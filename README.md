@@ -38,6 +38,10 @@ npm run build
 
 This builds the Angular frontend.
 
+## Development Conventions
+
+Global frontend layout and responsive rules are documented in `AGENTS.md`. Primary content gutters should default to `20px` left and right spacing, and reusable layout utilities live in `frontend/src/styles/responsive-layout.css`.
+
 ## CI
 
 GitHub Actions runs lightweight checks for the Angular frontend and Express backend on pushes and pull requests to `main`.
