@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { SeoService } from './core/seo/seo.service';
@@ -10,7 +10,9 @@ import { SeoService } from './core/seo/seo.service';
   styleUrl: './app.css'
 })
 export class App {
-  constructor(private readonly seoService: SeoService) {
+  private readonly seoService = inject(SeoService);
+
+  constructor() {
     this.seoService.setDefaults();
   }
 }

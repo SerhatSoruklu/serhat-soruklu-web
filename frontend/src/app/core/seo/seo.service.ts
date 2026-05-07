@@ -1,5 +1,5 @@
 import { DOCUMENT, isPlatformBrowser, isPlatformServer } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 
 import { seoConfig } from './seo.config';
@@ -19,13 +19,10 @@ interface SeoMetadata {
 })
 export class SeoService {
   private readonly jsonLdScriptId = 'page-json-ld';
-
-  constructor(
-    private readonly title: Title,
-    private readonly meta: Meta,
-    @Inject(DOCUMENT) private readonly document: Document,
-    @Inject(PLATFORM_ID) private readonly platformId: object
-  ) {}
+  private readonly title = inject(Title);
+  private readonly meta = inject(Meta);
+  private readonly document = inject(DOCUMENT);
+  private readonly platformId = inject(PLATFORM_ID);
 
   setDefaults(): void {
     this.setMetadata({

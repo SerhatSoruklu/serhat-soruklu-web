@@ -10,6 +10,10 @@
     "build:frontend": "npm --prefix frontend run build:ssr",
     "check": "npm run check:backend",
     "check:backend": "npm --prefix backend run check",
+    "lint": "npm run lint:frontend && npm run lint:backend",
+    "lint:frontend": "npm --prefix frontend run lint",
+    "lint:backend": "npm --prefix backend run lint",
+    "lint:fix": "npm --prefix frontend run lint -- --fix && npm --prefix backend run lint:fix",
     "start": "npm --prefix backend start",
     "deploy": "bash scripts/deploy.sh"
   },

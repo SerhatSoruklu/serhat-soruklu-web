@@ -10,7 +10,6 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
-let server;
 
 function parseBoolean(value) {
   return ['1', 'true', 'yes'].includes(String(value).toLowerCase());
@@ -105,7 +104,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-app.use('/api', (req, res) => {
+app.use('/api', (_req, res) => {
   res.status(404).json({
     ok: false,
     error: 'API route not found',
@@ -134,7 +133,7 @@ async function startServer() {
     console.log('MONGODB_URI not set; skipping MongoDB connection');
   }
 
-  server = app.listen(PORT, () => {
+  app.listen(PORT, () => {
     console.log(`SerhatSoruklu backend listening on port ${PORT} in ${NODE_ENV} mode`);
   });
 }
