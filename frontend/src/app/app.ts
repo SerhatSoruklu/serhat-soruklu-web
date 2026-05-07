@@ -1,5 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+
+import { SeoService } from './core/seo/seo.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +10,7 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('frontend');
+  constructor(private readonly seoService: SeoService) {
+    this.seoService.setDefaults();
+  }
 }
