@@ -69,11 +69,11 @@ web_modules/
 .env
 .env.production
 .env.*
-!.env.example
 **/.env
 **/.env.production
 **/.env.*
-!**/.env.example
+backend/.env
+backend/.env.production
 
 # Angular cache
 .angular/

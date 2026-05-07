@@ -75,6 +75,4 @@ Real environment files are ignored by Git:
 - `backend/.env`
 - `backend/.env.production`
 
-Use `backend/.env.example` as the safe template.
-
 Local ignored backend env files may include placeholder keys for reference, but GitHub Actions secrets are the source of truth for CI. Do not commit real tokens, licenses, or production secrets.
