@@ -51,7 +51,12 @@ npm --prefix backend ci
 node --check backend/server.js
 ```
 
-CodeQL runs without extra secrets. SonarQube is skipped unless `SONAR_TOKEN`, `SONAR_HOST_URL`, and `SONAR_PROJECT_KEY` are configured as repository secrets. Xanitizer is skipped unless `XANITIZER_LICENSE` is configured as a repository secret.
+CodeQL runs without extra secrets. SonarQube and Xanitizer workflows are restored as optional checks. They skip safely until the required GitHub Actions secrets are configured:
+
+- `SONAR_TOKEN`
+- `SONAR_HOST_URL`
+- `SONAR_PROJECT_KEY`
+- `XANITIZER_LICENSE`
 
 ## Basic Deploy Script
 
@@ -71,3 +76,5 @@ Real environment files are ignored by Git:
 - `backend/.env.production`
 
 Use `backend/.env.example` as the safe template.
+
+Local ignored backend env files may include placeholder keys for reference, but GitHub Actions secrets are the source of truth for CI. Do not commit real tokens, licenses, or production secrets.

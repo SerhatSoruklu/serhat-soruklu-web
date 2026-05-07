@@ -11,23 +11,26 @@ permissions:
   contents: read
   security-events: write
 
+env:
+  XANITIZER_LICENSE_SECRET: XANITIZER_LICENSE
+
 jobs:
   xanitizer:
     name: Xanitizer security analysis
     runs-on: ubuntu-latest
     timeout-minutes: 25
-    env:
-      XANITIZER_LICENSE: ${{ secrets.XANITIZER_LICENSE }}
 
     steps:
-      - name: Check Xanitizer configuration
+      - name: Check Xanitizer secrets
         id: xanitizer-config
+        env:
+          XANITIZER_LICENSE_VALUE: ${{ secrets[env.XANITIZER_LICENSE_SECRET] }}
         run: |
-          if [ -n "$XANITIZER_LICENSE" ]; then
+          if [ -n "$XANITIZER_LICENSE_VALUE" ]; then
             echo "configured=true" >> "$GITHUB_OUTPUT"
           else
             echo "configured=false" >> "$GITHUB_OUTPUT"
-            echo "Xanitizer skipped: configure the XANITIZER_LICENSE repository secret to enable analysis."
+            echo "Xanitizer skipped: configure the XANITIZER_LICENSE GitHub Actions secret to enable analysis."
           fi
 
       - name: Checkout repository
@@ -54,7 +57,7 @@ jobs:
         if: steps.xanitizer-config.outputs.configured == 'true'
         uses: RIGS-IT/xanitizer-action@v1
         with:
-          license: ${{ env.XANITIZER_LICENSE }}
+          license: ${{ secrets[env.XANITIZER_LICENSE_SECRET] }}
 
       - name: Upload Xanitizer SARIF
         if: steps.xanitizer-config.outputs.configured == 'true' && hashFiles('Xanitizer-Findings-List.sarif') != ''

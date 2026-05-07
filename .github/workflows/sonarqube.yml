@@ -10,25 +10,30 @@ on:
 permissions:
   contents: read
 
+env:
+  SONAR_HOST_URL_SECRET: SONAR_HOST_URL
+  SONAR_PROJECT_KEY_SECRET: SONAR_PROJECT_KEY
+  SONAR_TOKEN_SECRET: SONAR_TOKEN
+
 jobs:
   sonarqube:
     name: SonarQube analysis
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    env:
-      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     steps:
-      - name: Check SonarQube configuration
+      - name: Check SonarQube secrets
         id: sonar-config
+        env:
+          SONAR_HOST_URL_VALUE: ${{ secrets[env.SONAR_HOST_URL_SECRET] }}
+          SONAR_PROJECT_KEY_VALUE: ${{ secrets[env.SONAR_PROJECT_KEY_SECRET] }}
+          SONAR_TOKEN_VALUE: ${{ secrets[env.SONAR_TOKEN_SECRET] }}
         run: |
-          if [ -n "$SONAR_TOKEN" ] && [ -n "$SONAR_HOST_URL" ] && [ -n "$SONAR_PROJECT_KEY" ]; then
+          if [ -n "$SONAR_TOKEN_VALUE" ] && [ -n "$SONAR_HOST_URL_VALUE" ] && [ -n "$SONAR_PROJECT_KEY_VALUE" ]; then
             echo "configured=true" >> "$GITHUB_OUTPUT"
           else
             echo "configured=false" >> "$GITHUB_OUTPUT"
-            echo "SonarQube skipped: configure SONAR_TOKEN, SONAR_HOST_URL, and SONAR_PROJECT_KEY repository secrets to enable analysis."
+            echo "SonarQube skipped: configure SONAR_TOKEN, SONAR_HOST_URL, and SONAR_PROJECT_KEY GitHub Actions secrets to enable analysis."
           fi
 
       - name: Checkout repository
@@ -43,24 +48,26 @@ jobs:
         with:
           node-version: 24
 
-      - name: Install frontend dependencies
+      - name: Install workspace dependencies
         if: steps.sonar-config.outputs.configured == 'true'
-        run: npm ci
-        working-directory: frontend
+        run: npm install
 
-      - name: Install backend dependencies
+      - name: Lint project
         if: steps.sonar-config.outputs.configured == 'true'
-        run: npm ci
-        working-directory: backend
+        run: npm run lint
+
+      - name: Build project
+        if: steps.sonar-config.outputs.configured == 'true'
+        run: npm run build
 
       - name: Run SonarQube scan
         if: steps.sonar-config.outputs.configured == 'true'
         uses: SonarSource/sonarqube-scan-action@v7.1.0
         env:
-          SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
-          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets[env.SONAR_HOST_URL_SECRET] }}
+          SONAR_TOKEN: ${{ secrets[env.SONAR_TOKEN_SECRET] }}
         with:
           args: >
-            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
+            -Dsonar.projectKey=${{ secrets[env.SONAR_PROJECT_KEY_SECRET] }}
             -Dsonar.sources=frontend/src,backend
             -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/.angular/**
