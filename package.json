@@ -5,9 +5,9 @@
   "private": true,
   "scripts": {
     "postinstall": "npm --prefix frontend install && npm --prefix backend install",
-    "dev": "concurrently --names frontend,backend --prefix \"[{name}]\" --prefix-colors cyan,green \"npm --prefix frontend start\" \"npm --prefix backend run dev\"",
-    "build": "npm run build:frontend",
-    "build:frontend": "npm --prefix frontend run build",
+    "dev": "concurrently --names frontend-ssr,backend --prefix \"[{name}]\" --prefix-colors cyan,green \"npm --prefix frontend run dev:ssr\" \"npm --prefix backend run dev\"",
+    "build": "npm run build:frontend && npm run check:backend",
+    "build:frontend": "npm --prefix frontend run build:ssr",
     "check": "npm run check:backend",
     "check:backend": "npm --prefix backend run check",
     "start": "npm --prefix backend start",

@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 
 import { seoConfig } from './seo.config';
@@ -23,7 +23,8 @@ export class SeoService {
   constructor(
     private readonly title: Title,
     private readonly meta: Meta,
-    @Inject(DOCUMENT) private readonly document: Document
+    @Inject(DOCUMENT) private readonly document: Document,
+    @Inject(PLATFORM_ID) private readonly platformId: object
   ) {}
 
   setDefaults(): void {
@@ -68,6 +69,10 @@ export class SeoService {
   }
 
   setCanonicalUrl(url: string): void {
+    if (!this.canUseDocumentHead()) {
+      return;
+    }
+
     const canonicalUrl = this.toAbsoluteUrl(url);
     let link = this.document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
 
@@ -109,6 +114,10 @@ export class SeoService {
   }
 
   setJsonLd(data: object): void {
+    if (!this.canUseDocumentHead()) {
+      return;
+    }
+
     this.removeJsonLd();
 
     const script = this.document.createElement('script');
@@ -119,7 +128,16 @@ export class SeoService {
   }
 
   removeJsonLd(): void {
+    if (!this.canUseDocumentHead()) {
+      return;
+    }
+
     this.document.getElementById(this.jsonLdScriptId)?.remove();
+  }
+
+  private canUseDocumentHead(): boolean {
+    const supportedPlatform = isPlatformBrowser(this.platformId) || isPlatformServer(this.platformId);
+    return supportedPlatform && !!this.document?.head;
   }
 
   private toAbsoluteUrl(url: string): string {
