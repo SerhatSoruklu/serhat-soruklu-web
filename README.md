@@ -42,6 +42,21 @@ This builds the Angular SSR frontend.
 
 Global frontend theme, layout, and responsive rules are documented in `AGENTS.md`. Primary content gutters should default to `20px` left and right spacing. Theme utilities live in `frontend/src/styles/theme.css`, and reusable layout utilities live in `frontend/src/styles/responsive-layout.css`.
 
+## Git And Deployment
+
+Do not push to GitHub, push to `main`, deploy, merge pull requests, or run deploy-related scripts after every local change. Commit, push, PR, merge, or deployment actions should happen only when explicitly requested.
+
+Recognized explicit publish commands include:
+
+- `push to GitHub`
+- `push and deploy`
+- `yeet deploy`
+- `full live merge yeet`
+
+In this repo, `deploy` in those phrases means publish the requested code changes to GitHub only. It does not mean production hosting, server deployment, Docker, PM2, Vercel, or infrastructure changes unless that target is explicitly named.
+
+The normal publish flow is: inspect the diff, stage intended files only, run `npm run lint`, `npm run build`, and `npm run check` when those scripts exist, commit, push to GitHub, then open/review/merge a PR when the requested flow calls for it and checks are clean. Do not push known-broken code unless explicitly overridden.
+
 ## CI
 
 GitHub Actions runs lightweight checks for the Angular frontend and Express backend on pushes and pull requests to `main`.
@@ -61,14 +76,6 @@ CodeQL runs without extra secrets. SonarQube runs as an optional check when the 
 - `SONAR_HOST_URL`
 - `SONAR_ORGANIZATION`
 - `SONAR_PROJECT_KEY`
-
-## Basic Deploy Script
-
-```bash
-npm run deploy
-```
-
-The deploy script is intentionally lightweight for now. It installs dependencies and builds the frontend. It does not add GitHub Actions, Docker, PM2, Turbo, Nx, or any deployment runner.
 
 ## Environment Files
 

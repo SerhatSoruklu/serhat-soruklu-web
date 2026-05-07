@@ -7,6 +7,7 @@ This file defines project conventions for Codex, future AI agents, and human dev
 - Frontend is Angular, TypeScript, SSR-enabled.
 - Backend is Node.js, Express, JavaScript.
 - Do not create pages, navigation, footer, hero sections, cards, or visual content unless the task explicitly asks for them.
+- Do not commit, push to GitHub, push to `main`, deploy, merge pull requests, or run deployment scripts unless the user explicitly asks for that action.
 - Keep the visual system modern, clean, and restrained.
 - Do not add Tailwind, Bootstrap, CSS variables, or heavy design-system tooling.
 - All future Codex, AI agent, and human development must follow this file's theme palette, default dark identity, gold accent discipline, `20px` layout gutter rule, and responsive breakpoint strategy.
@@ -186,6 +187,31 @@ Rules:
 - Temporary test processes must shut down cleanly after validation.
 - Use alternate ports for Playwright, end-to-end, and runtime smoke tests when needed.
 - If both frontend and backend are tested together, use the `4201` and `3001` pair.
+
+## GitHub Publish And Yeet Rules
+
+GitHub publishing is opt-in only. Do not commit, push, deploy, create pull requests, merge pull requests, or publish anything to GitHub after normal edits unless the user explicitly asks for it.
+
+Recognized explicit publish commands include:
+
+- `push to GitHub`
+- `push and deploy`
+- `yeet deploy`
+- `full live merge yeet`
+
+For this repo, `deploy` in these phrases means publish the requested code changes to GitHub only. It does not mean production hosting, server deployment, Docker, PM2, Vercel, or infrastructure changes unless the user explicitly names that target.
+
+When a publish command is given, use this flow:
+
+- Inspect `git status` and the diff before staging.
+- Stage only the intended files.
+- Run the required checks before committing or pushing so broken code is not published.
+- At minimum, run `npm run lint`, `npm run build`, and `npm run check` from the repo root when those scripts exist.
+- If a required check fails, fix it and rerun it before pushing. Do not push known-broken code unless the user explicitly overrides that rule.
+- Commit with a clear message.
+- Push to GitHub.
+- If the work is on a feature branch or a pull request is appropriate, open or update the PR, review the PR status/checks, and merge into `main` only when the user requested the full merge flow and checks are clean.
+- Never stage unrelated user changes silently.
 
 ## Validation
 
