@@ -105,7 +105,31 @@ Rules:
 
 ## Frontend CSS Conventions
 
-Global layout utilities live in `frontend/src/styles/responsive-layout.css` and are imported from `frontend/src/styles.css`.
+Do not dump all styling into `frontend/src/styles.css`. It should stay small and contain only imports for true global foundation styles.
+
+Allowed in global styles:
+
+- base `html` and `body` reset
+- font smoothing and browser normalization
+- global background and text defaults
+- theme foundation classes
+- responsive container and gutter utilities
+- accessibility helpers
+- shared low-level layout utilities only when genuinely reused
+
+Not allowed in global styles:
+
+- page section styling
+- navigation or footer styling
+- hero styling
+- card-specific styling
+- one-off component styling
+- large visual layouts
+- future page-specific responsive rules
+
+Component-specific CSS belongs in that component's own CSS file. Page-specific CSS belongs in that page component's CSS file once pages exist.
+
+Global layout utilities live in `frontend/src/styles/responsive-layout.css` and are imported from `frontend/src/styles.css`. Theme foundation utilities live in `frontend/src/styles/theme.css`.
 
 Use these classes for future pages/components:
 

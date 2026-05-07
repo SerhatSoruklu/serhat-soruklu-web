@@ -12,6 +12,7 @@ permissions:
 
 env:
   SONAR_HOST_URL_SECRET: SONAR_HOST_URL
+  SONAR_ORGANIZATION_SECRET: SONAR_ORGANIZATION
   SONAR_PROJECT_KEY_SECRET: SONAR_PROJECT_KEY
   SONAR_TOKEN_SECRET: SONAR_TOKEN
 
@@ -26,14 +27,15 @@ jobs:
         id: sonar-config
         env:
           SONAR_HOST_URL_VALUE: ${{ secrets[env.SONAR_HOST_URL_SECRET] }}
+          SONAR_ORGANIZATION_VALUE: ${{ secrets[env.SONAR_ORGANIZATION_SECRET] }}
           SONAR_PROJECT_KEY_VALUE: ${{ secrets[env.SONAR_PROJECT_KEY_SECRET] }}
           SONAR_TOKEN_VALUE: ${{ secrets[env.SONAR_TOKEN_SECRET] }}
         run: |
-          if [ -n "$SONAR_TOKEN_VALUE" ] && [ -n "$SONAR_HOST_URL_VALUE" ] && [ -n "$SONAR_PROJECT_KEY_VALUE" ]; then
+          if [ -n "$SONAR_TOKEN_VALUE" ] && [ -n "$SONAR_HOST_URL_VALUE" ] && [ -n "$SONAR_ORGANIZATION_VALUE" ] && [ -n "$SONAR_PROJECT_KEY_VALUE" ]; then
             echo "configured=true" >> "$GITHUB_OUTPUT"
           else
             echo "configured=false" >> "$GITHUB_OUTPUT"
-            echo "SonarQube skipped: configure SONAR_TOKEN, SONAR_HOST_URL, and SONAR_PROJECT_KEY GitHub Actions secrets to enable analysis."
+            echo "SonarQube skipped: configure SONAR_TOKEN, SONAR_HOST_URL, SONAR_ORGANIZATION, and SONAR_PROJECT_KEY GitHub Actions secrets to enable analysis."
           fi
 
       - name: Checkout repository
@@ -69,5 +71,6 @@ jobs:
         with:
           args: >
             -Dsonar.projectKey=${{ secrets[env.SONAR_PROJECT_KEY_SECRET] }}
+            -Dsonar.organization=${{ secrets[env.SONAR_ORGANIZATION_SECRET] }}
             -Dsonar.sources=frontend/src,backend
             -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/.angular/**
