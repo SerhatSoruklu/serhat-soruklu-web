@@ -211,6 +211,8 @@ When a publish command is given, use this flow:
 - Commit with a clear message.
 - Push to GitHub.
 - If the work is on a feature branch or a pull request is appropriate, open or update the PR, review the PR status/checks, and merge into `main` only when the user requested the full merge flow and checks are clean.
+- Use a unique, specific commit message and PR title/body that describe the actual change. Do not use vague messages like `update`, `changes`, `fix stuff`, or repeated boilerplate.
+- PR descriptions should explain what changed, why it changed, how it was validated, and any remaining risk.
 - Never stage unrelated user changes silently.
 
 ## Validation

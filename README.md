@@ -55,7 +55,7 @@ Recognized explicit publish commands include:
 
 In this repo, `deploy` in those phrases means publish the requested code changes to GitHub only. It does not mean production hosting, server deployment, Docker, PM2, Vercel, or infrastructure changes unless that target is explicitly named.
 
-The normal publish flow is: inspect the diff, stage intended files only, run `npm run lint`, `npm run build`, and `npm run check` when those scripts exist, commit, push to GitHub, then open/review/merge a PR when the requested flow calls for it and checks are clean. Do not push known-broken code unless explicitly overridden.
+The normal publish flow is: inspect the diff, stage intended files only, run `npm run lint`, `npm run build`, and `npm run check` when those scripts exist, commit, push to GitHub, then open/review/merge a PR when the requested flow calls for it and checks are clean. Commit messages and PR titles/descriptions must be unique and specific to the actual change. PR descriptions should explain what changed, why it changed, how it was validated, and any remaining risk. Do not push known-broken code unless explicitly overridden.
 
 ## CI
 
