@@ -1,6 +1,6 @@
 # Serhat Soruklu Web
 
-Personal platform, writing hub, and systems engineering portfolio of Serhat Soruklu.
+Personal platform, writing hub, and systems architecture portfolio of Serhat Soruklu.
 
 ## Structure
 
@@ -41,6 +41,42 @@ This builds the Angular SSR frontend.
 ## Development Conventions
 
 Global frontend theme, layout, and responsive rules are documented in `AGENTS.md`. Primary content gutters should default to `20px` left and right spacing. Theme utilities live in `frontend/src/styles/theme.css`, and reusable layout utilities live in `frontend/src/styles/responsive-layout.css`.
+
+## Brand Voice And Writing Direction
+
+This guidance applies only to `serhatsoruklu.com`. It is not Coupyn, ChatPDM, or corporate SaaS marketing.
+
+Copy, headlines, labels, and microcopy should feel emotionally powerful, intelligent, modern, respected, cinematic, ambitious, founder-level, technically elite, architect-level, calm, confident, future-facing, culturally relevant, and memorable. The emotional target is simple: this person builds serious things.
+
+The site should read like the work of a real systems builder, a respected internet architect, and a modern founder/operator building meaningful infrastructure. It should not feel like a generic developer portfolio.
+
+Prefer language around building systems, shaping infrastructure, engineering scale, architecting platforms, empowering discovery, designing trust, long-term systems, precision, resilience, execution, signal, momentum, intelligence, modern internet infrastructure, digital architecture, scalable foundations, engineered experiences, systems thinking, high-performance work, crafted details, refined execution, and systems built for longevity.
+
+Encourage strong headlines, emotionally resonant statements, subtle cinematic energy, premium technical authority, concise impactful copy, modern founder language, and tasteful ambition. The wording should sound cool without trying too hard.
+
+Public-facing copy must still feel human. Most non-technical readers will not consciously analyze terms like "systems architecture" or "digital foundations"; they respond to vibe, confidence, clarity, aesthetic consistency, emotional tone, and whether the work feels real or fake. The copy should create calm intelligence, seriousness, ambition, competence, and a little mystery without becoming cold.
+
+Use this balance for public website copy:
+
+- 70% clean intelligent authority
+- 20% human presence
+- 10% cinematic ambition
+
+Do not let every sentence sound like abstract infrastructure language. If the copy becomes too dense, it will read as corporate, robotic, emotionally distant, or like AI-generated tech-bro marketing. Strong technical language should be contrasted with short, grounded lines that breathe.
+
+Prefer short sentences, strong rhythm, minimal copy, emotionally grounded statements, real proof, and restrained confidence. Good public copy should work for technical and non-technical audiences at the same time.
+
+Examples:
+
+- Avoid: "Architecting scalable digital infrastructure for resilient future-facing ecosystems."
+- Prefer: "Building systems designed to last."
+- Avoid: "Engineering high-performance trust architectures."
+- Prefer: "I like building things that survive pressure."
+- Prefer: "Built from scratch. Designed to scale. Still evolving."
+
+Avoid generic SaaS buzzwords, fake AI-company language, excessive corporate jargon, cringe productivity language, startup spam, cheesy motivational quotes, childish hype, nerdy filler text, overexplaining, and generic portfolio copy. Do not use phrases like "disrupting the industry", "synergy", or similar hollow marketing language.
+
+The writing should match the visual identity: dark theme first, black and gold premium aesthetic, restrained luxury, modern systems architecture, calm authority, and minimal architecture. Text should feel at home in a premium architecture studio, a next-generation systems lab, a founder documentary intro, or a modern engineering publication.
 
 ## Git And Deployment
 

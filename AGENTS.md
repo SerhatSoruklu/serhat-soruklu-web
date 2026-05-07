@@ -15,7 +15,7 @@ This file defines project conventions for Codex, future AI agents, and human dev
 
 ## Visual Theme
 
-The official identity is premium systems engineering: black/deep navy with disciplined gold accents. The default theme is dark. Light theme and system preference support are allowed, but they must remain secondary to the dark identity.
+The official identity is premium systems architecture: black/deep navy with disciplined gold accents. The default theme is dark. Light theme and system preference support are allowed, but they must remain secondary to the dark identity.
 
 Dark theme palette:
 
