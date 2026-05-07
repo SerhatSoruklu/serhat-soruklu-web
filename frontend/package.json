@@ -3,11 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "dev": "npm run dev:ssr",
     "start": "npm run dev:ssr",
     "dev:ssr": "ng serve",
     "build": "ng build",
     "build:ssr": "ng build",
     "watch": "ng build --watch --configuration development",
+    "typecheck": "ng build --configuration development",
+    "typecheck:watch": "ng build --configuration development --watch",
     "test": "ng test",
     "serve:ssr:frontend": "node dist/frontend/server/server.mjs",
     "lint": "ng lint"
