@@ -6,7 +6,7 @@
   <title>Serhat Soruklu | Systems Architect</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Serhat Soruklu's personal platform for systems architecture, software engineering, writing, and production-focused technical work.">
+  <meta name="description" content="Systems architecture, software engineering, and modern digital infrastructure built with precision, scale, and long-term thinking.">
   <meta name="author" content="Serhat Soruklu">
   <meta name="robots" content="index, follow">
   <meta name="googlebot" content="index, follow, max-image-preview:large">
@@ -16,24 +16,71 @@
   <meta name="application-name" content="Serhat Soruklu">
   <meta name="apple-mobile-web-app-title" content="Serhat Soruklu">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#07090d" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#07090d">
+
+  <script>
+    (function () {
+      var storageKey = 'serhatsoruklu-theme';
+      var themeClasses = ['theme-dark', 'theme-light', 'theme-system', 'theme-resolved-dark', 'theme-resolved-light'];
+      var setting = 'dark';
+      var resolvedTheme = 'dark';
+
+      try {
+        var storedSetting = window.localStorage.getItem(storageKey);
+
+        if (storedSetting === 'dark' || storedSetting === 'light' || storedSetting === 'system') {
+          setting = storedSetting;
+        }
+      } catch (error) {
+        setting = 'dark';
+      }
+
+      if (setting === 'light') {
+        resolvedTheme = 'light';
+      } else if (setting === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        resolvedTheme = 'light';
+      }
+
+      function applyTheme(target) {
+        if (!target) {
+          return;
+        }
+
+        target.classList.remove.apply(target.classList, themeClasses);
+        target.classList.add('theme-' + setting, 'theme-resolved-' + resolvedTheme);
+        target.style.colorScheme = resolvedTheme;
+      }
+
+      applyTheme(document.documentElement);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        applyTheme(document.body);
+      }, { once: true });
+
+      var themeColor = document.querySelector('meta[name="theme-color"]');
+
+      if (themeColor) {
+        themeColor.setAttribute('content', resolvedTheme === 'light' ? '#ffffff' : '#07090d');
+      }
+    })();
+  </script>
 
   <link rel="canonical" href="https://serhatsoruklu.com/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="/assets/brand/favicons/favicon.svg">
   <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicons/favicon-96x96.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/brand/favicons/apple-touch-icon.png">
   <link rel="mask-icon" href="/assets/brand/favicons/favicon.svg" color="#d6a84f">
-  <link rel="preload" href="assets/social/serhat-soruklu-og.svg" as="image" type="image/svg+xml">
-
   <meta property="og:site_name" content="Serhat Soruklu">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_GB">
   <meta property="og:url" content="https://serhatsoruklu.com/">
   <meta property="og:title" content="Serhat Soruklu | Systems Architect">
-  <meta property="og:description" content="Personal platform for systems architecture, software engineering, writing, and production-focused technical work.">
+  <meta property="og:description" content="Systems architecture, software engineering, and modern digital infrastructure built with precision, scale, and long-term thinking.">
   <meta property="og:image" content="https://serhatsoruklu.com/assets/social/serhat-soruklu-og.svg">
   <meta property="og:image:type" content="image/svg+xml">
   <meta property="og:image:width" content="1200">
@@ -42,7 +89,7 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Serhat Soruklu | Systems Architect">
-  <meta name="twitter:description" content="Personal platform for systems architecture, software engineering, writing, and production-focused technical work.">
+  <meta name="twitter:description" content="Systems architecture, software engineering, and modern digital infrastructure built with precision, scale, and long-term thinking.">
   <meta name="twitter:image" content="https://serhatsoruklu.com/assets/social/serhat-soruklu-og.svg">
   <meta name="twitter:image:alt" content="Serhat Soruklu systems architect identity in deep navy and gold.">
 
@@ -51,23 +98,38 @@
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "Person",
-          "@id": "https://serhatsoruklu.com/#person",
-          "name": "Serhat Soruklu",
-          "url": "https://serhatsoruklu.com/",
-          "sameAs": [
-            "https://github.com/SerhatSoruklu"
-          ]
-        },
-        {
           "@type": "WebSite",
           "@id": "https://serhatsoruklu.com/#website",
           "name": "Serhat Soruklu",
           "url": "https://serhatsoruklu.com/",
+          "description": "Systems architecture, software engineering, and modern digital infrastructure built with precision, scale, and long-term thinking.",
+          "inLanguage": "en-GB",
           "publisher": {
             "@id": "https://serhatsoruklu.com/#person"
-          },
-          "inLanguage": "en-GB"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://serhatsoruklu.com/#person",
+          "name": "Serhat Soruklu",
+          "url": "https://serhatsoruklu.com/",
+          "jobTitle": "Founder, Systems Architect, Full-Stack Engineer",
+          "description": "Founder and systems architect focused on software engineering, digital infrastructure, scalable platforms, and long-term systems.",
+          "knowsAbout": [
+            "Systems architecture",
+            "Software engineering",
+            "Full-stack development",
+            "Angular",
+            "Node.js",
+            "MongoDB",
+            "Digital infrastructure",
+            "Scalable platforms",
+            "SEO architecture",
+            "Trust systems"
+          ],
+          "sameAs": [
+            "https://github.com/SerhatSoruklu"
+          ]
         }
       ]
     }

@@ -38,9 +38,51 @@ npm run build
 
 This builds the Angular SSR frontend.
 
+## Frontend Playwright E2E
+
+Playwright is installed as a frontend-local dev dependency for responsive, visual, route, console, and regression checks.
+
+Install browser binaries once after dependencies are installed:
+
+```bash
+npm --prefix frontend run e2e:install
+```
+
+Run the Chromium e2e suite against the Angular dev server on the reserved test port `4201`:
+
+```bash
+npm --prefix frontend run e2e
+```
+
+Useful local variants:
+
+```bash
+npm --prefix frontend run e2e:headed
+npm --prefix frontend run e2e:ui
+npm --prefix frontend run e2e:report
+```
+
+The Playwright config lives in `frontend/playwright.config.ts`, and tests live in `frontend/tests/e2e/`. Playwright starts `npm run dev:ssr -- --host 127.0.0.1 --port 4201`, so it does not collide with the normal `localhost:4200` development server.
+
+Generated reports, traces, screenshots, videos, and browser-cache artifacts are ignored by Git. The main artifact locations are:
+
+- `frontend/test-results/`
+- `frontend/playwright-report/`
+- `frontend/blob-report/`
+- `frontend/.playwright/`
+
 ## Development Conventions
 
 Global frontend theme, layout, and responsive rules are documented in `AGENTS.md`. Primary content gutters should default to `20px` left and right spacing. Theme utilities live in `frontend/src/styles/theme.css`, and reusable layout utilities live in `frontend/src/styles/responsive-layout.css`.
+
+## Typography
+
+SerhatSoruklu.com uses a two-font system:
+
+- `Sora` for the logo name, page headings, and primary interface text. It gives the site a modern, authoritative systems-builder tone without the editorial/bookish feel of a serif.
+- `Space Mono` for technical labels such as `SYSTEMS ARCHITECT`, nav text, eyebrows, and compact metadata. This keeps the precise robot-like technical signal.
+
+The font files are self-hosted in `frontend/public/assets/fonts/` and declared in `frontend/src/styles/fonts.css`. Do not reintroduce remote display-font imports for the core brand typography.
 
 ## Brand Voice And Writing Direction
 

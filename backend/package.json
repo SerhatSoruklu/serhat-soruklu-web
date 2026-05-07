@@ -7,6 +7,8 @@
     "check": "node --check server.js",
     "lint": "node ../frontend/node_modules/eslint/bin/eslint.js server.js",
     "lint:fix": "node ../frontend/node_modules/eslint/bin/eslint.js server.js --fix",
+    "test": "node --test",
+    "test:coverage": "c8 --reporter=lcov --reporter=text node --test",
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
@@ -23,5 +25,8 @@
     "mongodb": "^7.2.0",
     "mongoose": "^9.6.1",
     "nodemon": "^3.1.14"
+  },
+  "devDependencies": {
+    "c8": "^11.0.0"
   }
 }

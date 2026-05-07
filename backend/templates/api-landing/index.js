@@ -1,16 +1,16 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 
 const templatePath = path.join(__dirname, 'template.html');
 const template = fs.readFileSync(templatePath, 'utf8');
 
 function escapeHtml(value) {
   return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
 }
 
 function renderApiLandingPage({ nodeEnv }) {
@@ -35,5 +35,6 @@ function createApiLandingHandlers({ faviconPath, logoPath, nodeEnv }) {
 
 module.exports = {
   createApiLandingHandlers,
+  escapeHtml,
   renderApiLandingPage
 };

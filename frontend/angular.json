@@ -78,7 +78,10 @@
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:unit-test"
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "coverageReporters": ["text", "lcov"]
+          }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
