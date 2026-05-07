@@ -40,7 +40,7 @@ This builds the Angular frontend.
 
 ## Development Conventions
 
-Global frontend layout and responsive rules are documented in `AGENTS.md`. Primary content gutters should default to `20px` left and right spacing, and reusable layout utilities live in `frontend/src/styles/responsive-layout.css`.
+Global frontend theme, layout, and responsive rules are documented in `AGENTS.md`. Primary content gutters should default to `20px` left and right spacing. Theme utilities live in `frontend/src/styles/theme.css`, and reusable layout utilities live in `frontend/src/styles/responsive-layout.css`.
 
 ## CI
 

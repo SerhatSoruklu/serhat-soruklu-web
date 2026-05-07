@@ -9,6 +9,70 @@ This file defines project conventions for Codex, future AI agents, and human dev
 - Do not create pages, navigation, footer, hero sections, cards, or visual content unless the task explicitly asks for them.
 - Keep the visual system modern, clean, and restrained.
 - Do not add Tailwind, Bootstrap, CSS variables, or heavy design-system tooling.
+- All future Codex, AI agent, and human development must follow this file's theme palette, default dark identity, gold accent discipline, `20px` layout gutter rule, and responsive breakpoint strategy.
+- Do not let pages or components invent their own color system, spacing system, or breakpoint set.
+
+## Visual Theme
+
+The official identity is premium systems engineering: black/deep navy with disciplined gold accents. The default theme is dark. Light theme and system preference support are allowed, but they must remain secondary to the dark identity.
+
+Dark theme palette:
+
+- Background: `#07090d`
+- Surface: `#10141c`
+- Text: `#f5f7fa`
+- Muted text: `#a8b0bd`
+- Gold accent: `#d6a84f`
+- Soft gold: `#f0d58c`
+- Border: `#252b36`
+
+Light theme palette:
+
+- Background: `#ffffff`
+- Surface: `#f8f7f3`
+- Text: `#111827`
+- Muted text: `#5f6673`
+- Gold accent: `#b8872f`
+- Soft gold: `#e7c46f`
+- Border: `#e5e0d6`
+
+Theme CSS lives in `frontend/src/styles/theme.css` and is imported from `frontend/src/styles.css`. Use explicit classes and plain CSS values. Do not use CSS variables.
+
+Theme classes:
+
+- `.theme-dark` applies the dark palette.
+- `.theme-light` applies the light palette.
+- `.theme-system` may follow `prefers-color-scheme` through CSS only.
+
+The application defaults to dark through global `body` styles. A future app shell may apply `.theme-dark`, `.theme-light`, or `.theme-system`, but browser-only theme logic must use Angular platform checks and must not access `window`, `document`, `localStorage`, or `sessionStorage` directly.
+
+Gold usage is allowed for:
+
+- logo accents
+- link hover states
+- small dividers
+- selected navigation state
+- badges
+- key callouts
+
+Gold usage is not allowed for:
+
+- large backgrounds
+- full sections
+- excessive borders
+- every button
+- decorative noise
+
+Use minimal theme utilities when useful:
+
+- `.theme-background`
+- `.theme-surface`
+- `.theme-text`
+- `.theme-muted`
+- `.theme-border`
+- `.theme-accent`
+- `.theme-accent-soft`
+- `.theme-link`
 
 ## Responsive Architecture
 

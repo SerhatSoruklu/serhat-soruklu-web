@@ -1,0 +1,165 @@
+html {
+  background: #07090d;
+}
+
+body,
+.theme-dark {
+  color-scheme: dark;
+  background: #07090d;
+  color: #f5f7fa;
+}
+
+.theme-light {
+  color-scheme: light;
+  background: #ffffff;
+  color: #111827;
+}
+
+.theme-background {
+  background: #07090d;
+  color: #f5f7fa;
+}
+
+.theme-surface {
+  background: #10141c;
+  color: #f5f7fa;
+}
+
+.theme-text {
+  color: #f5f7fa;
+}
+
+.theme-muted {
+  color: #a8b0bd;
+}
+
+.theme-border {
+  border-color: #252b36;
+}
+
+.theme-accent {
+  color: #d6a84f;
+}
+
+.theme-accent-soft {
+  color: #f0d58c;
+}
+
+a,
+.theme-link {
+  color: #f0d58c;
+  text-decoration-color: #d6a84f;
+}
+
+a:hover,
+.theme-link:hover {
+  color: #d6a84f;
+}
+
+.theme-light .theme-background,
+.theme-light.theme-background {
+  background: #ffffff;
+  color: #111827;
+}
+
+.theme-light .theme-surface,
+.theme-light.theme-surface {
+  background: #f8f7f3;
+  color: #111827;
+}
+
+.theme-light .theme-text,
+.theme-light.theme-text {
+  color: #111827;
+}
+
+.theme-light .theme-muted,
+.theme-light.theme-muted {
+  color: #5f6673;
+}
+
+.theme-light .theme-border,
+.theme-light.theme-border {
+  border-color: #e5e0d6;
+}
+
+.theme-light .theme-accent,
+.theme-light.theme-accent {
+  color: #b8872f;
+}
+
+.theme-light .theme-accent-soft,
+.theme-light.theme-accent-soft {
+  color: #e7c46f;
+}
+
+.theme-light a,
+.theme-light .theme-link,
+.theme-light.theme-link {
+  color: #b8872f;
+  text-decoration-color: #e7c46f;
+}
+
+.theme-light a:hover,
+.theme-light .theme-link:hover,
+.theme-light.theme-link:hover {
+  color: #e7c46f;
+}
+
+@media (prefers-color-scheme: light) {
+  .theme-system {
+    color-scheme: light;
+    background: #ffffff;
+    color: #111827;
+  }
+
+  .theme-system .theme-background,
+  .theme-system.theme-background {
+    background: #ffffff;
+    color: #111827;
+  }
+
+  .theme-system .theme-surface,
+  .theme-system.theme-surface {
+    background: #f8f7f3;
+    color: #111827;
+  }
+
+  .theme-system .theme-text,
+  .theme-system.theme-text {
+    color: #111827;
+  }
+
+  .theme-system .theme-muted,
+  .theme-system.theme-muted {
+    color: #5f6673;
+  }
+
+  .theme-system .theme-border,
+  .theme-system.theme-border {
+    border-color: #e5e0d6;
+  }
+
+  .theme-system .theme-accent,
+  .theme-system.theme-accent {
+    color: #b8872f;
+  }
+
+  .theme-system .theme-accent-soft,
+  .theme-system.theme-accent-soft {
+    color: #e7c46f;
+  }
+
+  .theme-system a,
+  .theme-system .theme-link,
+  .theme-system.theme-link {
+    color: #b8872f;
+    text-decoration-color: #e7c46f;
+  }
+
+  .theme-system a:hover,
+  .theme-system .theme-link:hover,
+  .theme-system.theme-link:hover {
+    color: #e7c46f;
+  }
+}
