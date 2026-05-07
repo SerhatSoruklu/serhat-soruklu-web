@@ -42,7 +42,9 @@
           data-testid="mobile-theme-menu-button"
           (click)="toggleThemeMenu()"
         >
-          <span class="material-symbols-outlined" aria-hidden="true">{{ themeService.triggerIcon() }}</span>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path [attr.d]="themeTriggerIconPath()"></path>
+          </svg>
         </button>
 
         <div
@@ -63,7 +65,9 @@
               [attr.tabindex]="themeMenuOpen() ? 0 : -1"
               (click)="setTheme(option.value)"
             >
-              <span class="material-symbols-outlined" aria-hidden="true">{{ option.icon }}</span>
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path [attr.d]="option.iconPath"></path>
+              </svg>
               <span>{{ option.label }}</span>
             </button>
           }
@@ -71,17 +75,21 @@
       </div>
 
       <button
-        class="mobile-header__icon-button mobile-header__menu-button"
-          type="button"
-          aria-label="Open navigation"
-          [attr.aria-expanded]="menuOpen()"
-          aria-controls="mobile-navigation"
-          data-testid="mobile-menu-button"
-          (click)="toggleMenu()"
+        class="mobile-header__icon-button menu-button"
+        type="button"
+        [attr.aria-label]="menuOpen() ? 'Close navigation' : 'Open navigation'"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="mobile-navigation"
+        data-testid="mobile-menu-button"
+        (click)="toggleMenu()"
       >
-        <span class="mobile-header__menu-lines" aria-hidden="true">
-          <span></span>
-          <span></span>
+        <span class="menu-toggle" aria-hidden="true">
+          <svg class="menu-toggle__icon menu-toggle__icon--open" viewBox="0 0 24 24" focusable="false">
+            <path [attr.d]="menuIconPath"></path>
+          </svg>
+          <svg class="menu-toggle__icon menu-toggle__icon--close" viewBox="0 0 24 24" focusable="false">
+            <path [attr.d]="closeIconPath"></path>
+          </svg>
         </span>
       </button>
     </div>
@@ -96,15 +104,21 @@
     [attr.inert]="menuOpen() ? null : ''"
   >
     <a routerLink="/work" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
-      <span class="material-symbols-outlined mobile-nav__icon" aria-hidden="true">work</span>
+      <svg class="mobile-nav__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path [attr.d]="workIconPath"></path>
+      </svg>
       <span>Work</span>
     </a>
     <a routerLink="/systems" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
-      <span class="material-symbols-outlined mobile-nav__icon" aria-hidden="true">schema</span>
+      <svg class="mobile-nav__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path [attr.d]="systemsIconPath"></path>
+      </svg>
       <span>Systems</span>
     </a>
     <a routerLink="/writing" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
-      <span class="material-symbols-outlined mobile-nav__icon" aria-hidden="true">notes</span>
+      <svg class="mobile-nav__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path [attr.d]="writingIconPath"></path>
+      </svg>
       <span>Writing</span>
     </a>
     <a routerLink="/github" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
@@ -114,7 +128,9 @@
       <span>GitHub</span>
     </a>
     <a routerLink="/contact" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
-      <span class="material-symbols-outlined mobile-nav__icon" aria-hidden="true">mail</span>
+      <svg class="mobile-nav__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path [attr.d]="contactIconPath"></path>
+      </svg>
       <span>Contact</span>
     </a>
   </nav>

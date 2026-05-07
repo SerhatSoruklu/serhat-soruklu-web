@@ -135,6 +135,30 @@ In this repo, `deploy` in those phrases means publish the requested code changes
 
 The normal publish flow is: inspect the diff, stage intended files only, run `npm run lint`, `npm run build`, and `npm run check` when those scripts exist, commit, push to GitHub, then open/review/merge a PR when the requested flow calls for it and checks are clean. Commit messages and PR titles/descriptions must be unique and specific to the actual change. PR descriptions should explain what changed, why it changed, how it was validated, and any remaining risk. Do not push known-broken code unless explicitly overridden.
 
+## Branch Protection and Merge Rules
+
+The default branch is protected by the active GitHub ruleset `main-production-protection`. The ruleset targets the default branch only.
+
+All changes must go through pull requests before they reach `main`. Required approvals are currently set to `0` because this is a solo-founder repository, but pull request conversation resolution is required before merging. Squash and rebase merges are allowed. Merge commits are disabled.
+
+The ruleset blocks force pushes and branch deletions on `main`. It also requires selected status checks to pass before merge, including CodeQL code scanning results and SonarCloud code quality results for errors. CodeQL and SonarCloud findings must be fixed cleanly, not bypassed or disabled. Failing required checks are expected to block merging until the branch is repaired and checks complete successfully.
+
+Branches do not need to be up to date with `main` before merging, and status checks on branch creation are not required. Deployment should happen only from a clean `main` after the pull request has merged and required checks are green.
+
+Codex workflow for this repository:
+
+1. Create or use a feature branch.
+2. Make the requested changes.
+3. Run local checks.
+4. Push the branch.
+5. Open or update the pull request.
+6. Inspect all GitHub checks.
+7. Fix failing checks.
+8. Resolve all pull request conversations.
+9. Merge only when the ruleset allows it.
+10. Deploy from `main`.
+11. Report the final deployed commit and CI status.
+
 ## CI
 
 GitHub Actions runs lightweight checks for the Angular frontend and Express backend on pushes and pull requests to `main`.

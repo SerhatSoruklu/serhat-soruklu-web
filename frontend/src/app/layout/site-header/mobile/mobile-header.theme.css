@@ -35,7 +35,7 @@
 :host-context(.theme-resolved-light) .mobile-brand__mark,
 :host-context(.theme-resolved-light) .mobile-brand__subtitle,
 :host-context(.theme-resolved-light) .mobile-header__icon-button,
-:host-context(.theme-resolved-light) .mobile-theme__option--active .material-symbols-outlined {
+:host-context(.theme-resolved-light) .mobile-theme__option--active .icon {
   color: #b8872f;
 }
 

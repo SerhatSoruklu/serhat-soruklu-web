@@ -1,14 +1,23 @@
 import { NgClass } from '@angular/common';
 import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { mdiGithub } from '@mdi/js';
+import {
+  mdiBriefcaseOutline,
+  mdiEmailOutline,
+  mdiGithub,
+  mdiNoteTextOutline,
+  mdiSitemapOutline,
+  mdiThemeLightDark,
+  mdiWeatherNight,
+  mdiWhiteBalanceSunny
+} from '@mdi/js';
 
 import { ThemeService, ThemeSetting } from '../../core/theme/theme.service';
 import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
 import { MobileHeaderComponent } from './mobile/mobile-header.component';
 
 interface ThemeOption {
-  icon: string;
+  iconPath: string;
   label: string;
   value: ThemeSetting;
 }
@@ -23,12 +32,26 @@ export class SiteHeaderComponent {
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   readonly themeService = inject(ThemeService);
   readonly githubIconPath = mdiGithub;
+  readonly workIconPath = mdiBriefcaseOutline;
+  readonly systemsIconPath = mdiSitemapOutline;
+  readonly writingIconPath = mdiNoteTextOutline;
+  readonly contactIconPath = mdiEmailOutline;
   readonly themeMenuOpen = signal(false);
   readonly themeOptions: ThemeOption[] = [
-    { icon: 'dark_mode', label: 'Dark', value: 'dark' },
-    { icon: 'light_mode', label: 'Light', value: 'light' },
-    { icon: 'contrast', label: 'System', value: 'system' }
+    { iconPath: mdiWeatherNight, label: 'Dark', value: 'dark' },
+    { iconPath: mdiWhiteBalanceSunny, label: 'Light', value: 'light' },
+    { iconPath: mdiThemeLightDark, label: 'System', value: 'system' }
   ];
+
+  themeTriggerIconPath(): string {
+    const setting = this.themeService.setting();
+
+    if (setting === 'system') {
+      return mdiThemeLightDark;
+    }
+
+    return this.themeService.resolvedTheme() === 'dark' ? mdiWeatherNight : mdiWhiteBalanceSunny;
+  }
 
   toggleThemeMenu(): void {
     this.themeMenuOpen.update((open) => !open);

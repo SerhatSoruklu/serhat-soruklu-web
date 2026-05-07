@@ -29,7 +29,7 @@
 
 :host-context(.theme-resolved-light) .site-brand__subtitle,
 :host-context(.theme-resolved-light) .theme-selector__trigger,
-:host-context(.theme-resolved-light) .theme-selector__option--active .material-symbols-outlined {
+:host-context(.theme-resolved-light) .theme-selector__option--active .theme-selector__option-icon {
   color: #b8872f;
 }
 
