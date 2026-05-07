@@ -6,7 +6,7 @@ Personal platform, writing hub, and systems engineering portfolio of Serhat Soru
 
 ```text
 serhatsoruklu/
-  frontend/   Angular, TypeScript
+  frontend/   Angular SSR, TypeScript
   backend/    Node.js, Express, JavaScript
 ```
 
@@ -22,7 +22,7 @@ npm run dev
 
 `npm run dev` starts both services in one terminal:
 
-- `[frontend]` Angular dev server with live reload
+- `[frontend]` Angular SSR dev server with live reload
 - `[backend]` Express server through nodemon
 
 Default local URLs:
@@ -36,7 +36,7 @@ Default local URLs:
 npm run build
 ```
 
-This builds the Angular frontend.
+This builds the Angular SSR frontend.
 
 ## Development Conventions
 
