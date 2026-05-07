@@ -1,17 +1,11 @@
 import { NgClass } from '@angular/common';
 import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { mdiGithub } from '@mdi/js';
 
 import { ThemeService, ThemeSetting } from '../../core/theme/theme.service';
 import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
+import { getThemeTriggerIconPath, HEADER_NAV_ITEMS, HEADER_THEME_OPTIONS } from './header-icons';
 import { MobileHeaderComponent } from './mobile/mobile-header.component';
-
-interface ThemeOption {
-  icon: string;
-  label: string;
-  value: ThemeSetting;
-}
 
 @Component({
   selector: 'app-site-header',
@@ -22,13 +16,13 @@ interface ThemeOption {
 export class SiteHeaderComponent {
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   readonly themeService = inject(ThemeService);
-  readonly githubIconPath = mdiGithub;
+  readonly navItems = HEADER_NAV_ITEMS;
   readonly themeMenuOpen = signal(false);
-  readonly themeOptions: ThemeOption[] = [
-    { icon: 'dark_mode', label: 'Dark', value: 'dark' },
-    { icon: 'light_mode', label: 'Light', value: 'light' },
-    { icon: 'contrast', label: 'System', value: 'system' }
-  ];
+  readonly themeOptions = HEADER_THEME_OPTIONS;
+
+  themeTriggerIconPath(): string {
+    return getThemeTriggerIconPath(this.themeService.setting(), this.themeService.resolvedTheme());
+  }
 
   toggleThemeMenu(): void {
     this.themeMenuOpen.update((open) => !open);

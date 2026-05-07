@@ -30,28 +30,14 @@
     </a>
 
     <nav class="site-nav" aria-label="Primary navigation">
-      <a routerLink="/work" routerLinkActive="site-nav__link--active" class="site-nav__link">
-        <span class="material-symbols-outlined site-nav__icon" aria-hidden="true">work</span>
-        <span>Work</span>
-      </a>
-      <a routerLink="/systems" routerLinkActive="site-nav__link--active" class="site-nav__link">
-        <span class="material-symbols-outlined site-nav__icon" aria-hidden="true">schema</span>
-        <span>Systems</span>
-      </a>
-      <a routerLink="/writing" routerLinkActive="site-nav__link--active" class="site-nav__link">
-        <span class="material-symbols-outlined site-nav__icon" aria-hidden="true">notes</span>
-        <span>Writing</span>
-      </a>
-      <a routerLink="/github" routerLinkActive="site-nav__link--active" class="site-nav__link">
-        <svg class="site-nav__icon site-nav__github-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path [attr.d]="githubIconPath"></path>
-        </svg>
-        <span>GitHub</span>
-      </a>
-      <a routerLink="/contact" routerLinkActive="site-nav__link--active" class="site-nav__link">
-        <span class="material-symbols-outlined site-nav__icon" aria-hidden="true">mail</span>
-        <span>Contact</span>
-      </a>
+      @for (item of navItems; track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="site-nav__link--active" class="site-nav__link">
+          <svg class="site-nav__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path [attr.d]="item.iconPath"></path>
+          </svg>
+          <span>{{ item.label }}</span>
+        </a>
+      }
     </nav>
 
     <div class="theme-selector">
@@ -66,7 +52,9 @@
         data-testid="desktop-theme-menu-button"
         (click)="toggleThemeMenu()"
       >
-        <span class="material-symbols-outlined" aria-hidden="true">{{ themeService.triggerIcon() }}</span>
+        <svg class="theme-selector__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path [attr.d]="themeTriggerIconPath()"></path>
+        </svg>
       </button>
 
       @if (themeMenuOpen()) {
@@ -80,7 +68,9 @@
               [attr.aria-checked]="themeService.setting() === option.value"
               (click)="setTheme(option.value)"
             >
-              <span class="material-symbols-outlined" aria-hidden="true">{{ option.icon }}</span>
+              <svg class="theme-selector__option-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path [attr.d]="option.iconPath"></path>
+              </svg>
               <span>{{ option.label }}</span>
             </button>
           }

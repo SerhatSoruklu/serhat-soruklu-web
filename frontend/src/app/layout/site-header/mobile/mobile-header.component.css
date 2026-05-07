@@ -105,27 +105,47 @@
   outline: none;
 }
 
-.material-symbols-outlined {
-  font-family: "Material Symbols Outlined", sans-serif;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: 0;
-  text-transform: none;
-  font-feature-settings: "liga";
-}
-
-.mobile-header__menu-lines {
-  display: grid;
-  width: 18px;
-  gap: 5px;
-}
-
-.mobile-header__menu-lines span {
+.icon,
+.mobile-nav__icon {
   display: block;
-  height: 1px;
-  background: currentColor;
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.menu-toggle {
+  position: relative;
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+}
+
+.menu-toggle__icon {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.menu-toggle__icon--open {
+  opacity: 1;
+}
+
+.menu-toggle__icon--close {
+  opacity: 0;
+  transform: rotate(-90deg);
+}
+
+.menu-button[aria-expanded="true"] .menu-toggle__icon--open {
+  opacity: 0;
+  transform: rotate(90deg);
+}
+
+.menu-button[aria-expanded="true"] .menu-toggle__icon--close {
+  opacity: 1;
+  transform: none;
 }
 
 .mobile-theme {
@@ -186,7 +206,7 @@
   color: #f5f7fa;
 }
 
-.mobile-theme__option--active .material-symbols-outlined {
+.mobile-theme__option--active .icon {
   color: #f0d58c;
 }
 
@@ -219,17 +239,11 @@
 }
 
 .mobile-nav__icon {
-  display: inline-grid;
+  display: block;
   width: 18px;
   height: 18px;
   flex: 0 0 18px;
-  place-items: center;
   color: currentColor;
-  font-size: 18px;
-  line-height: 1;
-}
-
-.mobile-nav__github-icon {
   fill: currentColor;
 }
 

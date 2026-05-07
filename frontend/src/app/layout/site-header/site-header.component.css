@@ -95,17 +95,11 @@
 }
 
 .site-nav__icon {
-  display: inline-grid;
+  display: block;
   width: 18px;
   height: 18px;
   flex: 0 0 18px;
-  place-items: center;
   color: currentColor;
-  font-size: 18px;
-  line-height: 1;
-}
-
-.site-nav__github-icon {
   fill: currentColor;
 }
 
@@ -161,15 +155,12 @@
   color: #f5f7fa;
 }
 
-.material-symbols-outlined {
-  font-family: "Material Symbols Outlined", sans-serif;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: 0;
-  text-transform: none;
-  font-feature-settings: "liga";
+.theme-selector__icon,
+.theme-selector__option-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
 }
 
 .theme-selector__menu {
@@ -207,6 +198,6 @@
   color: #f5f7fa;
 }
 
-.theme-selector__option--active .material-symbols-outlined {
+.theme-selector__option--active .theme-selector__option-icon {
   color: #f0d58c;
 }
