@@ -55,12 +55,12 @@ npm --prefix backend ci
 node --check backend/server.js
 ```
 
-CodeQL runs without extra secrets. SonarQube and Xanitizer workflows are restored as optional checks. They skip safely until the required GitHub Actions secrets are configured:
+CodeQL runs without extra secrets. SonarQube runs as an optional check when the required GitHub Actions secrets are configured:
 
 - `SONAR_TOKEN`
 - `SONAR_HOST_URL`
+- `SONAR_ORGANIZATION`
 - `SONAR_PROJECT_KEY`
-- `XANITIZER_LICENSE`
 
 ## Basic Deploy Script
 
