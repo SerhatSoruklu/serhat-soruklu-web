@@ -1,5 +1,5 @@
-const path = require('path');
-const net = require('net');
+const path = require('node:path');
+const net = require('node:net');
 
 require('dotenv').config({
   path: path.join(__dirname, process.env.NODE_ENV === 'production' ? '.env.production' : '.env'),
@@ -227,7 +227,7 @@ async function startServer() {
   server.on('error', handleServerError);
 }
 
-if (require.main === module) {
+if (!module.parent) {
   startServer().catch((error) => {
     console.error('Failed to start backend:', error);
     process.exit(1);

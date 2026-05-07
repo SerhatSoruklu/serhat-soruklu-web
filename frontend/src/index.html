@@ -20,24 +20,29 @@
 
   <script>
     (function () {
+      var browserGlobal = globalThis;
       var storageKey = 'serhatsoruklu-theme';
       var themeClasses = ['theme-dark', 'theme-light', 'theme-system', 'theme-resolved-dark', 'theme-resolved-light'];
       var setting = 'dark';
       var resolvedTheme = 'dark';
 
       try {
-        var storedSetting = window.localStorage.getItem(storageKey);
+        var storedSetting = browserGlobal.localStorage.getItem(storageKey);
 
         if (storedSetting === 'dark' || storedSetting === 'light' || storedSetting === 'system') {
           setting = storedSetting;
         }
       } catch (error) {
+        if (browserGlobal.console && typeof browserGlobal.console.debug === 'function') {
+          browserGlobal.console.debug('Stored theme preference is unavailable.', error);
+        }
         setting = 'dark';
       }
 
-      if (setting === 'light') {
-        resolvedTheme = 'light';
-      } else if (setting === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      if (
+        setting === 'light' ||
+        (setting === 'system' && browserGlobal.matchMedia && browserGlobal.matchMedia('(prefers-color-scheme: light)').matches)
+      ) {
         resolvedTheme = 'light';
       }
 
@@ -46,7 +51,7 @@
           return;
         }
 
-        target.classList.remove.apply(target.classList, themeClasses);
+        target.classList.remove(...themeClasses);
         target.classList.add('theme-' + setting, 'theme-resolved-' + resolvedTheme);
         target.style.colorScheme = resolvedTheme;
       }
@@ -68,7 +73,7 @@
   <link rel="canonical" href="https://serhatsoruklu.com/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" integrity="sha384-iztz15spE29DaefvarTwWkHokz7fhveZF2TllrirsYfUiekftuTd7z318ixo4DEn" crossorigin="anonymous">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="/assets/brand/favicons/favicon.svg">

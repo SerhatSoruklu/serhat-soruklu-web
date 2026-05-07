@@ -15,6 +15,11 @@ type TooltipPlacement = 'top' | 'bottom';
 
 let tooltipId = 0;
 
+function createTooltipId(): string {
+  tooltipId += 1;
+  return `app-tooltip-${tooltipId}`;
+}
+
 @Directive({
   selector: '[appTooltip]'
 })
@@ -25,7 +30,7 @@ export class TooltipDirective implements OnDestroy {
   private readonly renderer = inject(Renderer2);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
   private readonly browserWindow = this.isBrowser ? this.document.defaultView : null;
-  private readonly id = `app-tooltip-${tooltipId += 1}`;
+  private readonly id = createTooltipId();
   private tooltipElement: HTMLElement | null = null;
   private hideTimer: number | null = null;
 

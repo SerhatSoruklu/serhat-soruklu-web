@@ -19,9 +19,11 @@ export class ThemeService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
   private readonly browserWindow = this.isBrowser ? this.document.defaultView : null;
-  private readonly settingValue = signal<ThemeSetting>('dark');
-  private readonly resolvedThemeValue = signal<ResolvedTheme>('dark');
-  private mediaQuery: MediaQueryList | null = null;
+  private readonly mediaQuery: MediaQueryList | null = this.browserWindow?.matchMedia
+    ? this.browserWindow.matchMedia('(prefers-color-scheme: light)')
+    : null;
+  private readonly settingValue = signal<ThemeSetting>(this.isBrowser ? this.readStoredSetting() : 'dark');
+  private readonly resolvedThemeValue = signal<ResolvedTheme>(this.resolveTheme(this.settingValue()));
 
   readonly setting = this.settingValue.asReadonly();
   readonly resolvedTheme = this.resolvedThemeValue.asReadonly();
@@ -50,11 +52,6 @@ export class ThemeService {
 
   constructor() {
     if (this.isBrowser) {
-      this.mediaQuery = this.browserWindow?.matchMedia
-        ? this.browserWindow.matchMedia('(prefers-color-scheme: light)')
-        : null;
-      this.settingValue.set(this.readStoredSetting());
-      this.resolvedThemeValue.set(this.resolveTheme(this.settingValue()));
       this.mediaQuery?.addEventListener('change', this.handleSystemThemeChange);
     }
 
@@ -122,19 +119,16 @@ export class ThemeService {
     const appRoot = this.document.querySelector('app-root');
 
     root.classList.remove(...THEME_CLASSES);
-    root.classList.add(themeClass);
-    root.classList.add(resolvedThemeClass);
+    root.classList.add(themeClass, resolvedThemeClass);
 
     if (body) {
       body.classList.remove(...THEME_CLASSES);
-      body.classList.add(themeClass);
-      body.classList.add(resolvedThemeClass);
+      body.classList.add(themeClass, resolvedThemeClass);
     }
 
     if (appRoot) {
       appRoot.classList.remove(...THEME_CLASSES);
-      appRoot.classList.add(themeClass);
-      appRoot.classList.add(resolvedThemeClass);
+      appRoot.classList.add(themeClass, resolvedThemeClass);
     }
   }
 

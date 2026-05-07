@@ -27,7 +27,7 @@ describe('installProductionConsoleGuard', () => {
     console.error('visible');
 
     expect(calls.some((message) => message.includes('STOP'))).toBe(true);
-    expect(calls.some((message) => message.includes('SerhatSoruklu.com'))).toBe(true);
+    expect(calls.some((message) => message === '%cSerhatSoruklu.com%c Systems are built in layers. This one is no exception.')).toBe(true);
     expect(calls).not.toContain('hidden');
     expect(errors).toEqual(['visible']);
   });
