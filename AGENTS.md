@@ -149,6 +149,44 @@ Angular code must be SSR-safe:
 - Use Angular platform checks for browser-only behavior.
 - Keep global CSS static and browser-API free.
 
+## Local Development Ports
+
+The official persistent local development workflow is:
+
+```bash
+npm run dev
+```
+
+Default persistent local development ports:
+
+- Angular SSR frontend: `4200`
+- Express backend API: `3000`
+
+These ports are the primary always-on development environment. Codex, AI agents, scripts, and temporary validation commands must not assume port `4200` or port `3000` is free because the developer may already have `npm run dev` running continuously.
+
+Temporary runtime validation must use alternate ports.
+
+Preferred temporary test ports:
+
+- Angular SSR frontend test port: `4201`
+- Express backend API test port: `3001`
+
+Examples:
+
+```bash
+ng serve --port 4201
+PORT=3001 npm --prefix backend run dev
+```
+
+Rules:
+
+- Never kill active developer servers.
+- Never replace the main `npm run dev` workflow.
+- Never modify production environment values for temporary tests.
+- Temporary test processes must shut down cleanly after validation.
+- Use alternate ports for Playwright, end-to-end, and runtime smoke tests when needed.
+- If both frontend and backend are tested together, use the `4201` and `3001` pair.
+
 ## Validation
 
 Before committing frontend layout changes, run:
