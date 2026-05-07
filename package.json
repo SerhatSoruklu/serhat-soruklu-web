@@ -1,0 +1,19 @@
+{
+  "name": "serhatsoruklu",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm --prefix frontend install && npm --prefix backend install",
+    "dev": "concurrently --names frontend,backend --prefix \"[{name}]\" --prefix-colors cyan,green \"npm --prefix frontend start\" \"npm --prefix backend run dev\"",
+    "build": "npm --prefix frontend run build",
+    "start": "npm --prefix backend start",
+    "deploy": "bash scripts/deploy.sh"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
