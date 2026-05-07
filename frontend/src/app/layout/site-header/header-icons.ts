@@ -1,0 +1,53 @@
+import {
+  mdiBriefcaseOutline,
+  mdiClose,
+  mdiEmailOutline,
+  mdiGithub,
+  mdiMenu,
+  mdiNoteTextOutline,
+  mdiSitemapOutline,
+  mdiThemeLightDark,
+  mdiWeatherNight,
+  mdiWhiteBalanceSunny
+} from '@mdi/js';
+
+import { ResolvedTheme, ThemeSetting } from '../../core/theme/theme.service';
+
+export interface HeaderNavItem {
+  iconPath: string;
+  label: string;
+  path: string;
+}
+
+export interface HeaderThemeOption {
+  iconPath: string;
+  label: string;
+  value: ThemeSetting;
+}
+
+export const HEADER_NAV_ITEMS: HeaderNavItem[] = [
+  { iconPath: mdiBriefcaseOutline, label: 'Work', path: '/work' },
+  { iconPath: mdiSitemapOutline, label: 'Systems', path: '/systems' },
+  { iconPath: mdiNoteTextOutline, label: 'Writing', path: '/writing' },
+  { iconPath: mdiGithub, label: 'GitHub', path: '/github' },
+  { iconPath: mdiEmailOutline, label: 'Contact', path: '/contact' }
+];
+
+export const HEADER_THEME_OPTIONS: HeaderThemeOption[] = [
+  { iconPath: mdiWeatherNight, label: 'Dark', value: 'dark' },
+  { iconPath: mdiWhiteBalanceSunny, label: 'Light', value: 'light' },
+  { iconPath: mdiThemeLightDark, label: 'System', value: 'system' }
+];
+
+export const HEADER_MENU_ICON_PATHS = {
+  close: mdiClose,
+  menu: mdiMenu
+};
+
+export function getThemeTriggerIconPath(setting: ThemeSetting, resolvedTheme: ResolvedTheme): string {
+  if (setting === 'system') {
+    return mdiThemeLightDark;
+  }
+
+  return resolvedTheme === 'dark' ? mdiWeatherNight : mdiWhiteBalanceSunny;
+}

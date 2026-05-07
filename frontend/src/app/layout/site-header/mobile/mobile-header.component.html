@@ -103,35 +103,13 @@
     data-testid="mobile-nav-panel"
     [attr.inert]="menuOpen() ? null : ''"
   >
-    <a routerLink="/work" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
-      <svg class="mobile-nav__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path [attr.d]="workIconPath"></path>
-      </svg>
-      <span>Work</span>
-    </a>
-    <a routerLink="/systems" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
-      <svg class="mobile-nav__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path [attr.d]="systemsIconPath"></path>
-      </svg>
-      <span>Systems</span>
-    </a>
-    <a routerLink="/writing" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
-      <svg class="mobile-nav__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path [attr.d]="writingIconPath"></path>
-      </svg>
-      <span>Writing</span>
-    </a>
-    <a routerLink="/github" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
-      <svg class="mobile-nav__icon mobile-nav__github-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path [attr.d]="githubIconPath"></path>
-      </svg>
-      <span>GitHub</span>
-    </a>
-    <a routerLink="/contact" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
-      <svg class="mobile-nav__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path [attr.d]="contactIconPath"></path>
-      </svg>
-      <span>Contact</span>
-    </a>
+    @for (item of navItems; track item.path) {
+      <a [routerLink]="item.path" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
+        <svg class="mobile-nav__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path [attr.d]="item.iconPath"></path>
+        </svg>
+        <span>{{ item.label }}</span>
+      </a>
+    }
   </nav>
 </header>
