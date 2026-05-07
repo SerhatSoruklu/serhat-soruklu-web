@@ -38,6 +38,21 @@ npm run build
 
 This builds the Angular frontend.
 
+## CI
+
+GitHub Actions runs lightweight checks for the Angular frontend and Express backend on pushes and pull requests to `main`.
+
+Local equivalents:
+
+```bash
+npm --prefix frontend ci
+npm --prefix frontend run build
+npm --prefix backend ci
+node --check backend/server.js
+```
+
+CodeQL runs without extra secrets. SonarQube is skipped unless `SONAR_TOKEN`, `SONAR_HOST_URL`, and `SONAR_PROJECT_KEY` are configured as repository secrets. Xanitizer is skipped unless `XANITIZER_LICENSE` is configured as a repository secret.
+
 ## Basic Deploy Script
 
 ```bash

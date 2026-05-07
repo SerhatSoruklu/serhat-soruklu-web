@@ -1,0 +1,33 @@
+name: Summary
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  repository-summary:
+    name: Repository summary
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Write workflow summary
+        run: |
+          {
+            echo "## Repository summary"
+            echo ""
+            echo "- Frontend: Angular app in \`frontend/\`"
+            echo "- Backend: Express app in \`backend/\`"
+            echo "- Commit: \`${GITHUB_SHA}\`"
+            echo ""
+            echo "Security scans that require external setup skip safely when their repository secrets are not configured."
+          } >> "$GITHUB_STEP_SUMMARY"
