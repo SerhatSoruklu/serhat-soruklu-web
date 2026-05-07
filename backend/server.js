@@ -1,4 +1,5 @@
-const path = require('path');
+const path = require('node:path');
+const net = require('node:net');
 
 require('dotenv').config({
   path: path.join(__dirname, process.env.NODE_ENV === 'production' ? '.env.production' : '.env'),
@@ -10,13 +11,60 @@ const helmet = require('helmet');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 const mongoose = require('mongoose');
+const { createApiLandingHandlers } = require('./templates/api-landing');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
+const frontendPublicPath = path.join(__dirname, '..', 'frontend', 'public');
+const frontendFaviconPath = path.join(frontendPublicPath, 'favicon.ico');
+const frontendApiLogoPath = path.join(
+  frontendPublicPath,
+  'assets',
+  'brand',
+  'favicons',
+  'web-app-manifest-192x192.png'
+);
 
 function parseBoolean(value) {
   return ['1', 'true', 'yes'].includes(String(value).toLowerCase());
+}
+
+function handleServerError(error) {
+  if (error.code === 'EADDRINUSE') {
+    const message = `Port ${PORT} is already in use.`;
+
+    if (NODE_ENV === 'development') {
+      console.warn(`${message} Reusing the existing backend dev server; stop the old npm run dev session before starting a fresh one.`);
+      return;
+    }
+
+    console.error(message);
+    process.exit(1);
+  }
+
+  console.error('Backend server error:', error);
+  process.exit(1);
+}
+
+function isPortAcceptingConnections(port) {
+  return new Promise((resolve) => {
+    const socket = net.createConnection({ host: '127.0.0.1', port: Number(port) });
+
+    socket.once('connect', () => {
+      socket.end();
+      resolve(true);
+    });
+
+    socket.once('error', () => {
+      resolve(false);
+    });
+
+    socket.setTimeout(500, () => {
+      socket.destroy();
+      resolve(false);
+    });
+  });
 }
 
 function getAllowedOrigins() {
@@ -61,6 +109,25 @@ const apiRateLimiter = rateLimit({
     error: 'Too many requests'
   }
 });
+const staticAssetRateLimiter = rateLimit({
+  windowMs: Number(process.env.STATIC_RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000,
+  max: Number(process.env.STATIC_RATE_LIMIT_MAX) || 600,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    ok: false,
+    error: 'Too many requests'
+  }
+});
+const {
+  serveFavicon,
+  serveLandingPage,
+  serveLogo
+} = createApiLandingHandlers({
+  faviconPath: frontendFaviconPath,
+  logoPath: frontendApiLogoPath,
+  nodeEnv: NODE_ENV
+});
 
 applyTrustProxy();
 app.disable('x-powered-by');
@@ -69,7 +136,11 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'none'"],
-        frameAncestors: ["'none'"]
+        baseUri: ["'none'"],
+        connectSrc: ["'self'"],
+        frameAncestors: ["'none'"],
+        imgSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"]
       }
     }
   })
@@ -91,6 +162,13 @@ app.use(
 );
 app.use(express.json({ limit: '100kb' }));
 app.use(express.urlencoded({ extended: false, limit: '100kb' }));
+
+app.get('/favicon.ico', staticAssetRateLimiter, serveFavicon);
+app.get('/api-logo-192.png', staticAssetRateLimiter, serveLogo);
+app.get('/.well-known/appspecific/com.chrome.devtools.json', (_req, res) => {
+  res.status(204).end();
+});
+app.get('/', serveLandingPage);
 
 app.use('/api', (req, res, next) => {
   res.set('Cache-Control', 'no-store');
@@ -130,6 +208,11 @@ app.use((error, req, res, next) => {
 });
 
 async function startServer() {
+  if (NODE_ENV === 'development' && await isPortAcceptingConnections(PORT)) {
+    console.warn(`Port ${PORT} is already in use. Reusing the existing backend dev server; stop the old npm run dev session before starting a fresh one.`);
+    return;
+  }
+
   if (process.env.MONGODB_URI) {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('MongoDB connected');
@@ -137,12 +220,23 @@ async function startServer() {
     console.log('MONGODB_URI not set; skipping MongoDB connection');
   }
 
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, () => {
     console.log(`SerhatSoruklu backend listening on port ${PORT} in ${NODE_ENV} mode`);
+  });
+
+  server.on('error', handleServerError);
+}
+
+if (!module.parent) {
+  startServer().catch((error) => {
+    console.error('Failed to start backend:', error);
+    process.exit(1);
   });
 }
 
-startServer().catch((error) => {
-  console.error('Failed to start backend:', error);
-  process.exit(1);
-});
+module.exports = {
+  app,
+  getAllowedOrigins,
+  parseBoolean,
+  startServer
+};

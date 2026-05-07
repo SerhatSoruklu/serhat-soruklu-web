@@ -2,6 +2,21 @@ html {
   background: #07090d;
 }
 
+.site-brand__logo--light,
+.mobile-brand__logo--light {
+  display: none;
+}
+
+.theme-resolved-light .site-brand__logo--dark,
+.theme-resolved-light .mobile-brand__logo--dark {
+  display: none;
+}
+
+.theme-resolved-light .site-brand__logo--light,
+.theme-resolved-light .mobile-brand__logo--light {
+  display: block;
+}
+
 body,
 .theme-dark {
   color-scheme: dark;

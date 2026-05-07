@@ -1,0 +1,121 @@
+<header class="mobile-header" data-testid="mobile-header">
+  <div class="mobile-header__bar">
+    <a class="mobile-brand" routerLink="/" aria-label="Serhat Soruklu home" (click)="closeMenu()">
+      <span class="mobile-brand__mark">
+        <img
+          class="mobile-brand__logo mobile-brand__logo--dark"
+          src="/assets/brand/logo/serhat_soruklu_s_dark_header.png"
+          alt="Serhat Soruklu logo"
+          width="36"
+          height="36"
+          loading="eager"
+          decoding="async"
+          data-testid="mobile-brand-logo-dark"
+        >
+        <img
+          class="mobile-brand__logo mobile-brand__logo--light"
+          src="/assets/brand/logo/serhat_soruklu_s_light_header.png"
+          alt="Serhat Soruklu logo"
+          width="36"
+          height="36"
+          loading="eager"
+          decoding="async"
+          data-testid="mobile-brand-logo-light"
+        >
+      </span>
+      <span class="mobile-brand__text">
+        <span class="mobile-brand__name">Serhat Soruklu</span>
+        <span class="mobile-brand__subtitle">SYSTEMS ARCHITECT</span>
+      </span>
+    </a>
+
+    <div class="mobile-header__actions">
+      <div class="mobile-theme">
+        <button
+          class="mobile-header__icon-button"
+          type="button"
+          aria-label="Select theme"
+          [attr.aria-expanded]="themeMenuOpen()"
+          aria-haspopup="menu"
+          [appTooltip]="themeService.themeTooltipText()"
+          appTooltipPlacement="bottom"
+          data-testid="mobile-theme-menu-button"
+          (click)="toggleThemeMenu()"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">{{ themeService.triggerIcon() }}</span>
+        </button>
+
+        <div
+          class="mobile-theme__menu"
+          [ngClass]="{ 'mobile-theme__menu--open': themeMenuOpen() }"
+          role="menu"
+          aria-label="Theme options"
+          data-testid="mobile-theme-menu"
+          [attr.inert]="themeMenuOpen() ? null : ''"
+        >
+          @for (option of themeOptions; track option.value) {
+            <button
+              class="mobile-theme__option"
+              [ngClass]="{ 'mobile-theme__option--active': themeService.setting() === option.value }"
+              type="button"
+              role="menuitemradio"
+              [attr.aria-checked]="themeService.setting() === option.value"
+              [attr.tabindex]="themeMenuOpen() ? 0 : -1"
+              (click)="setTheme(option.value)"
+            >
+              <span class="material-symbols-outlined" aria-hidden="true">{{ option.icon }}</span>
+              <span>{{ option.label }}</span>
+            </button>
+          }
+        </div>
+      </div>
+
+      <button
+        class="mobile-header__icon-button mobile-header__menu-button"
+          type="button"
+          aria-label="Open navigation"
+          [attr.aria-expanded]="menuOpen()"
+          aria-controls="mobile-navigation"
+          data-testid="mobile-menu-button"
+          (click)="toggleMenu()"
+      >
+        <span class="mobile-header__menu-lines" aria-hidden="true">
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <nav
+    id="mobile-navigation"
+    class="mobile-nav"
+    [ngClass]="{ 'mobile-nav--open': menuOpen() }"
+    aria-label="Mobile navigation"
+    data-testid="mobile-nav-panel"
+    [attr.inert]="menuOpen() ? null : ''"
+  >
+    <a routerLink="/work" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
+      <span class="material-symbols-outlined mobile-nav__icon" aria-hidden="true">work</span>
+      <span>Work</span>
+    </a>
+    <a routerLink="/systems" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
+      <span class="material-symbols-outlined mobile-nav__icon" aria-hidden="true">schema</span>
+      <span>Systems</span>
+    </a>
+    <a routerLink="/writing" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
+      <span class="material-symbols-outlined mobile-nav__icon" aria-hidden="true">notes</span>
+      <span>Writing</span>
+    </a>
+    <a routerLink="/github" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
+      <svg class="mobile-nav__icon mobile-nav__github-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path [attr.d]="githubIconPath"></path>
+      </svg>
+      <span>GitHub</span>
+    </a>
+    <a routerLink="/contact" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
+      <span class="material-symbols-outlined mobile-nav__icon" aria-hidden="true">mail</span>
+      <span>Contact</span>
+    </a>
+  </nav>
+</header>

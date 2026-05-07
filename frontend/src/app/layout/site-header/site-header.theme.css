@@ -1,0 +1,49 @@
+:host-context(.theme-resolved-light) .site-header {
+  border-bottom-color: #e5e0d6;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+:host-context(.theme-resolved-light) .site-brand,
+:host-context(.theme-resolved-light) .site-brand__name,
+:host-context(.theme-resolved-light) .site-nav__link:hover,
+:host-context(.theme-resolved-light) .site-nav__link:active,
+:host-context(.theme-resolved-light) .site-nav__link:focus-visible,
+:host-context(.theme-resolved-light) .site-nav__link--active,
+:host-context(.theme-resolved-light) .theme-selector__trigger:hover,
+:host-context(.theme-resolved-light) .theme-selector__option:hover,
+:host-context(.theme-resolved-light) .theme-selector__option--active {
+  color: #111827;
+}
+
+:host-context(.theme-resolved-light) .site-brand__mark {
+  border-color: #e5e0d6;
+  background: #fff;
+  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.08);
+}
+
+:host-context(.theme-resolved-light) .theme-selector__trigger,
+:host-context(.theme-resolved-light) .theme-selector__menu {
+  border-color: #e5e0d6;
+  background: #f8f7f3;
+}
+
+:host-context(.theme-resolved-light) .site-brand__subtitle,
+:host-context(.theme-resolved-light) .theme-selector__trigger,
+:host-context(.theme-resolved-light) .theme-selector__option--active .material-symbols-outlined {
+  color: #b8872f;
+}
+
+:host-context(.theme-resolved-light) .site-nav__link::after {
+  background: #b8872f;
+}
+
+:host-context(.theme-resolved-light) .site-nav__link,
+:host-context(.theme-resolved-light) .site-nav__link:visited,
+:host-context(.theme-resolved-light) .theme-selector__option {
+  color: #5f6673;
+}
+
+:host-context(.theme-resolved-light) .theme-selector__option:hover,
+:host-context(.theme-resolved-light) .theme-selector__option--active {
+  background: #ffffff;
+}

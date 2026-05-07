@@ -1,0 +1,93 @@
+<header class="site-header" data-testid="desktop-header">
+  <div class="site-header__inner">
+    <a class="site-brand" routerLink="/" aria-label="Serhat Soruklu home">
+      <span class="site-brand__mark">
+        <img
+          class="site-brand__logo site-brand__logo--dark"
+          src="/assets/brand/logo/serhat_soruklu_s_dark_header.png"
+          alt="Serhat Soruklu logo"
+          width="44"
+          height="44"
+          loading="eager"
+          decoding="async"
+          data-testid="desktop-brand-logo-dark"
+        >
+        <img
+          class="site-brand__logo site-brand__logo--light"
+          src="/assets/brand/logo/serhat_soruklu_s_light_header.png"
+          alt="Serhat Soruklu logo"
+          width="44"
+          height="44"
+          loading="eager"
+          decoding="async"
+          data-testid="desktop-brand-logo-light"
+        >
+      </span>
+      <span class="site-brand__text">
+        <span class="site-brand__name">Serhat Soruklu</span>
+        <span class="site-brand__subtitle">SYSTEMS ARCHITECT</span>
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a routerLink="/work" routerLinkActive="site-nav__link--active" class="site-nav__link">
+        <span class="material-symbols-outlined site-nav__icon" aria-hidden="true">work</span>
+        <span>Work</span>
+      </a>
+      <a routerLink="/systems" routerLinkActive="site-nav__link--active" class="site-nav__link">
+        <span class="material-symbols-outlined site-nav__icon" aria-hidden="true">schema</span>
+        <span>Systems</span>
+      </a>
+      <a routerLink="/writing" routerLinkActive="site-nav__link--active" class="site-nav__link">
+        <span class="material-symbols-outlined site-nav__icon" aria-hidden="true">notes</span>
+        <span>Writing</span>
+      </a>
+      <a routerLink="/github" routerLinkActive="site-nav__link--active" class="site-nav__link">
+        <svg class="site-nav__icon site-nav__github-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path [attr.d]="githubIconPath"></path>
+        </svg>
+        <span>GitHub</span>
+      </a>
+      <a routerLink="/contact" routerLinkActive="site-nav__link--active" class="site-nav__link">
+        <span class="material-symbols-outlined site-nav__icon" aria-hidden="true">mail</span>
+        <span>Contact</span>
+      </a>
+    </nav>
+
+    <div class="theme-selector">
+      <button
+        class="theme-selector__trigger"
+        type="button"
+        aria-label="Select theme"
+        [attr.aria-expanded]="themeMenuOpen()"
+        aria-haspopup="menu"
+        [appTooltip]="themeService.themeTooltipText()"
+        appTooltipPlacement="bottom"
+        data-testid="desktop-theme-menu-button"
+        (click)="toggleThemeMenu()"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">{{ themeService.triggerIcon() }}</span>
+      </button>
+
+      @if (themeMenuOpen()) {
+        <div class="theme-selector__menu" role="menu" aria-label="Theme options">
+          @for (option of themeOptions; track option.value) {
+            <button
+              class="theme-selector__option"
+              [ngClass]="{ 'theme-selector__option--active': themeService.setting() === option.value }"
+              type="button"
+              role="menuitemradio"
+              [attr.aria-checked]="themeService.setting() === option.value"
+              (click)="setTheme(option.value)"
+            >
+              <span class="material-symbols-outlined" aria-hidden="true">{{ option.icon }}</span>
+              <span>{{ option.label }}</span>
+            </button>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</header>
+
+<app-mobile-header />

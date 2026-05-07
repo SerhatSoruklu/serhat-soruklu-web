@@ -1,2 +1,4 @@
+@import './styles/fonts.css';
 @import './styles/theme.css';
 @import './styles/responsive-layout.css';
+@import './styles/tooltip.css';

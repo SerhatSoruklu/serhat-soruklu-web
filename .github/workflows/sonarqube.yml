@@ -63,6 +63,14 @@ jobs:
         if: steps.sonar-config.outputs.configured == 'true'
         run: npm run build
 
+      - name: Run frontend coverage
+        if: steps.sonar-config.outputs.configured == 'true'
+        run: npm --prefix frontend test -- --watch=false --coverage
+
+      - name: Run backend coverage
+        if: steps.sonar-config.outputs.configured == 'true'
+        run: npm --prefix backend run test:coverage
+
       - name: Run SonarQube scan
         if: steps.sonar-config.outputs.configured == 'true'
         uses: SonarSource/sonarqube-scan-action@v7.1.0
@@ -74,4 +82,7 @@ jobs:
             -Dsonar.projectKey=${{ secrets[env.SONAR_PROJECT_KEY_SECRET] }}
             -Dsonar.organization=${{ secrets[env.SONAR_ORGANIZATION_SECRET] }}
             -Dsonar.sources=frontend/src,backend
-            -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/.angular/**
+            -Dsonar.tests=frontend/src,backend
+            -Dsonar.test.inclusions=frontend/src/**/*.spec.ts,backend/**/*.test.js
+            -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/.angular/**,**/coverage/**,frontend/src/**/*.spec.ts,backend/**/*.test.js
+            -Dsonar.javascript.lcov.reportPaths=frontend/coverage/frontend/lcov.info,backend/coverage/lcov.info

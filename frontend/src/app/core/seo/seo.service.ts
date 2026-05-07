@@ -1,10 +1,18 @@
 import { DOCUMENT, isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
+import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 import { seoConfig } from './seo.config';
 
 type RobotsDirective = 'index, follow' | 'noindex, nofollow' | 'noindex, follow';
+
+export interface RouteSeoMetadata {
+  title: string;
+  description: string;
+  path: string;
+}
 
 interface SeoMetadata {
   title?: string;
@@ -23,15 +31,21 @@ export class SeoService {
   private readonly meta = inject(Meta);
   private readonly document = inject(DOCUMENT);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private initialized = false;
 
-  setDefaults(): void {
-    this.setMetadata({
-      title: seoConfig.defaultTitle,
-      description: seoConfig.defaultDescription,
-      canonicalUrl: seoConfig.canonicalBaseUrl,
-      ogImage: seoConfig.defaultOgImage,
-      robots: 'index, follow'
-    });
+  initializeRouteMetadata(): void {
+    if (this.initialized) {
+      return;
+    }
+
+    this.initialized = true;
+    this.applyRouteMetadata();
+
+    this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe(() => this.applyRouteMetadata());
   }
 
   setMetadata(metadata: SeoMetadata): void {
@@ -53,10 +67,9 @@ export class SeoService {
   }
 
   setTitle(title: string): void {
-    const fullTitle = title === seoConfig.titleSuffix ? title : `${title} | ${seoConfig.titleSuffix}`;
-    this.title.setTitle(fullTitle);
-    this.meta.updateTag({ property: 'og:title', content: fullTitle });
-    this.meta.updateTag({ name: 'twitter:title', content: fullTitle });
+    this.title.setTitle(title);
+    this.meta.updateTag({ property: 'og:title', content: title });
+    this.meta.updateTag({ name: 'twitter:title', content: title });
   }
 
   setDescription(description: string): void {
@@ -135,6 +148,48 @@ export class SeoService {
   private canUseDocumentHead(): boolean {
     const supportedPlatform = isPlatformBrowser(this.platformId) || isPlatformServer(this.platformId);
     return supportedPlatform && !!this.document?.head;
+  }
+
+  private applyRouteMetadata(): void {
+    const routeSeo = this.findDeepestSeoData(this.activatedRoute.snapshot) ?? {
+      title: seoConfig.defaultTitle,
+      description: seoConfig.defaultDescription,
+      path: '/'
+    };
+
+    this.setMetadata({
+      title: routeSeo.title,
+      description: routeSeo.description,
+      canonicalUrl: routeSeo.path,
+      ogImage: seoConfig.defaultOgImage,
+      robots: 'index, follow'
+    });
+  }
+
+  private findDeepestSeoData(snapshot: ActivatedRouteSnapshot): RouteSeoMetadata | null {
+    let current: ActivatedRouteSnapshot | null = snapshot;
+    let seo: RouteSeoMetadata | null = null;
+
+    while (current) {
+      if (this.isRouteSeoMetadata(current.data['seo'])) {
+        seo = current.data['seo'];
+      }
+
+      current = current.firstChild;
+    }
+
+    return seo;
+  }
+
+  private isRouteSeoMetadata(value: unknown): value is RouteSeoMetadata {
+    if (!value || typeof value !== 'object') {
+      return false;
+    }
+
+    const metadata = value as RouteSeoMetadata;
+    return typeof metadata.title === 'string'
+      && typeof metadata.description === 'string'
+      && typeof metadata.path === 'string';
   }
 
   private toAbsoluteUrl(url: string): string {
