@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 import { pageSeoMetadata } from '../../src/app/core/seo/seo.config';
+import { SITEMAP_ROUTES } from '../../src/app/core/seo/sitemap.config';
 import { installConsoleErrorGuard } from './support/console-errors';
 
 const routeSeoCases = [
@@ -23,6 +24,13 @@ const sitelinkRoutes = [
 ];
 
 type JsonLdEntity = Record<string, unknown>;
+
+interface SitemapEntry {
+  loc: string | null;
+  lastmod: string | null;
+  changefreq: string | null;
+  priority: string | null;
+}
 
 function getTitle(html: string): string | null {
   return html.match(/<title>(.*?)<\/title>/)?.[1] ?? null;
@@ -88,6 +96,23 @@ function hasCrawlableAnchor(html: string, href: string, label: string): boolean 
   const anchorPattern = new RegExp(`<a\\b[^>]*href="${escapeRegExp(href)}"[^>]*>[\\s\\S]*?${escapeRegExp(label)}[\\s\\S]*?<\\/a>`);
 
   return anchorPattern.test(html);
+}
+
+function getXmlElementValue(xml: string, tagName: string): string | null {
+  return xml.match(new RegExp(`<${tagName}>(.*?)<\\/${tagName}>`))?.[1] ?? null;
+}
+
+function getSitemapEntries(sitemap: string): SitemapEntry[] {
+  return [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((match) => ({
+    loc: getXmlElementValue(match[1], 'loc'),
+    lastmod: getXmlElementValue(match[1], 'lastmod'),
+    changefreq: getXmlElementValue(match[1], 'changefreq'),
+    priority: getXmlElementValue(match[1], 'priority')
+  }));
+}
+
+function formatSitemapPriority(priority: number): string {
+  return priority.toFixed(1);
 }
 
 test.describe('seo metadata', () => {
@@ -174,17 +199,29 @@ test.describe('seo metadata', () => {
     }
   });
 
-  test('sitemap lists every public route with clean canonical URLs', async ({ request }) => {
+  test('sitemap lists every public route with stable metadata', async ({ request }) => {
     const response = await request.get('/sitemap.xml');
     const sitemap = await response.text();
-    const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
+    const entries = getSitemapEntries(sitemap);
+    const urls = entries.map((entry) => entry.loc);
 
     expect(response.ok()).toBe(true);
+    expect(sitemap).toMatch(/^<\?xml version="1\.0" encoding="UTF-8"\?>/);
+    expect(sitemap).toContain('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
+    expect(sitemap.trim()).toMatch(/<\/urlset>$/);
     expect(sitemap).not.toContain('localhost');
     expect(new Set(urls).size).toBe(urls.length);
+    expect(entries).toHaveLength(SITEMAP_ROUTES.length);
 
-    for (const metadata of routeSeoCases) {
-      expect(urls).toContain(new URL(metadata.path, canonicalBaseUrl).toString());
+    for (const route of SITEMAP_ROUTES) {
+      const entry = entries.find((candidate) => candidate.loc === new URL(route.path, canonicalBaseUrl).toString());
+
+      expect(entry).toEqual({
+        loc: new URL(route.path, canonicalBaseUrl).toString(),
+        lastmod: route.lastModified,
+        changefreq: route.changeFrequency,
+        priority: formatSitemapPriority(route.priority)
+      });
     }
   });
 
