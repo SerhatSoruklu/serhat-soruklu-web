@@ -144,6 +144,28 @@ async function expectMobileDropdownStyling(page: Page, testId: string, resolvedT
   expect(styles.borderColor).toBe('rgb(37, 43, 54)');
 }
 
+async function getMobileNavState(page: Page): Promise<Array<{ label: string; active: boolean; ariaCurrent: string | null; backgroundColor: string }>> {
+  return page.getByTestId('mobile-nav-panel').locator('a').evaluateAll((links) => links.map((link) => ({
+    label: link.textContent?.trim() ?? '',
+    active: link.classList.contains('mobile-nav__link--active'),
+    ariaCurrent: link.getAttribute('aria-current'),
+    backgroundColor: getComputedStyle(link).backgroundColor
+  })));
+}
+
+async function expectOnlyMobileNavItemActive(page: Page, expectedLabel: string | null): Promise<void> {
+  const state = await getMobileNavState(page);
+  const activeItems = state.filter((item) => item.active);
+  const highlightedItems = state.filter((item) => item.backgroundColor !== 'rgba(0, 0, 0, 0)');
+
+  expect(activeItems.map((item) => item.label)).toEqual(expectedLabel ? [expectedLabel] : []);
+  expect(highlightedItems.map((item) => item.label)).toEqual(expectedLabel ? [expectedLabel] : []);
+
+  for (const item of state) {
+    expect(item.ariaCurrent).toBe(item.label === expectedLabel ? 'page' : null);
+  }
+}
+
 async function expectHeroStripeVisibleBelowHeader(page: Page): Promise<void> {
   const geometry = await page.evaluate(() => {
     const header = document.querySelector('[data-testid="mobile-header"]');
@@ -286,7 +308,7 @@ test.describe('responsive shell header', () => {
 
     await desktopHeader.getByRole('link', { name: 'Work' }).click();
     await expect(page).toHaveURL('/work');
-    await expect(page.getByRole('heading', { name: 'Work page working' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Work' })).toBeVisible();
     await expectNoHorizontalOverflow(page);
     expect(consoleMessages.some((message) => message.includes('NG0913'))).toBe(false);
     assertNoConsoleErrors();
@@ -314,14 +336,14 @@ test.describe('responsive shell header', () => {
 
     const themeButton = page.getByTestId('desktop-theme-menu-button');
     await themeButton.hover();
-    await expect(page.getByRole('tooltip')).toHaveText('Theme: Dark. Switch appearance.');
+    await expect(page.getByRole('tooltip')).toHaveText('Dark theme');
     await expectTooltipArrowAligned(page, 'desktop-theme-menu-button');
     await expectTooltipArrowTheme(page, 'dark');
     await page.mouse.move(10, 10);
     await expect(page.getByRole('tooltip')).toBeHidden();
 
     await themeButton.focus();
-    await expect(page.getByRole('tooltip')).toHaveText('Theme: Dark. Switch appearance.');
+    await expect(page.getByRole('tooltip')).toHaveText('Dark theme');
     await page.keyboard.press('Escape');
     await expect(page.getByRole('tooltip')).toBeHidden();
 
@@ -329,14 +351,14 @@ test.describe('responsive shell header', () => {
     await expect(page.getByRole('menu', { name: 'Theme options' })).toBeVisible();
     await page.getByRole('menuitemradio', { name: 'Light' }).click();
     await themeButton.hover();
-    await expect(page.getByRole('tooltip')).toHaveText('Theme: Light. Switch appearance.');
+    await expect(page.getByRole('tooltip')).toHaveText('Light theme');
     await expectTooltipArrowAligned(page, 'desktop-theme-menu-button');
     await expectTooltipArrowTheme(page, 'light');
 
     await themeButton.click();
     await page.getByRole('menuitemradio', { name: 'System' }).click();
     await themeButton.hover();
-    await expect(page.getByRole('tooltip')).toHaveText('Theme: System. Follows your device setting.');
+    await expect(page.getByRole('tooltip')).toHaveText('System theme');
     await expectTooltipArrowAligned(page, 'desktop-theme-menu-button');
     assertNoConsoleErrors();
   });
@@ -362,12 +384,12 @@ test.describe('responsive shell header', () => {
 
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/');
-    await expect(page.getByRole('heading', { name: 'Hero working' })).toBeVisible();
-    const homeLeft = await getHeadingLeft(page, 'Hero working');
+    await expect(page.getByRole('heading', { name: 'Serhat Soruklu' })).toBeVisible();
+    const homeLeft = await getHeadingLeft(page, 'Serhat Soruklu');
 
     await page.goto('/work');
-    await expect(page.getByRole('heading', { name: 'Work page working' })).toBeVisible();
-    const workLeft = await getHeadingLeft(page, 'Work page working');
+    await expect(page.getByRole('heading', { name: 'Work' })).toBeVisible();
+    const workLeft = await getHeadingLeft(page, 'Work');
 
     expect(Math.abs(homeLeft - workLeft)).toBeLessThanOrEqual(1);
     assertNoConsoleErrors();
@@ -379,10 +401,10 @@ test.describe('responsive shell header', () => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/');
 
-    await expect(page.getByRole('heading', { name: 'Hero working' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Serhat Soruklu' })).toBeVisible();
     await expect(page.getByTestId('desktop-header').getByText('SYSTEMS ARCHITECT')).toBeVisible();
 
-    const headingFont = await page.getByRole('heading', { name: 'Hero working' }).evaluate((element) => getComputedStyle(element).fontFamily);
+    const headingFont = await page.getByRole('heading', { name: 'Serhat Soruklu' }).evaluate((element) => getComputedStyle(element).fontFamily);
     const subtitleFont = await page
       .getByTestId('desktop-header')
       .getByText('SYSTEMS ARCHITECT')
@@ -445,6 +467,40 @@ test.describe('responsive shell header', () => {
   });
 
   for (const viewport of mobileViewports) {
+    test(`mobile/tablet nav active state is exact at ${viewport.name}`, async ({ page }, testInfo) => {
+      const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
+      const routeCases = [
+        { path: '/', activeLabel: null },
+        { path: '/work', activeLabel: 'Work' },
+        { path: '/systems', activeLabel: 'Systems' },
+        { path: '/writing', activeLabel: 'Writing' },
+        { path: '/github', activeLabel: 'GitHub' },
+        { path: '/contact', activeLabel: 'Contact' }
+      ];
+
+      await page.setViewportSize({ width: viewport.width, height: viewport.height });
+
+      for (const routeCase of routeCases) {
+        await page.goto(routeCase.path);
+        await page.getByTestId('mobile-menu-button').click();
+        await expectOnlyMobileNavItemActive(page, routeCase.activeLabel);
+        await expectNoHorizontalOverflow(page);
+      }
+
+      await page.goto('/github');
+      await page.reload({ waitUntil: 'networkidle' });
+      await page.getByTestId('mobile-menu-button').click();
+      await expectOnlyMobileNavItemActive(page, 'GitHub');
+
+      const contactLink = page.getByTestId('mobile-nav-panel').getByRole('link', { name: 'Contact' });
+      await contactLink.hover();
+      await expectOnlyMobileNavItemActive(page, 'GitHub');
+      await contactLink.focus();
+      await expectOnlyMobileNavItemActive(page, 'GitHub');
+
+      assertNoConsoleErrors();
+    });
+
     test(`mobile/tablet header works at ${viewport.name}`, async ({ page }, testInfo) => {
       const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
 
@@ -489,13 +545,13 @@ test.describe('responsive shell header', () => {
 
       await mobileNav.getByRole('link', { name: 'GitHub' }).click();
       await expect(page).toHaveURL('/github');
-      await expect(page.getByRole('heading', { name: 'GitHub page working' })).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'GitHub' })).toBeVisible();
       await expect(mobileNav).toBeHidden();
 
       await mobileHeader.getByTestId('mobile-menu-button').click();
       await mobileNav.getByRole('link', { name: 'Work' }).click();
       await expect(page).toHaveURL('/work');
-      await expect(page.getByRole('heading', { name: 'Work page working' })).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'Work' })).toBeVisible();
       await expect(mobileNav).toBeHidden();
       const focusInsideMobileNav = await mobileNav.evaluate((element) => element.contains(document.activeElement));
       expect(focusInsideMobileNav).toBe(false);
@@ -517,7 +573,7 @@ test.describe('responsive shell header', () => {
       await expect(page.locator('html')).toHaveClass(/theme-dark/);
       await expectResolvedLogo(page, 'mobile', 'dark');
       await mobileHeader.getByTestId('mobile-theme-menu-button').focus();
-      await expect(page.getByRole('tooltip')).toHaveText('Theme: Dark. Switch appearance.');
+      await expect(page.getByRole('tooltip')).toHaveText('Dark theme');
       await expectTooltipArrowAligned(page, 'mobile-theme-menu-button');
       await expectTooltipArrowTheme(page, 'dark');
       await page.keyboard.press('Escape');

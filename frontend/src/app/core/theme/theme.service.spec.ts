@@ -18,7 +18,7 @@ describe('ThemeService', () => {
     expect(service.setting()).toBe('dark');
     expect(service.resolvedTheme()).toBe('dark');
     expect(service.triggerIcon()).toBe('dark_mode');
-    expect(service.themeTooltipText()).toBe('Theme: Dark. Switch appearance.');
+    expect(service.themeTooltipText()).toBe('Dark theme');
     expect(globalThis.document.documentElement.classList.contains('theme-dark')).toBe(true);
     expect(globalThis.document.querySelector('meta[name="theme-color"]')?.getAttribute('content')).toBe('#07090d');
   });
@@ -32,7 +32,7 @@ describe('ThemeService', () => {
     expect(service.setting()).toBe('light');
     expect(service.resolvedTheme()).toBe('light');
     expect(service.triggerIcon()).toBe('light_mode');
-    expect(service.themeTooltipText()).toBe('Theme: Light. Switch appearance.');
+    expect(service.themeTooltipText()).toBe('Light theme');
     expect(globalThis.localStorage.getItem('serhatsoruklu-theme')).toBe('light');
     expect(globalThis.document.documentElement.classList.contains('theme-light')).toBe(true);
     expect(globalThis.document.querySelector('meta[name="theme-color"]')?.getAttribute('content')).toBe('#ffffff');
@@ -46,7 +46,7 @@ describe('ThemeService', () => {
 
     expect(service.setting()).toBe('system');
     expect(service.triggerIcon()).toBe('contrast');
-    expect(service.themeTooltipText()).toBe('Theme: System. Follows your device setting.');
+    expect(service.themeTooltipText()).toBe('System theme');
     expect(globalThis.localStorage.getItem('serhatsoruklu-theme')).toBe('system');
   });
 });

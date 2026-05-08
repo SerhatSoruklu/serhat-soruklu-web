@@ -8,12 +8,12 @@ import { WorkComponent } from './work/work.component';
 import { WritingComponent } from './writing/writing.component';
 
 const pages = [
-  { component: HomeComponent, heading: 'Hero working' },
-  { component: WorkComponent, heading: 'Work page working' },
-  { component: SystemsComponent, heading: 'Systems page working' },
-  { component: WritingComponent, heading: 'Writing page working' },
-  { component: GitHubComponent, heading: 'GitHub page working' },
-  { component: ContactComponent, heading: 'Contact page working' }
+  { component: HomeComponent, heading: 'Serhat Soruklu' },
+  { component: WorkComponent, heading: 'Work' },
+  { component: SystemsComponent, heading: 'Systems' },
+  { component: WritingComponent, heading: 'Writing' },
+  { component: GitHubComponent, heading: 'GitHub' },
+  { component: ContactComponent, heading: 'Contact' }
 ];
 
 describe('page components', () => {

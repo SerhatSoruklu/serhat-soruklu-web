@@ -31,14 +31,14 @@ export class ThemeService {
     const setting = this.setting();
 
     if (setting === 'light') {
-      return 'Theme: Light. Switch appearance.';
+      return 'Light theme';
     }
 
     if (setting === 'system') {
-      return 'Theme: System. Follows your device setting.';
+      return 'System theme';
     }
 
-    return 'Theme: Dark. Switch appearance.';
+    return 'Dark theme';
   });
   readonly triggerIcon = computed(() => {
     const setting = this.setting();

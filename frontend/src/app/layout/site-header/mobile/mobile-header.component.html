@@ -104,8 +104,8 @@
     [attr.inert]="menuOpen() ? null : ''"
   >
     @for (item of navItems; track item.path) {
-      <a [routerLink]="item.path" routerLinkActive="mobile-nav__link--active" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
-        <svg class="mobile-nav__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <a [routerLink]="item.path" routerLinkActive="mobile-nav__link--active" [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page" class="mobile-nav__link" [attr.tabindex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
+        <svg class="mobile-nav__icon" [ngClass]="{ 'mobile-nav__github-icon': item.iconClass === 'github-icon' }" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path [attr.d]="item.iconPath"></path>
         </svg>
         <span>{{ item.label }}</span>
