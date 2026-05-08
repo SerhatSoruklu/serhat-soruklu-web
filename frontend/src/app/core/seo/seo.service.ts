@@ -12,6 +12,7 @@ export interface RouteSeoMetadata {
   title: string;
   description: string;
   path: string;
+  ogImage?: string;
 }
 
 interface SeoMetadata {
@@ -88,14 +89,14 @@ export class SeoService {
       this.meta.updateTag({ property: 'og:url', content: this.toAbsoluteUrl(metadata.canonicalUrl) });
     }
 
-    const ogImage = metadata.ogImage || seoConfig.defaultOgImage;
-    if (ogImage) {
-      this.meta.updateTag({ property: 'og:image', content: this.toAbsoluteUrl(ogImage) });
-    }
+    const ogImage = metadata.ogImage ?? seoConfig.defaultOgImage;
+    this.meta.updateTag({ property: 'og:image', content: this.toAbsoluteUrl(ogImage) });
   }
 
   setTwitterCardTags(metadata: SeoMetadata): void {
-    this.meta.updateTag({ name: 'twitter:card', content: metadata.ogImage || seoConfig.defaultOgImage ? 'summary_large_image' : 'summary' });
+    const twitterImage = metadata.ogImage ?? seoConfig.defaultOgImage;
+    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({ name: 'twitter:image', content: this.toAbsoluteUrl(twitterImage) });
 
     if (seoConfig.twitterHandle) {
       this.meta.updateTag({ name: 'twitter:site', content: seoConfig.twitterHandle });
@@ -134,14 +135,15 @@ export class SeoService {
       label: pageSeoMetadata.home.label,
       title: seoConfig.defaultTitle,
       description: seoConfig.defaultDescription,
-      path: '/'
+      path: '/',
+      ogImage: seoConfig.defaultOgImage
     };
 
     this.setMetadata({
       title: routeSeo.title,
       description: routeSeo.description,
       canonicalUrl: routeSeo.path,
-      ogImage: seoConfig.defaultOgImage,
+      ogImage: routeSeo.ogImage ?? seoConfig.defaultOgImage,
       robots: 'index, follow'
     });
     this.setJsonLd(this.createBreadcrumbStructuredData(routeSeo));

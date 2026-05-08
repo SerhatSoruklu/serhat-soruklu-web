@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
 import { pageSeoMetadata } from '../../src/app/core/seo/seo.config';
 import { SITEMAP_ROUTES } from '../../src/app/core/seo/sitemap.config';
@@ -12,7 +13,6 @@ const routeSeoCases = [
   pageSeoMetadata.github,
   pageSeoMetadata.contact
 ];
-const ogImage = 'https://serhatsoruklu.com/assets/social/serhat-soruklu-og.svg';
 const siteName = 'Serhat Soruklu';
 const canonicalBaseUrl = 'https://serhatsoruklu.com';
 const sitelinkRoutes = [
@@ -21,6 +21,50 @@ const sitelinkRoutes = [
   pageSeoMetadata.writing,
   pageSeoMetadata.github,
   pageSeoMetadata.contact
+];
+const ogImageCases = [
+  {
+    path: pageSeoMetadata.home.ogImage,
+    title: 'Serhat Soruklu',
+    subtitle: 'Systems architecture, software engineering,',
+    urlLabel: 'serhatsoruklu.com',
+    logoHref: /^data:image\/png;base64,/
+  },
+  {
+    path: pageSeoMetadata.work.ogImage,
+    title: 'Work',
+    subtitle: 'Projects, platforms, and systems built with',
+    urlLabel: 'serhatsoruklu.com/work',
+    logoHref: /^data:image\/png;base64,/
+  },
+  {
+    path: pageSeoMetadata.systems.ogImage,
+    title: 'Systems',
+    subtitle: 'Architecture, infrastructure, constraints,',
+    urlLabel: 'serhatsoruklu.com/systems',
+    logoHref: /^data:image\/png;base64,/
+  },
+  {
+    path: pageSeoMetadata.writing.ogImage,
+    title: 'Writing',
+    subtitle: 'Notes on software, systems, architecture,',
+    urlLabel: 'serhatsoruklu.com/writing',
+    logoHref: /^data:image\/png;base64,/
+  },
+  {
+    path: pageSeoMetadata.github.ogImage,
+    title: 'GitHub',
+    subtitle: 'Open-source work, repositories,',
+    urlLabel: 'serhatsoruklu.com/github',
+    logoHref: /^data:image\/png;base64,/
+  },
+  {
+    path: pageSeoMetadata.contact.ogImage,
+    title: 'Contact',
+    subtitle: 'Collaborations, engineering discussions,',
+    urlLabel: 'serhatsoruklu.com/contact',
+    logoHref: /^data:image\/png;base64,/
+  }
 ];
 
 type JsonLdEntity = Record<string, unknown>;
@@ -98,6 +142,10 @@ function hasCrawlableAnchor(html: string, href: string, label: string): boolean 
   return anchorPattern.test(html);
 }
 
+function exactText(value: string): RegExp {
+  return new RegExp(`^${escapeRegExp(value)}$`);
+}
+
 function getXmlElementValue(xml: string, tagName: string): string | null {
   return xml.match(new RegExp(`<${tagName}>(.*?)<\\/${tagName}>`))?.[1] ?? null;
 }
@@ -115,20 +163,76 @@ function formatSitemapPriority(priority: number): string {
   return priority.toFixed(1);
 }
 
+async function expectSvgTextInsideViewport(pageTextSelector: string, page: Page): Promise<void> {
+  const boxes = await page.locator(pageTextSelector).evaluateAll((elements) => elements.map((element) => {
+    const box = element.getBoundingClientRect();
+
+    return {
+      left: box.left,
+      top: box.top,
+      right: box.right,
+      bottom: box.bottom
+    };
+  }));
+
+  for (const box of boxes) {
+    expect(box.left).toBeGreaterThanOrEqual(0);
+    expect(box.top).toBeGreaterThanOrEqual(0);
+    expect(box.right).toBeLessThanOrEqual(1200);
+    expect(box.bottom).toBeLessThanOrEqual(630);
+  }
+}
+
 test.describe('seo metadata', () => {
-  test('OG SVG renders standalone with all visible text', async ({ page }, testInfo) => {
-    const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
+  for (const ogCase of ogImageCases) {
+    test(`${ogCase.path} renders standalone with route text and logo`, async ({ page, request }, testInfo) => {
+      const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
+      const response = await request.get(ogCase.path);
 
-    await page.setViewportSize({ width: 1200, height: 630 });
-    await page.goto('/assets/social/serhat-soruklu-og.svg');
+      expect(response.ok()).toBe(true);
 
-    await expect(page.locator('svg')).toBeVisible();
-    await expect(page.locator('text').filter({ hasText: 'Serhat Soruklu' })).toBeVisible();
-    await expect(page.locator('text').filter({ hasText: 'Systems architecture, software engineering,' })).toBeVisible();
-    await expect(page.locator('text').filter({ hasText: 'and product-focused technology.' })).toBeVisible();
-    await expect(page.locator('text').filter({ hasText: 'serhatsoruklu.com' })).toBeVisible();
-    assertNoConsoleErrors();
-  });
+      await page.setViewportSize({ width: 1200, height: 630 });
+      await page.goto(ogCase.path);
+
+      const svg = page.locator('svg');
+      await expect(svg).toBeVisible();
+      await expect(svg).toHaveAttribute('width', '1200');
+      await expect(svg).toHaveAttribute('height', '630');
+      await expect(svg).toHaveAttribute('viewBox', '0 0 1200 630');
+      await expect(page.locator('text').filter({ hasText: exactText(ogCase.title) })).toBeVisible();
+      await expect(page.locator('text').filter({ hasText: ogCase.subtitle })).toBeVisible();
+      await expect(page.locator('text').filter({ hasText: exactText(ogCase.urlLabel) })).toBeVisible();
+
+      const logo = page.locator('image').first();
+      await expect(logo).toBeVisible();
+      const logoHref = await logo.getAttribute('href');
+
+      if (typeof ogCase.logoHref === 'string') {
+        expect(logoHref).toBe(ogCase.logoHref);
+        expect((await request.get(ogCase.logoHref)).ok()).toBe(true);
+      } else {
+        expect(logoHref).toMatch(ogCase.logoHref);
+      }
+
+      const logoCard = page.locator('#brand-logo-card');
+      await expect(logoCard).toHaveAttribute('transform', 'translate(856 206)');
+      await expect(logoCard.locator('rect').nth(0)).toHaveAttribute('width', '220');
+      await expect(logoCard.locator('rect').nth(0)).toHaveAttribute('height', '220');
+      await expect(logoCard.locator('rect').nth(0)).toHaveAttribute('rx', '32');
+      await expect(logoCard.locator('rect').nth(0)).toHaveAttribute('stroke-width', '3');
+      await expect(logoCard.locator('rect').nth(1)).toHaveAttribute('x', '18');
+      await expect(logoCard.locator('rect').nth(1)).toHaveAttribute('y', '18');
+      await expect(logoCard.locator('rect').nth(1)).toHaveAttribute('width', '184');
+      await expect(logoCard.locator('rect').nth(1)).toHaveAttribute('height', '184');
+      await expect(logo).toHaveAttribute('x', '38');
+      await expect(logo).toHaveAttribute('y', '38');
+      await expect(logo).toHaveAttribute('width', '144');
+      await expect(logo).toHaveAttribute('height', '144');
+
+      await expectSvgTextInsideViewport('text', page);
+      assertNoConsoleErrors();
+    });
+  }
 
   test('home page keeps social metadata without unused OG preload warning', async ({ page }, testInfo) => {
     const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
@@ -139,8 +243,8 @@ test.describe('seo metadata', () => {
 
     await page.goto('/');
     await expect(page.locator('link[rel="preload"][href*="serhat-soruklu-og.svg"]')).toHaveCount(0);
-    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', ogImage);
-    await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', ogImage);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', new URL(pageSeoMetadata.home.ogImage, canonicalBaseUrl).toString());
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', new URL(pageSeoMetadata.home.ogImage, canonicalBaseUrl).toString());
 
     await page.waitForLoadState('networkidle');
     expect(consoleMessages.some((message) => message.includes('preloaded') && message.includes('serhat-soruklu-og.svg'))).toBe(false);
@@ -166,11 +270,11 @@ test.describe('seo metadata', () => {
       expect(getMetaContent(html, 'property', 'og:description')).toBe(metadata.description);
       expect(getMetaContent(html, 'property', 'og:url')).toBe(canonicalUrl);
       expect(getMetaContent(html, 'property', 'og:site_name')).toBe(siteName);
-      expect(getMetaContent(html, 'property', 'og:image')).toBe(ogImage);
+      expect(getMetaContent(html, 'property', 'og:image')).toBe(new URL(metadata.ogImage, canonicalBaseUrl).toString());
       expect(getMetaContent(html, 'name', 'twitter:card')).toBe('summary_large_image');
       expect(getMetaContent(html, 'name', 'twitter:title')).toBe(metadata.title);
       expect(getMetaContent(html, 'name', 'twitter:description')).toBe(metadata.description);
-      expect(getMetaContent(html, 'name', 'twitter:image')).toBe(ogImage);
+      expect(getMetaContent(html, 'name', 'twitter:image')).toBe(new URL(metadata.ogImage, canonicalBaseUrl).toString());
       expect(website?.['name']).toBe(siteName);
       expect(website?.['alternateName']).toEqual(expect.arrayContaining(['SerhatSoruklu.com', 'Serhat Soruklu Systems Architect']));
       expect(website?.['url']).toBe(`${canonicalBaseUrl}/`);
