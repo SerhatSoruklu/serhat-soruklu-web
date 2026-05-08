@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
-  <title id="title">Serhat Soruklu</title>
-  <desc id="desc">Systems architect identity artwork with deep navy background, light text, and gold accents.</desc>
+  <title id="title">Writing</title>
+  <desc id="desc">Open Graph artwork for Serhat Soruklu writing page.</desc>
   <rect width="1200" height="630" fill="#07090d"/>
   <rect x="72" y="72" width="1056" height="486" rx="28" fill="#10141c" stroke="#252b36" stroke-width="3"/>
   <path d="M112 184h976" stroke="#252b36" stroke-width="2"/>
@@ -8,13 +8,13 @@
   <circle cx="126" cy="126" r="8" fill="#d6a84f"/>
   <circle cx="160" cy="126" r="8" fill="#f0d58c"/>
   <circle cx="194" cy="126" r="8" fill="#a8b0bd"/>
-  <text x="116" y="294" fill="#f5f7fa" font-family="Inter, Arial, sans-serif" font-size="74" font-weight="700" letter-spacing="0">Serhat Soruklu</text>
-  <text fill="#a8b0bd" font-family="Inter, Arial, sans-serif" font-size="29" font-weight="400" letter-spacing="0">
-    <tspan x="120" y="356">Systems architecture, software engineering,</tspan>
-    <tspan x="120" y="396">and product-focused technology.</tspan>
+  <text x="116" y="296" fill="#f5f7fa" font-family="Arial, Helvetica, sans-serif" font-size="84" font-weight="700" letter-spacing="0">Writing</text>
+  <text fill="#a8b0bd" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="400" letter-spacing="0">
+    <tspan x="120" y="356">Notes on software, systems, architecture,</tspan>
+    <tspan x="120" y="396">execution, and long-term thinking.</tspan>
   </text>
   <path d="M120 432h226" stroke="#d6a84f" stroke-width="6" stroke-linecap="round"/>
-  <text x="120" y="516" fill="#f0d58c" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="600" letter-spacing="0">serhatsoruklu.com</text>
+  <text x="120" y="516" fill="#f0d58c" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="600" letter-spacing="0">serhatsoruklu.com/writing</text>
   <g id="brand-logo-card" transform="translate(856 206)">
     <rect width="220" height="220" rx="32" fill="#07090d" stroke="#252b36" stroke-width="3"/>
     <rect x="18" y="18" width="184" height="184" rx="24" fill="none" stroke="#1a202b" stroke-width="2"/>
