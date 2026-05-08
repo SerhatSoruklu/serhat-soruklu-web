@@ -14,6 +14,7 @@ import {
 import { ResolvedTheme, ThemeSetting } from '../../core/theme/theme.service';
 
 export interface HeaderNavItem {
+  iconClass?: string;
   iconPath: string;
   label: string;
   path: string;
@@ -29,7 +30,7 @@ export const HEADER_NAV_ITEMS: HeaderNavItem[] = [
   { iconPath: mdiBriefcaseOutline, label: 'Work', path: '/work' },
   { iconPath: mdiSitemapOutline, label: 'Systems', path: '/systems' },
   { iconPath: mdiNoteTextOutline, label: 'Writing', path: '/writing' },
-  { iconPath: mdiGithub, label: 'GitHub', path: '/github' },
+  { iconClass: 'github-icon', iconPath: mdiGithub, label: 'GitHub', path: '/github' },
   { iconPath: mdiEmailOutline, label: 'Contact', path: '/contact' }
 ];
 

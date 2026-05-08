@@ -101,12 +101,12 @@
 .mobile-header__icon-button:hover,
 .mobile-header__icon-button:focus-visible {
   border-color: #d6a84f;
+  box-shadow: inset 0 0 0 1px #d6a84f;
   color: #f5f7fa;
   outline: none;
 }
 
-.icon,
-.mobile-nav__icon {
+.icon {
   display: block;
   width: 20px;
   height: 20px;
@@ -239,20 +239,20 @@
 }
 
 .mobile-nav__icon {
-  display: block;
   width: 18px;
   height: 18px;
   flex: 0 0 18px;
-  color: currentColor;
   fill: currentColor;
 }
 
 .mobile-nav__link:hover,
 .mobile-nav__link:focus-visible,
 .mobile-nav__link--active {
-  background: #07090d;
   color: #f5f7fa;
-  outline: none;
+}
+
+.mobile-nav__link--active {
+  background: #07090d;
 }
 
 @media (max-width: 389px) {

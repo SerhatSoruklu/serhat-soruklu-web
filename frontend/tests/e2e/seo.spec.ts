@@ -12,6 +12,17 @@ const routeSeoCases = [
   pageSeoMetadata.contact
 ];
 const ogImage = 'https://serhatsoruklu.com/assets/social/serhat-soruklu-og.svg';
+const siteName = 'Serhat Soruklu';
+const canonicalBaseUrl = 'https://serhatsoruklu.com';
+const sitelinkRoutes = [
+  pageSeoMetadata.work,
+  pageSeoMetadata.systems,
+  pageSeoMetadata.writing,
+  pageSeoMetadata.github,
+  pageSeoMetadata.contact
+];
+
+type JsonLdEntity = Record<string, unknown>;
 
 function getTitle(html: string): string | null {
   return html.match(/<title>(.*?)<\/title>/)?.[1] ?? null;
@@ -30,6 +41,53 @@ function getCanonicalHref(html: string): string | null {
   const tag = tags.find((candidate) => candidate.includes('rel="canonical"'));
 
   return tag?.match(/\bhref="([^"]*)"/)?.[1] ?? null;
+}
+
+function getCanonicalCount(html: string): number {
+  return (html.match(/<link\b[^>]*rel="canonical"[^>]*>/g) ?? []).length;
+}
+
+function getJsonLdEntities(html: string): JsonLdEntity[] {
+  const scripts = [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)];
+
+  return scripts.flatMap((script) => {
+    const parsed = JSON.parse(script[1].trim()) as JsonLdEntity;
+    const graph = parsed['@graph'];
+
+    if (Array.isArray(graph)) {
+      return graph as JsonLdEntity[];
+    }
+
+    return [parsed];
+  });
+}
+
+function findJsonLdEntity(entities: JsonLdEntity[], type: string): JsonLdEntity | undefined {
+  return entities.find((entity) => {
+    const entityType = entity['@type'];
+    return entityType === type || (Array.isArray(entityType) && entityType.includes(type));
+  });
+}
+
+function getBreadcrumbNames(entities: JsonLdEntity[]): string[] {
+  const breadcrumb = findJsonLdEntity(entities, 'BreadcrumbList');
+  const items = breadcrumb?.['itemListElement'];
+
+  if (!Array.isArray(items)) {
+    return [];
+  }
+
+  return items.map((item) => (item as JsonLdEntity)['name']).filter((name): name is string => typeof name === 'string');
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[\\^$.*+?()[\]{}|]/g, '\\$&');
+}
+
+function hasCrawlableAnchor(html: string, href: string, label: string): boolean {
+  const anchorPattern = new RegExp(`<a\\b[^>]*href="${escapeRegExp(href)}"[^>]*>[\\s\\S]*?${escapeRegExp(label)}[\\s\\S]*?<\\/a>`);
+
+  return anchorPattern.test(html);
 }
 
 test.describe('seo metadata', () => {
@@ -68,19 +126,79 @@ test.describe('seo metadata', () => {
     test(`direct route load has route-specific metadata for ${metadata.path}`, async ({ request }) => {
       const response = await request.get(metadata.path);
       const html = await response.text();
-      const canonicalUrl = new URL(metadata.path, 'https://serhatsoruklu.com').toString();
+      const canonicalUrl = new URL(metadata.path, canonicalBaseUrl).toString();
+      const jsonLdEntities = getJsonLdEntities(html);
+      const website = findJsonLdEntity(jsonLdEntities, 'WebSite');
+      const person = findJsonLdEntity(jsonLdEntities, 'Person');
 
       expect(response.ok()).toBe(true);
       expect(getTitle(html)).toBe(metadata.title);
       expect(getMetaContent(html, 'name', 'description')).toBe(metadata.description);
       expect(getCanonicalHref(html)).toBe(canonicalUrl);
+      expect(getCanonicalCount(html)).toBe(1);
+      expect(html).not.toContain('noindex');
       expect(getMetaContent(html, 'property', 'og:title')).toBe(metadata.title);
       expect(getMetaContent(html, 'property', 'og:description')).toBe(metadata.description);
       expect(getMetaContent(html, 'property', 'og:url')).toBe(canonicalUrl);
+      expect(getMetaContent(html, 'property', 'og:site_name')).toBe(siteName);
       expect(getMetaContent(html, 'property', 'og:image')).toBe(ogImage);
+      expect(getMetaContent(html, 'name', 'twitter:card')).toBe('summary_large_image');
       expect(getMetaContent(html, 'name', 'twitter:title')).toBe(metadata.title);
       expect(getMetaContent(html, 'name', 'twitter:description')).toBe(metadata.description);
       expect(getMetaContent(html, 'name', 'twitter:image')).toBe(ogImage);
+      expect(website?.['name']).toBe(siteName);
+      expect(website?.['alternateName']).toEqual(expect.arrayContaining(['SerhatSoruklu.com', 'Serhat Soruklu Systems Architect']));
+      expect(website?.['url']).toBe(`${canonicalBaseUrl}/`);
+      expect(website?.['inLanguage']).toBe('en-GB');
+      expect(person?.['name']).toBe(siteName);
+      expect(person?.['url']).toBe(`${canonicalBaseUrl}/`);
+      expect(person?.['jobTitle']).toBe('Founder, Systems Architect, Full-Stack Engineer');
+      expect(person?.['sameAs']).toEqual(expect.arrayContaining(['https://github.com/SerhatSoruklu']));
+
+      const expectedBreadcrumbs = metadata.path === '/'
+        ? [pageSeoMetadata.home.label]
+        : [pageSeoMetadata.home.label, metadata.label];
+      expect(getBreadcrumbNames(jsonLdEntities)).toEqual(expectedBreadcrumbs);
+      expect(getBreadcrumbNames(jsonLdEntities).some((name) => name.includes('Serhat Soruklu |'))).toBe(false);
     });
   }
+
+  test('home SSR contains crawlable short navigation labels', async ({ request }) => {
+    const response = await request.get('/');
+    const html = await response.text();
+
+    expect(response.ok()).toBe(true);
+
+    for (const metadata of sitelinkRoutes) {
+      expect(hasCrawlableAnchor(html, metadata.path, metadata.label)).toBe(true);
+    }
+  });
+
+  test('sitemap lists every public route with clean canonical URLs', async ({ request }) => {
+    const response = await request.get('/sitemap.xml');
+    const sitemap = await response.text();
+    const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
+
+    expect(response.ok()).toBe(true);
+    expect(sitemap).not.toContain('localhost');
+    expect(new Set(urls).size).toBe(urls.length);
+
+    for (const metadata of routeSeoCases) {
+      expect(urls).toContain(new URL(metadata.path, canonicalBaseUrl).toString());
+    }
+  });
+
+  test('robots.txt keeps public routes crawlable and references the sitemap', async ({ request }) => {
+    const response = await request.get('/robots.txt');
+    const robots = await response.text();
+
+    expect(response.ok()).toBe(true);
+    expect(robots).toContain('User-agent: *');
+    expect(robots).toContain('Allow: /');
+    expect(robots).toContain('Sitemap: https://serhatsoruklu.com/sitemap.xml');
+
+    for (const metadata of sitelinkRoutes) {
+      expect(robots).not.toContain(`Disallow: ${metadata.path}`);
+    }
+  });
 });

@@ -27,6 +27,12 @@
   background: #f8f7f3;
 }
 
+:host-context(.theme-resolved-light) .theme-selector__trigger:hover,
+:host-context(.theme-resolved-light) .theme-selector__trigger:focus-visible {
+  border-color: #b8872f;
+  box-shadow: inset 0 0 0 1px #b8872f;
+}
+
 :host-context(.theme-resolved-light) .site-brand__subtitle,
 :host-context(.theme-resolved-light) .theme-selector__trigger,
 :host-context(.theme-resolved-light) .theme-selector__option--active .theme-selector__option-icon {

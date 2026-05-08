@@ -32,7 +32,7 @@ test.describe('theme behavior', () => {
     await expect(page.locator('html')).toHaveClass(/theme-resolved-light/);
 
     await themeButton.hover();
-    await expect(page.getByRole('tooltip')).toHaveText('Theme: Light. Switch appearance.');
+    await expect(page.getByRole('tooltip')).toHaveText('Light theme');
     await page.mouse.move(10, 10);
     await expect(page.getByRole('tooltip')).toBeHidden();
 

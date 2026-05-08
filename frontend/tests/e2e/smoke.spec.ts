@@ -3,11 +3,12 @@ import { expect, test } from '@playwright/test';
 import { installConsoleErrorGuard } from './support/console-errors';
 
 const routes = [
-  { path: '/', heading: 'Hero working' },
-  { path: '/work', heading: 'Work page working' },
-  { path: '/systems', heading: 'Systems page working' },
-  { path: '/writing', heading: 'Writing page working' },
-  { path: '/contact', heading: 'Contact page working' }
+  { path: '/', heading: 'Serhat Soruklu' },
+  { path: '/work', heading: 'Work' },
+  { path: '/systems', heading: 'Systems' },
+  { path: '/writing', heading: 'Writing' },
+  { path: '/github', heading: 'GitHub' },
+  { path: '/contact', heading: 'Contact' }
 ];
 
 test.describe('smoke routes', () => {

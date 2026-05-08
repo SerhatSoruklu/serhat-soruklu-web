@@ -31,8 +31,8 @@
 
     <nav class="site-nav" aria-label="Primary navigation">
       @for (item of navItems; track item.path) {
-        <a [routerLink]="item.path" routerLinkActive="site-nav__link--active" class="site-nav__link">
-          <svg class="site-nav__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <a [routerLink]="item.path" routerLinkActive="site-nav__link--active" [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page" class="site-nav__link">
+          <svg class="site-nav__icon" [ngClass]="{ 'site-nav__github-icon': item.iconClass === 'github-icon' }" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path [attr.d]="item.iconPath"></path>
           </svg>
           <span>{{ item.label }}</span>

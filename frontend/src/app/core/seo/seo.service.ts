@@ -1,14 +1,14 @@
 import { DOCUMENT, isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
-import { seoConfig } from './seo.config';
+import { pageSeoMetadata, seoConfig } from './seo.config';
 
 type RobotsDirective = 'index, follow' | 'noindex, nofollow' | 'noindex, follow';
 
 export interface RouteSeoMetadata {
+  label: string;
   title: string;
   description: string;
   path: string;
@@ -31,22 +31,6 @@ export class SeoService {
   private readonly meta = inject(Meta);
   private readonly document = inject(DOCUMENT);
   private readonly platformId = inject(PLATFORM_ID);
-  private readonly router = inject(Router);
-  private readonly activatedRoute = inject(ActivatedRoute);
-  private initialized = false;
-
-  initializeRouteMetadata(): void {
-    if (this.initialized) {
-      return;
-    }
-
-    this.initialized = true;
-    this.applyRouteMetadata();
-
-    this.router.events
-      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
-      .subscribe(() => this.applyRouteMetadata());
-  }
 
   setMetadata(metadata: SeoMetadata): void {
     if (metadata.title) {
@@ -145,13 +129,9 @@ export class SeoService {
     this.document.getElementById(this.jsonLdScriptId)?.remove();
   }
 
-  private canUseDocumentHead(): boolean {
-    const supportedPlatform = isPlatformBrowser(this.platformId) || isPlatformServer(this.platformId);
-    return supportedPlatform && !!this.document?.head;
-  }
-
-  private applyRouteMetadata(): void {
-    const routeSeo = this.findDeepestSeoData(this.activatedRoute.snapshot) ?? {
+  applyRouteMetadata(snapshot: ActivatedRouteSnapshot): void {
+    const routeSeo = this.findDeepestSeoData(snapshot) ?? {
+      label: pageSeoMetadata.home.label,
       title: seoConfig.defaultTitle,
       description: seoConfig.defaultDescription,
       path: '/'
@@ -164,6 +144,12 @@ export class SeoService {
       ogImage: seoConfig.defaultOgImage,
       robots: 'index, follow'
     });
+    this.setJsonLd(this.createBreadcrumbStructuredData(routeSeo));
+  }
+
+  private canUseDocumentHead(): boolean {
+    const supportedPlatform = isPlatformBrowser(this.platformId) || isPlatformServer(this.platformId);
+    return supportedPlatform && !!this.document?.head;
   }
 
   private findDeepestSeoData(snapshot: ActivatedRouteSnapshot): RouteSeoMetadata | null {
@@ -187,9 +173,42 @@ export class SeoService {
     }
 
     const metadata = value as RouteSeoMetadata;
-    return typeof metadata.title === 'string'
+    return typeof metadata.label === 'string'
+      && typeof metadata.title === 'string'
       && typeof metadata.description === 'string'
       && typeof metadata.path === 'string';
+  }
+
+  private createBreadcrumbStructuredData(routeSeo: RouteSeoMetadata): object {
+    const items: Array<{
+      '@type': 'ListItem';
+      position: number;
+      name: string;
+      item: string;
+    }> = [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: pageSeoMetadata.home.label,
+        item: this.toAbsoluteUrl(pageSeoMetadata.home.path)
+      }
+    ];
+
+    if (routeSeo.path !== pageSeoMetadata.home.path) {
+      items.push({
+        '@type': 'ListItem',
+        position: 2,
+        name: routeSeo.label,
+        item: this.toAbsoluteUrl(routeSeo.path)
+      });
+    }
+
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      '@id': `${this.toAbsoluteUrl(routeSeo.path)}#breadcrumb`,
+      itemListElement: items
+    };
   }
 
   private toAbsoluteUrl(url: string): string {

@@ -10,7 +10,8 @@
 :host-context(.theme-resolved-light) .mobile-theme__option:hover,
 :host-context(.theme-resolved-light) .mobile-theme__option--active,
 :host-context(.theme-resolved-light) .mobile-nav__link:hover,
-:host-context(.theme-resolved-light) .mobile-nav__link:focus-visible {
+:host-context(.theme-resolved-light) .mobile-nav__link:focus-visible,
+:host-context(.theme-resolved-light) .mobile-nav__link--active {
   color: #111827;
 }
 
@@ -19,6 +20,12 @@
 :host-context(.theme-resolved-light) .mobile-nav {
   border-color: #e5e0d6;
   background: #f8f7f3;
+}
+
+:host-context(.theme-resolved-light) .mobile-header__icon-button:hover,
+:host-context(.theme-resolved-light) .mobile-header__icon-button:focus-visible {
+  border-color: #b8872f;
+  box-shadow: inset 0 0 0 1px #b8872f;
 }
 
 :host-context(.theme-resolved-light) .mobile-theme__menu,
@@ -46,8 +53,6 @@
 
 :host-context(.theme-resolved-light) .mobile-theme__option:hover,
 :host-context(.theme-resolved-light) .mobile-theme__option--active,
-:host-context(.theme-resolved-light) .mobile-nav__link:hover,
-:host-context(.theme-resolved-light) .mobile-nav__link:focus-visible,
 :host-context(.theme-resolved-light) .mobile-nav__link--active {
   background: #ffffff;
 }
