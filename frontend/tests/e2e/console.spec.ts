@@ -7,7 +7,7 @@ test.describe('console health', () => {
     const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
 
     await page.goto('/');
-    await expect(page.getByRole('heading', { name: 'Serhat Soruklu' })).toBeVisible();
+    await expect(page.locator('h1')).toBeVisible();
     assertNoConsoleErrors();
   });
 

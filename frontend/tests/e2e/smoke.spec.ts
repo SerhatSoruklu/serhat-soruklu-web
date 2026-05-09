@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { installConsoleErrorGuard } from './support/console-errors';
 
 const routes = [
-  { path: '/', heading: 'Serhat Soruklu' },
+  { path: '/', heading: /I build fast, structured web platforms.*architect.*founder/ },
   { path: '/work', heading: 'Work' },
   { path: '/systems', heading: 'Systems' },
   { path: '/writing', heading: 'Writing' },

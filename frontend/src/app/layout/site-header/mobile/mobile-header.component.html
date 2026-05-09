@@ -1,4 +1,12 @@
-<header class="mobile-header" data-testid="mobile-header">
+<header
+  class="mobile-header"
+  [ngClass]="{
+    'mobile-header--panel-open': menuOpen() || themeMenuOpen(),
+    'mobile-header--scrolled': isScrolled()
+  }"
+  data-testid="mobile-header"
+  [style.--scroll-progress]="scrollProgress()"
+>
   <div class="mobile-header__bar">
     <a class="mobile-brand" routerLink="/" aria-label="Serhat Soruklu home" (click)="closeMenu()">
       <span class="mobile-brand__mark">
@@ -101,6 +109,10 @@
         </span>
       </button>
     </div>
+  </div>
+
+  <div class="mobile-header__scroll-progress" aria-hidden="true">
+    <span class="mobile-header__scroll-progress-bar"></span>
   </div>
 
   <nav

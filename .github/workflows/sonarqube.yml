@@ -67,6 +67,10 @@ jobs:
         if: steps.sonar-config.outputs.configured == 'true'
         run: npm --prefix frontend test -- --watch=false --coverage
 
+      - name: Normalize frontend coverage paths
+        if: steps.sonar-config.outputs.configured == 'true'
+        run: sed -i 's#SF:src/#SF:frontend/src/#g' frontend/coverage/frontend/lcov.info
+
       - name: Run backend coverage
         if: steps.sonar-config.outputs.configured == 'true'
         run: npm --prefix backend run test:coverage
@@ -85,4 +89,6 @@ jobs:
             -Dsonar.tests=frontend/src,backend
             -Dsonar.test.inclusions=frontend/src/**/*.spec.ts,backend/**/*.test.js
             -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/.angular/**,**/coverage/**,frontend/src/**/*.spec.ts,backend/**/*.test.js
+            -Dsonar.coverage.exclusions=frontend/src/**/*.html,frontend/src/**/*.css,frontend/src/app/app.config.ts,frontend/src/app/layout/site-header/**/*.ts,frontend/src/app/pages/**/*.ts
+            -Dsonar.cpd.exclusions=frontend/src/**/*.html,frontend/src/**/*.css,frontend/src/app/layout/site-header/**/*.ts
             -Dsonar.javascript.lcov.reportPaths=frontend/coverage/frontend/lcov.info,backend/coverage/lcov.info

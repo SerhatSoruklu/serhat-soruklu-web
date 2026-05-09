@@ -1,0 +1,462 @@
+.serhat-portrait-dialog-backdrop {
+  background: rgba(2, 3, 6, 0.72);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.theme-resolved-light .serhat-portrait-dialog-backdrop {
+  background: rgba(17, 24, 39, 0.28);
+}
+
+.cdk-overlay-pane.serhat-portrait-dialog-panel {
+  width: min(1040px, calc(100vw - 40px));
+  max-width: calc(100vw - 40px) !important;
+  max-height: calc(100dvh - 40px);
+}
+
+.serhat-portrait-dialog-panel .mat-mdc-dialog-container,
+.serhat-portrait-dialog-panel .mat-mdc-dialog-surface {
+  border-radius: 14px;
+}
+
+.serhat-portrait-dialog-panel .mat-mdc-dialog-surface {
+  overflow: hidden;
+  background: transparent;
+  box-shadow: none;
+}
+
+.portrait-dialog {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(420px, 0.95fr) minmax(360px, 1fr);
+  max-height: calc(100dvh - 40px);
+  overflow: hidden;
+  border: 1px solid rgba(214, 168, 79, 0.2);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(214, 168, 79, 0.12), transparent 30%),
+    linear-gradient(135deg, rgba(16, 20, 28, 0.98), rgba(7, 9, 13, 0.98));
+  color: #f5f7fa;
+  font-family: "Sora", Inter, ui-sans-serif, system-ui, sans-serif;
+  box-shadow:
+    0 26px 72px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(245, 247, 250, 0.04) inset;
+  animation: portraitDialogIn 180ms ease-out;
+}
+
+.portrait-dialog__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid rgba(168, 176, 189, 0.2);
+  border-radius: 8px;
+  background: rgba(7, 9, 13, 0.66);
+  color: #f0d58c;
+  cursor: pointer;
+  transition: border-color 160ms ease, box-shadow 160ms ease, color 160ms ease, background 160ms ease;
+}
+
+.portrait-dialog__close mat-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+  line-height: 1;
+}
+
+.portrait-dialog__close:hover,
+.portrait-dialog__close:focus-visible {
+  border-color: #d6a84f;
+  background: rgba(16, 20, 28, 0.92);
+  color: #f5f7fa;
+  box-shadow: 0 0 0 3px rgba(214, 168, 79, 0.14);
+  outline: none;
+}
+
+.portrait-dialog__media {
+  position: relative;
+  min-height: 600px;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(214, 168, 79, 0.12), transparent 44%),
+    #020306;
+}
+
+.portrait-dialog__media::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(90deg, transparent 78%, rgba(7, 9, 13, 0.4));
+}
+
+.portrait-dialog__portrait-layer {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+}
+
+.portrait-dialog__portrait-layer--dark {
+  position: relative;
+  opacity: 1;
+}
+
+.portrait-dialog--light-portrait .portrait-dialog__portrait-layer--dark {
+  opacity: 0;
+}
+
+.portrait-dialog--light-portrait .portrait-dialog__portrait-layer--light {
+  opacity: 1;
+}
+
+.portrait-dialog__portrait-layer img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+}
+
+.portrait-dialog__content {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  overflow: auto;
+  padding: 58px 48px 44px;
+}
+
+.portrait-dialog__eyebrow,
+.portrait-dialog__role,
+.portrait-dialog__systems-label {
+  font-family: "Space Mono", "IBM Plex Mono", monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.portrait-dialog__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 12px;
+  color: #d6a84f;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+}
+
+.portrait-dialog__eyebrow mat-icon,
+.portrait-dialog__role mat-icon,
+.portrait-dialog__systems-label mat-icon {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  color: currentColor;
+}
+
+.portrait-dialog__title {
+  margin: 0;
+  color: #f5f7fa;
+  font-family: "Sora", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(34px, 4vw, 46px);
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.portrait-dialog__role {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 12px 0 0;
+  color: #f0d58c;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+}
+
+.portrait-dialog__summary {
+  max-width: 480px;
+  margin: 28px 0 0;
+  color: #d5dae3;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.48;
+}
+
+.portrait-dialog__list {
+  display: grid;
+  gap: 11px;
+  padding: 0;
+  margin: 22px 0 0;
+  color: #f5f7fa;
+  list-style: none;
+}
+
+.portrait-dialog__list li {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  min-width: 0;
+  line-height: 1.35;
+}
+
+.portrait-dialog__list mat-icon {
+  width: 18px;
+  height: 18px;
+  color: #d6a84f;
+  transform: translateY(0.12em);
+}
+
+.portrait-dialog__systems {
+  margin-top: 28px;
+}
+
+.portrait-dialog__systems-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 12px;
+  color: #a8b0bd;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+}
+
+.portrait-dialog__chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.portrait-dialog__system-chip,
+.portrait-dialog__tool-chip {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(214, 168, 79, 0.26);
+  border-radius: 999px;
+  padding: 7px 11px;
+  background: rgba(7, 9, 13, 0.42);
+  color: #f5f7fa;
+  font-size: 12px;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.portrait-dialog__system-chip {
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease, box-shadow 160ms ease;
+}
+
+.portrait-dialog__system-chip:hover,
+.portrait-dialog__system-chip:focus-visible {
+  border-color: rgba(214, 168, 79, 0.46);
+  background: rgba(16, 20, 28, 0.78);
+  color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(214, 168, 79, 0.1);
+  outline: none;
+}
+
+.portrait-dialog__system-chip mat-icon,
+.portrait-dialog__tool-chip mat-icon {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  color: #d6a84f;
+}
+
+.portrait-dialog__chip-row--tools {
+  margin-top: 20px;
+}
+
+.portrait-dialog__tool-chip {
+  border-color: rgba(168, 176, 189, 0.2);
+  color: #a8b0bd;
+}
+
+.theme-resolved-light .portrait-dialog {
+  border-color: rgba(184, 135, 47, 0.26);
+  background:
+    radial-gradient(circle at 12% 12%, rgba(184, 135, 47, 0.1), transparent 30%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 247, 243, 0.98));
+  color: #111827;
+  box-shadow:
+    0 26px 72px rgba(17, 24, 39, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.78) inset;
+}
+
+.theme-resolved-light .portrait-dialog__media {
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(184, 135, 47, 0.12), transparent 44%),
+    #f8f7f3;
+}
+
+.theme-resolved-light .portrait-dialog__media::after {
+  background: linear-gradient(90deg, transparent 78%, rgba(248, 247, 243, 0.5));
+}
+
+.theme-resolved-light .portrait-dialog__close {
+  border-color: #e5e0d6;
+  background: rgba(255, 255, 255, 0.78);
+  color: #7a5a1d;
+}
+
+.theme-resolved-light .portrait-dialog__close:hover,
+.theme-resolved-light .portrait-dialog__close:focus-visible {
+  border-color: #b8872f;
+  background: #ffffff;
+  color: #10141c;
+  box-shadow: 0 0 0 3px rgba(184, 135, 47, 0.14);
+}
+
+.theme-resolved-light .portrait-dialog__eyebrow,
+.theme-resolved-light .portrait-dialog__role {
+  color: #b8872f;
+}
+
+.theme-resolved-light .portrait-dialog__title,
+.theme-resolved-light .portrait-dialog__list,
+.theme-resolved-light .portrait-dialog__system-chip {
+  color: #111827;
+}
+
+.theme-resolved-light .portrait-dialog__summary,
+.theme-resolved-light .portrait-dialog__systems-label,
+.theme-resolved-light .portrait-dialog__tool-chip {
+  color: #5f6673;
+}
+
+.theme-resolved-light .portrait-dialog__system-chip {
+  border-color: rgba(184, 135, 47, 0.28);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.theme-resolved-light .portrait-dialog__system-chip:hover,
+.theme-resolved-light .portrait-dialog__system-chip:focus-visible {
+  border-color: rgba(184, 135, 47, 0.46);
+  background: #ffffff;
+  color: #111827;
+  box-shadow: 0 0 0 3px rgba(184, 135, 47, 0.12);
+}
+
+.theme-resolved-light .portrait-dialog__tool-chip {
+  border-color: rgba(95, 102, 115, 0.16);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.theme-resolved-light .portrait-dialog__list mat-icon,
+.theme-resolved-light .portrait-dialog__system-chip mat-icon,
+.theme-resolved-light .portrait-dialog__tool-chip mat-icon {
+  color: #b8872f;
+}
+
+@media (max-width: 1023px) {
+  .cdk-overlay-pane.serhat-portrait-dialog-panel {
+    width: min(760px, calc(100vw - 40px));
+  }
+
+  .portrait-dialog {
+    display: block;
+    grid-template-columns: 1fr;
+  }
+
+  .portrait-dialog__media {
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    max-height: 48dvh;
+  }
+
+  .portrait-dialog__media::after {
+    background: linear-gradient(180deg, transparent 76%, rgba(7, 9, 13, 0.42));
+  }
+
+  .theme-resolved-light .portrait-dialog__media::after {
+    background: linear-gradient(180deg, transparent 76%, rgba(248, 247, 243, 0.5));
+  }
+
+  .portrait-dialog__content {
+    padding: 34px 34px 36px;
+  }
+}
+
+@media (max-width: 767px) {
+  .cdk-overlay-pane.serhat-portrait-dialog-panel {
+    width: calc(100vw - 40px);
+    max-width: calc(100vw - 40px) !important;
+    max-height: calc(100dvh - 40px);
+  }
+
+  .portrait-dialog {
+    max-height: calc(100dvh - 40px);
+    overflow: auto;
+    border-radius: 12px;
+  }
+
+  .serhat-portrait-dialog-panel .mat-mdc-dialog-container,
+  .serhat-portrait-dialog-panel .mat-mdc-dialog-surface {
+    border-radius: 12px;
+  }
+
+  .portrait-dialog__media {
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    max-height: none;
+  }
+
+  .portrait-dialog__content {
+    overflow: visible;
+    padding: 30px 22px 28px;
+  }
+
+  .portrait-dialog__title {
+    font-size: 32px;
+  }
+
+  .portrait-dialog__summary {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 389px) {
+  .portrait-dialog__content {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait-dialog,
+  .portrait-dialog__close,
+  .portrait-dialog__portrait-layer {
+    animation: none;
+    transition: none;
+  }
+}
+
+@keyframes portraitDialogIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

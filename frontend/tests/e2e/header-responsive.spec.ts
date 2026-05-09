@@ -20,6 +20,10 @@ async function getHeadingLeft(page: Page, headingName: string): Promise<number> 
   return page.getByRole('heading', { name: headingName }).evaluate((element) => element.getBoundingClientRect().left);
 }
 
+async function getPrimaryHeadingLeft(page: Page): Promise<number> {
+  return page.locator('h1').evaluate((element) => element.getBoundingClientRect().left);
+}
+
 async function expectElementInsideViewport(page: Page, testId: string): Promise<void> {
   const box = await page.getByTestId(testId).evaluate((element) => element.getBoundingClientRect());
   const viewportWidth = await page.evaluate(() => document.documentElement.clientWidth);
@@ -166,7 +170,7 @@ async function expectOnlyMobileNavItemActive(page: Page, expectedLabel: string |
   }
 }
 
-async function expectHeroStripeVisibleBelowHeader(page: Page): Promise<void> {
+async function expectHeroStripeBehindFixedHeader(page: Page): Promise<void> {
   const geometry = await page.evaluate(() => {
     const header = document.querySelector('[data-testid="mobile-header"]');
     const stripe = document.querySelector('.page-stripe, .page-placeholder');
@@ -186,7 +190,7 @@ async function expectHeroStripeVisibleBelowHeader(page: Page): Promise<void> {
   });
 
   expect(geometry).not.toBeNull();
-  expect(geometry!.stripeTop).toBeGreaterThanOrEqual(geometry!.headerBottom - 1);
+  expect(geometry!.stripeTop).toBeLessThan(geometry!.headerBottom);
   expect(geometry!.stripeBottom).toBeGreaterThan(geometry!.headerBottom + 120);
 }
 
@@ -379,19 +383,21 @@ test.describe('responsive shell header', () => {
     assertNoConsoleErrors();
   });
 
-  test('home placeholder aligns with other page containers', async ({ page }, testInfo) => {
+  test('home and inner page headings keep valid gutters', async ({ page }, testInfo) => {
     const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
 
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/');
-    await expect(page.getByRole('heading', { name: 'Serhat Soruklu' })).toBeVisible();
-    const homeLeft = await getHeadingLeft(page, 'Serhat Soruklu');
+    await expect(page.locator('h1')).toBeVisible();
+    const homeLeft = await getPrimaryHeadingLeft(page);
 
     await page.goto('/work');
     await expect(page.getByRole('heading', { name: 'Work' })).toBeVisible();
     const workLeft = await getHeadingLeft(page, 'Work');
 
-    expect(Math.abs(homeLeft - workLeft)).toBeLessThanOrEqual(1);
+    expect(homeLeft).toBeGreaterThanOrEqual(20);
+    expect(workLeft).toBeGreaterThanOrEqual(20);
+    await expectNoHorizontalOverflow(page);
     assertNoConsoleErrors();
   });
 
@@ -401,10 +407,10 @@ test.describe('responsive shell header', () => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/');
 
-    await expect(page.getByRole('heading', { name: 'Serhat Soruklu' })).toBeVisible();
+    await expect(page.locator('h1')).toBeVisible();
     await expect(page.getByTestId('desktop-header').getByText('SYSTEMS ARCHITECT')).toBeVisible();
 
-    const headingFont = await page.getByRole('heading', { name: 'Serhat Soruklu' }).evaluate((element) => getComputedStyle(element).fontFamily);
+    const headingFont = await page.locator('h1').evaluate((element) => getComputedStyle(element).fontFamily);
     const subtitleFont = await page
       .getByTestId('desktop-header')
       .getByText('SYSTEMS ARCHITECT')
@@ -564,7 +570,7 @@ test.describe('responsive shell header', () => {
       await expect(page.locator('html')).toHaveClass(/theme-light/);
       await expectResolvedLogo(page, 'mobile', 'light');
       await expect(mobileHeader.getByRole('menu', { name: 'Theme options' })).toBeHidden();
-      await expectHeroStripeVisibleBelowHeader(page);
+      await expectHeroStripeBehindFixedHeader(page);
       await mobileHeader.getByTestId('mobile-theme-menu-button').click();
       await expect(mobileHeader.getByRole('menu', { name: 'Theme options' })).toBeVisible();
       await expectThemeMenuAnchoredToButton(page);

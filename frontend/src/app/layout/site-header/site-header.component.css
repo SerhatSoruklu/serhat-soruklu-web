@@ -1,31 +1,87 @@
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  right: 0;
+  left: 0;
   z-index: 20;
-  border-bottom: 1px solid rgba(37, 43, 54, 0.62);
+  border-bottom: 0;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+  isolation: isolate;
+}
+
+.site-header::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+  opacity: 0;
   background:
-    radial-gradient(circle at 70% 0%, rgba(214, 168, 79, 0.075), transparent 34%),
-    linear-gradient(180deg, rgba(7, 9, 13, 0.84), rgba(7, 9, 13, 0.66));
-  backdrop-filter: blur(14px);
+    radial-gradient(circle at 70% 0%, rgba(214, 168, 79, 0.055), transparent 34%),
+    linear-gradient(180deg, rgba(7, 9, 13, 0.84), rgba(7, 9, 13, 0.64));
+  -webkit-backdrop-filter: blur(14px) saturate(112%);
+  backdrop-filter: blur(14px) saturate(112%);
   box-shadow: inset 0 1px 0 rgba(245, 247, 250, 0.035);
 }
 
+.site-header--scrolled::before,
+.site-header:hover::before,
+.site-header:has(:focus-visible)::before {
+  opacity: 1;
+}
+
+.site-header--scrolled:hover::before,
+.site-header--scrolled:has(:focus-visible)::before {
+  background:
+    radial-gradient(circle at 70% 0%, rgba(214, 168, 79, 0.065), transparent 34%),
+    linear-gradient(180deg, rgba(7, 9, 13, 0.9), rgba(7, 9, 13, 0.72));
+  -webkit-backdrop-filter: blur(18px) saturate(116%);
+  backdrop-filter: blur(18px) saturate(116%);
+}
+
 .site-header__inner {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: minmax(260px, 1fr) auto auto;
+  grid-template-columns: minmax(292px, 1fr) auto auto;
   align-items: center;
-  gap: 32px;
+  gap: 38px;
   width: 100%;
-  max-width: 1280px;
-  min-height: 84px;
+  max-width: 1360px;
+  min-height: 110px;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+.site-header__scroll-progress {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  height: 2px;
+  overflow: hidden;
+  background: rgba(214, 168, 79, 0.14);
+  pointer-events: none;
+}
+
+.site-header__scroll-progress-bar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(214, 168, 79, 0.48), #f0d58c 52%, rgba(214, 168, 79, 0.78));
+  box-shadow: 0 0 10px rgba(214, 168, 79, 0.16);
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: left center;
+  transition: transform 120ms linear;
 }
 
 .site-brand {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
+  gap: 17px;
   width: fit-content;
   color: #f5f7fa;
   text-decoration: none;
@@ -34,33 +90,35 @@
 .site-brand__mark {
   position: relative;
   display: grid;
-  width: 56px;
-  height: 56px;
+  width: 68px;
+  height: 68px;
   place-items: center;
   border: 1px solid #252b36;
   border-radius: 8px;
   background: #020306;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
+  transition: opacity 160ms ease;
 }
 
 .site-brand__logo {
   grid-area: 1 / 1;
-  width: 44px;
-  height: 44px;
+  width: 53px;
+  height: 53px;
   object-fit: contain;
 }
 
 .site-brand__text {
   display: grid;
-  gap: 4px;
+  gap: 6px;
 }
 
 .site-brand__name {
   color: #f5f7fa;
   font-family: "Sora", Inter, ui-sans-serif, system-ui, sans-serif;
-  font-size: 25px;
+  font-size: 30px;
   font-weight: 700;
   line-height: 1;
+  transition: opacity 160ms ease;
 }
 
 .site-brand__subtitle,
@@ -71,38 +129,55 @@
 
 .site-brand__subtitle {
   color: #d6a84f;
-  font-size: 11px;
+  font-size: 12.5px;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.17em;
   line-height: 1;
+  transition: opacity 160ms ease;
+}
+
+.site-brand:hover .site-brand__mark,
+.site-brand:focus-visible .site-brand__mark {
+  opacity: 0.78;
+}
+
+.site-brand:hover .site-brand__name,
+.site-brand:focus-visible .site-brand__name {
+  opacity: 0.72;
+}
+
+.site-brand:hover .site-brand__subtitle,
+.site-brand:focus-visible .site-brand__subtitle {
+  opacity: 0.58;
 }
 
 .site-nav {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: clamp(20px, 1.7vw, 28px);
 }
 
 .site-nav__link {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  min-height: 36px;
+  gap: 11px;
+  min-height: 40px;
   color: #a8b0bd;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 700;
   letter-spacing: 0.14em;
-  line-height: 36px;
+  line-height: 40px;
   text-decoration: none;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .site-nav__icon {
   display: block;
-  width: 18px;
-  height: 18px;
-  flex: 0 0 18px;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
   color: currentColor;
   fill: currentColor;
 }
@@ -128,7 +203,17 @@
 .site-nav__link:focus-visible,
 .site-nav__link--active {
   color: #f5f7fa;
-  outline: none;
+}
+
+.site-nav__link:focus-visible {
+  border-radius: 4px;
+  outline: 2px solid rgba(240, 213, 140, 0.72);
+  outline-offset: 6px;
+}
+
+.theme-selector__option:focus-visible {
+  outline: 2px solid rgba(240, 213, 140, 0.72);
+  outline-offset: 2px;
 }
 
 .site-nav__link:hover::after,
@@ -144,20 +229,24 @@
 
 .theme-selector__trigger {
   display: grid;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   place-items: center;
   border: 1px solid #252b36;
   border-radius: 8px;
   background: #10141c;
   color: #f0d58c;
   cursor: pointer;
+  transition: border-color 160ms ease, box-shadow 160ms ease, color 160ms ease, background 160ms ease;
 }
 
 .theme-selector__trigger:hover,
 .theme-selector__trigger:focus-visible {
   border-color: #d6a84f;
-  box-shadow: inset 0 0 0 1px #d6a84f;
+  background: #10141c;
+  box-shadow:
+    inset 0 0 0 1px #d6a84f,
+    0 0 0 3px rgba(214, 168, 79, 0.14);
   color: #f5f7fa;
   outline: none;
 }
@@ -188,7 +277,7 @@
 
 .theme-selector__menu {
   position: absolute;
-  top: 50px;
+  top: 58px;
   right: 0;
   display: grid;
   width: max-content;
@@ -224,4 +313,15 @@
 
 .theme-selector__option--active .theme-selector__option-icon {
   color: #f0d58c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header::before,
+  .site-header__scroll-progress-bar,
+  .site-brand__mark,
+  .site-brand__name,
+  .site-brand__subtitle,
+  .site-nav__link::after {
+    transition: none;
+  }
 }
