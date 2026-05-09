@@ -4,7 +4,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { ThemeService, ThemeSetting } from '../../../core/theme/theme.service';
 import { TooltipDirective } from '../../../shared/tooltip/tooltip.directive';
-import { getThemeTriggerIconPath, HEADER_MENU_ICON_PATHS, HEADER_NAV_ITEMS, HEADER_THEME_OPTIONS } from '../header-icons';
+import { HEADER_MENU_ICON_PATHS, HEADER_NAV_ITEMS, HEADER_THEME_OPTIONS, HEADER_THEME_TRIGGER_ICON_PATHS } from '../header-icons';
 
 @Component({
   selector: 'app-mobile-header',
@@ -21,10 +21,7 @@ export class MobileHeaderComponent {
   readonly menuOpen = signal(false);
   readonly themeMenuOpen = signal(false);
   readonly themeOptions = HEADER_THEME_OPTIONS;
-
-  themeTriggerIconPath(): string {
-    return getThemeTriggerIconPath(this.themeService.setting(), this.themeService.resolvedTheme());
-  }
+  readonly themeTriggerIconPaths = HEADER_THEME_TRIGGER_ICON_PATHS;
 
   toggleMenu(): void {
     this.themeMenuOpen.set(false);

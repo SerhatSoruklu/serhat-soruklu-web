@@ -53,6 +53,27 @@
   border-left: 7px solid transparent;
 }
 
+.app-tooltip--right::before,
+.app-tooltip--right::after {
+  top: var(--tooltip-arrow-top, 50%);
+  left: auto;
+  transform: translateY(-50%);
+}
+
+.app-tooltip--right::before {
+  left: -9px;
+  border-top: 9px solid transparent;
+  border-right: 9px solid #252b36;
+  border-bottom: 9px solid transparent;
+}
+
+.app-tooltip--right::after {
+  left: -7px;
+  border-top: 7px solid transparent;
+  border-right: 7px solid #10141c;
+  border-bottom: 7px solid transparent;
+}
+
 .app-tooltip--visible {
   opacity: 1;
   transform: translateY(0);
@@ -78,4 +99,12 @@
 
 .theme-resolved-light .app-tooltip--top::after {
   border-top-color: #ffffff;
+}
+
+.theme-resolved-light .app-tooltip--right::before {
+  border-right-color: #e5e0d6;
+}
+
+.theme-resolved-light .app-tooltip--right::after {
+  border-right-color: #ffffff;
 }

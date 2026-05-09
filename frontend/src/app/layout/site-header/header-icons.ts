@@ -45,10 +45,16 @@ export const HEADER_MENU_ICON_PATHS = {
   menu: mdiMenu
 };
 
+export const HEADER_THEME_TRIGGER_ICON_PATHS = {
+  dark: mdiWeatherNight,
+  light: mdiWhiteBalanceSunny,
+  system: mdiThemeLightDark
+};
+
 export function getThemeTriggerIconPath(setting: ThemeSetting, resolvedTheme: ResolvedTheme): string {
   if (setting === 'system') {
-    return mdiThemeLightDark;
+    return HEADER_THEME_TRIGGER_ICON_PATHS.system;
   }
 
-  return resolvedTheme === 'dark' ? mdiWeatherNight : mdiWhiteBalanceSunny;
+  return resolvedTheme === 'dark' ? HEADER_THEME_TRIGGER_ICON_PATHS.dark : HEADER_THEME_TRIGGER_ICON_PATHS.light;
 }

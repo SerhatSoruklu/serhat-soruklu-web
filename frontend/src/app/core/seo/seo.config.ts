@@ -8,6 +8,7 @@ export interface SeoMetadata {
 
 const canonicalBaseUrl = 'https://serhatsoruklu.com';
 const defaultOgImage = '/assets/social/serhat-soruklu-og.svg';
+const defaultPersonImage = '/assets/portfolio-image/serhat-soruklu-portrait-818.jpg';
 
 export const pageSeoMetadata = {
   home: {
@@ -60,6 +61,7 @@ export const seoConfig = {
   defaultDescription: pageSeoMetadata.home.description,
   canonicalBaseUrl,
   defaultOgImage,
+  defaultPersonImage,
   twitterHandle: '',
   authorName: 'Serhat Soruklu',
   defaultLocale: 'en_GB'

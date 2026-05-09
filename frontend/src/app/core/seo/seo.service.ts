@@ -205,11 +205,44 @@ export class SeoService {
       });
     }
 
-    return {
+    const breadcrumb = {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       '@id': `${this.toAbsoluteUrl(routeSeo.path)}#breadcrumb`,
       itemListElement: items
+    };
+
+    if (routeSeo.path !== pageSeoMetadata.home.path) {
+      return breadcrumb;
+    }
+
+    const breadcrumbNode = {
+      '@type': breadcrumb['@type'],
+      '@id': breadcrumb['@id'],
+      itemListElement: breadcrumb.itemListElement
+    };
+
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumbNode,
+        {
+          '@type': 'Person',
+          '@id': `${this.toAbsoluteUrl(pageSeoMetadata.home.path)}#person`,
+          name: seoConfig.authorName,
+          url: this.toAbsoluteUrl(pageSeoMetadata.home.path),
+          image: this.toAbsoluteUrl(seoConfig.defaultPersonImage)
+        },
+        {
+          '@type': 'WebSite',
+          '@id': `${this.toAbsoluteUrl(pageSeoMetadata.home.path)}#website`,
+          name: seoConfig.siteName,
+          url: this.toAbsoluteUrl(pageSeoMetadata.home.path),
+          publisher: {
+            '@id': `${this.toAbsoluteUrl(pageSeoMetadata.home.path)}#person`
+          }
+        }
+      ]
     };
   }
 

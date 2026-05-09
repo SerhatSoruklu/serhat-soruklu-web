@@ -1,0 +1,47 @@
+{
+  "classes": "theme-dark theme-resolved-dark",
+  "viewport": {
+    "width": 360,
+    "height": 780
+  },
+  "bodyScrollWidth": 360,
+  "frame": {
+    "left": 20,
+    "right": 340,
+    "top": 28.38,
+    "bottom": 1897.14,
+    "width": 320,
+    "height": 1868.77
+  },
+  "framePadding": "16px",
+  "panel": {
+    "left": 37,
+    "right": 323,
+    "top": 310.38,
+    "bottom": 1025.44,
+    "width": 286,
+    "height": 715.06
+  },
+  "coupynLogo": {
+    "left": 56,
+    "right": 236.91,
+    "top": 365.38,
+    "bottom": 401.38,
+    "width": 180.91,
+    "height": 36
+  },
+  "coupynFont": "\"Coupyn Logo Open Sans\", \"Open Sans\", Arial, sans-serif",
+  "coupynScriptFont": "\"Coupyn Logo Pacifico\", Pacifico, Caveat, \"Segoe Script\", \"Brush Script MT\", cursive",
+  "chatLogo": {
+    "left": 56,
+    "right": 298,
+    "top": 1098.44,
+    "bottom": 1138.77,
+    "width": 242,
+    "height": 40.33
+  },
+  "chatStroke": "rgb(226, 232, 240)",
+  "chatPdmFill": "rgb(96, 165, 250)",
+  "gapSystemsToPrinciples": 32,
+  "gapPrinciplesToNext": 32
+}

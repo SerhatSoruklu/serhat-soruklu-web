@@ -1,0 +1,24 @@
+{
+  "bodyScrollWidth": 820,
+  "viewportWidth": 820,
+  "coupynWeight": "700",
+  "chatPdmColor": "rgb(37, 99, 235)",
+  "chatCircle": {
+    "left": 64,
+    "right": 89.83,
+    "width": 25.83,
+    "height": 25.83
+  },
+  "chatLine": {
+    "left": 89.83,
+    "right": 115.66,
+    "width": 25.83,
+    "height": 3
+  },
+  "chatSquare": {
+    "left": 122.63,
+    "right": 141.22,
+    "width": 18.59,
+    "height": 18.59
+  }
+}
