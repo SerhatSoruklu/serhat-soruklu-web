@@ -1,6 +1,369 @@
-<section class="page-stripe page-stripe--home" aria-labelledby="home-title">
-  <div class="page-stripe__inner">
-    <p class="page-stripe__eyebrow">SERHATSORUKLU.COM</p>
-    <h1 id="home-title">Serhat Soruklu</h1>
-  </div>
-</section>
+<div class="home-page">
+  <section class="home-hero layout-section" aria-labelledby="home-title">
+    <div class="home-hero__background" aria-hidden="true">
+      <svg class="home-hero__grid" viewBox="0 0 1200 720" preserveAspectRatio="none" focusable="false">
+        <path d="M-80 188C176 166 382 150 612 128C842 106 1016 90 1280 74"></path>
+        <path d="M-70 412C182 372 366 354 560 340C820 322 1010 304 1260 280"></path>
+        <path d="M168 -40L250 760M650 -40L708 760M1028 -40L1068 760"></path>
+      </svg>
+      <svg class="home-hero__signal" viewBox="0 0 1200 720" preserveAspectRatio="none" focusable="false">
+        <path d="M86 512C236 442 360 452 486 382C604 316 708 324 846 250C968 184 1062 176 1160 152"></path>
+        <path d="M150 310H420L520 360H654L760 432H1048"></path>
+        <path d="M260 198C370 218 442 254 522 314L646 406H824L1028 348"></path>
+        <circle cx="420" cy="310" r="4.5"></circle>
+        <circle cx="520" cy="360" r="4.5"></circle>
+        <circle cx="760" cy="432" r="4.5"></circle>
+        <circle cx="846" cy="250" r="4.5"></circle>
+      </svg>
+    </div>
+
+    <div class="home-hero__inner layout-container--wide">
+      <div class="home-hero__layout">
+        <div class="home-hero__content">
+          <p class="home-hero__eyebrow">SERHATSORUKLU.COM</p>
+          <p class="home-hero__intro">I’m Serhat Soruklu.</p>
+          <h1 id="home-title">
+            <span>I build fast, structured web platforms </span>
+            <span>with the discipline of an <em>architect</em> </span>
+            <span> and the urgency of a <em class="home-hero__emphasis--soft">founder</em>.</span>
+          </h1>
+
+          <div class="home-hero__support">
+            <p class="home-hero__subtitle">
+              Systems architect building deterministic systems, scalable infrastructure, and long-horizon internet platforms.
+            </p>
+
+            <ul class="home-hero__proof" aria-label="Selected proof points">
+              <li aria-label="Coupyn, 950K+ company pages">
+                <span>Coupyn</span>
+                <svg class="home-hero__proof-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <circle cx="12" cy="12" r="6"></circle>
+                  <circle cx="12" cy="12" r="2.5"></circle>
+                </svg>
+                <span>950K+ company pages</span>
+              </li>
+              <li aria-label="ChatPDM, Deterministic governance">
+                <span>ChatPDM</span>
+                <svg class="home-hero__proof-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <circle cx="12" cy="12" r="6"></circle>
+                  <circle cx="12" cy="12" r="2.5"></circle>
+                </svg>
+                <span>Governance System</span>
+              </li>
+              <li>Self-managed infrastructure</li>
+            </ul>
+          </div>
+
+          <div class="home-hero__actions" aria-label="Homepage actions">
+            <a class="site-button site-button-primary" routerLink="/systems">View Systems</a>
+            <a class="site-button site-button-secondary" routerLink="/writing">Read Writing</a>
+          </div>
+        </div>
+
+        <figure class="home-hero__portrait">
+          <picture>
+            <source
+              type="image/avif"
+              srcset="
+                /assets/portfolio-image/serhat-soruklu-portrait-480.avif 480w,
+                /assets/portfolio-image/serhat-soruklu-portrait-720.avif 720w,
+                /assets/portfolio-image/serhat-soruklu-portrait-818.avif 818w
+              "
+              sizes="(min-width: 1728px) 420px, (min-width: 1280px) 380px, (min-width: 1024px) 330px, (min-width: 768px) 420px, calc(100vw - 40px)"
+            >
+            <source
+              type="image/webp"
+              srcset="
+                /assets/portfolio-image/serhat-soruklu-portrait-480.webp 480w,
+                /assets/portfolio-image/serhat-soruklu-portrait-720.webp 720w,
+                /assets/portfolio-image/serhat-soruklu-portrait-818.webp 818w
+              "
+              sizes="(min-width: 1728px) 420px, (min-width: 1280px) 380px, (min-width: 1024px) 330px, (min-width: 768px) 420px, calc(100vw - 40px)"
+            >
+            <img
+              src="/assets/portfolio-image/serhat-soruklu-portrait-818.jpg"
+              srcset="
+                /assets/portfolio-image/serhat-soruklu-portrait-480.jpg 480w,
+                /assets/portfolio-image/serhat-soruklu-portrait-720.jpg 720w,
+                /assets/portfolio-image/serhat-soruklu-portrait-818.jpg 818w
+              "
+              sizes="(min-width: 1728px) 420px, (min-width: 1280px) 380px, (min-width: 1024px) 330px, (min-width: 768px) 420px, calc(100vw - 40px)"
+              width="818"
+              height="1023"
+              alt="Serhat Soruklu, systems architect and founder, in a technical workspace."
+              decoding="async"
+              fetchpriority="high"
+              loading="eager"
+            >
+          </picture>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-systems layout-section" aria-labelledby="selected-systems-title">
+    <div class="home-section-frame">
+      <div class="home-systems__inner">
+        <div class="home-systems__header">
+          <p class="home-section__phase">SELECTED SYSTEMS</p>
+          <h2 id="selected-systems-title">Built Systems, Not Concepts</h2>
+          <p>
+            A small selection of platforms built with architectural discipline, operational control, and long-term system thinking.
+          </p>
+        </div>
+
+        <div class="home-systems__list">
+        <article class="system-panel system-panel--coupyn" aria-labelledby="coupyn-system-title">
+          <div class="system-panel__content">
+            <p class="system-panel__eyebrow">Commerce Infrastructure</p>
+            <h3 id="coupyn-system-title" class="system-panel__brand-title system-panel__brand-title--coupyn">
+              <a
+                class="project-logo-link"
+                href="https://coupyn.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                appTooltip="https://coupyn.com"
+                [appTooltipPlacement]="projectTitleTooltipPlacement"
+                aria-label="Open Coupyn.com in a new tab">
+                <span class="project-logo project-logo--coupyn" aria-hidden="true">
+                  <span class="project-logo__coupyn-word">Coupyn</span>
+                  <span class="project-logo__coupyn-script">.com</span>
+                </span>
+              </a>
+            </h3>
+            <p class="system-panel__statement">
+              Outcome-driven commerce infrastructure built for long-horizon trust and scale.
+            </p>
+
+            <ul class="system-panel__signals" aria-label="Coupyn proof signals">
+              <li>950K+ company pages</li>
+              <li>Live coupon and referral marketplace</li>
+              <li>Self-managed OVH infrastructure</li>
+            </ul>
+
+            <div class="system-panel__stack" aria-label="Coupyn technology stack">
+              <span>Angular</span>
+              <span>Node.js</span>
+              <span>MongoDB</span>
+              <span>OVH</span>
+            </div>
+
+            <a class="site-button site-button-secondary system-panel__button system-panel__button--quiet" routerLink="/systems">
+              Explore Coupyn System
+            </a>
+          </div>
+
+          <div class="system-panel__diagram" aria-hidden="true">
+            <svg viewBox="0 0 560 360" focusable="false">
+              <path class="diagram-grid-line" d="M54 76H506M54 180H506M54 284H506"></path>
+              <path class="diagram-grid-line" d="M126 44V316M280 44V316M434 44V316"></path>
+              <path class="diagram-path diagram-path--soft diagram-path--wide" d="M104 78C176 48 226 92 286 76C350 58 406 64 492 86"></path>
+              <path class="diagram-path diagram-path--soft" d="M96 296C172 278 226 304 286 286C350 266 396 276 492 246"></path>
+              <path class="diagram-path diagram-path--primary" d="M92 110H158L226 154"></path>
+              <path class="diagram-path" d="M92 180H226"></path>
+              <path class="diagram-path diagram-path--primary" d="M92 250H158L226 206"></path>
+              <path class="diagram-path diagram-path--primary" d="M334 180H378L424 116H492"></path>
+              <path class="diagram-path" d="M334 180H396"></path>
+              <path class="diagram-path diagram-path--primary" d="M334 180H378L424 252H492"></path>
+              <path class="diagram-path diagram-path--soft" d="M334 206H398L424 252"></path>
+              <g class="diagram-node-group">
+                <circle class="diagram-node" cx="92" cy="110" r="6"></circle>
+                <circle class="diagram-node" cx="92" cy="180" r="7"></circle>
+                <circle class="diagram-node diagram-node--gold" cx="92" cy="250" r="8"></circle>
+                <circle class="diagram-node" cx="158" cy="110" r="4"></circle>
+                <circle class="diagram-node" cx="158" cy="250" r="4"></circle>
+                <circle class="diagram-node diagram-node--gold diagram-node--hub" cx="280" cy="180" r="10"></circle>
+                <circle class="diagram-node" cx="378" cy="180" r="6"></circle>
+                <circle class="diagram-node diagram-node--gold" cx="424" cy="116" r="8"></circle>
+                <circle class="diagram-node" cx="492" cy="116" r="6"></circle>
+                <circle class="diagram-node" cx="424" cy="252" r="6"></circle>
+                <circle class="diagram-node diagram-node--gold" cx="492" cy="252" r="8"></circle>
+              </g>
+              <rect class="diagram-terminal diagram-terminal--hub" x="226" y="140" width="108" height="80" rx="10"></rect>
+              <rect class="diagram-terminal" x="424" y="88" width="82" height="56" rx="8"></rect>
+              <rect class="diagram-terminal" x="424" y="224" width="82" height="56" rx="8"></rect>
+            </svg>
+          </div>
+        </article>
+
+        <article class="system-panel system-panel--chatpdm" aria-labelledby="chatpdm-system-title">
+          <div class="system-panel__content">
+            <p class="system-panel__eyebrow">Deterministic Governance</p>
+            <h3 id="chatpdm-system-title" class="system-panel__brand-title system-panel__brand-title--chatpdm">
+              <a
+                class="project-logo-link"
+                href="https://chatpdm.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                appTooltip="https://chatpdm.com"
+                [appTooltipPlacement]="projectTitleTooltipPlacement"
+                aria-label="Open ChatPDM in a new tab">
+                <span class="project-logo project-logo--chatpdm" aria-hidden="true">
+                  <span class="project-logo__chatpdm-mark">
+                    <span class="project-logo__chatpdm-circle"></span>
+                    <span class="project-logo__chatpdm-line"></span>
+                    <span class="project-logo__chatpdm-square"></span>
+                  </span>
+                  <span class="project-logo__chatpdm-wordmark">
+                    <span class="project-logo__chatpdm-chat">Chat</span><span class="project-logo__chatpdm-pdm">PDM</span>
+                  </span>
+                </span>
+              </a>
+            </h3>
+            <p class="system-panel__statement">
+              A deterministic language governance system designed to resolve, refuse, and prevent semantic drift.
+            </p>
+
+            <ul class="system-panel__signals" aria-label="ChatPDM proof signals">
+              <li>Resolve-or-refuse runtime model</li>
+              <li>Explicit constraint contracts</li>
+              <li>Source-grounded concept packets</li>
+              <li>Built for auditability and safe failure</li>
+            </ul>
+
+            <div class="system-panel__stack" aria-label="ChatPDM system stack">
+              <span>Runtime Model</span>
+              <span>API Contracts</span>
+              <span>Constraint Gates</span>
+            </div>
+
+            <a class="site-button site-button-secondary system-panel__button system-panel__button--quiet" routerLink="/systems">
+              Explore ChatPDM System
+            </a>
+          </div>
+
+          <div class="system-panel__diagram" aria-hidden="true">
+            <svg viewBox="0 0 560 360" focusable="false">
+              <path class="diagram-grid-line" d="M64 82H496M64 180H496M64 278H496"></path>
+              <path class="diagram-grid-line" d="M138 50V310M282 50V310M426 50V310"></path>
+              <path class="diagram-path diagram-path--primary" d="M76 180H164L230 180"></path>
+              <path class="diagram-path diagram-path--soft" d="M164 180L230 128H282"></path>
+              <path class="diagram-path diagram-path--soft" d="M164 180L230 232H282"></path>
+              <path class="diagram-path" d="M342 166H380L420 108H500"></path>
+              <path class="diagram-path diagram-path--slow" d="M342 194H380L420 252H500"></path>
+              <path class="diagram-path diagram-path--soft diagram-path--wide" d="M234 180C262 154 304 154 334 180C304 206 262 206 234 180"></path>
+              <circle class="diagram-node diagram-node--gold" cx="76" cy="180" r="8"></circle>
+              <circle class="diagram-node" cx="164" cy="180" r="7"></circle>
+              <circle class="diagram-node diagram-node--gold diagram-node--hub" cx="282" cy="180" r="10"></circle>
+              <circle class="diagram-node" cx="380" cy="108" r="7"></circle>
+              <circle class="diagram-node" cx="380" cy="252" r="7"></circle>
+              <circle class="diagram-node diagram-node--gold" cx="500" cy="108" r="7"></circle>
+              <circle class="diagram-node" cx="500" cy="252" r="7"></circle>
+              <rect class="diagram-terminal diagram-terminal--hub" x="230" y="128" width="112" height="104" rx="10"></rect>
+              <rect class="diagram-terminal" x="420" y="78" width="82" height="60" rx="8"></rect>
+              <rect class="diagram-terminal" x="420" y="222" width="82" height="60" rx="8"></rect>
+            </svg>
+          </div>
+        </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-principles layout-section" aria-labelledby="principles-title">
+    <div class="home-section-frame">
+      <div class="home-principles__inner">
+        <div class="home-principles__header">
+          <p class="home-section__phase">PRINCIPLES</p>
+          <h2 id="principles-title">Principles Behind The Systems</h2>
+          <p>Systems built for clarity, resilience, operational control, and long-term trust.</p>
+        </div>
+
+        <ol class="home-principles__list" aria-label="Principles behind the systems">
+          <li class="principle-row">
+            <span class="principle-row__index" aria-hidden="true">01</span>
+            <div class="principle-row__body">
+              <h3>Explicitness Over Ambiguity</h3>
+              <p>Systems should fail clearly instead of drifting silently.</p>
+            </div>
+          </li>
+          <li class="principle-row">
+            <span class="principle-row__index" aria-hidden="true">02</span>
+            <div class="principle-row__body">
+              <h3>Structure Creates Trust</h3>
+              <p>Predictable behavior, observable state, and operational discipline make systems reliable.</p>
+            </div>
+          </li>
+          <li class="principle-row">
+            <span class="principle-row__index" aria-hidden="true">03</span>
+            <div class="principle-row__body">
+              <h3>Long-Horizon Thinking</h3>
+              <p>Platforms should survive growth, pressure, and iteration without losing coherence.</p>
+            </div>
+          </li>
+          <li class="principle-row">
+            <span class="principle-row__index" aria-hidden="true">04</span>
+            <div class="principle-row__body">
+              <h3>Real Systems Over Hype</h3>
+              <p>Execution, infrastructure, and measurable outcomes matter more than presentation.</p>
+            </div>
+          </li>
+          <li class="principle-row">
+            <span class="principle-row__index" aria-hidden="true">05</span>
+            <div class="principle-row__body">
+              <h3>Control The Stack</h3>
+              <p>Owning the architecture deeply creates resilience, performance, and independence.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-next layout-section" aria-labelledby="next-step-title">
+    <div class="home-section-frame">
+      <div class="home-next__inner">
+        <div class="home-next__header">
+          <p class="home-section__phase">NEXT STEP</p>
+          <h2 id="next-step-title">Explore The Systems In Depth</h2>
+          <p>Detailed system breakdowns, engineering principles, infrastructure decisions, and long-horizon platform thinking.</p>
+        </div>
+
+        <nav class="home-next__nav" aria-label="Next homepage paths">
+        <a class="home-next__panel" routerLink="/systems">
+          <span class="home-next__panel-copy">
+            <span class="home-next__panel-title">
+              <svg class="home-next__title-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M21 16V13C21 11.89 20.11 11 19 11H13V8H15V2H9V8H11V11H5C3.89 11 3 11.89 3 13V16H1V22H7V16H5V13H11V16H9V22H15V16H13V13H19V16H17V22H23V16H21M11 4H13V6H11V4M5 20H3V18H5V20M13 20H11V18H13V20M21 20H19V18H21V20Z"></path>
+              </svg>
+              <span>Systems</span>
+            </span>
+            <span class="home-next__panel-text">Explore Coupyn and ChatPDM systems</span>
+          </span>
+          <svg class="home-next__panel-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M5 12H17M13 7L18 12L13 17"></path>
+          </svg>
+        </a>
+        <a class="home-next__panel" routerLink="/writing">
+          <span class="home-next__panel-copy">
+            <span class="home-next__panel-title">
+              <svg class="home-next__title-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M19 3H5A2 2 0 0 0 3 5V19A2 2 0 0 0 5 21H19A2 2 0 0 0 21 19V5A2 2 0 0 0 19 3M19 19H5V5H19V19M17 9H7V7H17V9M17 13H7V11H17V13M14 17H7V15H14V17Z"></path>
+              </svg>
+              <span>Writing</span>
+            </span>
+            <span class="home-next__panel-text">Essays, architecture, and engineering thinking</span>
+          </span>
+          <svg class="home-next__panel-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M5 12H17M13 7L18 12L13 17"></path>
+          </svg>
+        </a>
+        <a class="home-next__panel" routerLink="/github">
+          <span class="home-next__panel-copy">
+            <span class="home-next__panel-title">
+              <svg class="home-next__title-icon home-next__title-icon--github" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.5,20.14 9.5,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.5,20.68 14.5,21C14.5,21.27 14.66,21.59 15.17,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"></path>
+              </svg>
+              <span>GitHub</span>
+            </span>
+            <span class="home-next__panel-text">Open-source systems and implementation details</span>
+          </span>
+          <svg class="home-next__panel-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M5 12H17M13 7L18 12L13 17"></path>
+          </svg>
+        </a>
+        </nav>
+      </div>
+    </div>
+  </section>
+</div>

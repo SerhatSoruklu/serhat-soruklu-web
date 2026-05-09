@@ -1,0 +1,35 @@
+{
+  "classes": "theme-system theme-resolved-dark",
+  "viewport": {
+    "width": 820,
+    "height": 1180
+  },
+  "bodyScrollWidth": 820,
+  "systemsFrame": {
+    "left": 20,
+    "right": 800,
+    "width": 780,
+    "top": 23.63,
+    "bottom": 2162.97,
+    "height": 2139.34
+  },
+  "framePadding": "20px",
+  "coupynLogo": {
+    "left": 64,
+    "right": 270.84,
+    "width": 206.84,
+    "top": 327.92,
+    "bottom": 368.92,
+    "height": 41
+  },
+  "chatLogo": {
+    "left": 64,
+    "right": 293.59,
+    "width": 229.59,
+    "top": 1225.02,
+    "bottom": 1263.28,
+    "height": 38.27
+  },
+  "gapSystemsToPrinciples": 48,
+  "gapPrinciplesToNext": 48
+}

@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { mdiThemeLightDark, mdiWeatherNight, mdiWhiteBalanceSunny } from '@mdi/js';
 
 import { routes } from '../../../app.routes';
-import { HEADER_NAV_ITEMS, HEADER_THEME_OPTIONS } from '../header-icons';
+import { HEADER_NAV_ITEMS, HEADER_THEME_OPTIONS, HEADER_THEME_TRIGGER_ICON_PATHS } from '../header-icons';
 import { MobileHeaderComponent } from './mobile-header.component';
 
 describe('MobileHeaderComponent', () => {
@@ -31,21 +31,16 @@ describe('MobileHeaderComponent', () => {
     expect(component.themeService.setting()).toBe('light');
   });
 
-  it('uses shared navigation, theme options, and trigger icons', () => {
+  it('uses shared navigation, theme options, and trigger icon paths', () => {
     const fixture = TestBed.createComponent(MobileHeaderComponent);
     const component = fixture.componentInstance;
 
     expect(component.navItems).toBe(HEADER_NAV_ITEMS);
     expect(component.themeOptions).toBe(HEADER_THEME_OPTIONS);
-
-    component.setTheme('dark');
-    expect(component.themeTriggerIconPath()).toBe(mdiWeatherNight);
-
-    component.setTheme('light');
-    expect(component.themeTriggerIconPath()).toBe(mdiWhiteBalanceSunny);
-
-    component.setTheme('system');
-    expect(component.themeTriggerIconPath()).toBe(mdiThemeLightDark);
+    expect(component.themeTriggerIconPaths).toBe(HEADER_THEME_TRIGGER_ICON_PATHS);
+    expect(component.themeTriggerIconPaths.dark).toBe(mdiWeatherNight);
+    expect(component.themeTriggerIconPaths.light).toBe(mdiWhiteBalanceSunny);
+    expect(component.themeTriggerIconPaths.system).toBe(mdiThemeLightDark);
   });
 
   it('closes open panels on outside click and escape', () => {

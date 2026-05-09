@@ -1,0 +1,12 @@
+{
+  "bodyScrollWidth": 360,
+  "viewportWidth": 360,
+  "describedBy": "app-tooltip-3",
+  "tooltipText": "Open official site",
+  "tooltipClasses": "app-tooltip app-tooltip--right app-tooltip--visible",
+  "tooltipBackground": "rgb(16, 20, 28)",
+  "tooltipColor": "rgb(245, 247, 250)",
+  "tooltipLeft": 222.83,
+  "tooltipRight": 348,
+  "arrowTop": "17.09375px"
+}

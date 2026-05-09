@@ -11,7 +11,7 @@ import {
   RendererStyleFlags2
 } from '@angular/core';
 
-type TooltipPlacement = 'top' | 'bottom';
+type TooltipPlacement = 'top' | 'right' | 'bottom';
 
 let tooltipId = 0;
 
@@ -54,10 +54,10 @@ export class TooltipDirective implements OnDestroy {
       this.renderer.setAttribute(this.tooltipElement, 'id', this.id);
       this.renderer.setAttribute(this.tooltipElement, 'role', 'tooltip');
       this.renderer.addClass(this.tooltipElement, 'app-tooltip');
-      this.renderer.addClass(this.tooltipElement, `app-tooltip--${this.appTooltipPlacement()}`);
       this.renderer.appendChild(this.document.body, this.tooltipElement);
     }
 
+    this.applyPlacementClass();
     this.renderer.setProperty(this.tooltipElement, 'textContent', this.appTooltip());
     this.renderer.setAttribute(this.elementRef.nativeElement, 'aria-describedby', this.id);
     this.positionTooltip();
@@ -98,17 +98,42 @@ export class TooltipDirective implements OnDestroy {
     const viewportPadding = 12;
     const arrowPadding = 14;
     const viewportWidth = this.document.documentElement.clientWidth;
+    const viewportHeight = this.document.documentElement.clientHeight;
+    const placement = this.appTooltipPlacement();
     const centeredLeft = triggerBox.left + (triggerBox.width / 2) - (tooltipBox.width / 2);
-    const left = Math.min(Math.max(centeredLeft, viewportPadding), viewportWidth - tooltipBox.width - viewportPadding);
-    const top = this.appTooltipPlacement() === 'top'
-      ? triggerBox.top - tooltipBox.height - gap
-      : triggerBox.bottom + gap;
-    const triggerCenter = triggerBox.left + (triggerBox.width / 2);
-    const arrowOffset = Math.min(Math.max(triggerCenter - left, arrowPadding), tooltipBox.width - arrowPadding);
+    const centeredTop = triggerBox.top + (triggerBox.height / 2) - (tooltipBox.height / 2);
+    const horizontalLeft = Math.min(Math.max(centeredLeft, viewportPadding), viewportWidth - tooltipBox.width - viewportPadding);
+    const rightLeft = Math.min(
+      Math.max(triggerBox.right + gap, viewportPadding),
+      viewportWidth - tooltipBox.width - viewportPadding
+    );
+    const left = placement === 'right' ? rightLeft : horizontalLeft;
+    const top = placement === 'right'
+      ? Math.min(Math.max(centeredTop, viewportPadding), viewportHeight - tooltipBox.height - viewportPadding)
+      : placement === 'top'
+        ? triggerBox.top - tooltipBox.height - gap
+        : triggerBox.bottom + gap;
+    const triggerCenterX = triggerBox.left + (triggerBox.width / 2);
+    const triggerCenterY = triggerBox.top + (triggerBox.height / 2);
+    const arrowOffset = placement === 'right'
+      ? Math.min(Math.max(triggerCenterY - top, arrowPadding), tooltipBox.height - arrowPadding)
+      : Math.min(Math.max(triggerCenterX - left, arrowPadding), tooltipBox.width - arrowPadding);
 
     this.renderer.setStyle(this.tooltipElement, 'left', `${left}px`);
     this.renderer.setStyle(this.tooltipElement, 'top', `${Math.max(top, viewportPadding)}px`);
     this.renderer.setStyle(this.tooltipElement, '--tooltip-arrow-left', `${arrowOffset}px`, RendererStyleFlags2.DashCase);
+    this.renderer.setStyle(this.tooltipElement, '--tooltip-arrow-top', `${arrowOffset}px`, RendererStyleFlags2.DashCase);
+  }
+
+  private applyPlacementClass(): void {
+    if (!this.tooltipElement) {
+      return;
+    }
+
+    this.renderer.removeClass(this.tooltipElement, 'app-tooltip--top');
+    this.renderer.removeClass(this.tooltipElement, 'app-tooltip--right');
+    this.renderer.removeClass(this.tooltipElement, 'app-tooltip--bottom');
+    this.renderer.addClass(this.tooltipElement, `app-tooltip--${this.appTooltipPlacement()}`);
   }
 
   private destroyTooltip(): void {

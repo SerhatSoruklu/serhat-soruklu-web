@@ -1,0 +1,27 @@
+{
+  "bodyScrollWidth": 360,
+  "viewportWidth": 360,
+  "coupynWeight": "700",
+  "coupynScriptMarginLeft": "-2px",
+  "coupynScriptColor": "rgb(114, 172, 243)",
+  "chatPdmColor": "rgb(37, 99, 235)",
+  "chatCircle": {
+    "left": 56,
+    "right": 80,
+    "width": 24,
+    "height": 24
+  },
+  "chatLine": {
+    "left": 80,
+    "right": 104,
+    "width": 24,
+    "height": 3
+  },
+  "chatSquare": {
+    "left": 110.47,
+    "right": 127.73,
+    "width": 17.27,
+    "height": 17.27
+  },
+  "chatSquareMarginLeft": "6.48px"
+}

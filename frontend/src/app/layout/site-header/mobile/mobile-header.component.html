@@ -42,9 +42,17 @@
           data-testid="mobile-theme-menu-button"
           (click)="toggleThemeMenu()"
         >
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path [attr.d]="themeTriggerIconPath()"></path>
-          </svg>
+          <span class="menu-toggle" aria-hidden="true">
+            <svg class="menu-toggle__icon theme-icon--dark" viewBox="0 0 24 24" focusable="false">
+              <path [attr.d]="themeTriggerIconPaths.dark"></path>
+            </svg>
+            <svg class="menu-toggle__icon theme-icon--light" viewBox="0 0 24 24" focusable="false">
+              <path [attr.d]="themeTriggerIconPaths.light"></path>
+            </svg>
+            <svg class="menu-toggle__icon theme-icon--system" viewBox="0 0 24 24" focusable="false">
+              <path [attr.d]="themeTriggerIconPaths.system"></path>
+            </svg>
+          </span>
         </button>
 
         <div

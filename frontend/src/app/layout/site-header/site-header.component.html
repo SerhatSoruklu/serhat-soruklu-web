@@ -52,9 +52,17 @@
         data-testid="desktop-theme-menu-button"
         (click)="toggleThemeMenu()"
       >
-        <svg class="theme-selector__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path [attr.d]="themeTriggerIconPath()"></path>
-        </svg>
+        <span class="theme-selector__trigger-icons" aria-hidden="true">
+          <svg class="theme-selector__icon theme-selector__icon--dark" viewBox="0 0 24 24" focusable="false">
+            <path [attr.d]="themeTriggerIconPaths.dark"></path>
+          </svg>
+          <svg class="theme-selector__icon theme-selector__icon--light" viewBox="0 0 24 24" focusable="false">
+            <path [attr.d]="themeTriggerIconPaths.light"></path>
+          </svg>
+          <svg class="theme-selector__icon theme-selector__icon--system" viewBox="0 0 24 24" focusable="false">
+            <path [attr.d]="themeTriggerIconPaths.system"></path>
+          </svg>
+        </span>
       </button>
 
       @if (themeMenuOpen()) {

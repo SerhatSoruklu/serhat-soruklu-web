@@ -1,0 +1,11 @@
+{
+  "classes": "theme-light theme-resolved-light",
+  "bodyScrollWidth": 360,
+  "viewportWidth": 360,
+  "coupynWordColor": "rgb(31, 45, 77)",
+  "coupynScriptColor": "rgb(114, 172, 243)",
+  "chatStroke": "rgb(15, 23, 42)",
+  "chatPdmFill": "rgb(37, 99, 235)",
+  "framePadding": "16px",
+  "chatWidth": 242
+}
