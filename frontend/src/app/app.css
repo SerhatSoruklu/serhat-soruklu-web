@@ -7,7 +7,7 @@
 }
 
 .site-main {
-  min-height: calc(100vh - 84px);
+  min-height: 100vh;
   background:
     radial-gradient(circle at 76% -6%, rgba(214, 168, 79, 0.09), transparent 30%),
     radial-gradient(circle at 14% 42%, rgba(168, 176, 189, 0.035), transparent 28%),

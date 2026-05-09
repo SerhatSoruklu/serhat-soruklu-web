@@ -104,6 +104,25 @@ Rules:
 - Avoid random per-component spacing values and one-off magic numbers.
 - Keep spacing predictable and quiet; the site should feel clean and Google-like, not decorative.
 
+## Header Overlay Rule
+
+The site header is a fixed transparent overlay at the top of the viewport.
+
+New pages must start their first visual section behind the header so the header blends with the page/hero background at rest.
+
+Do:
+
+- Let the first section background extend underneath the header.
+- Add enough top padding inside the first section so content does not collide with the header.
+- Keep top/rest header transparent.
+- Use the scrolled/header-active backing only for readability.
+
+Do not:
+
+- Add a blank top spacer just for the header.
+- Add a solid page strip behind the header.
+- Make first sections start below the header unless the page intentionally has no visual background.
+
 ## Frontend CSS Conventions
 
 Do not dump all styling into `frontend/src/styles.css`. It should stay small and contain only imports for true global foundation styles.

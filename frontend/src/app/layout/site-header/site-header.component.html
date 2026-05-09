@@ -1,4 +1,9 @@
-<header class="site-header" data-testid="desktop-header">
+<header
+  class="site-header"
+  [class.site-header--scrolled]="isScrolled()"
+  data-testid="desktop-header"
+  [style.--scroll-progress]="scrollProgress()"
+>
   <div class="site-header__inner">
     <a class="site-brand" routerLink="/" aria-label="Serhat Soruklu home">
       <span class="site-brand__mark">
@@ -85,6 +90,10 @@
         </div>
       }
     </div>
+  </div>
+
+  <div class="site-header__scroll-progress" aria-hidden="true">
+    <span class="site-header__scroll-progress-bar"></span>
   </div>
 </header>
 

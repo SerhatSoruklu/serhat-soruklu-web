@@ -60,42 +60,87 @@
           </div>
         </div>
 
-        <figure class="home-hero__portrait">
-          <picture>
-            <source
-              type="image/avif"
-              srcset="
-                /assets/portfolio-image/serhat-soruklu-portrait-480.avif 480w,
-                /assets/portfolio-image/serhat-soruklu-portrait-720.avif 720w,
-                /assets/portfolio-image/serhat-soruklu-portrait-818.avif 818w
-              "
-              sizes="(min-width: 1728px) 420px, (min-width: 1280px) 380px, (min-width: 1024px) 330px, (min-width: 768px) 420px, calc(100vw - 40px)"
-            >
-            <source
-              type="image/webp"
-              srcset="
-                /assets/portfolio-image/serhat-soruklu-portrait-480.webp 480w,
-                /assets/portfolio-image/serhat-soruklu-portrait-720.webp 720w,
-                /assets/portfolio-image/serhat-soruklu-portrait-818.webp 818w
-              "
-              sizes="(min-width: 1728px) 420px, (min-width: 1280px) 380px, (min-width: 1024px) 330px, (min-width: 768px) 420px, calc(100vw - 40px)"
-            >
-            <img
-              src="/assets/portfolio-image/serhat-soruklu-portrait-818.jpg"
-              srcset="
-                /assets/portfolio-image/serhat-soruklu-portrait-480.jpg 480w,
-                /assets/portfolio-image/serhat-soruklu-portrait-720.jpg 720w,
-                /assets/portfolio-image/serhat-soruklu-portrait-818.jpg 818w
-              "
-              sizes="(min-width: 1728px) 420px, (min-width: 1280px) 380px, (min-width: 1024px) 330px, (min-width: 768px) 420px, calc(100vw - 40px)"
-              width="818"
-              height="1023"
-              alt="Serhat Soruklu, systems architect and founder, in a technical workspace."
-              decoding="async"
-              fetchpriority="high"
-              loading="eager"
-            >
-          </picture>
+        <figure class="home-hero__portrait" data-testid="home-hero-portrait">
+          <button
+            class="home-hero__portrait-trigger"
+            type="button"
+            aria-label="Open Serhat Soruklu portrait profile"
+            data-testid="home-hero-portrait-trigger"
+            (click)="openPortraitDialog()"
+          >
+            <span class="home-hero__portrait-frame">
+              <picture class="home-hero__portrait-layer home-hero__portrait-layer--dark" data-testid="home-hero-portrait-dark">
+                <source
+                  type="image/avif"
+                  srcset="
+                    /assets/portfolio-image/serhat-soruklu-portrait-480.avif 480w,
+                    /assets/portfolio-image/serhat-soruklu-portrait-720.avif 720w,
+                    /assets/portfolio-image/serhat-soruklu-portrait-818.avif 818w
+                  "
+                  sizes="(min-width: 1728px) 420px, (min-width: 1280px) 380px, (min-width: 1024px) 330px, (min-width: 768px) 420px, calc(100vw - 40px)"
+                >
+                <source
+                  type="image/webp"
+                  srcset="
+                    /assets/portfolio-image/serhat-soruklu-portrait-480.webp 480w,
+                    /assets/portfolio-image/serhat-soruklu-portrait-720.webp 720w,
+                    /assets/portfolio-image/serhat-soruklu-portrait-818.webp 818w
+                  "
+                  sizes="(min-width: 1728px) 420px, (min-width: 1280px) 380px, (min-width: 1024px) 330px, (min-width: 768px) 420px, calc(100vw - 40px)"
+                >
+                <img
+                  src="/assets/portfolio-image/serhat-soruklu-portrait-818.jpg"
+                  srcset="
+                    /assets/portfolio-image/serhat-soruklu-portrait-480.jpg 480w,
+                    /assets/portfolio-image/serhat-soruklu-portrait-720.jpg 720w,
+                    /assets/portfolio-image/serhat-soruklu-portrait-818.jpg 818w
+                  "
+                  sizes="(min-width: 1728px) 420px, (min-width: 1280px) 380px, (min-width: 1024px) 330px, (min-width: 768px) 420px, calc(100vw - 40px)"
+                  width="818"
+                  height="1022"
+                  alt="Serhat Soruklu, systems architect and founder, in a technical workspace."
+                  decoding="async"
+                  fetchpriority="high"
+                  loading="eager"
+                >
+              </picture>
+              <picture class="home-hero__portrait-layer home-hero__portrait-layer--light" data-testid="home-hero-portrait-light">
+                <source
+                  type="image/avif"
+                  srcset="
+                    /assets/portfolio-image/serhat-soruklu-portrait-light-480.avif 480w,
+                    /assets/portfolio-image/serhat-soruklu-portrait-light-720.avif 720w,
+                    /assets/portfolio-image/serhat-soruklu-portrait-light-818.avif 818w
+                  "
+                  sizes="(min-width: 1728px) 420px, (min-width: 1280px) 380px, (min-width: 1024px) 330px, (min-width: 768px) 420px, calc(100vw - 40px)"
+                >
+                <source
+                  type="image/webp"
+                  srcset="
+                    /assets/portfolio-image/serhat-soruklu-portrait-light-480.webp 480w,
+                    /assets/portfolio-image/serhat-soruklu-portrait-light-720.webp 720w,
+                    /assets/portfolio-image/serhat-soruklu-portrait-light-818.webp 818w
+                  "
+                  sizes="(min-width: 1728px) 420px, (min-width: 1280px) 380px, (min-width: 1024px) 330px, (min-width: 768px) 420px, calc(100vw - 40px)"
+                >
+                <img
+                  src="/assets/portfolio-image/serhat-soruklu-portrait-light-818.jpg"
+                  srcset="
+                    /assets/portfolio-image/serhat-soruklu-portrait-light-480.jpg 480w,
+                    /assets/portfolio-image/serhat-soruklu-portrait-light-720.jpg 720w,
+                    /assets/portfolio-image/serhat-soruklu-portrait-light-818.jpg 818w
+                  "
+                  sizes="(min-width: 1728px) 420px, (min-width: 1280px) 380px, (min-width: 1024px) 330px, (min-width: 768px) 420px, calc(100vw - 40px)"
+                  width="818"
+                  height="1022"
+                  alt=""
+                  decoding="async"
+                  fetchpriority="low"
+                  loading="eager"
+                >
+              </picture>
+            </span>
+          </button>
         </figure>
       </div>
     </div>
@@ -123,7 +168,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 appTooltip="https://coupyn.com"
-                [appTooltipPlacement]="projectTitleTooltipPlacement"
+                [appTooltipPlacement]="projectTitleTooltipPlacement()"
                 aria-label="Open Coupyn.com in a new tab">
                 <span class="project-logo project-logo--coupyn" aria-hidden="true">
                   <span class="project-logo__coupyn-word">Coupyn</span>
@@ -153,35 +198,96 @@
             </a>
           </div>
 
-          <div class="system-panel__diagram" aria-hidden="true">
-            <svg viewBox="0 0 560 360" focusable="false">
-              <path class="diagram-grid-line" d="M54 76H506M54 180H506M54 284H506"></path>
-              <path class="diagram-grid-line" d="M126 44V316M280 44V316M434 44V316"></path>
-              <path class="diagram-path diagram-path--soft diagram-path--wide" d="M104 78C176 48 226 92 286 76C350 58 406 64 492 86"></path>
-              <path class="diagram-path diagram-path--soft" d="M96 296C172 278 226 304 286 286C350 266 396 276 492 246"></path>
-              <path class="diagram-path diagram-path--primary" d="M92 110H158L226 154"></path>
-              <path class="diagram-path" d="M92 180H226"></path>
-              <path class="diagram-path diagram-path--primary" d="M92 250H158L226 206"></path>
-              <path class="diagram-path diagram-path--primary" d="M334 180H378L424 116H492"></path>
-              <path class="diagram-path" d="M334 180H396"></path>
-              <path class="diagram-path diagram-path--primary" d="M334 180H378L424 252H492"></path>
-              <path class="diagram-path diagram-path--soft" d="M334 206H398L424 252"></path>
-              <g class="diagram-node-group">
-                <circle class="diagram-node" cx="92" cy="110" r="6"></circle>
-                <circle class="diagram-node" cx="92" cy="180" r="7"></circle>
-                <circle class="diagram-node diagram-node--gold" cx="92" cy="250" r="8"></circle>
-                <circle class="diagram-node" cx="158" cy="110" r="4"></circle>
-                <circle class="diagram-node" cx="158" cy="250" r="4"></circle>
-                <circle class="diagram-node diagram-node--gold diagram-node--hub" cx="280" cy="180" r="10"></circle>
-                <circle class="diagram-node" cx="378" cy="180" r="6"></circle>
-                <circle class="diagram-node diagram-node--gold" cx="424" cy="116" r="8"></circle>
-                <circle class="diagram-node" cx="492" cy="116" r="6"></circle>
-                <circle class="diagram-node" cx="424" cy="252" r="6"></circle>
-                <circle class="diagram-node diagram-node--gold" cx="492" cy="252" r="8"></circle>
+          <div class="system-panel__diagram" data-testid="coupyn-architecture-diagram" aria-hidden="true">
+            <svg class="architecture-svg architecture-svg--coupyn" viewBox="0 0 460 310" focusable="false">
+              <defs>
+                <marker id="coupyn-arrow-neutral" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+                  <path class="architecture-marker architecture-marker--neutral" d="M0 0L8 4L0 8Z"></path>
+                </marker>
+                <marker id="coupyn-arrow-gold" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+                  <path class="architecture-marker architecture-marker--gold" d="M0 0L8 4L0 8Z"></path>
+                </marker>
+                <marker id="coupyn-arrow-blue" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+                  <path class="architecture-marker architecture-marker--blue" d="M0 0L8 4L0 8Z"></path>
+                </marker>
+              </defs>
+
+              <path class="architecture-grid-line" d="M34 42H426M34 157H426M34 286H426"></path>
+              <path class="architecture-grid-line" d="M77 34V286M230 34V286M383 34V286"></path>
+
+              <path class="architecture-rail architecture-rail--neutral" marker-end="url(#coupyn-arrow-neutral)" d="M124 94H183"></path>
+              <path class="architecture-rail architecture-rail--blue" marker-end="url(#coupyn-arrow-blue)" d="M230 112V132"></path>
+              <path class="architecture-rail architecture-rail--blue" marker-end="url(#coupyn-arrow-blue)" d="M292 157H320C332 157 339 148 352 126"></path>
+              <path class="architecture-rail architecture-rail--gold" marker-end="url(#coupyn-arrow-gold)" d="M383 134V196"></path>
+              <path class="architecture-rail architecture-rail--gold" marker-end="url(#coupyn-arrow-gold)" d="M336 237H277"></path>
+              <path class="architecture-rail architecture-rail--gold" marker-end="url(#coupyn-arrow-gold)" d="M183 237H124"></path>
+              <path class="architecture-rail architecture-rail--feedback architecture-rail--commerce-feedback" marker-end="url(#coupyn-arrow-blue)" d="M77 196V142"></path>
+
+              <rect class="architecture-engine architecture-card-frame--blue" x="168" y="132" width="124" height="50" rx="14"></rect>
+              <text class="architecture-engine-label architecture-engine-label--commerce" x="230" y="154">Commerce</text>
+              <text class="architecture-engine-label architecture-engine-label--soft architecture-engine-label--commerce-soft" x="230" y="171">Signal Engine</text>
+
+              <g class="architecture-card architecture-card--coupyn-node" transform="translate(30 54)">
+                <rect class="architecture-card-frame" width="94" height="80" rx="10"></rect>
+                <g class="architecture-icon architecture-icon--neutral" transform="translate(32 11)">
+                  <rect x="0" y="8" width="30" height="28" rx="3"></rect>
+                  <path d="M7 8V2H23V8M8 18H12M18 18H22M8 27H12M18 27H22"></path>
+                </g>
+                <text class="architecture-label architecture-label--compact architecture-label--node" x="47" y="58">Company</text>
+                <text class="architecture-caption architecture-caption--node" x="47" y="72">Index</text>
               </g>
-              <rect class="diagram-terminal diagram-terminal--hub" x="226" y="140" width="108" height="80" rx="10"></rect>
-              <rect class="diagram-terminal" x="424" y="88" width="82" height="56" rx="8"></rect>
-              <rect class="diagram-terminal" x="424" y="224" width="82" height="56" rx="8"></rect>
+
+              <g class="architecture-card architecture-card--coupyn-node" transform="translate(183 34)">
+                <rect class="architecture-card-frame architecture-card-frame--blue" width="94" height="78" rx="10"></rect>
+                <g class="architecture-icon architecture-icon--blue" transform="translate(32 12)">
+                  <path d="M4 2H22L34 14L16 32L-2 14Z"></path>
+                  <circle cx="22" cy="10" r="2.5"></circle>
+                </g>
+                <text class="architecture-label architecture-label--compact architecture-label--node" x="47" y="58">Offer</text>
+                <text class="architecture-caption architecture-caption--node" x="47" y="72">Layer</text>
+              </g>
+
+              <g class="architecture-card architecture-card--coupyn-node" transform="translate(336 54)">
+                <rect class="architecture-card-frame" width="94" height="80" rx="10"></rect>
+                <g class="architecture-icon architecture-icon--neutral" transform="translate(33 11)">
+                  <path d="M3 3L27 18L17 21L12 32Z"></path>
+                  <path d="M22 6C29 10 33 17 32 25M28 3C38 9 43 19 41 31"></path>
+                </g>
+                <text class="architecture-label architecture-label--compact architecture-label--node" x="47" y="58">User</text>
+                <text class="architecture-caption architecture-caption--node" x="47" y="72">Actions</text>
+              </g>
+
+              <g class="architecture-card architecture-card--coupyn-node architecture-card--trusted" transform="translate(336 196)">
+                <rect class="architecture-card-frame architecture-card-frame--trusted" width="94" height="82" rx="10"></rect>
+                <g class="architecture-icon architecture-icon--gold" transform="translate(32 10)">
+                  <path d="M16 2L30 8V18C30 28 24 35 16 38C8 35 2 28 2 18V8Z"></path>
+                  <path d="M10 20L15 25L24 15"></path>
+                </g>
+                <text class="architecture-label architecture-label--compact architecture-label--node" x="47" y="58">Proof</text>
+                <text class="architecture-caption architecture-caption--node" x="47" y="72">Signals</text>
+              </g>
+
+              <g class="architecture-card architecture-card--coupyn-node architecture-card--trusted" transform="translate(183 196)">
+                <rect class="architecture-card-frame architecture-card-frame--trusted" width="94" height="82" rx="10"></rect>
+                <g class="architecture-icon architecture-icon--gold" transform="translate(31 12)">
+                  <path d="M2 34H32"></path>
+                  <path d="M6 34V24M16 34V16M26 34V8"></path>
+                  <path d="M12 11L26 3L34 11"></path>
+                </g>
+                <text class="architecture-label architecture-label--compact architecture-label--node" x="47" y="58">Ranking</text>
+                <text class="architecture-caption architecture-caption--node" x="47" y="72">Visibility</text>
+              </g>
+
+              <g class="architecture-card architecture-card--coupyn-node architecture-card--trusted" transform="translate(30 196)">
+                <rect class="architecture-card-frame architecture-card-frame--trusted" width="94" height="82" rx="10"></rect>
+                <g class="architecture-icon architecture-icon--gold" transform="translate(31 11)">
+                  <path d="M17 2L28 9V22C28 30 23 35 17 38C11 35 6 30 6 22V9Z"></path>
+                  <path d="M12 21L16 25L24 16"></path>
+                  <path d="M30 32L36 26"></path>
+                </g>
+                <text class="architecture-label architecture-label--compact architecture-label--node" x="47" y="58">Trust</text>
+                <text class="architecture-caption architecture-caption--node" x="47" y="72">Lift</text>
+              </g>
             </svg>
           </div>
         </article>
@@ -196,7 +302,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
                 appTooltip="https://chatpdm.com"
-                [appTooltipPlacement]="projectTitleTooltipPlacement"
+                [appTooltipPlacement]="projectTitleTooltipPlacement()"
                 aria-label="Open ChatPDM in a new tab">
                 <span class="project-logo project-logo--chatpdm" aria-hidden="true">
                   <span class="project-logo__chatpdm-mark">
@@ -211,7 +317,7 @@
               </a>
             </h3>
             <p class="system-panel__statement">
-              A deterministic language governance system designed to resolve, refuse, and prevent semantic drift.
+              A deterministic language level governance system designed to resolve, refuse, and prevent semantic drift.
             </p>
 
             <ul class="system-panel__signals" aria-label="ChatPDM proof signals">
@@ -232,26 +338,101 @@
             </a>
           </div>
 
-          <div class="system-panel__diagram" aria-hidden="true">
-            <svg viewBox="0 0 560 360" focusable="false">
-              <path class="diagram-grid-line" d="M64 82H496M64 180H496M64 278H496"></path>
-              <path class="diagram-grid-line" d="M138 50V310M282 50V310M426 50V310"></path>
-              <path class="diagram-path diagram-path--primary" d="M76 180H164L230 180"></path>
-              <path class="diagram-path diagram-path--soft" d="M164 180L230 128H282"></path>
-              <path class="diagram-path diagram-path--soft" d="M164 180L230 232H282"></path>
-              <path class="diagram-path" d="M342 166H380L420 108H500"></path>
-              <path class="diagram-path diagram-path--slow" d="M342 194H380L420 252H500"></path>
-              <path class="diagram-path diagram-path--soft diagram-path--wide" d="M234 180C262 154 304 154 334 180C304 206 262 206 234 180"></path>
-              <circle class="diagram-node diagram-node--gold" cx="76" cy="180" r="8"></circle>
-              <circle class="diagram-node" cx="164" cy="180" r="7"></circle>
-              <circle class="diagram-node diagram-node--gold diagram-node--hub" cx="282" cy="180" r="10"></circle>
-              <circle class="diagram-node" cx="380" cy="108" r="7"></circle>
-              <circle class="diagram-node" cx="380" cy="252" r="7"></circle>
-              <circle class="diagram-node diagram-node--gold" cx="500" cy="108" r="7"></circle>
-              <circle class="diagram-node" cx="500" cy="252" r="7"></circle>
-              <rect class="diagram-terminal diagram-terminal--hub" x="230" y="128" width="112" height="104" rx="10"></rect>
-              <rect class="diagram-terminal" x="420" y="78" width="82" height="60" rx="8"></rect>
-              <rect class="diagram-terminal" x="420" y="222" width="82" height="60" rx="8"></rect>
+          <div class="system-panel__diagram" data-testid="chatpdm-architecture-diagram" aria-hidden="true">
+            <svg class="architecture-svg architecture-svg--chatpdm" viewBox="0 0 460 310" focusable="false">
+              <defs>
+                <marker id="chatpdm-arrow-neutral" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+                  <path class="architecture-marker architecture-marker--neutral" d="M0 0L8 4L0 8Z"></path>
+                </marker>
+                <marker id="chatpdm-arrow-gold" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+                  <path class="architecture-marker architecture-marker--gold" d="M0 0L8 4L0 8Z"></path>
+                </marker>
+                <marker id="chatpdm-arrow-resolve" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+                  <path class="architecture-marker architecture-marker--resolve" d="M0 0L8 4L0 8Z"></path>
+                </marker>
+                <marker id="chatpdm-arrow-refuse" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+                  <path class="architecture-marker architecture-marker--refuse" d="M0 0L8 4L0 8Z"></path>
+                </marker>
+              </defs>
+
+              <path class="architecture-grid-line" d="M32 46H428M32 157H428M32 268H428"></path>
+              <path class="architecture-grid-line" d="M60 38V280M232 38V280M400 38V280"></path>
+
+              <path class="architecture-rail architecture-rail--neutral" marker-end="url(#chatpdm-arrow-neutral)" d="M96 157H114"></path>
+              <path class="architecture-rail architecture-rail--neutral" marker-end="url(#chatpdm-arrow-neutral)" d="M190 157H208"></path>
+              <path class="architecture-rail architecture-rail--gold" marker-end="url(#chatpdm-arrow-gold)" d="M296 157H314"></path>
+              <path class="architecture-rail architecture-rail--resolve" marker-end="url(#chatpdm-arrow-resolve)" d="M392 146C408 142 374 98 388 95"></path>
+              <path class="architecture-rail architecture-rail--refuse" marker-end="url(#chatpdm-arrow-refuse)" d="M392 168C408 172 374 216 388 221"></path>
+
+              <path class="architecture-rail architecture-rail--feedback architecture-rail--audit" marker-end="url(#chatpdm-arrow-neutral)" d="M60 196V264H154"></path>
+              <path class="architecture-audit-tap" d="M60 196V264M152 196V238M252 196V238M353 196V238M414 132V264M414 258V264"></path>
+
+              <g class="architecture-card architecture-card--pipeline" data-chatpdm-node="input" transform="translate(18 119)">
+                <rect class="architecture-card-frame" width="78" height="76" rx="10"></rect>
+                <g class="architecture-icon architecture-icon--neutral" transform="translate(19 11)">
+                  <path d="M8 2H24L32 10V36H8Z"></path>
+                  <path d="M24 2V10H32M13 18H27M13 26H25"></path>
+                </g>
+                <text class="architecture-label architecture-label--compact architecture-label--node" x="39" y="62">Input</text>
+              </g>
+
+              <g class="architecture-card architecture-card--pipeline" data-chatpdm-node="parse" transform="translate(114 119)">
+                <rect class="architecture-card-frame" width="76" height="76" rx="10"></rect>
+                <g class="architecture-icon architecture-icon--neutral" transform="translate(21 12)">
+                  <path d="M10 2L2 10V26L10 34M24 2L32 10V26L24 34"></path>
+                  <path d="M14 27L20 9"></path>
+                </g>
+                <text class="architecture-label architecture-label--compact architecture-label--node" x="38" y="62">Parse</text>
+              </g>
+
+              <g class="architecture-card architecture-card--pipeline" data-chatpdm-node="contract" transform="translate(208 119)">
+                <rect class="architecture-card-frame" width="88" height="76" rx="10"></rect>
+                <g class="architecture-icon architecture-icon--neutral" transform="translate(24 11)">
+                  <path d="M7 2H27L33 8V36H7Z"></path>
+                  <path d="M27 2V8H33M13 18H26M13 26H22"></path>
+                  <path d="M21 31L25 35L34 25"></path>
+                </g>
+                <text class="architecture-label architecture-label--compact architecture-label--node" x="44" y="62">Contract</text>
+              </g>
+
+              <g class="architecture-card architecture-card--trusted architecture-card--pipeline" data-chatpdm-node="gate" transform="translate(314 119)">
+                <rect class="architecture-card-frame architecture-card-frame--trusted" width="78" height="76" rx="10"></rect>
+                <g class="architecture-icon architecture-icon--gold" transform="translate(20 11)">
+                  <rect x="5" y="16" width="28" height="20" rx="4"></rect>
+                  <path d="M11 16V11C11 5 15 2 19 2C24 2 28 5 28 11V16"></path>
+                  <path d="M19 24V29"></path>
+                </g>
+                <text class="architecture-label architecture-label--compact architecture-label--node" x="39" y="62">Gate</text>
+              </g>
+
+              <g class="architecture-card architecture-card--resolve" data-chatpdm-node="resolve" transform="translate(388 58)">
+                <rect class="architecture-card-frame architecture-card-frame--resolve" width="58" height="74" rx="10"></rect>
+                <g class="architecture-icon architecture-icon--resolve" transform="translate(14 12)">
+                  <circle cx="15" cy="15" r="15"></circle>
+                  <path d="M7 16L13 22L25 8"></path>
+                </g>
+                <text class="architecture-label architecture-label--outcome" x="29" y="60">Resolve</text>
+              </g>
+
+              <g class="architecture-card architecture-card--refuse" data-chatpdm-node="refuse" transform="translate(388 184)">
+                <rect class="architecture-card-frame architecture-card-frame--refuse" width="58" height="74" rx="10"></rect>
+                <g class="architecture-icon architecture-icon--refuse" transform="translate(14 12)">
+                  <path d="M15 1L29 9V22L15 31L1 22V9Z"></path>
+                  <path d="M10 10L20 21M20 10L10 21"></path>
+                </g>
+                <text class="architecture-label architecture-label--outcome" x="29" y="60">Refuse</text>
+              </g>
+
+              <g class="architecture-card architecture-card--audit" data-chatpdm-node="audit" transform="translate(154 238)">
+                <rect class="architecture-card-frame" width="150" height="54" rx="10"></rect>
+                <g class="architecture-icon architecture-icon--neutral architecture-icon--small" transform="translate(57 8)">
+                  <path d="M2 3H24M2 12H24M2 21H16"></path>
+                  <circle cx="30" cy="3" r="2"></circle>
+                  <circle cx="30" cy="12" r="2"></circle>
+                  <circle cx="30" cy="21" r="2"></circle>
+                </g>
+                <text class="architecture-label architecture-label--compact architecture-label--audit" x="75" y="45">Audit Trace</text>
+              </g>
             </svg>
           </div>
         </article>
@@ -274,7 +455,7 @@
             <span class="principle-row__index" aria-hidden="true">01</span>
             <div class="principle-row__body">
               <h3>Explicitness Over Ambiguity</h3>
-              <p>Systems should fail clearly instead of drifting silently.</p>
+              <p>Systems should fail safely instead of drifting silently.</p>
             </div>
           </li>
           <li class="principle-row">

@@ -1,35 +1,92 @@
 :host {
-  position: sticky;
+  position: fixed;
   top: 0;
+  right: 0;
+  left: 0;
   z-index: 20;
   display: block;
 }
 
 .mobile-header {
   position: relative;
-  border-bottom: 1px solid rgba(37, 43, 54, 0.62);
-  background:
-    radial-gradient(circle at 72% 0%, rgba(214, 168, 79, 0.075), transparent 36%),
-    linear-gradient(180deg, rgba(7, 9, 13, 0.86), rgba(7, 9, 13, 0.68));
-  backdrop-filter: blur(14px);
-  box-shadow: inset 0 1px 0 rgba(245, 247, 250, 0.035);
+  border-bottom: 0;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
   isolation: isolate;
 }
 
+.mobile-header::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+  opacity: 0;
+  background:
+    radial-gradient(circle at 72% 0%, rgba(214, 168, 79, 0.055), transparent 36%),
+    linear-gradient(180deg, rgba(7, 9, 13, 0.86), rgba(7, 9, 13, 0.68));
+  -webkit-backdrop-filter: blur(14px) saturate(112%);
+  backdrop-filter: blur(14px) saturate(112%);
+  box-shadow: inset 0 1px 0 rgba(245, 247, 250, 0.035);
+}
+
+.mobile-header--scrolled::before,
+.mobile-header:hover::before,
+.mobile-header:has(:focus-visible)::before,
+.mobile-header--panel-open::before {
+  opacity: 1;
+}
+
+.mobile-header--scrolled:hover::before,
+.mobile-header--scrolled:has(:focus-visible)::before,
+.mobile-header--scrolled.mobile-header--panel-open::before {
+  background:
+    radial-gradient(circle at 72% 0%, rgba(214, 168, 79, 0.065), transparent 36%),
+    linear-gradient(180deg, rgba(7, 9, 13, 0.92), rgba(7, 9, 13, 0.76));
+  -webkit-backdrop-filter: blur(18px) saturate(116%);
+  backdrop-filter: blur(18px) saturate(116%);
+}
+
 .mobile-header__bar {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 10px;
-  min-height: 72px;
+  gap: 12px;
+  min-height: 84px;
   padding: 0 20px;
+}
+
+.mobile-header__scroll-progress {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  height: 2px;
+  overflow: hidden;
+  background: rgba(214, 168, 79, 0.14);
+  pointer-events: none;
+}
+
+.mobile-header__scroll-progress-bar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(214, 168, 79, 0.48), #f0d58c 52%, rgba(214, 168, 79, 0.78));
+  box-shadow: 0 0 10px rgba(214, 168, 79, 0.16);
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: left center;
+  transition: transform 120ms linear;
 }
 
 .mobile-brand {
   display: inline-flex;
   min-width: 0;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   color: #f5f7fa;
   text-decoration: none;
 }
@@ -38,36 +95,38 @@
   position: relative;
   display: grid;
   flex: 0 0 auto;
-  width: 46px;
-  height: 46px;
+  width: 52px;
+  height: 52px;
   place-items: center;
   border: 1px solid #252b36;
   border-radius: 8px;
   background: #020306;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
+  transition: opacity 160ms ease;
 }
 
 .mobile-brand__logo {
   grid-area: 1 / 1;
-  width: 36px;
-  height: 36px;
+  width: 41px;
+  height: 41px;
   object-fit: contain;
 }
 
 .mobile-brand__text {
   display: grid;
   min-width: 0;
-  gap: 4px;
+  gap: 5px;
 }
 
 .mobile-brand__name {
   overflow: hidden;
   color: #f5f7fa;
   font-family: "Sora", Inter, ui-sans-serif, system-ui, sans-serif;
-  font-size: 21px;
+  font-size: 23px;
   font-weight: 700;
   line-height: 1;
   text-overflow: ellipsis;
+  transition: opacity 160ms ease;
   white-space: nowrap;
 }
 
@@ -80,37 +139,57 @@
 .mobile-brand__subtitle {
   overflow: hidden;
   color: #d6a84f;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.12em;
   line-height: 1;
   text-overflow: ellipsis;
+  transition: opacity 160ms ease;
   white-space: nowrap;
+}
+
+.mobile-brand:hover .mobile-brand__mark,
+.mobile-brand:focus-visible .mobile-brand__mark {
+  opacity: 0.78;
+}
+
+.mobile-brand:hover .mobile-brand__name,
+.mobile-brand:focus-visible .mobile-brand__name {
+  opacity: 0.72;
+}
+
+.mobile-brand:hover .mobile-brand__subtitle,
+.mobile-brand:focus-visible .mobile-brand__subtitle {
+  opacity: 0.58;
 }
 
 .mobile-header__actions {
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
 }
 
 .mobile-header__icon-button {
   display: grid;
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   place-items: center;
   border: 1px solid #252b36;
   border-radius: 8px;
   background: #10141c;
   color: #f0d58c;
   cursor: pointer;
+  transition: border-color 160ms ease, box-shadow 160ms ease, color 160ms ease, background 160ms ease;
 }
 
 .mobile-header__icon-button:hover,
 .mobile-header__icon-button:focus-visible {
   border-color: #d6a84f;
-  box-shadow: inset 0 0 0 1px #d6a84f;
+  background: #10141c;
+  box-shadow:
+    inset 0 0 0 1px #d6a84f,
+    0 0 0 3px rgba(214, 168, 79, 0.14);
   color: #f5f7fa;
   outline: none;
 }
@@ -181,7 +260,7 @@
   z-index: 50;
   display: grid;
   width: max-content;
-  min-width: 112px;
+  min-width: 168px;
   gap: 4px;
   padding: 6px;
 }
@@ -222,12 +301,12 @@
 
 .mobile-nav {
   position: absolute;
-  top: calc(100% + 12px);
+  top: calc(100% + 16px);
   right: 20px;
   left: 20px;
   z-index: 45;
   display: grid;
-  max-height: calc(100vh - 92px);
+  max-height: calc(100vh - 108px);
   gap: 3px;
   overflow: auto;
   padding: 8px;
@@ -261,41 +340,62 @@
   color: #f5f7fa;
 }
 
+.mobile-nav__link:focus-visible,
+.mobile-theme__option:focus-visible {
+  outline: 2px solid rgba(240, 213, 140, 0.72);
+  outline-offset: 2px;
+}
+
 .mobile-nav__link--active {
   background: #07090d;
+  box-shadow: inset 3px 0 0 #d6a84f;
 }
 
 @media (max-width: 389px) {
   .mobile-header__bar {
-    min-height: 68px;
+    min-height: 80px;
+    gap: 10px;
   }
 
   .mobile-brand {
-    gap: 9px;
+    gap: 10px;
   }
 
   .mobile-brand__mark {
-    width: 42px;
-    height: 42px;
+    width: 48px;
+    height: 48px;
   }
 
   .mobile-brand__logo {
-    width: 34px;
-    height: 34px;
+    width: 38px;
+    height: 38px;
   }
 
   .mobile-brand__name {
-    font-size: 20px;
+    font-size: 21.5px;
   }
 
   .mobile-brand__subtitle {
     display: block;
-    font-size: 8px;
+    font-size: 8.5px;
     letter-spacing: 0.08em;
   }
 
   .mobile-header__icon-button {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-header::before,
+  .mobile-header__scroll-progress-bar,
+  .mobile-brand__mark,
+  .mobile-brand__name,
+  .mobile-brand__subtitle,
+  .mobile-theme__menu,
+  .mobile-nav,
+  .menu-toggle__icon {
+    transition: none;
   }
 }
