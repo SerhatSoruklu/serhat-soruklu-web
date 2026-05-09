@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { ContactComponent } from './contact/contact.component';
 import { GitHubComponent } from './github/github.component';
@@ -20,7 +21,8 @@ describe('page components', () => {
   for (const page of pages) {
     it(`renders ${page.heading}`, async () => {
       await TestBed.configureTestingModule({
-        imports: [page.component]
+        imports: [page.component],
+        providers: [provideRouter([])]
       }).compileComponents();
 
       const fixture = TestBed.createComponent(page.component);
