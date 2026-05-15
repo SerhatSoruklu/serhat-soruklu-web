@@ -55,8 +55,8 @@
           </div>
 
           <div class="home-hero__actions" aria-label="Homepage actions">
-            <a class="site-button site-button-primary" routerLink="/systems">View Systems</a>
-            <a class="site-button site-button-secondary" routerLink="/writing">Read Writing</a>
+            <a class="site-button site-button-primary" routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">View Systems</a>
+            <a class="site-button site-button-secondary" routerLink="/writing" (click)="topNavigation.handleLinkClick('/writing')">Read Writing</a>
           </div>
         </div>
 
@@ -193,7 +193,7 @@
               <span>OVH</span>
             </div>
 
-            <a class="site-button site-button-secondary system-panel__button system-panel__button--quiet" routerLink="/systems">
+            <a class="site-button site-button-secondary system-panel__button system-panel__button--quiet" routerLink="/systems/coupyn" (click)="topNavigation.handleLinkClick('/systems')">
               Explore Coupyn System
             </a>
           </div>
@@ -333,7 +333,7 @@
               <span>Constraint Gates</span>
             </div>
 
-            <a class="site-button site-button-secondary system-panel__button system-panel__button--quiet" routerLink="/systems">
+            <a class="site-button site-button-secondary system-panel__button system-panel__button--quiet" routerLink="/systems/chatpdm" (click)="topNavigation.handleLinkClick('/systems')">
               Explore ChatPDM System
             </a>
           </div>
@@ -501,7 +501,7 @@
         </div>
 
         <nav class="home-next__nav" aria-label="Next homepage paths">
-        <a class="home-next__panel" routerLink="/systems">
+        <a class="home-next__panel" routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">
           <span class="home-next__panel-copy">
             <span class="home-next__panel-title">
               <svg class="home-next__title-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -515,7 +515,7 @@
             <path d="M5 12H17M13 7L18 12L13 17"></path>
           </svg>
         </a>
-        <a class="home-next__panel" routerLink="/writing">
+        <a class="home-next__panel" routerLink="/writing" (click)="topNavigation.handleLinkClick('/writing')">
           <span class="home-next__panel-copy">
             <span class="home-next__panel-title">
               <svg class="home-next__title-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -529,7 +529,7 @@
             <path d="M5 12H17M13 7L18 12L13 17"></path>
           </svg>
         </a>
-        <a class="home-next__panel" routerLink="/github">
+        <a class="home-next__panel" routerLink="/github" (click)="topNavigation.handleLinkClick('/github')">
           <span class="home-next__panel-copy">
             <span class="home-next__panel-title">
               <svg class="home-next__title-icon home-next__title-icon--github" viewBox="0 0 24 24" aria-hidden="true" focusable="false">

@@ -39,6 +39,17 @@
   box-shadow: 0 8px 18px rgba(17, 24, 39, 0.08);
 }
 
+:host-context(.theme-resolved-light) .site-brand:hover .site-brand__mark,
+:host-context(.theme-resolved-light) .site-brand:focus-visible .site-brand__mark {
+  border-color: rgba(184, 135, 47, 0.62);
+  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.08);
+}
+
+:host-context(.theme-resolved-light) .site-brand:hover .site-brand__name,
+:host-context(.theme-resolved-light) .site-brand:focus-visible .site-brand__name {
+  color: #10141c;
+}
+
 :host-context(.theme-resolved-light) .theme-selector__trigger,
 :host-context(.theme-resolved-light) .theme-selector__menu {
   border-color: #e5e0d6;

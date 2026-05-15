@@ -1,0 +1,211 @@
+<div class="research-system-page dbf-page">
+  <section class="research-hero layout-section" aria-labelledby="dbf-title">
+    <div class="research-hero__inner layout-container--wide">
+      <div class="research-hero__copy">
+        <p class="research-eyebrow">SYSTEM / SECURITY BOUNDARY</p>
+        <h1 id="dbf-title">Deterministic Boundary Firewall</h1>
+        <p class="research-hero__summary">
+          A bounded pre-egress firewall that inspects text before model or tool execution, blocks configured high-risk probes, and returns deterministic refusal payloads.
+        </p>
+
+        <ul class="research-badges" aria-label="Deterministic Boundary Firewall attributes">
+          <li>BoundaryGate</li>
+          <li>Pre-egress firewall</li>
+          <li>Python + MCP</li>
+          <li>Frozen artifact</li>
+          <li>MIT</li>
+        </ul>
+
+        <div class="research-hero__actions" aria-label="DBF actions">
+          <a class="site-button site-button-primary" [href]="githubUrl" target="_blank" rel="noopener noreferrer">View GitHub</a>
+          <a class="site-button site-button-secondary" routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">Back to Systems</a>
+        </div>
+      </div>
+
+      <div class="research-hero__visual" aria-label="BoundaryGate pre-egress flow">
+        <div class="research-panel dbf-flow-panel">
+          <div class="research-panel__header">
+            <span>BoundaryGate</span>
+            <span>Before execution</span>
+          </div>
+
+          <ol class="dbf-flow">
+            <li>
+              <span>Input</span>
+              <small>Outbound text</small>
+            </li>
+            <li>
+              <span>Normalize</span>
+              <small>Partial text cleanup</small>
+            </li>
+            <li class="dbf-flow__gate">
+              <span>BoundaryGate</span>
+              <small>Configured tripwires</small>
+            </li>
+            <li class="dbf-flow__decision">
+              <span>Refuse / Allow</span>
+              <small>Deterministic payload</small>
+            </li>
+            <li>
+              <span>Egress</span>
+              <small>Only if allowed</small>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="research-section layout-section" aria-labelledby="dbf-purpose-title">
+    <div class="research-section-frame">
+      <div class="research-section-heading">
+        <p class="research-eyebrow">SYSTEM PURPOSE</p>
+        <h2 id="dbf-purpose-title">What It Does</h2>
+        <p>
+          BoundaryGate is a shared preflight gate used by a small Python client and a matching MCP server. It inspects text before outbound model or tool calls. If configured tripwires match, it returns a refusal payload. Otherwise the request is allowed to proceed.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="research-section layout-section" aria-labelledby="dbf-boundary-title">
+    <div class="research-section-frame">
+      <div class="research-section-heading">
+        <p class="research-eyebrow">BOUNDARY MODEL</p>
+        <h2 id="dbf-boundary-title">Bounded, Not Magical</h2>
+        <p>
+          DBF is a deterministic phrase and pattern boundary. It is not a general semantic firewall, and the repository intentionally avoids claiming exhaustive synonym or full obfuscation resistance.
+        </p>
+      </div>
+
+      <div class="research-card-grid research-card-grid--three">
+        <article class="research-card">
+          <h3>Normalization</h3>
+          <p>Text is normalized before checks, but normalization is partial and documented as a bounded surface.</p>
+        </article>
+        <article class="research-card">
+          <h3>Tripwire Matching</h3>
+          <p><code>blocked_terms</code> are exact configured matches, not semantic extraction or broad intent inference.</p>
+        </article>
+        <article class="research-card">
+          <h3>Refusal Payload</h3>
+          <p>Matched probes return structured refusal payloads instead of silently passing through to execution.</p>
+        </article>
+        <article class="research-card">
+          <h3>Transport Interception</h3>
+          <p>The boundary sits before outbound model or tool calls so risky text can be rejected early.</p>
+        </article>
+        <article class="research-card">
+          <h3>Client/Server Parity</h3>
+          <p>The Python client and MCP server share the same boundary model to reduce drift between surfaces.</p>
+        </article>
+        <article class="research-card">
+          <h3>Release Gate</h3>
+          <p>Quality checks act as a release gate for the artifact, not as proof of complete security coverage.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="research-section layout-section" aria-labelledby="dbf-attack-title">
+    <div class="research-section-frame">
+      <div class="research-section-heading">
+        <p class="research-eyebrow">ATTACK SURFACE</p>
+        <h2 id="dbf-attack-title">Built To Be Attacked</h2>
+        <p>
+          The repository intentionally invites bypass attempts across zero-width obfuscation, homoglyphs, mixed encodings, split-token prompts, role-play or policy puppetry, context smuggling, semantic paraphrase, transport reshaping, adversarial suffixes, and false-positive probes.
+        </p>
+      </div>
+
+      <div class="research-callout">
+        <p>
+          The goal is a proof surface and attack target: a clear boundary that can be tested, broken, documented, and improved without pretending to solve all semantic safety problems.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="research-section layout-section" aria-labelledby="dbf-proof-title">
+    <div class="research-section-frame">
+      <div class="research-section-heading">
+        <p class="research-eyebrow">PROOF MAP</p>
+        <h2 id="dbf-proof-title">Evidence Surface</h2>
+        <p>
+          The artifact is organized around verifiable surfaces: firewall tests, transport tests, server contract tests, live smoke tests, a diagram pack, and a proof-map pack.
+        </p>
+      </div>
+
+      <div class="research-card-grid research-card-grid--three">
+        <article class="research-card">
+          <h3>Test Surfaces</h3>
+          <ul class="research-list">
+            <li>Firewall tests</li>
+            <li>Transport tests</li>
+            <li>Server contract tests</li>
+            <li>Live smoke tests</li>
+          </ul>
+        </article>
+        <article class="research-card">
+          <h3>Documentation Pack</h3>
+          <ul class="research-list">
+            <li>Attack surface notes</li>
+            <li>Diagram pack</li>
+            <li>Proof-map pack</li>
+          </ul>
+        </article>
+        <article class="research-card">
+          <h3>Quality Signal</h3>
+          <p>Pylint 10.00/10 is represented as a repository quality signal only. It is not presented as a security proof.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="research-section layout-section" aria-labelledby="dbf-status-title">
+    <div class="research-section-frame">
+      <div class="research-section-heading">
+        <p class="research-eyebrow">STATUS</p>
+        <h2 id="dbf-status-title">Frozen Research Artifact</h2>
+        <p>
+          DBF is frozen and not actively maintained. Community-driven attacks, bypass reports, and improvements are welcome, but the page should be read as a bounded security research artifact rather than an actively supported product.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="research-section layout-section" aria-labelledby="dbf-next-title">
+    <div class="research-section-frame">
+      <div class="research-cta__layout">
+        <div class="research-section-heading research-section-heading--compact">
+          <p class="research-eyebrow">NEXT</p>
+          <h2 id="dbf-next-title">Continue From The Boundary</h2>
+          <p>Review the repository, return to the broader work surface, or compare the boundary model with deterministic language governance.</p>
+        </div>
+
+        <nav class="research-cta__nav" aria-label="DBF next paths">
+          <a class="research-cta-card" [href]="githubUrl" target="_blank" rel="noopener noreferrer">
+            <span>
+              <strong>GitHub</strong>
+              <small>Repository and attack surface</small>
+            </span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12H17M13 7L18 12L13 17"></path></svg>
+          </a>
+          <a class="research-cta-card" routerLink="/work" (click)="topNavigation.handleLinkClick('/work')">
+            <span>
+              <strong>Work</strong>
+              <small>Production and research surface</small>
+            </span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12H17M13 7L18 12L13 17"></path></svg>
+          </a>
+          <a class="research-cta-card" routerLink="/systems/chatpdm" (click)="topNavigation.handleLinkClick('/systems/chatpdm')">
+            <span>
+              <strong>ChatPDM</strong>
+              <small>Deterministic governance context</small>
+            </span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12H17M13 7L18 12L13 17"></path></svg>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </section>
+</div>

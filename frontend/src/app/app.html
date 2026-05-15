@@ -1,4 +1,5 @@
 <app-site-header />
-<main class="site-main">
+<main class="site-main" [class.site-main--home]="isHomeRoute()">
   <router-outlet />
+  <app-site-footer />
 </main>

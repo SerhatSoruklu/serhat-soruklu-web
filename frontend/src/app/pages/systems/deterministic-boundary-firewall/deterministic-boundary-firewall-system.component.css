@@ -1,0 +1,148 @@
+.dbf-page .research-hero {
+  background:
+    radial-gradient(ellipse at 78% 12%, rgba(47, 111, 181, 0.12), transparent 35%),
+    radial-gradient(ellipse at 24% 24%, rgba(214, 168, 79, 0.052), transparent 34%);
+}
+
+.dbf-flow {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 10px;
+  padding: 20px 0 0;
+  margin: 0;
+  list-style: none;
+}
+
+.dbf-flow li {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  min-height: 58px;
+  border: 1px solid rgba(37, 43, 54, 0.9);
+  border-left: 3px solid rgba(168, 176, 189, 0.36);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: rgba(7, 9, 13, 0.56);
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.dbf-flow li:hover {
+  border-color: rgba(214, 168, 79, 0.42);
+  border-left-color: rgba(214, 168, 79, 0.78);
+  background: rgba(16, 20, 28, 0.78);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  transform: translateY(-2px);
+}
+
+.dbf-flow__decision:hover {
+  border-color: rgba(47, 111, 181, 0.48);
+  border-left-color: rgba(47, 111, 181, 0.84);
+}
+
+.dbf-flow li:not(:last-child)::after {
+  position: absolute;
+  left: 22px;
+  bottom: -11px;
+  width: 2px;
+  height: 11px;
+  background: rgba(214, 168, 79, 0.38);
+  content: "";
+}
+
+.dbf-flow__gate {
+  border-left-color: rgba(214, 168, 79, 0.8);
+  background:
+    linear-gradient(90deg, rgba(214, 168, 79, 0.09), rgba(7, 9, 13, 0.56));
+}
+
+.dbf-flow__decision {
+  border-left-color: rgba(47, 111, 181, 0.84);
+}
+
+.dbf-flow span {
+  color: #f5f7fa;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.12;
+}
+
+.dbf-flow small {
+  color: #a8b0bd;
+  font-family: "Space Mono", "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+code {
+  color: #f0d58c;
+  font-family: "Space Mono", "IBM Plex Mono", monospace;
+  font-size: 0.93em;
+}
+
+:host-context(.theme-resolved-light) .dbf-page .research-hero {
+  background:
+    radial-gradient(ellipse at 78% 12%, rgba(47, 111, 181, 0.08), transparent 35%),
+    radial-gradient(ellipse at 24% 24%, rgba(184, 135, 47, 0.065), transparent 34%);
+}
+
+:host-context(.theme-resolved-light) .dbf-flow li {
+  border-color: rgba(229, 224, 214, 0.92);
+  border-left-color: rgba(95, 102, 115, 0.32);
+  background: rgba(255, 255, 255, 0.66);
+}
+
+:host-context(.theme-resolved-light) .dbf-flow li:hover {
+  border-color: rgba(184, 135, 47, 0.38);
+  border-left-color: rgba(184, 135, 47, 0.72);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 12px 28px rgba(17, 24, 39, 0.1);
+}
+
+:host-context(.theme-resolved-light) .dbf-flow__decision:hover {
+  border-color: rgba(47, 111, 181, 0.36);
+  border-left-color: rgba(47, 111, 181, 0.56);
+}
+
+:host-context(.theme-resolved-light) .dbf-flow__gate {
+  border-left-color: rgba(184, 135, 47, 0.76);
+  background:
+    linear-gradient(90deg, rgba(184, 135, 47, 0.08), rgba(255, 255, 255, 0.66));
+}
+
+:host-context(.theme-resolved-light) .dbf-flow__decision {
+  border-left-color: rgba(47, 111, 181, 0.56);
+}
+
+:host-context(.theme-resolved-light) .dbf-flow span {
+  color: #111827;
+}
+
+:host-context(.theme-resolved-light) .dbf-flow small {
+  color: #5f6673;
+}
+
+:host-context(.theme-resolved-light) .dbf-flow li:not(:last-child)::after {
+  background: rgba(184, 135, 47, 0.34);
+}
+
+:host-context(.theme-resolved-light) code {
+  color: #8d6621;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dbf-flow li {
+    transition: none;
+  }
+
+  .dbf-flow li:hover {
+    transform: none;
+  }
+}

@@ -1,6 +1,320 @@
-<section class="page-placeholder" aria-labelledby="work-title">
-  <div class="page-placeholder__inner">
-    <p class="page-placeholder__eyebrow">WORK</p>
-    <h1 id="work-title">Work</h1>
-  </div>
-</section>
+<div class="work-page">
+  <section class="work-hero layout-section" aria-labelledby="work-title">
+    <div class="work-hero__inner layout-container--wide">
+      <div class="work-hero__copy">
+        <p class="work-eyebrow">WORK</p>
+        <h1 id="work-title">Work Built With Full-Stack Ownership</h1>
+        <p class="work-hero__summary">
+          A focused record of production systems, infrastructure decisions, product surfaces, and long-term maintenance work carried from concept to operation.
+        </p>
+
+        <ul class="work-hero__proof" aria-label="Work proof points">
+          <li>Product architecture</li>
+          <li>Frontend and backend delivery</li>
+          <li>Infrastructure ownership</li>
+          <li>Long-term maintenance</li>
+        </ul>
+
+        <div class="work-hero__actions" aria-label="Work page actions">
+          <a class="site-button site-button-primary" routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">View Systems</a>
+          <a class="site-button site-button-secondary" [href]="githubUrl" target="_blank" rel="noopener noreferrer">Open GitHub</a>
+          <a class="site-button site-button-secondary" routerLink="/contact" (click)="topNavigation.handleLinkClick('/contact')">Contact</a>
+        </div>
+      </div>
+
+      <div class="work-hero__visual" aria-label="Execution stack from product through infrastructure">
+        <div class="execution-stack">
+          <div class="execution-stack__header">
+            <span>Execution Stack</span>
+            <span>Concept to operation</span>
+          </div>
+
+          <ol class="execution-stack__layers">
+            <li>
+              <span class="execution-stack__index">01</span>
+              <span class="execution-stack__label">Product</span>
+              <span class="execution-stack__status">designed</span>
+              <span class="execution-stack__detail">Scope, constraints, direction</span>
+            </li>
+            <li>
+              <span class="execution-stack__index">02</span>
+              <span class="execution-stack__label">Interface</span>
+              <span class="execution-stack__status">built</span>
+              <span class="execution-stack__detail">Responsive UI and interaction flows</span>
+            </li>
+            <li>
+              <span class="execution-stack__index">03</span>
+              <span class="execution-stack__label">API</span>
+              <span class="execution-stack__status">validated</span>
+              <span class="execution-stack__detail">Validation, routes, contracts</span>
+            </li>
+            <li>
+              <span class="execution-stack__index">04</span>
+              <span class="execution-stack__label">Data</span>
+              <span class="execution-stack__status">operated</span>
+              <span class="execution-stack__detail">Models, queries, metadata</span>
+            </li>
+            <li>
+              <span class="execution-stack__index">05</span>
+              <span class="execution-stack__label">Infrastructure</span>
+              <span class="execution-stack__status">maintained</span>
+              <span class="execution-stack__detail">Deployment, operations, maintenance</span>
+            </li>
+          </ol>
+
+          <div class="execution-stack__footer" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="work-scope layout-section" aria-labelledby="work-scope-title">
+    <div class="work-section-frame">
+      <div class="work-section-heading">
+        <p class="work-eyebrow">SCOPE</p>
+        <h2 id="work-scope-title">From Product Decisions To Production Systems</h2>
+        <p>
+          The work spans product architecture, interface design, backend systems, database structure, infrastructure, SEO surfaces, trust logic, deployment discipline, and ongoing iteration.
+        </p>
+      </div>
+
+      <div class="work-scope__grid">
+        <article class="work-scope-card">
+          <span class="work-card-index" aria-hidden="true">01</span>
+          <h3>Product Architecture</h3>
+          <p>Purpose, user flows, system boundaries, and long-term product direction.</p>
+        </article>
+        <article class="work-scope-card">
+          <span class="work-card-index" aria-hidden="true">02</span>
+          <h3>Frontend Systems</h3>
+          <p>Angular interfaces, responsive layouts, SSR-aware surfaces, routing, and interaction flows.</p>
+        </article>
+        <article class="work-scope-card">
+          <span class="work-card-index" aria-hidden="true">03</span>
+          <h3>Backend &amp; APIs</h3>
+          <p>Node.js/Express services, route design, validation, data access, and operational logic.</p>
+        </article>
+        <article class="work-scope-card">
+          <span class="work-card-index" aria-hidden="true">04</span>
+          <h3>Data &amp; Search Surfaces</h3>
+          <p>MongoDB-backed structures, company/index pages, metadata, SEO routes, and discoverability layers.</p>
+        </article>
+        <article class="work-scope-card">
+          <span class="work-card-index" aria-hidden="true">05</span>
+          <h3>Infrastructure &amp; Deployment</h3>
+          <p>Self-managed hosting, production-safe changes, server operations, and controlled release habits.</p>
+        </article>
+        <article class="work-scope-card">
+          <span class="work-card-index" aria-hidden="true">06</span>
+          <h3>Trust &amp; Feedback Loops</h3>
+          <p>Ranking signals, proof signals, moderation logic, outcome feedback, and explainable visibility.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="work-production layout-section" aria-labelledby="work-production-title">
+    <div class="work-section-frame">
+      <div class="work-section-heading">
+        <p class="work-eyebrow">PRODUCTION WORK</p>
+        <h2 id="work-production-title">Representative Work Areas</h2>
+      </div>
+
+      <div class="work-production__grid">
+        <article class="work-production-card">
+          <p class="work-production-card__label">Commerce Infrastructure</p>
+          <h3>Coupyn Operating Surface</h3>
+          <p>
+            Production work across company discovery, offer publishing, memberships, ranking, trust signals, SEO surfaces, and user-facing flows.
+          </p>
+          <ul>
+            <li>950K+ company page surface</li>
+            <li>Listing and membership logic</li>
+            <li>Trust and visibility signals</li>
+            <li>SEO and discovery infrastructure</li>
+          </ul>
+          <a routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">View system overview</a>
+        </article>
+
+        <article class="work-production-card">
+          <p class="work-production-card__label">Deterministic Systems</p>
+          <h3>ChatPDM Governance Runtime</h3>
+          <p>
+            Work on deterministic concept resolution, refusal-first behavior, constraint contracts, source grounding, and audit-friendly runtime boundaries.
+          </p>
+          <ul>
+            <li>Resolve-or-refuse model</li>
+            <li>Constraint contract structure</li>
+            <li>Source-grounded concept packets</li>
+            <li>Drift prevention boundaries</li>
+          </ul>
+          <a routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">View system overview</a>
+        </article>
+
+        <article class="work-production-card">
+          <p class="work-production-card__label">Infrastructure &amp; Maintenance</p>
+          <h3>Independent Delivery Layer</h3>
+          <p>
+            Cross-project work on deployment discipline, SSR stability, metadata correctness, responsive UI, production safety, and long-term maintainability.
+          </p>
+          <ul>
+            <li>Controlled production changes</li>
+            <li>Responsive design systems</li>
+            <li>Metadata and SEO discipline</li>
+            <li>Maintenance under real constraints</li>
+          </ul>
+          <a [href]="githubUrl" target="_blank" rel="noopener noreferrer">View GitHub</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="work-research layout-section" aria-labelledby="work-research-title">
+    <div class="work-section-frame work-section-frame--quiet">
+      <div class="work-section-heading">
+        <p class="work-eyebrow">RESEARCH &amp; BOUNDARY SYSTEMS</p>
+        <h2 id="work-research-title">Smaller Systems With Hard Boundaries</h2>
+        <p>
+          Focused protocol and security work exploring deterministic boundaries, continuity, verification, and safe failure.
+        </p>
+      </div>
+
+      <div class="work-research__grid">
+        <article class="work-research-card">
+          <p class="work-research-card__label">Pre-Egress Firewall</p>
+          <h3>Deterministic Boundary Firewall</h3>
+          <p>
+            A bounded deterministic pre-egress firewall that normalizes outbound text, blocks high-risk probes before execution, and returns structured refusal payloads when tripwires are hit.
+          </p>
+          <ul>
+            <li>BoundaryGate preflight gate</li>
+            <li>Python client and MCP server</li>
+            <li>Refusal payload contract</li>
+            <li>Attack-surface documentation</li>
+            <li>Diagram and proof-map pack</li>
+            <li>Frozen MIT research artifact</li>
+          </ul>
+          <div class="work-research-card__links">
+            <a routerLink="/systems/deterministic-boundary-firewall" (click)="topNavigation.handleLinkClick('/systems/deterministic-boundary-firewall')">View system page</a>
+            <a href="https://github.com/SerhatSoruklu/deterministic-boundary-firewall" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </article>
+
+        <article class="work-research-card">
+          <p class="work-research-card__label">Continuity Protocol</p>
+          <h3>Continuity Identity Model</h3>
+          <p>
+            A deterministic continuity protocol for deciding whether a changed machine actor remains eligible to inherit previously granted authority.
+          </p>
+          <ul>
+            <li>Frozen CIM v0.1 specification</li>
+            <li>Canonical test vectors</li>
+            <li>TypeScript verifier</li>
+            <li>Conformance runner</li>
+            <li>Audit documents</li>
+            <li>Protocol diagrams</li>
+          </ul>
+          <div class="work-research-card__links">
+            <a routerLink="/systems/continuity-identity-model" (click)="topNavigation.handleLinkClick('/systems/continuity-identity-model')">View system page</a>
+            <a href="https://github.com/SerhatSoruklu/continuity-identity-model" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="work-execution layout-section" aria-labelledby="work-execution-title">
+    <div class="work-section-frame">
+      <div class="work-section-heading">
+        <p class="work-eyebrow">EXECUTION MODEL</p>
+        <h2 id="work-execution-title">How The Work Gets Built</h2>
+      </div>
+
+      <div class="work-execution__grid">
+        <article class="work-execution-card">
+          <h3>Define The Constraint</h3>
+          <p>Clarify the purpose, user impact, system boundary, and failure behavior before expanding scope.</p>
+        </article>
+        <article class="work-execution-card">
+          <h3>Build The Smallest Durable Path</h3>
+          <p>Prefer small, testable, reversible changes that improve the live system without destabilizing it.</p>
+        </article>
+        <article class="work-execution-card">
+          <h3>Connect Action To Outcome</h3>
+          <p>Design features as loops: user action, system response, trust signal, feedback, and return behavior.</p>
+        </article>
+        <article class="work-execution-card">
+          <h3>Audit Under Pressure</h3>
+          <p>Systems should fail safely instead of drifting silently.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="work-ownership layout-section" aria-labelledby="work-ownership-title">
+    <div class="work-section-frame">
+      <div class="work-ownership__layout">
+        <div class="work-section-heading work-section-heading--compact">
+          <h2 id="work-ownership-title">Full-Stack Responsibility</h2>
+          <p>
+            The work is not limited to isolated feature implementation. It includes the decisions around architecture, product behavior, database shape, deployment, visibility, trust, and maintenance.
+          </p>
+        </div>
+
+        <ol class="work-ownership__timeline" aria-label="Full-stack responsibility timeline">
+          <li><span>01</span>Concept and product framing</li>
+          <li><span>02</span>Interface and user flow implementation</li>
+          <li><span>03</span>Backend and database design</li>
+          <li><span>04</span>Infrastructure and deployment</li>
+          <li><span>05</span>SEO and public metadata surfaces</li>
+          <li><span>06</span>Monitoring, repair, and iteration</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="work-next layout-section" aria-labelledby="work-next-title">
+    <div class="work-section-frame">
+      <div class="work-next__inner">
+        <div class="work-section-heading work-section-heading--compact">
+          <h2 id="work-next-title">Explore The Systems Behind The Work</h2>
+          <p>For deeper technical and product breakdowns, continue into the system pages or engineering writing.</p>
+        </div>
+
+        <nav class="work-next__nav" aria-label="Work next paths">
+          <a class="work-next-card" routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">
+            <span>
+              <strong>Systems</strong>
+              <small>Coupyn and ChatPDM overview</small>
+            </span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M5 12H17M13 7L18 12L13 17"></path>
+            </svg>
+          </a>
+          <a class="work-next-card" routerLink="/writing" (click)="topNavigation.handleLinkClick('/writing')">
+            <span>
+              <strong>Writing</strong>
+              <small>Engineering thinking and architecture</small>
+            </span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M5 12H17M13 7L18 12L13 17"></path>
+            </svg>
+          </a>
+          <a class="work-next-card" routerLink="/contact" (click)="topNavigation.handleLinkClick('/contact')">
+            <span>
+              <strong>Contact</strong>
+              <small>Discuss systems or production work</small>
+            </span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M5 12H17M13 7L18 12L13 17"></path>
+            </svg>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </section>
+</div>

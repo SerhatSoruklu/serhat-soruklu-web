@@ -2,6 +2,7 @@ import { DOCUMENT, isPlatformBrowser, NgClass } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, HostListener, inject, OnDestroy, PLATFORM_ID, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
+import { TopNavigationService } from '../../../core/navigation/top-navigation.service';
 import { ThemeService, ThemeSetting } from '../../../core/theme/theme.service';
 import { TooltipDirective } from '../../../shared/tooltip/tooltip.directive';
 import { HEADER_MENU_ICON_PATHS, HEADER_NAV_ITEMS, HEADER_THEME_OPTIONS, HEADER_THEME_TRIGGER_ICON_PATHS } from '../header-icons';
@@ -34,6 +35,7 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
   };
 
   readonly themeService = inject(ThemeService);
+  readonly topNavigation = inject(TopNavigationService);
   readonly closeIconPath = HEADER_MENU_ICON_PATHS.close;
   readonly isScrolled = signal(this.getScrollTop() >= SCROLLED_ENABLE_THRESHOLD);
   readonly menuIconPath = HEADER_MENU_ICON_PATHS.menu;

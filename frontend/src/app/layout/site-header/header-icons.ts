@@ -14,6 +14,7 @@ import {
 import { ResolvedTheme, ThemeSetting } from '../../core/theme/theme.service';
 
 export interface HeaderNavItem {
+  exact: boolean;
   iconClass?: string;
   iconPath: string;
   label: string;
@@ -27,11 +28,11 @@ export interface HeaderThemeOption {
 }
 
 export const HEADER_NAV_ITEMS: HeaderNavItem[] = [
-  { iconPath: mdiBriefcaseOutline, label: 'Work', path: '/work' },
-  { iconPath: mdiSitemapOutline, label: 'Systems', path: '/systems' },
-  { iconPath: mdiNoteTextOutline, label: 'Writing', path: '/writing' },
-  { iconClass: 'github-icon', iconPath: mdiGithub, label: 'GitHub', path: '/github' },
-  { iconPath: mdiEmailOutline, label: 'Contact', path: '/contact' }
+  { exact: true, iconPath: mdiBriefcaseOutline, label: 'Work', path: '/work' },
+  { exact: false, iconPath: mdiSitemapOutline, label: 'Systems', path: '/systems' },
+  { exact: true, iconPath: mdiNoteTextOutline, label: 'Writing', path: '/writing' },
+  { exact: true, iconClass: 'github-icon', iconPath: mdiGithub, label: 'GitHub', path: '/github' },
+  { exact: true, iconPath: mdiEmailOutline, label: 'Contact', path: '/contact' }
 ];
 
 export const HEADER_THEME_OPTIONS: HeaderThemeOption[] = [

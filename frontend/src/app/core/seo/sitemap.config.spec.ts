@@ -11,7 +11,7 @@ describe('SITEMAP_ROUTES', () => {
       },
       {
         path: '/work',
-        lastModified: '2026-05-08',
+        lastModified: '2026-05-15',
         changeFrequency: 'monthly',
         priority: 0.8
       },
@@ -20,6 +20,30 @@ describe('SITEMAP_ROUTES', () => {
         lastModified: '2026-05-08',
         changeFrequency: 'monthly',
         priority: 0.8
+      },
+      {
+        path: '/systems/coupyn',
+        lastModified: '2026-05-10',
+        changeFrequency: 'monthly',
+        priority: 0.7
+      },
+      {
+        path: '/systems/chatpdm',
+        lastModified: '2026-05-10',
+        changeFrequency: 'monthly',
+        priority: 0.7
+      },
+      {
+        path: '/systems/deterministic-boundary-firewall',
+        lastModified: '2026-05-15',
+        changeFrequency: 'monthly',
+        priority: 0.6
+      },
+      {
+        path: '/systems/continuity-identity-model',
+        lastModified: '2026-05-15',
+        changeFrequency: 'monthly',
+        priority: 0.6
       },
       {
         path: '/writing',

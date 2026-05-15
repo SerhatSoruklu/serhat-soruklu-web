@@ -1,8 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+
+import { TopNavigationService } from '../../core/navigation/top-navigation.service';
 
 @Component({
   selector: 'app-work',
+  imports: [RouterLink],
   templateUrl: './work.component.html',
-  styleUrls: ['../standard-page.css', './work.component.css']
+  styleUrl: './work.component.css'
 })
-export class WorkComponent {}
+export class WorkComponent {
+  readonly githubUrl = 'https://github.com/SerhatSoruklu';
+  readonly topNavigation = inject(TopNavigationService);
+}

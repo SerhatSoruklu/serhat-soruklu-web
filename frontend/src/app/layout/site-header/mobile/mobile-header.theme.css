@@ -74,6 +74,17 @@
   box-shadow: 0 8px 18px rgba(17, 24, 39, 0.08);
 }
 
+:host-context(.theme-resolved-light) .mobile-brand:hover .mobile-brand__mark,
+:host-context(.theme-resolved-light) .mobile-brand:focus-visible .mobile-brand__mark {
+  border-color: rgba(184, 135, 47, 0.62);
+  box-shadow: 0 8px 18px rgba(17, 24, 39, 0.08);
+}
+
+:host-context(.theme-resolved-light) .mobile-brand:hover .mobile-brand__name,
+:host-context(.theme-resolved-light) .mobile-brand:focus-visible .mobile-brand__name {
+  color: #10141c;
+}
+
 :host-context(.theme-resolved-light) .mobile-brand__mark,
 :host-context(.theme-resolved-light) .mobile-brand__subtitle,
 :host-context(.theme-resolved-light) .mobile-header__icon-button,

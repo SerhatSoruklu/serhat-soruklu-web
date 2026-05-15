@@ -4,7 +4,7 @@ import type { ActivatedRouteSnapshot } from '@angular/router';
 import { provideRouter, Router, TitleStrategy } from '@angular/router';
 
 import { routes } from '../../app.routes';
-import { seoConfig } from './seo.config';
+import { pageSeoMetadata, seoConfig } from './seo.config';
 import { SeoTitleStrategy } from './seo-title.strategy';
 import { SeoService } from './seo.service';
 
@@ -75,7 +75,7 @@ describe('SeoService', () => {
     await router.navigateByUrl('/work');
 
     expect(title.getTitle()).toBe('Serhat Soruklu | Work');
-    expect(globalThis.document.querySelector('meta[name="description"]')?.getAttribute('content')).toContain('Explore projects');
+    expect(globalThis.document.querySelector('meta[name="description"]')?.getAttribute('content')).toContain('Production work');
     expect(globalThis.document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe('https://serhatsoruklu.com/work');
     expect(globalThis.document.querySelector('meta[property="og:image"]')?.getAttribute('content')).toBe('https://serhatsoruklu.com/assets/social/serhat-soruklu-work-og.svg');
     expect(globalThis.document.querySelector('meta[name="twitter:image"]')?.getAttribute('content')).toBe('https://serhatsoruklu.com/assets/social/serhat-soruklu-work-og.svg');
@@ -98,6 +98,40 @@ describe('SeoService', () => {
         }
       ]
     });
+  });
+
+  it('applies page-specific SEO metadata for system detail routes', async () => {
+    const router = TestBed.inject(Router);
+    const title = TestBed.inject(Title);
+    const systemDetailPages = [
+      pageSeoMetadata.coupynSystem,
+      pageSeoMetadata.chatpdmSystem,
+      pageSeoMetadata.dbfSystem,
+      pageSeoMetadata.cimSystem
+    ];
+    const genericSystemsOgImage = `https://serhatsoruklu.com${pageSeoMetadata.systems.ogImage}`;
+
+    for (const pageMetadata of systemDetailPages) {
+      await router.navigateByUrl(pageMetadata.path);
+
+      const canonicalUrl = `https://serhatsoruklu.com${pageMetadata.path}`;
+      const pageOgImage = `https://serhatsoruklu.com${pageMetadata.ogImage}`;
+      expect(pageMetadata.title.length).toBeLessThanOrEqual(50);
+      expect(pageMetadata.description.length).toBeLessThanOrEqual(170);
+      expect(pageMetadata.ogImage).not.toBe(pageSeoMetadata.systems.ogImage);
+      expect(title.getTitle()).toBe(pageMetadata.title);
+      expect(globalThis.document.querySelector('meta[name="description"]')?.getAttribute('content')).toBe(pageMetadata.description);
+      expect(globalThis.document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(canonicalUrl);
+      expect(globalThis.document.querySelector('meta[property="og:title"]')?.getAttribute('content')).toBe(pageMetadata.title);
+      expect(globalThis.document.querySelector('meta[property="og:description"]')?.getAttribute('content')).toBe(pageMetadata.description);
+      expect(globalThis.document.querySelector('meta[property="og:url"]')?.getAttribute('content')).toBe(canonicalUrl);
+      expect(globalThis.document.querySelector('meta[name="twitter:title"]')?.getAttribute('content')).toBe(pageMetadata.title);
+      expect(globalThis.document.querySelector('meta[name="twitter:description"]')?.getAttribute('content')).toBe(pageMetadata.description);
+      expect(globalThis.document.querySelector('meta[property="og:image"]')?.getAttribute('content')).toBe(pageOgImage);
+      expect(globalThis.document.querySelector('meta[property="og:image"]')?.getAttribute('content')).not.toBe(genericSystemsOgImage);
+      expect(globalThis.document.querySelector('meta[name="twitter:image"]')?.getAttribute('content')).toBe(pageOgImage);
+      expect(globalThis.document.querySelector('meta[name="twitter:image"]')?.getAttribute('content')).not.toBe(genericSystemsOgImage);
+    }
   });
 
   it('falls back to home metadata when a route has no SEO data', () => {

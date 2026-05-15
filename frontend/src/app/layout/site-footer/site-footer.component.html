@@ -1,0 +1,122 @@
+<footer class="site-footer" aria-labelledby="site-footer-title">
+  <div class="site-footer__inner">
+    <div class="site-footer__top">
+      <a class="site-footer__brand" routerLink="/" aria-label="Serhat Soruklu home" (click)="topNavigation.handleBrandClick()">
+        <span class="site-footer__mark">
+          <img
+            class="site-footer__logo site-footer__logo--dark"
+            src="/assets/brand/logo/serhat_soruklu_s_dark_header.png"
+            alt=""
+            width="44"
+            height="44"
+            loading="lazy"
+            decoding="async"
+          >
+          <img
+            class="site-footer__logo site-footer__logo--light"
+            src="/assets/brand/logo/serhat_soruklu_s_light_header.png"
+            alt=""
+            width="44"
+            height="44"
+            loading="lazy"
+            decoding="async"
+          >
+        </span>
+        <span class="site-footer__identity">
+          <span id="site-footer-title" class="site-footer__name">Serhat Soruklu</span>
+          <span class="site-footer__role">SYSTEMS ARCHITECT</span>
+        </span>
+      </a>
+
+      <p class="site-footer__statement">
+        Building long-horizon internet systems with clarity, control, and operational discipline.
+      </p>
+    </div>
+
+    <nav class="site-footer__nav" aria-label="Footer navigation">
+      <section class="site-footer__group" aria-labelledby="site-footer-navigation-title">
+        <h2 id="site-footer-navigation-title" class="site-footer__group-title">
+          <svg class="site-footer__group-title-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+            <path [attr.d]="groupIconPaths.navigate"></path>
+          </svg>
+          Navigate
+        </h2>
+        <ul class="site-footer__list">
+          @for (link of navLinks; track link.path) {
+            <li>
+              <a
+                class="site-footer__link"
+                [routerLink]="link.path"
+                routerLinkActive="site-footer__link--active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                ariaCurrentWhenActive="page"
+                (click)="topNavigation.handleLinkClick(link.path)"
+              >
+                {{ link.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="site-footer__group" aria-labelledby="site-footer-systems-title">
+        <h2 id="site-footer-systems-title" class="site-footer__group-title">
+          <svg class="site-footer__group-title-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+            <path [attr.d]="groupIconPaths.systems"></path>
+          </svg>
+          Systems
+        </h2>
+        <ul class="site-footer__list">
+          @for (link of systemLinks; track link.label) {
+            <li>
+              <a
+                class="site-footer__link"
+                [routerLink]="link.path"
+                routerLinkActive="site-footer__link--active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="topNavigation.handleLinkClick(link.path)"
+              >
+                {{ link.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="site-footer__group" aria-labelledby="site-footer-reach-title">
+        <h2 id="site-footer-reach-title" class="site-footer__group-title">
+          <svg class="site-footer__group-title-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+            <path [attr.d]="groupIconPaths.reach"></path>
+          </svg>
+          Reach Us
+        </h2>
+        <ul class="site-footer__list">
+          @for (link of reachLinks; track link.path) {
+            <li>
+              <a
+                class="site-footer__link"
+                [routerLink]="link.path"
+                routerLinkActive="site-footer__link--active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                ariaCurrentWhenActive="page"
+                (click)="topNavigation.handleLinkClick(link.path)"
+              >
+                {{ link.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </section>
+    </nav>
+
+    <div class="site-footer__bottom">
+      <p class="site-footer__copyright">
+        <span class="site-footer__copyright-icon" aria-hidden="true">&copy;</span>
+        {{ currentYear }} Serhat Soruklu. Built and maintained as an independent systems portfolio.
+      </p>
+      <p class="site-footer__notice">
+        Coupyn, ChatPDM, and related project names belong to their respective owners, developers, affiliates, or operating entities where applicable.
+      </p>
+    </div>
+  </div>
+</footer>
