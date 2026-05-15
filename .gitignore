@@ -157,6 +157,7 @@ playwright-report/
 blob-report/
 .playwright/
 output/playwright/
+.playwright-mcp/
 frontend/test-results/
 frontend/playwright-report/
 frontend/blob-report/

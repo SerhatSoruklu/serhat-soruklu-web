@@ -3,7 +3,7 @@
   top: 0;
   right: 0;
   left: 0;
-  z-index: 20;
+  z-index: 100;
   border-bottom: 0;
   background: transparent;
   backdrop-filter: none;
@@ -43,7 +43,7 @@
 
 .site-header__inner {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   display: grid;
   grid-template-columns: minmax(292px, 1fr) auto auto;
   align-items: center;
@@ -97,7 +97,7 @@
   border-radius: 8px;
   background: #020306;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
-  transition: opacity 160ms ease;
+  transition: border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
 }
 
 .site-brand__logo {
@@ -118,7 +118,7 @@
   font-size: 30px;
   font-weight: 700;
   line-height: 1;
-  transition: opacity 160ms ease;
+  transition: color 160ms ease, opacity 160ms ease;
 }
 
 .site-brand__subtitle,
@@ -138,17 +138,19 @@
 
 .site-brand:hover .site-brand__mark,
 .site-brand:focus-visible .site-brand__mark {
-  opacity: 0.78;
+  border-color: rgba(214, 168, 79, 0.62);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
+  opacity: 0.82;
 }
 
 .site-brand:hover .site-brand__name,
 .site-brand:focus-visible .site-brand__name {
-  opacity: 0.72;
+  opacity: 0.74;
 }
 
 .site-brand:hover .site-brand__subtitle,
 .site-brand:focus-visible .site-brand__subtitle {
-  opacity: 0.58;
+  opacity: 1;
 }
 
 .site-nav {
@@ -225,6 +227,7 @@
 
 .theme-selector {
   position: relative;
+  z-index: 4;
 }
 
 .theme-selector__trigger {
@@ -279,6 +282,7 @@
   position: absolute;
   top: 58px;
   right: 0;
+  z-index: 5;
   display: grid;
   width: max-content;
   min-width: 112px;

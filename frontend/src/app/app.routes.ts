@@ -19,6 +19,34 @@ export const routes: Routes = [
     }
   },
   {
+    path: 'systems/coupyn',
+    loadComponent: () => import('./pages/systems/coupyn/coupyn-system.component').then((component) => component.CoupynSystemComponent),
+    data: {
+      seo: pageSeoMetadata.coupynSystem
+    }
+  },
+  {
+    path: 'systems/chatpdm',
+    loadComponent: () => import('./pages/systems/chatpdm/chatpdm-system.component').then((component) => component.ChatpdmSystemComponent),
+    data: {
+      seo: pageSeoMetadata.chatpdmSystem
+    }
+  },
+  {
+    path: 'systems/deterministic-boundary-firewall',
+    loadComponent: () => import('./pages/systems/deterministic-boundary-firewall/deterministic-boundary-firewall-system.component').then((component) => component.DeterministicBoundaryFirewallSystemComponent),
+    data: {
+      seo: pageSeoMetadata.dbfSystem
+    }
+  },
+  {
+    path: 'systems/continuity-identity-model',
+    loadComponent: () => import('./pages/systems/continuity-identity-model/continuity-identity-model-system.component').then((component) => component.ContinuityIdentityModelSystemComponent),
+    data: {
+      seo: pageSeoMetadata.cimSystem
+    }
+  },
+  {
     path: 'systems',
     loadComponent: () => import('./pages/systems/systems.component').then((component) => component.SystemsComponent),
     data: {

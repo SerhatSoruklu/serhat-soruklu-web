@@ -24,7 +24,7 @@
 
 :host {
   display: block;
-  background: #07090d;
+  background: transparent;
   color: #f5f7fa;
 }
 
@@ -32,39 +32,7 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse at 74% 8%, rgba(214, 168, 79, 0.1), transparent 34%),
-    radial-gradient(ellipse at 12% 38%, rgba(168, 176, 189, 0.035), transparent 36%),
-    radial-gradient(ellipse at 78% 78%, rgba(214, 168, 79, 0.045), transparent 38%),
-    linear-gradient(180deg, #07090d 0%, #080b11 48%, #07090d 100%);
-}
-
-.home-page::before {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  content: "";
-  background:
-    linear-gradient(90deg, rgba(168, 176, 189, 0.03) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(168, 176, 189, 0.026) 1px, transparent 1px);
-  background-size: 120px 120px;
-  opacity: 0.075;
-  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.36));
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.36));
-}
-
-.home-page::after {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  content: "";
-  background:
-    radial-gradient(ellipse at 76% 13%, rgba(214, 168, 79, 0.075), transparent 30%),
-    radial-gradient(ellipse at 22% 52%, rgba(168, 176, 189, 0.024), transparent 34%),
-    radial-gradient(ellipse at 72% 88%, rgba(214, 168, 79, 0.04), transparent 35%);
-  opacity: 1;
+  background: transparent;
 }
 
 .home-hero {
@@ -1032,7 +1000,7 @@ a.system-panel__button--quiet:hover {
   overflow: hidden;
   border-bottom: 0;
   padding-top: 16px;
-  padding-bottom: 28px;
+  padding-bottom: 0;
   background: transparent;
 }
 
@@ -1053,7 +1021,16 @@ a.system-panel__button--quiet:hover {
   display: grid;
   gap: 34px;
   padding-top: 70px;
-  padding-bottom: 70px;
+  padding-bottom: 84px;
+}
+
+.home-next .home-section-frame {
+  border-color: rgba(168, 176, 189, 0.046);
+  border-top-color: rgba(214, 168, 79, 0.055);
+  border-bottom-color: rgba(168, 176, 189, 0.026);
+  background:
+    radial-gradient(ellipse at 82% 92%, rgba(214, 168, 79, 0.026), transparent 36%),
+    linear-gradient(180deg, rgba(16, 20, 28, 0.025), rgba(7, 9, 13, 0.055));
 }
 
 .home-next__header {
@@ -1233,30 +1210,12 @@ a.system-panel__button--quiet:hover {
 }
 
 :host-context(.theme-resolved-light) {
-  background: #ffffff;
+  background: transparent;
   color: #111827;
 }
 
 :host-context(.theme-resolved-light) .home-page {
-  background:
-    radial-gradient(ellipse at 74% 8%, rgba(184, 135, 47, 0.09), transparent 34%),
-    radial-gradient(ellipse at 12% 38%, rgba(17, 24, 39, 0.024), transparent 36%),
-    radial-gradient(ellipse at 78% 78%, rgba(184, 135, 47, 0.04), transparent 38%),
-    linear-gradient(180deg, #ffffff 0%, #f8f7f3 48%, #ffffff 100%);
-}
-
-:host-context(.theme-resolved-light) .home-page::before {
-  background:
-    linear-gradient(90deg, rgba(95, 102, 115, 0.035) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(95, 102, 115, 0.03) 1px, transparent 1px);
-  opacity: 0.08;
-}
-
-:host-context(.theme-resolved-light) .home-page::after {
-  background:
-    radial-gradient(ellipse at 76% 13%, rgba(184, 135, 47, 0.07), transparent 30%),
-    radial-gradient(ellipse at 22% 52%, rgba(95, 102, 115, 0.018), transparent 34%),
-    radial-gradient(ellipse at 72% 88%, rgba(184, 135, 47, 0.035), transparent 35%);
+  background: transparent;
 }
 
 :host-context(.theme-resolved-light) .home-hero {
@@ -1612,6 +1571,15 @@ a.system-panel__button--quiet:hover {
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(248, 247, 243, 0.78));
   color: #111827;
+}
+
+:host-context(.theme-resolved-light) .home-next .home-section-frame {
+  border-color: rgba(229, 224, 214, 0.48);
+  border-top-color: rgba(184, 135, 47, 0.07);
+  border-bottom-color: rgba(229, 224, 214, 0.32);
+  background:
+    radial-gradient(ellipse at 82% 92%, rgba(184, 135, 47, 0.022), transparent 36%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(248, 247, 243, 0.2));
 }
 
 :host-context(.theme-resolved-light) .home-next__panel:hover,

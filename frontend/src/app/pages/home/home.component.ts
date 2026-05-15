@@ -3,6 +3,7 @@ import { Component, HostListener, inject, PLATFORM_ID, signal } from '@angular/c
 import { MatDialog } from '@angular/material/dialog';
 import { RouterLink } from '@angular/router';
 
+import { TopNavigationService } from '../../core/navigation/top-navigation.service';
 import { PortraitDialogComponent } from '../../shared/dialogs/portrait-dialog/portrait-dialog.component';
 import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
 
@@ -20,6 +21,7 @@ export class HomeComponent {
   private readonly browserWindow = this.isBrowser ? this.document.defaultView : null;
 
   readonly projectTitleTooltipPlacement = signal<'top' | 'right'>(this.getProjectTitleTooltipPlacement());
+  readonly topNavigation = inject(TopNavigationService);
 
   @HostListener('window:resize')
   updateProjectTitleTooltipPlacement(): void {

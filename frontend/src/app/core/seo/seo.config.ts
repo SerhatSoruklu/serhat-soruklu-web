@@ -21,7 +21,7 @@ export const pageSeoMetadata = {
   work: {
     label: 'Work',
     title: 'Serhat Soruklu | Work',
-    description: 'Explore projects, platforms, and systems focused on architecture, scalability, performance, and execution.',
+    description: 'Production work by Serhat Soruklu across product architecture, full-stack delivery, infrastructure ownership, SEO surfaces, and long-term system maintenance.',
     path: '/work',
     ogImage: '/assets/social/serhat-soruklu-work-og.svg'
   },
@@ -31,6 +31,34 @@ export const pageSeoMetadata = {
     description: 'Structured thinking on systems architecture, infrastructure, engineering patterns, and scalable digital design.',
     path: '/systems',
     ogImage: '/assets/social/serhat-soruklu-systems-og.svg'
+  },
+  coupynSystem: {
+    label: 'Coupyn',
+    title: 'Serhat Soruklu | Coupyn System',
+    description: 'Outcome-driven commerce infrastructure for trust, referral discovery, and scalable marketplace signals.',
+    path: '/systems/coupyn',
+    ogImage: '/assets/social/serhat-soruklu-systems-coupyn-og.svg'
+  },
+  chatpdmSystem: {
+    label: 'ChatPDM',
+    title: 'Serhat Soruklu | ChatPDM System',
+    description: 'Deterministic language governance built to resolve, refuse, and prevent semantic drift.',
+    path: '/systems/chatpdm',
+    ogImage: '/assets/social/serhat-soruklu-systems-chatpdm-og.svg'
+  },
+  dbfSystem: {
+    label: 'DBF',
+    title: 'Serhat Soruklu | DBF System',
+    description: 'A bounded deterministic pre-egress firewall research artifact using BoundaryGate, refusal payloads, MCP parity, attack-surface testing, and release-gate checks.',
+    path: '/systems/deterministic-boundary-firewall',
+    ogImage: '/assets/social/serhat-soruklu-systems-dbf-og.svg'
+  },
+  cimSystem: {
+    label: 'CIM',
+    title: 'Serhat Soruklu | CIM System',
+    description: 'A deterministic continuity protocol for evaluating whether a changed machine actor remains eligible to inherit previously granted authority.',
+    path: '/systems/continuity-identity-model',
+    ogImage: '/assets/social/serhat-soruklu-systems-cim-og.svg'
   },
   writing: {
     label: 'Writing',
