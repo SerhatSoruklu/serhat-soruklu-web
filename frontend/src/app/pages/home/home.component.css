@@ -1817,7 +1817,7 @@ a.system-panel__button--quiet:hover {
 
   .home-next {
     padding-top: 36px;
-    padding-bottom: 56px;
+    padding-bottom: 100px;
   }
 
   .home-section-frame {
@@ -1902,6 +1902,34 @@ a.system-panel__button--quiet:hover {
 }
 
 @media (max-width: 520px) {
+  .home-next {
+    padding-bottom: 40px;
+  }
+
+  .home-next .home-section-frame {
+    border-bottom-color: rgba(214, 168, 79, 0.16);
+  }
+
+  .home-next .home-section-frame::after {
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+    left: 20px;
+    z-index: 2;
+    height: 1px;
+    pointer-events: none;
+    content: "";
+    background: linear-gradient(90deg, transparent, rgba(214, 168, 79, 0.38), rgba(168, 176, 189, 0.18), transparent);
+  }
+
+  :host-context(.theme-resolved-light) .home-next .home-section-frame {
+    border-bottom-color: rgba(184, 135, 47, 0.18);
+  }
+
+  :host-context(.theme-resolved-light) .home-next .home-section-frame::after {
+    background: linear-gradient(90deg, transparent, rgba(184, 135, 47, 0.36), rgba(95, 102, 115, 0.16), transparent);
+  }
+
   .home-hero__inner {
     min-height: auto;
     padding-top: 104px;

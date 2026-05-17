@@ -4,6 +4,10 @@
     radial-gradient(ellipse at 28% 24%, rgba(214, 168, 79, 0.044), transparent 34%);
 }
 
+.cim-page .research-section[aria-labelledby="cim-next-title"] {
+  padding-bottom: clamp(58px, 7vw, 104px);
+}
+
 .cim-flow {
   position: relative;
   z-index: 1;
