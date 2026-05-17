@@ -1,6 +1,7 @@
 import { DOCUMENT, isPlatformBrowser, NgClass } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, HostListener, inject, OnDestroy, PLATFORM_ID, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { mdiArrowRight, mdiHomeVariantOutline } from '@mdi/js';
 
 import { TopNavigationService } from '../../../core/navigation/top-navigation.service';
 import { ThemeService, ThemeSetting } from '../../../core/theme/theme.service';
@@ -36,6 +37,7 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
 
   readonly themeService = inject(ThemeService);
   readonly topNavigation = inject(TopNavigationService);
+  private readonly router = inject(Router);
   readonly closeIconPath = HEADER_MENU_ICON_PATHS.close;
   readonly isScrolled = signal(this.getScrollTop() >= SCROLLED_ENABLE_THRESHOLD);
   readonly menuIconPath = HEADER_MENU_ICON_PATHS.menu;
@@ -45,6 +47,33 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
   readonly themeMenuOpen = signal(false);
   readonly themeOptions = HEADER_THEME_OPTIONS;
   readonly themeTriggerIconPaths = HEADER_THEME_TRIGGER_ICON_PATHS;
+  readonly currentYear = new Date().getFullYear();
+  readonly homeIconPath = mdiHomeVariantOutline;
+  readonly quickLinkArrowPath = mdiArrowRight;
+  readonly quickLinks = [
+    {
+      brand: 'coupyn',
+      label: 'Coupyn',
+      path: '/systems/coupyn',
+      externalUrl: 'https://coupyn.com',
+      ariaLabel: 'View Coupyn system page',
+      externalAriaLabel: 'Open Coupyn.com in a new tab'
+    },
+    {
+      brand: 'chatpdm',
+      label: 'ChatPDM',
+      path: '/systems/chatpdm',
+      externalUrl: 'https://chatpdm.com',
+      ariaLabel: 'View ChatPDM system page',
+      externalAriaLabel: 'Open ChatPDM.com in a new tab'
+    }
+  ];
+  readonly systemChildLinks = [
+    { label: 'Coupyn', path: '/systems/coupyn' },
+    { label: 'ChatPDM', path: '/systems/chatpdm' },
+    { label: 'DBF', path: '/systems/deterministic-boundary-firewall' },
+    { label: 'CIM', path: '/systems/continuity-identity-model' }
+  ];
 
   ngAfterViewInit(): void {
     const browserWindow = this.document.defaultView;
@@ -93,6 +122,16 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
     this.blurActiveElement();
     this.themeService.setTheme(setting);
     this.themeMenuOpen.set(false);
+  }
+
+  isExactRoute(path: string): boolean {
+    return this.router.url.split(/[?#]/, 1)[0] === path;
+  }
+
+  isSystemsRoute(): boolean {
+    const currentPath = this.router.url.split(/[?#]/, 1)[0];
+
+    return currentPath === '/systems' || this.systemChildLinks.some((link) => link.path === currentPath);
   }
 
   @HostListener('document:click', ['$event'])

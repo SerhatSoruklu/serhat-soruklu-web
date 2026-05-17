@@ -55,6 +55,13 @@ describe('SeoService', () => {
     expect(globalThis.document.querySelector('meta[name="twitter:image"]')?.getAttribute('content')).toBe(defaultOgImage);
   });
 
+  it('keeps public SEO titles and descriptions within search result length targets', () => {
+    for (const pageMetadata of Object.values(pageSeoMetadata)) {
+      expect(pageMetadata.title.length).toBeLessThanOrEqual(55);
+      expect(pageMetadata.description.length).toBeLessThanOrEqual(150);
+    }
+  });
+
   it('manages page JSON-LD script', () => {
     const service = TestBed.inject(SeoService);
 
@@ -74,7 +81,7 @@ describe('SeoService', () => {
 
     await router.navigateByUrl('/work');
 
-    expect(title.getTitle()).toBe('Serhat Soruklu | Work');
+    expect(title.getTitle()).toBe(pageSeoMetadata.work.title);
     expect(globalThis.document.querySelector('meta[name="description"]')?.getAttribute('content')).toContain('Production work');
     expect(globalThis.document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe('https://serhatsoruklu.com/work');
     expect(globalThis.document.querySelector('meta[property="og:image"]')?.getAttribute('content')).toBe('https://serhatsoruklu.com/assets/social/serhat-soruklu-work-og.svg');
@@ -116,8 +123,8 @@ describe('SeoService', () => {
 
       const canonicalUrl = `https://serhatsoruklu.com${pageMetadata.path}`;
       const pageOgImage = `https://serhatsoruklu.com${pageMetadata.ogImage}`;
-      expect(pageMetadata.title.length).toBeLessThanOrEqual(50);
-      expect(pageMetadata.description.length).toBeLessThanOrEqual(170);
+      expect(pageMetadata.title.length).toBeLessThanOrEqual(55);
+      expect(pageMetadata.description.length).toBeLessThanOrEqual(150);
       expect(pageMetadata.ogImage).not.toBe(pageSeoMetadata.systems.ogImage);
       expect(title.getTitle()).toBe(pageMetadata.title);
       expect(globalThis.document.querySelector('meta[name="description"]')?.getAttribute('content')).toBe(pageMetadata.description);

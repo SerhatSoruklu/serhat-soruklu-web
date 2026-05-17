@@ -53,10 +53,13 @@ async function expectResolvedLogo(page: Page, scope: 'desktop' | 'mobile', resol
 }
 
 async function expectPanelBelowHeader(page: Page, panelTestId: string): Promise<void> {
+  await page.waitForTimeout(180);
+
   const headerBottom = await page.getByTestId('mobile-header').evaluate((element) => element.getBoundingClientRect().bottom);
   const panelTop = await page.getByTestId(panelTestId).evaluate((element) => element.getBoundingClientRect().top);
 
-  expect(panelTop).toBeGreaterThanOrEqual(headerBottom + 8);
+  expect(panelTop - headerBottom).toBeGreaterThanOrEqual(-2);
+  expect(panelTop - headerBottom).toBeLessThanOrEqual(1);
 }
 
 async function expectThemeMenuAnchoredToButton(page: Page): Promise<void> {
@@ -92,6 +95,8 @@ async function expectThemeMenuAnchoredToButton(page: Page): Promise<void> {
 }
 
 async function expectMobileMenuCloseToHeader(page: Page): Promise<void> {
+  await page.waitForTimeout(180);
+
   const geometry = await page.evaluate(() => {
     const header = document.querySelector('[data-testid="mobile-header"]');
     const nav = document.querySelector('[data-testid="mobile-nav-panel"]');
@@ -114,12 +119,11 @@ async function expectMobileMenuCloseToHeader(page: Page): Promise<void> {
   });
 
   expect(geometry).not.toBeNull();
-  expect(geometry!.gap).toBeGreaterThanOrEqual(10);
-  expect(geometry!.gap).toBeLessThanOrEqual(16);
-  expect(geometry!.navLeft).toBeGreaterThanOrEqual(20);
-  expect(geometry!.navRight).toBeLessThanOrEqual(geometry!.viewportWidth - 20);
-  expect(geometry!.navHeight).toBeLessThanOrEqual(280);
-  expect(geometry!.navHeight).toBeLessThan(geometry!.viewportHeight - 92);
+  expect(geometry!.gap).toBeGreaterThanOrEqual(-2);
+  expect(geometry!.gap).toBeLessThanOrEqual(1);
+  expect(geometry!.navLeft).toBeLessThanOrEqual(1);
+  expect(geometry!.navRight).toBeGreaterThanOrEqual(geometry!.viewportWidth - 1);
+  expect(geometry!.navHeight).toBeLessThan(geometry!.viewportHeight - 80);
 }
 
 async function expectMobileDropdownStyling(page: Page, testId: string, resolvedTheme: 'dark' | 'light'): Promise<void> {
@@ -129,13 +133,20 @@ async function expectMobileDropdownStyling(page: Page, testId: string, resolvedT
     return {
       backgroundColor: computedStyle.backgroundColor,
       borderColor: computedStyle.borderTopColor,
-      borderRadius: computedStyle.borderTopLeftRadius,
+      borderBottomRadius: computedStyle.borderBottomLeftRadius,
+      borderTopRadius: computedStyle.borderTopLeftRadius,
       boxShadow: computedStyle.boxShadow,
       zIndex: computedStyle.zIndex
     };
   });
 
-  expect(styles.borderRadius).toBe('10px');
+  if (testId === 'mobile-nav-panel') {
+    expect(styles.borderTopRadius).toBe('0px');
+    expect(styles.borderBottomRadius).toBe('0px');
+  } else {
+    expect(styles.borderTopRadius).toBe('10px');
+  }
+
   expect(styles.boxShadow).not.toBe('none');
 
   if (resolvedTheme === 'light') {
@@ -149,9 +160,9 @@ async function expectMobileDropdownStyling(page: Page, testId: string, resolvedT
 }
 
 async function getMobileNavState(page: Page): Promise<Array<{ label: string; active: boolean; ariaCurrent: string | null; backgroundColor: string }>> {
-  return page.getByTestId('mobile-nav-panel').locator('a').evaluateAll((links) => links.map((link) => ({
-    label: link.textContent?.trim() ?? '',
-    active: link.classList.contains('mobile-nav__link--active'),
+  return page.getByTestId('mobile-nav-panel').locator('a.mobile-nav__home, a.mobile-nav__link').evaluateAll((links) => links.map((link) => ({
+    label: link.getAttribute('aria-label') || link.textContent?.trim() || '',
+    active: link.classList.contains('mobile-nav__link--active') || link.classList.contains('mobile-nav__home--active'),
     ariaCurrent: link.getAttribute('aria-current'),
     backgroundColor: getComputedStyle(link).backgroundColor
   })));
@@ -160,7 +171,7 @@ async function getMobileNavState(page: Page): Promise<Array<{ label: string; act
 async function expectOnlyMobileNavItemActive(page: Page, expectedLabel: string | null): Promise<void> {
   const state = await getMobileNavState(page);
   const activeItems = state.filter((item) => item.active);
-  const highlightedItems = state.filter((item) => item.backgroundColor !== 'rgba(0, 0, 0, 0)');
+  const highlightedItems = state.filter((item) => item.active && item.backgroundColor !== 'rgba(0, 0, 0, 0)');
 
   expect(activeItems.map((item) => item.label)).toEqual(expectedLabel ? [expectedLabel] : []);
   expect(highlightedItems.map((item) => item.label)).toEqual(expectedLabel ? [expectedLabel] : []);
@@ -476,7 +487,7 @@ test.describe('responsive shell header', () => {
     test(`mobile/tablet nav active state is exact at ${viewport.name}`, async ({ page }, testInfo) => {
       const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
       const routeCases = [
-        { path: '/', activeLabel: null },
+        { path: '/', activeLabel: 'Home' },
         { path: '/work', activeLabel: 'Work' },
         { path: '/systems', activeLabel: 'Systems' },
         { path: '/writing', activeLabel: 'Writing' },

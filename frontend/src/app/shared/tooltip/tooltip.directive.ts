@@ -99,14 +99,12 @@ export class TooltipDirective implements OnDestroy {
     const arrowPadding = 14;
     const viewportWidth = this.document.documentElement.clientWidth;
     const viewportHeight = this.document.documentElement.clientHeight;
-    const placement = this.appTooltipPlacement();
+    const preferredPlacement = this.appTooltipPlacement();
+    const placement = this.resolvePlacement(preferredPlacement, triggerBox, tooltipBox, gap, viewportPadding, viewportWidth);
     const centeredLeft = triggerBox.left + (triggerBox.width / 2) - (tooltipBox.width / 2);
     const centeredTop = triggerBox.top + (triggerBox.height / 2) - (tooltipBox.height / 2);
     const horizontalLeft = Math.min(Math.max(centeredLeft, viewportPadding), viewportWidth - tooltipBox.width - viewportPadding);
-    const rightLeft = Math.min(
-      Math.max(triggerBox.right + gap, viewportPadding),
-      viewportWidth - tooltipBox.width - viewportPadding
-    );
+    const rightLeft = triggerBox.right + gap;
     const left = placement === 'right' ? rightLeft : horizontalLeft;
     const top = placement === 'right'
       ? Math.min(Math.max(centeredTop, viewportPadding), viewportHeight - tooltipBox.height - viewportPadding)
@@ -119,13 +117,37 @@ export class TooltipDirective implements OnDestroy {
       ? Math.min(Math.max(triggerCenterY - top, arrowPadding), tooltipBox.height - arrowPadding)
       : Math.min(Math.max(triggerCenterX - left, arrowPadding), tooltipBox.width - arrowPadding);
 
+    this.applyPlacementClass(placement);
     this.renderer.setStyle(this.tooltipElement, 'left', `${left}px`);
     this.renderer.setStyle(this.tooltipElement, 'top', `${Math.max(top, viewportPadding)}px`);
     this.renderer.setStyle(this.tooltipElement, '--tooltip-arrow-left', `${arrowOffset}px`, RendererStyleFlags2.DashCase);
     this.renderer.setStyle(this.tooltipElement, '--tooltip-arrow-top', `${arrowOffset}px`, RendererStyleFlags2.DashCase);
   }
 
-  private applyPlacementClass(): void {
+  private resolvePlacement(
+    preferredPlacement: TooltipPlacement,
+    triggerBox: DOMRect,
+    tooltipBox: DOMRect,
+    gap: number,
+    viewportPadding: number,
+    viewportWidth: number
+  ): TooltipPlacement {
+    if (preferredPlacement !== 'right') {
+      return preferredPlacement;
+    }
+
+    if (triggerBox.right + gap + tooltipBox.width <= viewportWidth - viewportPadding) {
+      return 'right';
+    }
+
+    if (triggerBox.top - tooltipBox.height - gap >= viewportPadding) {
+      return 'top';
+    }
+
+    return 'bottom';
+  }
+
+  private applyPlacementClass(placement: TooltipPlacement = this.appTooltipPlacement()): void {
     if (!this.tooltipElement) {
       return;
     }
@@ -133,7 +155,7 @@ export class TooltipDirective implements OnDestroy {
     this.renderer.removeClass(this.tooltipElement, 'app-tooltip--top');
     this.renderer.removeClass(this.tooltipElement, 'app-tooltip--right');
     this.renderer.removeClass(this.tooltipElement, 'app-tooltip--bottom');
-    this.renderer.addClass(this.tooltipElement, `app-tooltip--${this.appTooltipPlacement()}`);
+    this.renderer.addClass(this.tooltipElement, `app-tooltip--${placement}`);
   }
 
   private destroyTooltip(): void {

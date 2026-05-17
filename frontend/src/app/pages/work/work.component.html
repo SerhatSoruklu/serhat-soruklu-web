@@ -3,9 +3,9 @@
     <div class="work-hero__inner layout-container--wide">
       <div class="work-hero__copy">
         <p class="work-eyebrow">WORK</p>
-        <h1 id="work-title">Work Built With Full-Stack Ownership</h1>
+        <h1 id="work-title">Built End-to-End, Owned Completely</h1>
         <p class="work-hero__summary">
-          A focused record of production systems, infrastructure decisions, product surfaces, and long-term maintenance work carried from concept to operation.
+          A record of real production systems I have owned completely, turning early ideas into polished user experiences, solid infrastructure, and reliable platforms that keep delivering.
         </p>
 
         <ul class="work-hero__proof" aria-label="Work proof points">
@@ -17,7 +17,7 @@
 
         <div class="work-hero__actions" aria-label="Work page actions">
           <a class="site-button site-button-primary" routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">View Systems</a>
-          <a class="site-button site-button-secondary" [href]="githubUrl" target="_blank" rel="noopener noreferrer">Open GitHub</a>
+          <a class="site-button site-button-secondary" routerLink="/github" (click)="topNavigation.handleLinkClick('/github')">Open GitHub</a>
           <a class="site-button site-button-secondary" routerLink="/contact" (click)="topNavigation.handleLinkClick('/contact')">Contact</a>
         </div>
       </div>
@@ -85,32 +85,50 @@
       <div class="work-scope__grid">
         <article class="work-scope-card">
           <span class="work-card-index" aria-hidden="true">01</span>
-          <h3>Product Architecture</h3>
+          <h3 class="work-card-title">
+            <mat-icon class="work-card-icon" svgIcon="work-scope-product" aria-hidden="true"></mat-icon>
+            <span>Product Architecture</span>
+          </h3>
           <p>Purpose, user flows, system boundaries, and long-term product direction.</p>
         </article>
         <article class="work-scope-card">
           <span class="work-card-index" aria-hidden="true">02</span>
-          <h3>Frontend Systems</h3>
+          <h3 class="work-card-title">
+            <mat-icon class="work-card-icon" svgIcon="work-scope-frontend" aria-hidden="true"></mat-icon>
+            <span>Frontend Systems</span>
+          </h3>
           <p>Angular interfaces, responsive layouts, SSR-aware surfaces, routing, and interaction flows.</p>
         </article>
         <article class="work-scope-card">
           <span class="work-card-index" aria-hidden="true">03</span>
-          <h3>Backend &amp; APIs</h3>
+          <h3 class="work-card-title">
+            <mat-icon class="work-card-icon" svgIcon="work-scope-api" aria-hidden="true"></mat-icon>
+            <span>Backend &amp; APIs</span>
+          </h3>
           <p>Node.js/Express services, route design, validation, data access, and operational logic.</p>
         </article>
         <article class="work-scope-card">
           <span class="work-card-index" aria-hidden="true">04</span>
-          <h3>Data &amp; Search Surfaces</h3>
+          <h3 class="work-card-title">
+            <mat-icon class="work-card-icon" svgIcon="work-scope-data" aria-hidden="true"></mat-icon>
+            <span>Data &amp; Search Surfaces</span>
+          </h3>
           <p>MongoDB-backed structures, company/index pages, metadata, SEO routes, and discoverability layers.</p>
         </article>
         <article class="work-scope-card">
           <span class="work-card-index" aria-hidden="true">05</span>
-          <h3>Infrastructure &amp; Deployment</h3>
+          <h3 class="work-card-title">
+            <mat-icon class="work-card-icon" svgIcon="work-scope-infrastructure" aria-hidden="true"></mat-icon>
+            <span>Infrastructure &amp; Deployment</span>
+          </h3>
           <p>Self-managed hosting, production-safe changes, server operations, and controlled release habits.</p>
         </article>
         <article class="work-scope-card">
           <span class="work-card-index" aria-hidden="true">06</span>
-          <h3>Trust &amp; Feedback Loops</h3>
+          <h3 class="work-card-title">
+            <mat-icon class="work-card-icon" svgIcon="work-scope-trust" aria-hidden="true"></mat-icon>
+            <span>Trust &amp; Feedback Loops</span>
+          </h3>
           <p>Ranking signals, proof signals, moderation logic, outcome feedback, and explainable visibility.</p>
         </article>
       </div>
@@ -127,7 +145,22 @@
       <div class="work-production__grid">
         <article class="work-production-card">
           <p class="work-production-card__label">Commerce Infrastructure</p>
-          <h3>Coupyn Operating Surface</h3>
+          <h3 class="work-production-card__brand-title">
+            <a
+              class="work-production-brand-link"
+              href="https://coupyn.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              appTooltip="https://coupyn.com"
+              appTooltipPlacement="bottom"
+              aria-label="Open Coupyn.com in a new tab">
+              <span class="work-production-brand work-production-brand--coupyn" aria-hidden="true">
+                <span class="work-production-brand__coupyn-word">Coupyn</span>
+                <span class="work-production-brand__coupyn-script">.com</span>
+              </span>
+            </a>
+            <span class="work-production-card__title-text">Operating Surface</span>
+          </h3>
           <p>
             Production work across company discovery, offer publishing, memberships, ranking, trust signals, SEO surfaces, and user-facing flows.
           </p>
@@ -137,12 +170,33 @@
             <li>Trust and visibility signals</li>
             <li>SEO and discovery infrastructure</li>
           </ul>
-          <a routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">View system overview</a>
+          <a routerLink="/systems/coupyn" (click)="topNavigation.handleLinkClick('/systems/coupyn')">View Coupyn System</a>
         </article>
 
         <article class="work-production-card">
           <p class="work-production-card__label">Deterministic Systems</p>
-          <h3>ChatPDM Governance Runtime</h3>
+          <h3 class="work-production-card__brand-title">
+            <a
+              class="work-production-brand-link"
+              href="https://chatpdm.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              appTooltip="https://chatpdm.com"
+              appTooltipPlacement="bottom"
+              aria-label="Open ChatPDM in a new tab">
+              <span class="work-production-brand work-production-brand--chatpdm" aria-hidden="true">
+                <span class="work-production-brand__chatpdm-mark">
+                  <span class="work-production-brand__chatpdm-circle"></span>
+                  <span class="work-production-brand__chatpdm-line"></span>
+                  <span class="work-production-brand__chatpdm-square"></span>
+                </span>
+                <span class="work-production-brand__chatpdm-wordmark">
+                  <span class="work-production-brand__chatpdm-chat">Chat</span><span class="work-production-brand__chatpdm-pdm">PDM</span>
+                </span>
+              </span>
+            </a>
+            <span class="work-production-card__title-text">Governance Runtime</span>
+          </h3>
           <p>
             Work on deterministic concept resolution, refusal-first behavior, constraint contracts, source grounding, and audit-friendly runtime boundaries.
           </p>
@@ -152,12 +206,15 @@
             <li>Source-grounded concept packets</li>
             <li>Drift prevention boundaries</li>
           </ul>
-          <a routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">View system overview</a>
+          <a routerLink="/systems/chatpdm" (click)="topNavigation.handleLinkClick('/systems/chatpdm')">View ChatPDM System</a>
         </article>
 
         <article class="work-production-card">
           <p class="work-production-card__label">Infrastructure &amp; Maintenance</p>
-          <h3>Independent Delivery Layer</h3>
+          <h3 class="work-card-title work-card-title--production">
+            <mat-icon class="work-card-icon" svgIcon="work-production-delivery" aria-hidden="true"></mat-icon>
+            <span>Independent Delivery Layer</span>
+          </h3>
           <p>
             Cross-project work on deployment discipline, SSR stability, metadata correctness, responsive UI, production safety, and long-term maintainability.
           </p>
@@ -167,7 +224,6 @@
             <li>Metadata and SEO discipline</li>
             <li>Maintenance under real constraints</li>
           </ul>
-          <a [href]="githubUrl" target="_blank" rel="noopener noreferrer">View GitHub</a>
         </article>
       </div>
     </div>
@@ -199,8 +255,7 @@
             <li>Frozen MIT research artifact</li>
           </ul>
           <div class="work-research-card__links">
-            <a routerLink="/systems/deterministic-boundary-firewall" (click)="topNavigation.handleLinkClick('/systems/deterministic-boundary-firewall')">View system page</a>
-            <a href="https://github.com/SerhatSoruklu/deterministic-boundary-firewall" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a routerLink="/systems/deterministic-boundary-firewall" (click)="topNavigation.handleLinkClick('/systems/deterministic-boundary-firewall')">View DBF System</a>
           </div>
         </article>
 
@@ -219,8 +274,7 @@
             <li>Protocol diagrams</li>
           </ul>
           <div class="work-research-card__links">
-            <a routerLink="/systems/continuity-identity-model" (click)="topNavigation.handleLinkClick('/systems/continuity-identity-model')">View system page</a>
-            <a href="https://github.com/SerhatSoruklu/continuity-identity-model" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a routerLink="/systems/continuity-identity-model" (click)="topNavigation.handleLinkClick('/systems/continuity-identity-model')">View CIM System</a>
           </div>
         </article>
       </div>
@@ -236,19 +290,31 @@
 
       <div class="work-execution__grid">
         <article class="work-execution-card">
-          <h3>Define The Constraint</h3>
+          <h3 class="work-card-title">
+            <mat-icon class="work-card-icon" svgIcon="work-execution-constraint" aria-hidden="true"></mat-icon>
+            <span>Define The Constraint</span>
+          </h3>
           <p>Clarify the purpose, user impact, system boundary, and failure behavior before expanding scope.</p>
         </article>
         <article class="work-execution-card">
-          <h3>Build The Smallest Durable Path</h3>
+          <h3 class="work-card-title">
+            <mat-icon class="work-card-icon" svgIcon="work-execution-build" aria-hidden="true"></mat-icon>
+            <span>Build The Smallest Durable Path</span>
+          </h3>
           <p>Prefer small, testable, reversible changes that improve the live system without destabilizing it.</p>
         </article>
         <article class="work-execution-card">
-          <h3>Connect Action To Outcome</h3>
+          <h3 class="work-card-title">
+            <mat-icon class="work-card-icon" svgIcon="work-execution-outcome" aria-hidden="true"></mat-icon>
+            <span>Connect Action To Outcome</span>
+          </h3>
           <p>Design features as loops: user action, system response, trust signal, feedback, and return behavior.</p>
         </article>
         <article class="work-execution-card">
-          <h3>Audit Under Pressure</h3>
+          <h3 class="work-card-title">
+            <mat-icon class="work-card-icon" svgIcon="work-execution-audit" aria-hidden="true"></mat-icon>
+            <span>Audit Under Pressure</span>
+          </h3>
           <p>Systems should fail safely instead of drifting silently.</p>
         </article>
       </div>
@@ -266,12 +332,12 @@
         </div>
 
         <ol class="work-ownership__timeline" aria-label="Full-stack responsibility timeline">
-          <li><span>01</span>Concept and product framing</li>
-          <li><span>02</span>Interface and user flow implementation</li>
-          <li><span>03</span>Backend and database design</li>
-          <li><span>04</span>Infrastructure and deployment</li>
-          <li><span>05</span>SEO and public metadata surfaces</li>
-          <li><span>06</span>Monitoring, repair, and iteration</li>
+          <li><span class="work-ownership__index">01</span><span class="work-ownership__label">Concept and product framing</span></li>
+          <li><span class="work-ownership__index">02</span><span class="work-ownership__label">Interface and user flow implementation</span></li>
+          <li><span class="work-ownership__index">03</span><span class="work-ownership__label">Backend and database design</span></li>
+          <li><span class="work-ownership__index">04</span><span class="work-ownership__label">Infrastructure and deployment</span></li>
+          <li><span class="work-ownership__index">05</span><span class="work-ownership__label">SEO and public metadata surfaces</span></li>
+          <li><span class="work-ownership__index">06</span><span class="work-ownership__label">Monitoring, repair, and iteration</span></li>
         </ol>
       </div>
     </div>
@@ -287,29 +353,38 @@
 
         <nav class="work-next__nav" aria-label="Work next paths">
           <a class="work-next-card" routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">
-            <span>
-              <strong>Systems</strong>
+            <span class="work-next-card__copy">
+              <span class="work-next-card__title">
+                <mat-icon class="work-next-card__title-icon" svgIcon="work-cta-systems" aria-hidden="true"></mat-icon>
+                <strong>Systems</strong>
+              </span>
               <small>Coupyn and ChatPDM overview</small>
             </span>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <svg class="work-next-card__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path d="M5 12H17M13 7L18 12L13 17"></path>
             </svg>
           </a>
           <a class="work-next-card" routerLink="/writing" (click)="topNavigation.handleLinkClick('/writing')">
-            <span>
-              <strong>Writing</strong>
+            <span class="work-next-card__copy">
+              <span class="work-next-card__title">
+                <mat-icon class="work-next-card__title-icon" svgIcon="work-cta-writing" aria-hidden="true"></mat-icon>
+                <strong>Writing</strong>
+              </span>
               <small>Engineering thinking and architecture</small>
             </span>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <svg class="work-next-card__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path d="M5 12H17M13 7L18 12L13 17"></path>
             </svg>
           </a>
           <a class="work-next-card" routerLink="/contact" (click)="topNavigation.handleLinkClick('/contact')">
-            <span>
-              <strong>Contact</strong>
+            <span class="work-next-card__copy">
+              <span class="work-next-card__title">
+                <mat-icon class="work-next-card__title-icon" svgIcon="work-cta-contact" aria-hidden="true"></mat-icon>
+                <strong>Contact</strong>
+              </span>
               <small>Discuss systems or production work</small>
             </span>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <svg class="work-next-card__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path d="M5 12H17M13 7L18 12L13 17"></path>
             </svg>
           </a>

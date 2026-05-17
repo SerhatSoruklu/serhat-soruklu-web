@@ -1,6 +1,7 @@
 <header
   class="mobile-header"
   [ngClass]="{
+    'mobile-header--nav-open': menuOpen(),
     'mobile-header--panel-open': menuOpen() || themeMenuOpen(),
     'mobile-header--scrolled': isScrolled()
   }"
@@ -123,13 +124,34 @@
     data-testid="mobile-nav-panel"
     [attr.inert]="menuOpen() ? null : ''"
   >
+    <a
+      routerLink="/"
+      class="mobile-nav__home"
+      routerLinkActive="mobile-nav__home--active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      ariaCurrentWhenActive="page"
+      aria-label="Home"
+      [attr.tabindex]="menuOpen() ? 0 : -1"
+      (click)="topNavigation.handleBrandClick(); closeMenu()"
+    >
+      <span class="mobile-nav__home-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path [attr.d]="homeIconPath"></path>
+        </svg>
+      </span>
+      <span class="mobile-nav__home-copy">
+        <span class="mobile-nav__home-label">Home</span>
+        <span class="mobile-nav__home-note">Serhat Soruklu</span>
+      </span>
+    </a>
+
     @for (item of navItems; track item.path) {
       <a
         [routerLink]="item.path"
         routerLinkActive="mobile-nav__link--active"
         [routerLinkActiveOptions]="{ exact: item.exact }"
-        ariaCurrentWhenActive="page"
         class="mobile-nav__link"
+        [attr.aria-current]="isExactRoute(item.path) ? 'page' : null"
         [attr.tabindex]="menuOpen() ? 0 : -1"
         (click)="topNavigation.handleLinkClick(item.path); closeMenu()"
       >
@@ -138,6 +160,79 @@
         </svg>
         <span>{{ item.label }}</span>
       </a>
+
+      @if (item.path === '/systems' && isSystemsRoute()) {
+        <div class="mobile-nav__system-children" aria-label="System pages">
+          @for (child of systemChildLinks; track child.path) {
+            <a
+              class="mobile-nav__system-child"
+              [routerLink]="child.path"
+              routerLinkActive="mobile-nav__system-child--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              ariaCurrentWhenActive="page"
+              [attr.tabindex]="menuOpen() ? 0 : -1"
+              (click)="topNavigation.handleLinkClick(child.path); closeMenu()"
+            >
+              {{ child.label }}
+            </a>
+          }
+        </div>
+      }
     }
+
+    <footer class="mobile-nav__footer" aria-label="Mobile menu footer">
+      <div class="mobile-nav__quick-links" aria-label="Quick links">
+        @for (link of quickLinks; track link.path) {
+          <div class="mobile-nav__quick-link-group">
+            <a
+              class="mobile-nav__quick-link"
+              [routerLink]="link.path"
+              [attr.aria-label]="link.ariaLabel"
+              [attr.tabindex]="menuOpen() ? 0 : -1"
+              (click)="topNavigation.handleLinkClick(link.path); closeMenu()"
+            >
+              @if (link.brand === 'coupyn') {
+                <span class="mobile-nav-brand mobile-nav-brand--coupyn" aria-hidden="true">
+                  <span class="mobile-nav-brand__coupyn-word">Coupyn</span>
+                  <span class="mobile-nav-brand__coupyn-script">.com</span>
+                </span>
+              } @else if (link.brand === 'chatpdm') {
+                <span class="mobile-nav-brand mobile-nav-brand--chatpdm" aria-hidden="true">
+                  <span class="mobile-nav-brand__chatpdm-mark" aria-hidden="true">
+                    <span class="mobile-nav-brand__chatpdm-circle"></span>
+                    <span class="mobile-nav-brand__chatpdm-line"></span>
+                    <span class="mobile-nav-brand__chatpdm-square"></span>
+                  </span>
+                  <span class="mobile-nav-brand__chatpdm-wordmark">
+                    <span class="mobile-nav-brand__chatpdm-chat">Chat</span><span class="mobile-nav-brand__chatpdm-pdm">PDM</span>
+                  </span>
+                </span>
+              }
+              <svg class="mobile-nav__quick-link-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path [attr.d]="quickLinkArrowPath"></path>
+              </svg>
+            </a>
+            <a
+              class="mobile-nav__quick-url"
+              [href]="link.externalUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="link.externalAriaLabel"
+              [attr.tabindex]="menuOpen() ? 0 : -1"
+            >
+              {{ link.externalUrl }}
+            </a>
+          </div>
+        }
+      </div>
+
+      <p class="mobile-nav__copyright">
+        <span class="mobile-nav__copyright-mark" aria-hidden="true">&copy;</span>
+        <span class="mobile-nav__copyright-text">{{ currentYear }} Serhat Soruklu</span>
+      </p>
+      <p class="mobile-nav__notice">
+        Built and maintained as an independent systems portfolio.
+      </p>
+    </footer>
   </nav>
 </header>

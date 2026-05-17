@@ -13,70 +13,70 @@ const defaultPersonImage = '/assets/portfolio-image/serhat-soruklu-portrait-818.
 export const pageSeoMetadata = {
   home: {
     label: 'Home',
-    title: 'Serhat Soruklu | Systems Architect',
+    title: 'Systems Architect | Serhat Soruklu',
     description: 'Systems architecture, software engineering, and modern digital infrastructure built with precision, scale, and long-term thinking.',
     path: '/',
     ogImage: defaultOgImage
   },
   work: {
     label: 'Work',
-    title: 'Serhat Soruklu | Work',
-    description: 'Production work by Serhat Soruklu across product architecture, full-stack delivery, infrastructure ownership, SEO surfaces, and long-term system maintenance.',
+    title: 'Work | Serhat Soruklu',
+    description: 'Production work by Serhat Soruklu across product architecture, full-stack delivery, infrastructure ownership, SEO surfaces, and long-term maintenance.',
     path: '/work',
     ogImage: '/assets/social/serhat-soruklu-work-og.svg'
   },
   systems: {
     label: 'Systems',
-    title: 'Serhat Soruklu | Systems',
-    description: 'Structured thinking on systems architecture, infrastructure, engineering patterns, and scalable digital design.',
+    title: 'Systems | Serhat Soruklu',
+    description: 'Explore Serhat Soruklu\'s systems map across Coupyn, ChatPDM, DBF, CIM, production platforms, research, and architecture models.',
     path: '/systems',
     ogImage: '/assets/social/serhat-soruklu-systems-og.svg'
   },
   coupynSystem: {
     label: 'Coupyn',
-    title: 'Serhat Soruklu | Coupyn System',
-    description: 'Outcome-driven commerce infrastructure for trust, referral discovery, and scalable marketplace signals.',
+    title: 'Coupyn System | Serhat Soruklu',
+    description: 'Coupyn is Serhat Soruklu\'s production commerce system for coupon and referral discovery, company pages, trust signals, and durable SEO visibility.',
     path: '/systems/coupyn',
     ogImage: '/assets/social/serhat-soruklu-systems-coupyn-og.svg'
   },
   chatpdmSystem: {
     label: 'ChatPDM',
-    title: 'Serhat Soruklu | ChatPDM System',
-    description: 'Deterministic language governance built to resolve, refuse, and prevent semantic drift.',
+    title: 'ChatPDM System | Serhat Soruklu',
+    description: 'ChatPDM is Serhat Soruklu\'s deterministic language governance system for bounded concepts, refusal-first resolution, and semantic drift prevention.',
     path: '/systems/chatpdm',
     ogImage: '/assets/social/serhat-soruklu-systems-chatpdm-og.svg'
   },
   dbfSystem: {
     label: 'DBF',
-    title: 'Serhat Soruklu | DBF System',
-    description: 'A bounded deterministic pre-egress firewall research artifact using BoundaryGate, refusal payloads, MCP parity, attack-surface testing, and release-gate checks.',
+    title: 'DBF System | Serhat Soruklu',
+    description: 'Deterministic Boundary Firewall is Serhat Soruklu\'s research system for bounded pre-egress checks, refusal payloads, MCP parity, and drift-safe gates.',
     path: '/systems/deterministic-boundary-firewall',
     ogImage: '/assets/social/serhat-soruklu-systems-dbf-og.svg'
   },
   cimSystem: {
     label: 'CIM',
-    title: 'Serhat Soruklu | CIM System',
-    description: 'A deterministic continuity protocol for evaluating whether a changed machine actor remains eligible to inherit previously granted authority.',
+    title: 'CIM System | Serhat Soruklu',
+    description: 'Continuity Identity Model is Serhat Soruklu\'s deterministic protocol for identity continuity, state change, and inherited authority in machine actors.',
     path: '/systems/continuity-identity-model',
     ogImage: '/assets/social/serhat-soruklu-systems-cim-og.svg'
   },
   writing: {
     label: 'Writing',
-    title: 'Serhat Soruklu | Writing',
+    title: 'Writing | Serhat Soruklu',
     description: 'Essays and technical writing on software, systems, architecture, execution, and long-term digital thinking.',
     path: '/writing',
     ogImage: '/assets/social/serhat-soruklu-writing-og.svg'
   },
   github: {
     label: 'GitHub',
-    title: 'Serhat Soruklu | GitHub',
+    title: 'GitHub | Serhat Soruklu',
     description: 'Open-source projects, repositories, experiments, and engineering work by Serhat Soruklu on GitHub.',
     path: '/github',
     ogImage: '/assets/social/serhat-soruklu-github-og.svg'
   },
   contact: {
     label: 'Contact',
-    title: 'Serhat Soruklu | Contact',
+    title: 'Contact | Serhat Soruklu',
     description: 'Contact Serhat Soruklu for collaborations, systems architecture, engineering discussions, and project inquiries.',
     path: '/contact',
     ogImage: '/assets/social/serhat-soruklu-contact-og.svg'

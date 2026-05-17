@@ -17,7 +17,7 @@
         </ul>
 
         <div class="research-hero__actions" aria-label="CIM actions">
-          <a class="site-button site-button-primary" [href]="githubUrl" target="_blank" rel="noopener noreferrer">View GitHub</a>
+          <a class="site-button site-button-primary" routerLink="/github" (click)="topNavigation.handleLinkClick('/github')">View GitHub</a>
           <a class="site-button site-button-secondary" routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">Back to Systems</a>
         </div>
       </div>
@@ -75,7 +75,7 @@
   </section>
 
   <section class="research-section layout-section" aria-labelledby="cim-authority-title">
-    <div class="research-section-frame">
+    <div class="research-section-frame research-section-frame--interactive">
       <div class="research-section-heading">
         <p class="research-eyebrow">PROTOCOL AUTHORITY</p>
         <h2 id="cim-authority-title">Specification Before Implementation</h2>
@@ -95,19 +95,31 @@
 
       <div class="research-card-grid research-card-grid--three">
         <article class="research-card">
-          <h3>CIM-SPEC-v0.1.md</h3>
+          <h3 class="research-card-title">
+            <mat-icon class="research-card-icon" svgIcon="cim-repo-spec" aria-hidden="true"></mat-icon>
+            <span>CIM-SPEC-v0.1.md</span>
+          </h3>
           <p>Frozen protocol specification and the primary source of truth for continuity decisions.</p>
         </article>
         <article class="research-card">
-          <h3>packages/cim-core</h3>
+          <h3 class="research-card-title">
+            <mat-icon class="research-card-icon" svgIcon="cim-repo-core" aria-hidden="true"></mat-icon>
+            <span>packages/cim-core</span>
+          </h3>
           <p>TypeScript verifier and canonical vector runner for checking implementation behavior.</p>
         </article>
         <article class="research-card">
-          <h3>docs/audit</h3>
+          <h3 class="research-card-title">
+            <mat-icon class="research-card-icon" svgIcon="cim-repo-audit" aria-hidden="true"></mat-icon>
+            <span>docs/audit</span>
+          </h3>
           <p>Hardening audit reports and machine-readable findings for review and traceability.</p>
         </article>
         <article class="research-card">
-          <h3>assets/images</h3>
+          <h3 class="research-card-title">
+            <mat-icon class="research-card-icon" svgIcon="cim-repo-images" aria-hidden="true"></mat-icon>
+            <span>assets/images</span>
+          </h3>
           <p>Protocol diagrams that explain the continuity and conformance model.</p>
         </article>
       </div>
@@ -115,7 +127,7 @@
   </section>
 
   <section class="research-section layout-section" aria-labelledby="cim-conformance-title">
-    <div class="research-section-frame">
+    <div class="research-section-frame research-section-frame--interactive">
       <div class="research-section-heading">
         <p class="research-eyebrow">CONFORMANCE</p>
         <h2 id="cim-conformance-title">Conformance First</h2>
@@ -132,19 +144,61 @@
         <p class="research-eyebrow">FLOW OVERVIEW</p>
         <h2 id="cim-flow-title">Continuity Verification Flow</h2>
         <p>
-          The protocol flow starts with the frozen specification and canonical vectors, then tests implementations against conformance expectations before producing a continuity decision.
+          A restrained view of how the frozen specification, canonical vectors, and implementation targets flow into conformance checks and continuity decisions.
         </p>
       </div>
 
       <div class="cim-conformance-panel" aria-label="Continuity verification flow diagram">
-        <div class="cim-conformance-panel__node cim-conformance-panel__node--source">CIM-SPEC-v0.1</div>
-        <div class="cim-conformance-panel__node">Canonical Test Vectors</div>
-        <div class="cim-conformance-panel__node">TypeScript Reference Implementation</div>
-        <div class="cim-conformance-panel__branch">
-          <span>Go Reference Implementation Target</span>
-          <span>Rust Reference Implementation Target</span>
+        <div class="cim-conformance-panel__stage cim-conformance-panel__stage--sources">
+          <div class="cim-conformance-panel__node cim-conformance-panel__node--source">
+            <mat-icon class="cim-conformance-panel__icon" svgIcon="cim-flow-spec" aria-hidden="true"></mat-icon>
+            <span>CIM-SPEC-v0.1</span>
+            <small>Normative specification</small>
+          </div>
+          <div class="cim-conformance-panel__node cim-conformance-panel__node--source">
+            <mat-icon class="cim-conformance-panel__icon" svgIcon="cim-flow-vectors" aria-hidden="true"></mat-icon>
+            <span>Canonical Test Vectors</span>
+            <small>Expected decisions</small>
+          </div>
         </div>
-        <div class="cim-conformance-panel__node cim-conformance-panel__node--decision">Cross-Language Conformance Runner</div>
+
+        <div class="cim-conformance-panel__connector" aria-hidden="true"></div>
+
+        <div class="cim-conformance-panel__stage cim-conformance-panel__stage--implementations">
+          <div class="cim-conformance-panel__node cim-conformance-panel__node--verifier">
+            <mat-icon class="cim-conformance-panel__icon" svgIcon="cim-flow-verifier" aria-hidden="true"></mat-icon>
+            <span>TypeScript Reference Implementation</span>
+            <small>Active verifier target</small>
+          </div>
+          <div class="cim-conformance-panel__node cim-conformance-panel__node--target">
+            <mat-icon class="cim-conformance-panel__icon" svgIcon="cim-flow-target" aria-hidden="true"></mat-icon>
+            <span>Go Reference Implementation Target</span>
+            <small>Cross-language target</small>
+          </div>
+          <div class="cim-conformance-panel__node cim-conformance-panel__node--target">
+            <mat-icon class="cim-conformance-panel__icon" svgIcon="cim-flow-target" aria-hidden="true"></mat-icon>
+            <span>Rust Reference Implementation Target</span>
+            <small>Cross-language target</small>
+          </div>
+        </div>
+
+        <div class="cim-conformance-panel__connector" aria-hidden="true"></div>
+
+        <div class="cim-conformance-panel__stage cim-conformance-panel__stage--runner">
+          <div class="cim-conformance-panel__node cim-conformance-panel__node--runner">
+            <mat-icon class="cim-conformance-panel__icon" svgIcon="cim-flow-runner" aria-hidden="true"></mat-icon>
+            <span>Cross-Language Conformance Runner</span>
+            <small>Consistency check path</small>
+          </div>
+        </div>
+
+        <div class="cim-conformance-panel__connector cim-conformance-panel__connector--short" aria-hidden="true"></div>
+
+        <div class="cim-conformance-panel__decision">
+          <mat-icon class="cim-conformance-panel__icon" svgIcon="cim-flow-decision" aria-hidden="true"></mat-icon>
+          <span>Continuity Decision</span>
+          <small>Authority eligibility result</small>
+        </div>
       </div>
     </div>
   </section>
@@ -159,26 +213,37 @@
         </div>
 
         <nav class="research-cta__nav" aria-label="CIM next paths">
-          <a class="research-cta-card" [href]="githubUrl" target="_blank" rel="noopener noreferrer">
-            <span>
-              <strong>GitHub</strong>
+          <a class="research-cta-card" routerLink="/github" (click)="topNavigation.handleLinkClick('/github')">
+            <span class="research-cta-card__copy">
+              <span class="research-cta-card__title">
+                <svg class="research-cta-card__title-icon research-cta-card__title-icon--github" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path [attr.d]="githubIconPath"></path>
+                </svg>
+                <strong>GitHub</strong>
+              </span>
               <small>Specification and vectors</small>
             </span>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12H17M13 7L18 12L13 17"></path></svg>
+            <svg class="research-cta-card__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12H17M13 7L18 12L13 17"></path></svg>
           </a>
           <a class="research-cta-card" routerLink="/work" (click)="topNavigation.handleLinkClick('/work')">
-            <span>
-              <strong>Work</strong>
+            <span class="research-cta-card__copy">
+              <span class="research-cta-card__title">
+                <mat-icon class="research-cta-card__title-icon" svgIcon="research-cta-work" aria-hidden="true"></mat-icon>
+                <strong>Work</strong>
+              </span>
               <small>Production and research surface</small>
             </span>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12H17M13 7L18 12L13 17"></path></svg>
+            <svg class="research-cta-card__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12H17M13 7L18 12L13 17"></path></svg>
           </a>
           <a class="research-cta-card" routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">
-            <span>
-              <strong>Systems</strong>
+            <span class="research-cta-card__copy">
+              <span class="research-cta-card__title">
+                <mat-icon class="research-cta-card__title-icon" svgIcon="research-cta-systems" aria-hidden="true"></mat-icon>
+                <strong>Systems</strong>
+              </span>
               <small>Primary systems overview</small>
             </span>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12H17M13 7L18 12L13 17"></path></svg>
+            <svg class="research-cta-card__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12H17M13 7L18 12L13 17"></path></svg>
           </a>
         </nav>
       </div>
