@@ -4,6 +4,10 @@
     radial-gradient(ellipse at 24% 24%, rgba(214, 168, 79, 0.052), transparent 34%);
 }
 
+.dbf-page .research-section[aria-labelledby="dbf-next-title"] {
+  padding-bottom: clamp(58px, 7vw, 104px);
+}
+
 .dbf-flow {
   position: relative;
   z-index: 1;

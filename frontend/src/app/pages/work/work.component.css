@@ -373,6 +373,10 @@ h1 {
   padding-bottom: 16px;
 }
 
+.work-next {
+  padding-bottom: clamp(58px, 7vw, 104px);
+}
+
 .work-section-frame {
   width: calc(100% - 40px);
   max-width: 1400px;

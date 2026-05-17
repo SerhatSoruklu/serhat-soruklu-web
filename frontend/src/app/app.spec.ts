@@ -31,14 +31,17 @@ describe('App', () => {
     fixture.detectChanges();
     expect(app.isHomeRoute()).toBe(false);
     expect(app.usesDetailAtmosphere()).toBe(true);
+    expect(app.usesSystemsAtmosphere()).toBe(false);
 
     await router.navigateByUrl('/systems');
     fixture.detectChanges();
     expect(app.isHomeRoute()).toBe(false);
     expect(app.usesDetailAtmosphere()).toBe(false);
+    expect(app.usesSystemsAtmosphere()).toBe(true);
 
     await router.navigateByUrl('/systems/continuity-identity-model');
     fixture.detectChanges();
     expect(app.usesDetailAtmosphere()).toBe(true);
+    expect(app.usesSystemsAtmosphere()).toBe(false);
   });
 });

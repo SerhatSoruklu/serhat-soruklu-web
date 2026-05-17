@@ -34,26 +34,23 @@
   background: transparent;
 }
 
-.systems-hero {
+.systems-hero,
+.systems-map,
+.systems-cards,
+.systems-principles,
+.systems-next {
   position: relative;
+  z-index: 1;
+}
+
+.systems-hero {
   overflow: hidden;
-  background:
-    radial-gradient(ellipse at 80% 12%, rgba(47, 111, 181, 0.12), transparent 34%),
-    radial-gradient(ellipse at 28% 18%, rgba(214, 168, 79, 0.06), transparent 35%);
+  background: transparent;
 }
 
 .systems-hero::before {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
   content: "";
-  background:
-    linear-gradient(90deg, rgba(168, 176, 189, 0.026) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(168, 176, 189, 0.02) 1px, transparent 1px);
-  background-size: 112px 112px;
-  opacity: 0.24;
-  -webkit-mask-image: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.42) 72%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.42) 72%, transparent 100%);
+  display: none;
 }
 
 .systems-hero__inner {
@@ -356,7 +353,7 @@ h1 {
 
 .systems-section-frame--compact {
   padding-top: 64px;
-  padding-bottom: 88px;
+  padding-bottom: 100px;
 }
 
 .systems-section-heading {
@@ -380,8 +377,7 @@ h1 {
 }
 
 .systems-map {
-  background:
-    linear-gradient(180deg, rgba(7, 9, 13, 0), rgba(16, 20, 28, 0.34) 48%, rgba(7, 9, 13, 0));
+  background: transparent;
 }
 
 .systems-map__grid {
@@ -440,7 +436,7 @@ h1 {
 .system-card__badge,
 .system-card__status span {
   font-family: "Space Mono", "IBM Plex Mono", monospace;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.12em;
   line-height: 1.3;
@@ -777,6 +773,12 @@ h1 {
     transform 180ms ease;
 }
 
+.system-card__primary span {
+  min-width: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+
 .system-card__primary:visited {
   color: #07090d;
 }
@@ -825,8 +827,10 @@ h1 {
 }
 
 .system-card__arrow {
-  width: 20px;
-  height: 20px;
+  display: block;
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
   transition: transform 180ms ease;
 }
 
@@ -836,7 +840,7 @@ h1 {
 }
 
 .systems-principles {
-  background: linear-gradient(180deg, rgba(7, 9, 13, 0), rgba(16, 20, 28, 0.26) 56%, rgba(7, 9, 13, 0));
+  background: transparent;
 }
 
 .systems-principles__grid {
@@ -1001,27 +1005,19 @@ h1 {
 }
 
 :host-context(.theme-resolved-light) .systems-hero {
-  background:
-    radial-gradient(ellipse at 80% 12%, rgba(47, 111, 181, 0.09), transparent 34%),
-    radial-gradient(ellipse at 28% 18%, rgba(184, 135, 47, 0.1), transparent 35%),
-    #ffffff;
+  background: transparent;
 }
 
 :host-context(.theme-resolved-light) .systems-hero::before {
-  background:
-    linear-gradient(90deg, rgba(95, 102, 115, 0.06) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(95, 102, 115, 0.045) 1px, transparent 1px);
-  opacity: 0.32;
+  display: none;
 }
 
 :host-context(.theme-resolved-light) .systems-map {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(248, 247, 243, 0.64) 48%, rgba(255, 255, 255, 0));
+  background: transparent;
 }
 
 :host-context(.theme-resolved-light) .systems-principles {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(248, 247, 243, 0.52) 56%, rgba(255, 255, 255, 0));
+  background: transparent;
 }
 
 :host-context(.theme-resolved-light) h1,
@@ -1183,7 +1179,14 @@ h1 {
   background: linear-gradient(135deg, rgba(184, 135, 47, 0.98), rgba(160, 111, 35, 0.98));
 }
 
+@media (min-width: 1440px) {
+  .systems-hero__inner {
+    padding-top: 158px;
+  }
+}
+
 @media (min-width: 768px) {
+
   .systems-map__grid,
   .systems-cards__grid,
   .systems-principles__grid {
@@ -1225,6 +1228,34 @@ h1 {
 
   .systems-principle-tile:nth-child(4) {
     grid-column: 1 / span 2;
+  }
+}
+
+@media (max-width: 1023px) {
+  .system-card__topline {
+    justify-content: flex-start;
+  }
+
+  .system-card__badge {
+    max-width: min(178px, calc(100% - 56px));
+    text-align: left;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .system-card__actions {
+    grid-template-columns: 1fr;
+  }
+
+  .system-card__primary,
+  .system-card__secondary {
+    width: 100%;
+  }
+
+  .system-card__primary {
+    min-height: 48px;
+    padding-right: 18px;
+    padding-left: 18px;
   }
 }
 
@@ -1300,20 +1331,13 @@ h1 {
     padding-bottom: 54px;
   }
 
-  .system-card__topline {
-    align-items: flex-start;
-  }
-
-  .system-card__badge {
-    max-width: 180px;
-  }
-
   .systems-next-card {
     min-height: 132px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .systems-architecture__nodes li,
   .systems-architecture__nodes li::before,
   .systems-architecture__icon,
