@@ -1,5 +1,11 @@
 <app-site-header />
-<main class="site-main" [class.site-main--home]="isHomeRoute()">
-  <router-outlet />
+<main
+  class="site-main"
+  [class.site-main--home]="isHomeRoute()"
+  [class.site-main--detail-atmosphere]="usesDetailAtmosphere()"
+>
+  <div class="site-route-frame">
+    <router-outlet />
+  </div>
   <app-site-footer />
 </main>

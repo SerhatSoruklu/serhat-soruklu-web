@@ -7,9 +7,10 @@
 .dbf-flow {
   position: relative;
   z-index: 1;
+  box-sizing: border-box;
   display: grid;
   gap: 10px;
-  padding: 20px 0 0;
+  padding: 24px 20px;
   margin: 0;
   list-style: none;
 }
@@ -87,6 +88,28 @@ code {
   font-size: 0.93em;
 }
 
+.dbf-page .research-card::before {
+  background: linear-gradient(90deg, rgba(214, 168, 79, 0.86), rgba(168, 176, 189, 0.28), rgba(47, 111, 181, 0.22), transparent);
+}
+
+.dbf-page .research-card::after {
+  background:
+    linear-gradient(135deg, rgba(214, 168, 79, 0.052), transparent 44%),
+    radial-gradient(circle at 90% 16%, rgba(168, 176, 189, 0.048), transparent 28%);
+}
+
+.dbf-page .research-card:hover {
+  border-color: rgba(214, 168, 79, 0.34);
+}
+
+.dbf-page .research-callout:hover {
+  border-color: rgba(214, 168, 79, 0.38);
+}
+
+.dbf-page .research-section-frame--interactive:hover {
+  border-top-color: rgba(214, 168, 79, 0.28);
+}
+
 :host-context(.theme-resolved-light) .dbf-page .research-hero {
   background:
     radial-gradient(ellipse at 78% 12%, rgba(47, 111, 181, 0.08), transparent 35%),
@@ -137,6 +160,24 @@ code {
   color: #8d6621;
 }
 
+:host-context(.theme-resolved-light) .dbf-page .research-card::before {
+  background: linear-gradient(90deg, rgba(184, 135, 47, 0.78), rgba(95, 102, 115, 0.22), rgba(47, 111, 181, 0.18), transparent);
+}
+
+:host-context(.theme-resolved-light) .dbf-page .research-card::after {
+  background:
+    linear-gradient(135deg, rgba(184, 135, 47, 0.06), transparent 44%),
+    radial-gradient(circle at 90% 16%, rgba(95, 102, 115, 0.035), transparent 28%);
+}
+
+:host-context(.theme-resolved-light) .dbf-page .research-card:hover {
+  border-color: rgba(184, 135, 47, 0.34);
+}
+
+:host-context(.theme-resolved-light) .dbf-page .research-callout:hover {
+  border-color: rgba(184, 135, 47, 0.36);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dbf-flow li {
     transition: none;
@@ -144,5 +185,11 @@ code {
 
   .dbf-flow li:hover {
     transform: none;
+  }
+}
+
+@media (max-width: 389px) {
+  .dbf-flow {
+    padding: 20px 18px;
   }
 }

@@ -1,6 +1,189 @@
-<section class="page-placeholder" aria-labelledby="systems-title">
-  <div class="page-placeholder__inner">
-    <p class="page-placeholder__eyebrow">SYSTEMS</p>
-    <h1 id="systems-title">Systems</h1>
-  </div>
-</section>
+<div class="systems-page">
+  <section class="systems-hero layout-section" aria-labelledby="systems-title">
+    <div class="systems-hero__inner layout-container--wide">
+      <div class="systems-hero__copy">
+        <p class="systems-eyebrow">SYSTEMS</p>
+        <h1 id="systems-title">Systems Built To Hold Shape</h1>
+        <p class="systems-hero__summary">
+          A concise map of the platforms, governance runtime, and research models behind Serhat Soruklu&rsquo;s work.
+        </p>
+
+        <div class="systems-hero__actions" aria-label="Systems page actions">
+          <button class="site-button site-button-primary" type="button" (click)="scrollToSystemCards($event)">Explore Systems</button>
+          <a class="site-button site-button-secondary" routerLink="/work" (click)="topNavigation.handleLinkClick('/work')">View Work</a>
+        </div>
+      </div>
+
+      <aside class="systems-architecture" aria-label="Systems architecture map">
+        <div class="systems-architecture__header">
+          <span>Architecture Map</span>
+          <span>Production to research</span>
+        </div>
+
+        <ol class="systems-architecture__nodes">
+          @for (node of architectureNodes; track node.index) {
+            <li>
+              <span class="systems-architecture__marker" aria-hidden="true">
+                <mat-icon class="systems-architecture__icon" [svgIcon]="node.icon" aria-hidden="true"></mat-icon>
+              </span>
+              <span class="systems-architecture__index">{{ node.index }}</span>
+              <span class="systems-architecture__label">{{ node.label }}</span>
+              <span class="systems-architecture__description">{{ node.description }}</span>
+              <span class="systems-architecture__group">{{ node.group }}</span>
+            </li>
+          }
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <section class="systems-map layout-section" aria-labelledby="systems-map-title">
+    <div class="systems-section-frame layout-container--wide">
+      <div class="systems-section-heading">
+        <p class="systems-eyebrow">MAP</p>
+        <h2 id="systems-map-title">Production Systems And Research Systems</h2>
+        <p>
+          Coupyn and ChatPDM are product-facing surfaces. DBF and CIM define stricter models for boundaries, continuity, and controlled failure.
+        </p>
+      </div>
+
+      <div class="systems-map__grid">
+        @for (column of systemsMap; track column.title) {
+          <article class="systems-map-card">
+            <p class="systems-map-card__label">{{ column.title }}</p>
+            <p class="systems-map-card__description">{{ column.description }}</p>
+            <ul aria-label="{{ column.title }}">
+              @for (system of column.systems; track system) {
+                <li>{{ system }}</li>
+              }
+            </ul>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section #systemCardsSection id="system-cards" class="systems-cards layout-section" aria-labelledby="system-cards-title">
+    <div class="systems-section-frame systems-section-frame--open layout-container--wide">
+      <div class="systems-section-heading">
+        <p class="systems-eyebrow">SYSTEMS</p>
+        <h2 id="system-cards-title">Four Public System Surfaces</h2>
+      </div>
+
+      <div class="systems-cards__grid">
+        @for (card of systemCards; track card.primaryPath) {
+          <article class="system-card">
+            <div class="system-card__topline">
+              <span class="system-card__icon-chip">
+                <mat-icon class="system-card__icon" [svgIcon]="card.icon" aria-hidden="true"></mat-icon>
+              </span>
+              <span class="system-card__badge">{{ card.category }}</span>
+            </div>
+
+            <h3 class="system-card__title" [class.system-card__title--brand]="card.brand" [attr.aria-label]="card.title">
+              @if (card.brand === 'coupyn') {
+                <a
+                  class="work-production-brand-link"
+                  href="https://coupyn.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  appTooltip="https://coupyn.com"
+                  appTooltipPlacement="right"
+                  aria-label="Open Coupyn.com in a new tab">
+                  <span class="work-production-brand work-production-brand--coupyn" aria-hidden="true">
+                    <span class="work-production-brand__coupyn-word">Coupyn</span>
+                    <span class="work-production-brand__coupyn-script">.com</span>
+                  </span>
+                </a>
+              } @else if (card.brand === 'chatpdm') {
+                <a
+                  class="work-production-brand-link"
+                  href="https://chatpdm.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  appTooltip="https://chatpdm.com"
+                  appTooltipPlacement="right"
+                  aria-label="Open ChatPDM.com in a new tab">
+                  <span class="work-production-brand work-production-brand--chatpdm" aria-hidden="true">
+                    <span class="work-production-brand__chatpdm-mark">
+                      <span class="work-production-brand__chatpdm-circle"></span>
+                      <span class="work-production-brand__chatpdm-line"></span>
+                      <span class="work-production-brand__chatpdm-square"></span>
+                    </span>
+                    <span class="work-production-brand__chatpdm-wordmark">
+                      <span class="work-production-brand__chatpdm-chat">Chat</span><span class="work-production-brand__chatpdm-pdm">PDM</span>
+                    </span>
+                  </span>
+                </a>
+              } @else {
+                {{ card.title }}
+              }
+            </h3>
+            <p class="system-card__description">{{ card.description }}</p>
+
+            <div class="system-card__status">
+              <span>Status</span>
+              <strong>{{ card.status }}</strong>
+            </div>
+
+            <ul class="system-card__chips" aria-label="{{ card.title }} proof points">
+              @for (chip of card.chips; track chip) {
+                <li>{{ chip }}</li>
+              }
+            </ul>
+
+            <div class="system-card__actions">
+              <a class="system-card__primary" [routerLink]="card.primaryPath" (click)="topNavigation.handleLinkClick(card.primaryPath)">
+                <span>{{ card.primaryLabel }}</span>
+                <mat-icon class="system-card__arrow" svgIcon="systems-next-arrow" aria-hidden="true"></mat-icon>
+              </a>
+              <a class="system-card__secondary" [routerLink]="card.secondaryPath" (click)="topNavigation.handleLinkClick(card.secondaryPath)">
+                {{ card.secondaryLabel }}
+              </a>
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="systems-principles layout-section" aria-labelledby="systems-principles-title">
+    <div class="systems-section-frame layout-container--wide">
+      <div class="systems-section-heading">
+        <p class="systems-eyebrow">PRINCIPLES</p>
+        <h2 id="systems-principles-title">Shared Engineering Principles</h2>
+      </div>
+
+      <div class="systems-principles__grid">
+        @for (principle of principles; track principle.title) {
+          <article class="systems-principle-tile">
+            <h3>{{ principle.title }}</h3>
+            <p>{{ principle.description }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="systems-next layout-section" aria-labelledby="systems-next-title">
+    <div class="systems-section-frame systems-section-frame--compact layout-container--wide">
+      <div class="systems-section-heading">
+        <p class="systems-eyebrow">NEXT</p>
+        <h2 id="systems-next-title">Where To Go Next</h2>
+      </div>
+
+      <div class="systems-next__grid">
+        @for (route of nextRoutes; track route.path) {
+          <a class="systems-next-card" [routerLink]="route.path" (click)="topNavigation.handleLinkClick(route.path)">
+            <span class="systems-next-card__title">
+              <mat-icon class="systems-next-card__icon" [svgIcon]="route.icon" aria-hidden="true"></mat-icon>
+              <strong>{{ route.label }}</strong>
+            </span>
+            <small>{{ route.description }}</small>
+            <mat-icon class="systems-next-card__arrow" svgIcon="systems-next-arrow" aria-hidden="true"></mat-icon>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+</div>

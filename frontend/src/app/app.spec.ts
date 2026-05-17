@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { App } from './app';
 import { routes } from './app.routes';
 
@@ -15,5 +15,30 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
+  });
+
+  it('tracks home and detail atmosphere route state', async () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+    const router = TestBed.inject(Router);
+
+    await router.navigateByUrl('/');
+    fixture.detectChanges();
+    expect(app.isHomeRoute()).toBe(true);
+    expect(app.usesDetailAtmosphere()).toBe(false);
+
+    await router.navigateByUrl('/work?from=test#top');
+    fixture.detectChanges();
+    expect(app.isHomeRoute()).toBe(false);
+    expect(app.usesDetailAtmosphere()).toBe(true);
+
+    await router.navigateByUrl('/systems');
+    fixture.detectChanges();
+    expect(app.isHomeRoute()).toBe(false);
+    expect(app.usesDetailAtmosphere()).toBe(false);
+
+    await router.navigateByUrl('/systems/continuity-identity-model');
+    fixture.detectChanges();
+    expect(app.usesDetailAtmosphere()).toBe(true);
   });
 });

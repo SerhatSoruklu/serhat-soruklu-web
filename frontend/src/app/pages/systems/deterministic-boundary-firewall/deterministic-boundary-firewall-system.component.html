@@ -17,7 +17,7 @@
         </ul>
 
         <div class="research-hero__actions" aria-label="DBF actions">
-          <a class="site-button site-button-primary" [href]="githubUrl" target="_blank" rel="noopener noreferrer">View GitHub</a>
+          <a class="site-button site-button-primary" routerLink="/github" (click)="topNavigation.handleLinkClick('/github')">View GitHub</a>
           <a class="site-button site-button-secondary" routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">Back to Systems</a>
         </div>
       </div>
@@ -80,27 +80,45 @@
 
       <div class="research-card-grid research-card-grid--three">
         <article class="research-card">
-          <h3>Normalization</h3>
+          <h3 class="research-card-title">
+            <mat-icon class="research-card-icon" svgIcon="dbf-boundary-normalize" aria-hidden="true"></mat-icon>
+            <span>Normalization</span>
+          </h3>
           <p>Text is normalized before checks, but normalization is partial and documented as a bounded surface.</p>
         </article>
         <article class="research-card">
-          <h3>Tripwire Matching</h3>
+          <h3 class="research-card-title">
+            <mat-icon class="research-card-icon" svgIcon="dbf-boundary-tripwire" aria-hidden="true"></mat-icon>
+            <span>Tripwire Matching</span>
+          </h3>
           <p><code>blocked_terms</code> are exact configured matches, not semantic extraction or broad intent inference.</p>
         </article>
         <article class="research-card">
-          <h3>Refusal Payload</h3>
+          <h3 class="research-card-title">
+            <mat-icon class="research-card-icon" svgIcon="dbf-boundary-refusal" aria-hidden="true"></mat-icon>
+            <span>Refusal Payload</span>
+          </h3>
           <p>Matched probes return structured refusal payloads instead of silently passing through to execution.</p>
         </article>
         <article class="research-card">
-          <h3>Transport Interception</h3>
+          <h3 class="research-card-title">
+            <mat-icon class="research-card-icon" svgIcon="dbf-boundary-transport" aria-hidden="true"></mat-icon>
+            <span>Transport Interception</span>
+          </h3>
           <p>The boundary sits before outbound model or tool calls so risky text can be rejected early.</p>
         </article>
         <article class="research-card">
-          <h3>Client/Server Parity</h3>
+          <h3 class="research-card-title">
+            <mat-icon class="research-card-icon" svgIcon="dbf-boundary-client" aria-hidden="true"></mat-icon>
+            <span>Client/Server Parity</span>
+          </h3>
           <p>The Python client and MCP server share the same boundary model to reduce drift between surfaces.</p>
         </article>
         <article class="research-card">
-          <h3>Release Gate</h3>
+          <h3 class="research-card-title">
+            <mat-icon class="research-card-icon" svgIcon="dbf-boundary-release" aria-hidden="true"></mat-icon>
+            <span>Release Gate</span>
+          </h3>
           <p>Quality checks act as a release gate for the artifact, not as proof of complete security coverage.</p>
         </article>
       </div>
@@ -117,7 +135,8 @@
         </p>
       </div>
 
-      <div class="research-callout">
+      <div class="research-callout research-callout--with-icon">
+        <mat-icon class="research-callout__icon" svgIcon="dbf-attack-surface" aria-hidden="true"></mat-icon>
         <p>
           The goal is a proof surface and attack target: a clear boundary that can be tested, broken, documented, and improved without pretending to solve all semantic safety problems.
         </p>
@@ -137,7 +156,10 @@
 
       <div class="research-card-grid research-card-grid--three">
         <article class="research-card">
-          <h3>Test Surfaces</h3>
+          <h3 class="research-card-title">
+            <mat-icon class="research-card-icon" svgIcon="dbf-proof-tests" aria-hidden="true"></mat-icon>
+            <span>Test Surfaces</span>
+          </h3>
           <ul class="research-list">
             <li>Firewall tests</li>
             <li>Transport tests</li>
@@ -146,7 +168,10 @@
           </ul>
         </article>
         <article class="research-card">
-          <h3>Documentation Pack</h3>
+          <h3 class="research-card-title">
+            <mat-icon class="research-card-icon" svgIcon="dbf-proof-docs" aria-hidden="true"></mat-icon>
+            <span>Documentation Pack</span>
+          </h3>
           <ul class="research-list">
             <li>Attack surface notes</li>
             <li>Diagram pack</li>
@@ -154,7 +179,10 @@
           </ul>
         </article>
         <article class="research-card">
-          <h3>Quality Signal</h3>
+          <h3 class="research-card-title">
+            <mat-icon class="research-card-icon" svgIcon="dbf-proof-quality" aria-hidden="true"></mat-icon>
+            <span>Quality Signal</span>
+          </h3>
           <p>Pylint 10.00/10 is represented as a repository quality signal only. It is not presented as a security proof.</p>
         </article>
       </div>
@@ -162,7 +190,7 @@
   </section>
 
   <section class="research-section layout-section" aria-labelledby="dbf-status-title">
-    <div class="research-section-frame">
+    <div class="research-section-frame research-section-frame--interactive">
       <div class="research-section-heading">
         <p class="research-eyebrow">STATUS</p>
         <h2 id="dbf-status-title">Frozen Research Artifact</h2>
@@ -183,26 +211,37 @@
         </div>
 
         <nav class="research-cta__nav" aria-label="DBF next paths">
-          <a class="research-cta-card" [href]="githubUrl" target="_blank" rel="noopener noreferrer">
-            <span>
-              <strong>GitHub</strong>
+          <a class="research-cta-card" routerLink="/github" (click)="topNavigation.handleLinkClick('/github')">
+            <span class="research-cta-card__copy">
+              <span class="research-cta-card__title">
+                <svg class="research-cta-card__title-icon research-cta-card__title-icon--github" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path [attr.d]="githubIconPath"></path>
+                </svg>
+                <strong>GitHub</strong>
+              </span>
               <small>Repository and attack surface</small>
             </span>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12H17M13 7L18 12L13 17"></path></svg>
+            <svg class="research-cta-card__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12H17M13 7L18 12L13 17"></path></svg>
           </a>
           <a class="research-cta-card" routerLink="/work" (click)="topNavigation.handleLinkClick('/work')">
-            <span>
-              <strong>Work</strong>
+            <span class="research-cta-card__copy">
+              <span class="research-cta-card__title">
+                <mat-icon class="research-cta-card__title-icon" svgIcon="research-cta-work" aria-hidden="true"></mat-icon>
+                <strong>Work</strong>
+              </span>
               <small>Production and research surface</small>
             </span>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12H17M13 7L18 12L13 17"></path></svg>
+            <svg class="research-cta-card__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12H17M13 7L18 12L13 17"></path></svg>
           </a>
           <a class="research-cta-card" routerLink="/systems/chatpdm" (click)="topNavigation.handleLinkClick('/systems/chatpdm')">
-            <span>
-              <strong>ChatPDM</strong>
+            <span class="research-cta-card__copy">
+              <span class="research-cta-card__title">
+                <mat-icon class="research-cta-card__title-icon" svgIcon="research-cta-chatpdm" aria-hidden="true"></mat-icon>
+                <strong>ChatPDM</strong>
+              </span>
               <small>Deterministic governance context</small>
             </span>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12H17M13 7L18 12L13 17"></path></svg>
+            <svg class="research-cta-card__arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12H17M13 7L18 12L13 17"></path></svg>
           </a>
         </nav>
       </div>
