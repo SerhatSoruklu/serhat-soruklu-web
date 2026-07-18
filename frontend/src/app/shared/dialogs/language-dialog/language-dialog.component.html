@@ -1,0 +1,64 @@
+<section class="language-dialog" data-testid="language-dialog">
+  <button
+    class="language-dialog__close"
+    type="button"
+    aria-label="Close language availability dialog"
+    (click)="close()"
+  >
+    <app-path-icon name="language-close" [path]="iconPaths.close" />
+  </button>
+
+  <div class="language-dialog__visual" aria-hidden="true">
+    <span class="language-dialog__signal language-dialog__signal--gold"></span>
+    <span class="language-dialog__signal language-dialog__signal--blue"></span>
+    <div class="language-dialog__orbit language-dialog__orbit--outer"></div>
+    <div class="language-dialog__orbit language-dialog__orbit--inner"></div>
+    <div class="language-dialog__globe">
+      <app-path-icon name="language-earth" [path]="iconPaths.earth" />
+    </div>
+    <div class="language-dialog__language-ring">
+      @for (code of languageCodes; track code) {
+        <span>{{ code }}</span>
+      }
+    </div>
+    <div class="language-dialog__visual-label">
+      <app-path-icon name="language-translate" [path]="iconPaths.translate" />
+      <span>40+ languages</span>
+    </div>
+  </div>
+
+  <div class="language-dialog__content">
+    <p class="language-dialog__eyebrow">
+      <app-path-icon name="language-web" [path]="iconPaths.web" />
+      <span>Global access</span>
+    </p>
+
+    <h2 id="language-dialog-title" class="language-dialog__title">
+      Coming in <span>40+ languages</span>
+    </h2>
+
+    <p class="language-dialog__summary">
+      <strong>serhatsoruklu.com</strong> will soon welcome readers in more than 40 languages, with
+      the same systems-first experience across every screen.
+    </p>
+
+    <div class="language-dialog__domain" aria-label="Website language rollout status">
+      <app-path-icon name="language-clock" [path]="iconPaths.clock" />
+      <span class="language-dialog__domain-name">serhatsoruklu.com</span>
+      <span class="language-dialog__status">Coming soon</span>
+    </div>
+
+    <ul class="language-dialog__list" aria-label="Language rollout qualities">
+      @for (point of rolloutPoints; track point) {
+        <li>
+          <app-path-icon name="language-check" [path]="iconPaths.check" />
+          <span>{{ point }}</span>
+        </li>
+      }
+    </ul>
+
+    <button class="language-dialog__acknowledge" type="button" (click)="close()">
+      <span>Got it</span>
+    </button>
+  </div>
+</section>

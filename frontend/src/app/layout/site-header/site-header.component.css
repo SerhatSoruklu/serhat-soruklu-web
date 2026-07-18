@@ -16,7 +16,7 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  content: "";
+  content: '';
   opacity: 0;
   background:
     radial-gradient(circle at 70% 0%, rgba(214, 168, 79, 0.055), transparent 34%),
@@ -71,7 +71,12 @@
   display: block;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, rgba(214, 168, 79, 0.48), #f0d58c 52%, rgba(214, 168, 79, 0.78));
+  background: linear-gradient(
+    90deg,
+    rgba(214, 168, 79, 0.48),
+    #f0d58c 52%,
+    rgba(214, 168, 79, 0.78)
+  );
   box-shadow: 0 0 10px rgba(214, 168, 79, 0.16);
   transform: scaleX(var(--scroll-progress, 0));
   transform-origin: left center;
@@ -97,7 +102,10 @@
   border-radius: 8px;
   background: #020306;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
-  transition: border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    opacity 160ms ease;
 }
 
 .site-brand__logo {
@@ -114,17 +122,19 @@
 
 .site-brand__name {
   color: #f5f7fa;
-  font-family: "Sora", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-family: 'Sora', Inter, ui-sans-serif, system-ui, sans-serif;
   font-size: 30px;
   font-weight: 700;
   line-height: 1;
-  transition: color 160ms ease, opacity 160ms ease;
+  transition:
+    color 160ms ease,
+    opacity 160ms ease;
 }
 
 .site-brand__subtitle,
 .site-nav__link,
 .theme-selector__option {
-  font-family: "Space Mono", "IBM Plex Mono", monospace;
+  font-family: 'Space Mono', 'IBM Plex Mono', monospace;
 }
 
 .site-brand__subtitle {
@@ -157,6 +167,47 @@
   display: flex;
   align-items: center;
   gap: clamp(20px, 1.7vw, 28px);
+}
+
+.site-header__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.language-trigger {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid #252b36;
+  border-radius: 8px;
+  background: #10141c;
+  color: #f0d58c;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease,
+    background 160ms ease;
+}
+
+.language-trigger:hover,
+.language-trigger:focus-visible {
+  border-color: #d6a84f;
+  background: #10141c;
+  box-shadow:
+    inset 0 0 0 1px #d6a84f,
+    0 0 0 3px rgba(214, 168, 79, 0.14);
+  color: #f5f7fa;
+  outline: none;
+}
+
+.language-trigger__icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
 }
 
 .site-nav__link {
@@ -195,7 +246,7 @@
   left: 0;
   height: 1px;
   background: #d6a84f;
-  content: "";
+  content: '';
   clip-path: inset(0 100% 0 0);
   transition: clip-path 180ms ease;
 }
@@ -240,7 +291,11 @@
   background: #10141c;
   color: #f0d58c;
   cursor: pointer;
-  transition: border-color 160ms ease, box-shadow 160ms ease, color 160ms ease, background 160ms ease;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease,
+    background 160ms ease;
 }
 
 .theme-selector__trigger:hover,

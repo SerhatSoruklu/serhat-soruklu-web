@@ -51,13 +51,16 @@
 }
 
 :host-context(.theme-resolved-light) .theme-selector__trigger,
+:host-context(.theme-resolved-light) .language-trigger,
 :host-context(.theme-resolved-light) .theme-selector__menu {
   border-color: #e5e0d6;
   background: #f8f7f3;
 }
 
 :host-context(.theme-resolved-light) .theme-selector__trigger:hover,
-:host-context(.theme-resolved-light) .theme-selector__trigger:focus-visible {
+:host-context(.theme-resolved-light) .theme-selector__trigger:focus-visible,
+:host-context(.theme-resolved-light) .language-trigger:hover,
+:host-context(.theme-resolved-light) .language-trigger:focus-visible {
   border-color: #b8872f;
   background: #ffffff;
   color: #10141c;
@@ -76,6 +79,7 @@
 }
 
 :host-context(.theme-resolved-light) .site-brand__subtitle,
+:host-context(.theme-resolved-light) .language-trigger,
 :host-context(.theme-resolved-light) .theme-selector__trigger,
 :host-context(.theme-resolved-light) .theme-selector__option--active .theme-selector__option-icon {
   color: #b8872f;
