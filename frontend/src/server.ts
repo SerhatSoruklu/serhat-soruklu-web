@@ -113,12 +113,12 @@ app.use((req, res, next) => {
 
     const queryIndex = req.originalUrl.indexOf('?');
     const query = queryIndex === -1 ? '' : req.originalUrl.slice(queryIndex);
-    res.redirect(308, `${pathWithoutTrailingSlash}${query}`);
+    sendPermanentRedirect(res, createRelativeRedirectTarget(pathWithoutTrailingSlash, query));
     return;
   }
 
   if (enforceHttps && rawPath !== '/healthz' && !req.secure) {
-    res.redirect(308, `https://${canonicalHost}${req.originalUrl}`);
+    sendPermanentRedirect(res, createCanonicalHttpsRedirect(req.originalUrl));
     return;
   }
 
@@ -314,6 +314,33 @@ async function writeAngularResponse(response: Response, res: express.Response): 
 function getRawPath(originalUrl: string): string {
   const queryIndex = originalUrl.indexOf('?');
   return queryIndex === -1 ? originalUrl : originalUrl.slice(0, queryIndex);
+}
+
+function createRelativeRedirectTarget(pathname: string, query: string): string {
+  const isSafePath = pathname.startsWith('/') && !pathname.startsWith('//');
+  const isSafeQuery = query === '' || query.startsWith('?');
+
+  if (!isSafePath || !isSafeQuery || /[\r\n]/.test(`${pathname}${query}`)) {
+    throw new Error('Refused to create an unsafe relative redirect target.');
+  }
+
+  return `${pathname}${query}`;
+}
+
+function createCanonicalHttpsRedirect(originalUrl: string): string {
+  const canonicalOrigin = `https://${canonicalHost}`;
+  const redirectUrl = new URL(originalUrl, canonicalOrigin);
+
+  if (redirectUrl.origin !== canonicalOrigin || /[\r\n]/.test(redirectUrl.toString())) {
+    throw new Error('Refused to create a redirect outside the canonical HTTPS origin.');
+  }
+
+  return redirectUrl.toString();
+}
+
+function sendPermanentRedirect(res: express.Response, location: string): void {
+  res.setHeader('Location', location);
+  res.status(308).type('text/plain').send('Permanent Redirect');
 }
 
 function looksLikeStaticAsset(path: string): boolean {

@@ -74,7 +74,7 @@ describe('SorukluOrderComponent', () => {
 
     const icons = Array.from(
       (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLElement>(
-        'mat-icon.order-section-icon',
+        'app-path-icon.order-section-icon',
       ),
     );
 

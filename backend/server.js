@@ -495,20 +495,11 @@ async function startServer(options = {}) {
   logLifecycle(logger, 'info', 'listening', { mode: nodeEnv, port });
   void runtime.readiness.initialize();
 
-  if (options.registerSignalHandlers ?? require.main === module) {
+  if (options.registerSignalHandlers === true) {
     registerShutdownHandlers(shutdown);
   }
 
   return server;
-}
-
-if (require.main === module) {
-  startServer().catch((error) => {
-    logLifecycle(console, 'error', 'startup_failed', {
-      code: getSafeLogCode(error, 'STARTUP_ERROR')
-    });
-    process.exit(1);
-  });
 }
 
 module.exports = {

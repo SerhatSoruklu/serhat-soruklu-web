@@ -72,7 +72,7 @@
           </section>
         } @else {
           <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="submit()" [attr.aria-busy]="isSubmitting()" novalidate>
-            <input class="contact-honeypot" type="text" formControlName="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <label class="contact-honeypot" for="contact-website" aria-hidden="true">Leave this field blank</label>\n            <input id="contact-website" class="contact-honeypot" type="text" formControlName="website" tabindex="-1" autocomplete="off" aria-hidden="true">
 
             <div class="contact-form__grid">
               <label class="contact-field" [class.contact-field--invalid]="shouldShowError('firstName')" for="contact-first-name">

@@ -83,7 +83,7 @@
     <div class="order-frame order-definition">
       <header class="order-section-heading">
         <div class="order-heading-lockup">
-          <mat-icon class="order-section-icon" svgIcon="order-family" aria-hidden="true"></mat-icon>
+          <app-path-icon class="order-section-icon" name="order-family" [path]="iconPaths['order-family']" aria-hidden="true"></app-path-icon>
           <div>
             <p class="order-section-index">I · The Order</p>
             <h2 id="order-definition-title">A Selective Family Initiative</h2>
@@ -141,11 +141,11 @@
     <div class="order-frame">
       <header class="order-section-heading order-section-heading--split">
         <div class="order-heading-lockup">
-          <mat-icon
+          <app-path-icon
             class="order-section-icon"
-            svgIcon="order-purpose"
+            name="order-purpose" [path]="iconPaths['order-purpose']"
             aria-hidden="true"
-          ></mat-icon>
+          ></app-path-icon>
           <div>
             <p class="order-section-index">III · Purpose</p>
             <h2 id="order-purpose-title">Why the Order Exists</h2>
@@ -234,11 +234,11 @@
   >
     <div class="order-frame order-safeguarding">
       <div class="order-heading-lockup">
-        <mat-icon
+        <app-path-icon
           class="order-section-icon"
-          svgIcon="order-safeguarding"
+          name="order-safeguarding" [path]="iconPaths['order-safeguarding']"
           aria-hidden="true"
-        ></mat-icon>
+        ></app-path-icon>
         <div>
           <p class="order-section-index">VI · Lawful conduct</p>
           <h2 id="order-safeguarding-title">Safeguarding, Evidence and Due Process</h2>
@@ -300,11 +300,11 @@
     <div class="order-frame">
       <article class="order-clarification">
         <div class="order-heading-lockup">
-          <mat-icon
+          <app-path-icon
             class="order-section-icon"
-            svgIcon="order-identity"
+            name="order-identity" [path]="iconPaths['order-identity']"
             aria-hidden="true"
-          ></mat-icon>
+          ></app-path-icon>
           <div>
             <p class="order-section-index">VIII · Public identity boundary</p>
             <h2 id="order-clarification-title">Official Identity Clarification</h2>

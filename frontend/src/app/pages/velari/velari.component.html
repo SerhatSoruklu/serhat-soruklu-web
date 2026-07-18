@@ -18,7 +18,7 @@
             (click)="scrollToFramework()"
           >
             <span>Explore the Velarian Path</span>
-            <mat-icon svgIcon="velari-arrow" aria-hidden="true"></mat-icon>
+            <app-path-icon name="velari-arrow" [path]="iconPaths['velari-arrow']" aria-hidden="true"></app-path-icon>
           </button>
           <a
             class="velari-action velari-action--secondary"
@@ -27,13 +27,13 @@
             rel="me noopener noreferrer"
             aria-label="Open the official Velari Faith account on Instagram"
           >
-            <mat-icon svgIcon="velari-instagram" aria-hidden="true"></mat-icon>
+            <app-path-icon name="velari-instagram" [path]="iconPaths['velari-instagram']" aria-hidden="true"></app-path-icon>
             <span>Official Instagram</span>
-            <mat-icon
+            <app-path-icon
               class="velari-action__arrow"
-              svgIcon="velari-external"
+              name="velari-external" [path]="iconPaths['velari-external']"
               aria-hidden="true"
-            ></mat-icon>
+            ></app-path-icon>
           </a>
         </div>
 
@@ -62,7 +62,7 @@
         <div class="velari-emblem__image">
           <img
             [src]="emblemPath"
-            srcset="/assets/brand/velari/velari-faith-emblem-540.webp 540w, /assets/brand/velari/velari-faith-emblem-1080.webp 1080w"
+            [attr.srcset]="emblemSrcset"
             sizes="(min-width: 583px) 543px, calc(100vw - 40px)"
             alt="Velari faith emblem"
             width="1080"
@@ -74,16 +74,15 @@
         </div>
         <div class="velari-emblem-principles" aria-label="Velari philosophical compass">
           @for (principle of emblemPrinciples; track principle.position) {
-            <span
+            <button
+              type="button"
               [class]="'velari-emblem-principle velari-emblem-principle--' + principle.position"
-              role="note"
-              tabindex="0"
               [appTooltip]="principle.definition"
               [appTooltipPlacement]="principle.tooltipPlacement"
               [attr.aria-label]="principle.title + ': ' + principle.definition"
             >
               {{ principle.title }}
-            </span>
+            </button>
           }
         </div>
         <figcaption id="velari-emblem-caption">
@@ -119,7 +118,7 @@
           </p>
         </div>
         <aside class="velari-quote" aria-label="Velari guiding callout">
-          <mat-icon svgIcon="velari-light" aria-hidden="true"></mat-icon>
+          <app-path-icon name="velari-light" [path]="iconPaths['velari-light']" aria-hidden="true"></app-path-icon>
           <blockquote>Many paths, one Light.</blockquote>
           <p>Coexistence without erasing difference.</p>
         </aside>
@@ -179,7 +178,7 @@
             <article>
               <div class="velari-movement__top">
                 <span>{{ movement.index }}</span>
-                <mat-icon [svgIcon]="movement.icon" aria-hidden="true"></mat-icon>
+                <app-path-icon [name]="movement.icon" [path]="iconPaths[movement.icon]" aria-hidden="true"></app-path-icon>
               </div>
               <h3>{{ movement.title }}</h3>
               <p>{{ movement.statement }}</p>
@@ -249,7 +248,7 @@
       <div class="velari-practice-grid">
         @for (practice of dailyPractices; track practice.phase) {
           <article>
-            <mat-icon [svgIcon]="practice.icon" aria-hidden="true"></mat-icon>
+            <app-path-icon [name]="practice.icon" [path]="iconPaths[practice.icon]" aria-hidden="true"></app-path-icon>
             <p class="velari-practice__phase">{{ practice.phase }}</p>
             <h3>{{ practice.statement }}</h3>
             <ul>
@@ -269,11 +268,11 @@
   >
     <div class="velari-frame velari-choice">
       <header class="velari-heading">
-        <mat-icon
+        <app-path-icon
           class="velari-heading__icon"
-          svgIcon="velari-choice"
+          name="velari-choice" [path]="iconPaths['velari-choice']"
           aria-hidden="true"
-        ></mat-icon>
+        ></app-path-icon>
         <p class="velari-eyebrow">Choice and consequence</p>
         <h2 id="velari-choice-title">Freedom Carries Responsibility</h2>
       </header>
@@ -473,7 +472,7 @@
 
             <div class="velari-book-meta">
               <p class="velari-book-meta__status">
-                <mat-icon svgIcon="velari-text" aria-hidden="true"></mat-icon>
+                <app-path-icon name="velari-text" [path]="iconPaths['velari-text']" aria-hidden="true"></app-path-icon>
                 Developing work
               </p>
               <p>{{ text.description }}</p>
@@ -484,9 +483,9 @@
                 rel="noopener noreferrer"
                 [attr.aria-label]="'View ' + text.title + ' on Instagram'"
               >
-                <mat-icon svgIcon="velari-instagram" aria-hidden="true"></mat-icon>
+                <app-path-icon name="velari-instagram" [path]="iconPaths['velari-instagram']" aria-hidden="true"></app-path-icon>
                 <span>View on Instagram</span>
-                <mat-icon svgIcon="velari-external" aria-hidden="true"></mat-icon>
+                <app-path-icon name="velari-external" [path]="iconPaths['velari-external']" aria-hidden="true"></app-path-icon>
               </a>
             </div>
           </article>
@@ -498,7 +497,7 @@
   <section class="velari-section layout-section" aria-labelledby="velari-founder-title">
     <div class="velari-frame velari-stewardship">
       <div class="velari-stewardship__intro">
-        <mat-icon svgIcon="velari-stewardship" aria-hidden="true"></mat-icon>
+        <app-path-icon name="velari-stewardship" [path]="iconPaths['velari-stewardship']" aria-hidden="true"></app-path-icon>
         <header class="velari-heading">
           <p class="velari-eyebrow">Foundation and stewardship</p>
           <h2 id="velari-founder-title">Founded by Serhat Soruklu</h2>
@@ -524,7 +523,7 @@
     aria-labelledby="velari-order-title"
   >
     <div class="velari-frame velari-order-link">
-      <mat-icon svgIcon="velari-order" aria-hidden="true"></mat-icon>
+      <app-path-icon name="velari-order" [path]="iconPaths['velari-order']" aria-hidden="true"></app-path-icon>
       <div>
         <p class="velari-eyebrow">Associated identity</p>
         <h2 id="velari-order-title">The Spiritual Framework of the Order</h2>
@@ -540,7 +539,7 @@
         (click)="topNavigation.handleLinkClick('/soruklu-order')"
       >
         <span>Explore the Soruklu Order</span>
-        <mat-icon svgIcon="velari-arrow" aria-hidden="true"></mat-icon>
+        <app-path-icon name="velari-arrow" [path]="iconPaths['velari-arrow']" aria-hidden="true"></app-path-icon>
       </a>
     </div>
   </section>
@@ -548,7 +547,7 @@
   <section class="velari-section layout-section" aria-labelledby="velari-official-title">
     <div class="velari-frame velari-official">
       <div class="velari-official__mark" aria-hidden="true">
-        <mat-icon svgIcon="velari-instagram"></mat-icon>
+        <app-path-icon name="velari-instagram" [path]="iconPaths['velari-instagram']"></app-path-icon>
       </div>
       <div>
         <p class="velari-eyebrow">Official channel</p>
@@ -565,13 +564,13 @@
         rel="me noopener noreferrer"
         aria-label="Open the official Velari Faith account on Instagram"
       >
-        <mat-icon svgIcon="velari-instagram" aria-hidden="true"></mat-icon>
+        <app-path-icon name="velari-instagram" [path]="iconPaths['velari-instagram']" aria-hidden="true"></app-path-icon>
         <span>Open &#64;velarifaith</span>
-        <mat-icon
+        <app-path-icon
           class="velari-action__arrow"
-          svgIcon="velari-external"
+          name="velari-external" [path]="iconPaths['velari-external']"
           aria-hidden="true"
-        ></mat-icon>
+        ></app-path-icon>
       </a>
     </div>
   </section>
@@ -581,7 +580,7 @@
     aria-labelledby="velari-future-title"
   >
     <div class="velari-frame velari-future">
-      <mat-icon svgIcon="velari-future" aria-hidden="true"></mat-icon>
+      <app-path-icon name="velari-future" [path]="iconPaths['velari-future']" aria-hidden="true"></app-path-icon>
       <header class="velari-heading">
         <p class="velari-eyebrow">The long future</p>
         <h2 id="velari-future-title">Built to Outlive Its First Form</h2>
@@ -618,13 +617,13 @@
           rel="me noopener noreferrer"
           aria-label="Open the official Velari Faith account on Instagram"
         >
-          <mat-icon svgIcon="velari-instagram" aria-hidden="true"></mat-icon>
+          <app-path-icon name="velari-instagram" [path]="iconPaths['velari-instagram']" aria-hidden="true"></app-path-icon>
           <span>Official Instagram</span>
-          <mat-icon
+          <app-path-icon
             class="velari-action__arrow"
-            svgIcon="velari-external"
+            name="velari-external" [path]="iconPaths['velari-external']"
             aria-hidden="true"
-          ></mat-icon>
+          ></app-path-icon>
         </a>
         <a
           class="velari-action velari-action--secondary"
@@ -632,7 +631,7 @@
           (click)="topNavigation.handleLinkClick('/soruklu-order')"
         >
           <span>Explore the Soruklu Order</span>
-          <mat-icon svgIcon="velari-arrow" aria-hidden="true"></mat-icon>
+          <app-path-icon name="velari-arrow" [path]="iconPaths['velari-arrow']" aria-hidden="true"></app-path-icon>
         </a>
         <a
           class="velari-action velari-action--quiet"
@@ -640,7 +639,7 @@
           (click)="topNavigation.handleLinkClick('/')"
         >
           <span>Return to Serhat Soruklu</span>
-          <mat-icon svgIcon="velari-arrow" aria-hidden="true"></mat-icon>
+          <app-path-icon name="velari-arrow" [path]="iconPaths['velari-arrow']" aria-hidden="true"></app-path-icon>
         </a>
       </div>
     </div>

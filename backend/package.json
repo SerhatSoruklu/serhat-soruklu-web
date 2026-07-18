@@ -8,14 +8,14 @@
     "npm": ">=10.9.0 <11"
   },
   "scripts": {
-    "check": "node --check server.js && node --check contact.js && node --check emails/*.js && node --check emails/templates/*.js",
-    "lint": "node ../frontend/node_modules/eslint/bin/eslint.js server.js contact.js server.test.js templates/api-landing/index.js emails/*.js emails/templates/*.js",
-    "lint:fix": "node ../frontend/node_modules/eslint/bin/eslint.js server.js contact.js server.test.js templates/api-landing/index.js emails/*.js emails/templates/*.js --fix",
+    "check": "node --check start.js && node --check server.js && node --check contact.js && node --check emails/*.js && node --check emails/templates/*.js",
+    "lint": "node ../frontend/node_modules/eslint/bin/eslint.js start.js server.js contact.js server.test.js templates/api-landing/index.js emails/*.js emails/templates/*.js",
+    "lint:fix": "node ../frontend/node_modules/eslint/bin/eslint.js start.js server.js contact.js server.test.js templates/api-landing/index.js emails/*.js emails/templates/*.js --fix",
     "test": "node --test",
     "test:coverage": "c8 --reporter=lcov --reporter=text node --test",
-    "start": "node server.js --production",
-    "start:production": "node server.js --production",
-    "dev": "nodemon server.js --development"
+    "start": "node start.js --production",
+    "start:production": "node start.js --production",
+    "dev": "nodemon start.js --development"
   },
   "keywords": [],
   "author": "",

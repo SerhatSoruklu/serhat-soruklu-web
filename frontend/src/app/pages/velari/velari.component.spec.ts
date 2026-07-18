@@ -90,6 +90,7 @@ describe('VelariComponent', () => {
 
     expect(compass?.getAttribute('aria-label')).toBe('Velari philosophical compass');
     expect(principles).toHaveLength(4);
+    expect(principles.every((principle) => principle.tagName === 'BUTTON')).toBe(true);
     expect(principles.map((principle) => principle.textContent?.trim())).toEqual([
       'Discipline',
       'Indomitable',

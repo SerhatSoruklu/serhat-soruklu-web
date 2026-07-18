@@ -634,13 +634,7 @@ export class ContactComponent {
   }
 
   private createSubmissionId(): string {
-    const randomUuid = this.document.defaultView?.crypto?.randomUUID?.();
-
-    if (randomUuid) {
-      return randomUuid;
-    }
-
-    return `contact-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 14)}`;
+    return globalThis.crypto.randomUUID();
   }
 
   private registerIcons(): void {

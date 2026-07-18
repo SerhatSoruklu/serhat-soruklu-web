@@ -1,7 +1,5 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Component, inject, PLATFORM_ID } from '@angular/core';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import {
   mdiAccountGroupOutline,
@@ -10,6 +8,8 @@ import {
   mdiScaleBalance,
 } from '@mdi/js';
 import { siX } from 'simple-icons';
+
+import { PathIconComponent } from '../../shared/icons/path-icon.component';
 
 interface OrderPurpose {
   index: string;
@@ -29,23 +29,23 @@ interface OrderRole {
 
 @Component({
   selector: 'app-soruklu-order',
-  imports: [MatIconModule, RouterLink],
+  imports: [PathIconComponent, RouterLink],
   templateUrl: './soruklu-order.component.html',
   styleUrl: './soruklu-order.component.css',
 })
 export class SorukluOrderComponent {
   private readonly document = inject(DOCUMENT);
-  private readonly iconRegistry = inject(MatIconRegistry);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-  private readonly sanitizer = inject(DomSanitizer);
 
   readonly emblemPath = '/assets/brand/soruklu-order/the-soruklu-order-emblem.png';
   readonly officialXUrl = 'https://x.com/sorukluorder';
   readonly xIconPath = siX.path;
-
-  constructor() {
-    this.registerIcons();
-  }
+  readonly iconPaths: Readonly<Record<string, string>> = {
+    'order-family': mdiAccountGroupOutline,
+    'order-purpose': mdiBookOpenPageVariantOutline,
+    'order-safeguarding': mdiScaleBalance,
+    'order-identity': mdiFingerprint,
+  };
 
   scrollToOrder(): void {
     if (!this.isBrowser) {
@@ -157,22 +157,4 @@ export class SorukluOrderComponent {
       description: 'Preserves records and context for those who may carry the work forward.',
     },
   ];
-
-  private registerIcons(): void {
-    const icons = {
-      'order-family': mdiAccountGroupOutline,
-      'order-purpose': mdiBookOpenPageVariantOutline,
-      'order-safeguarding': mdiScaleBalance,
-      'order-identity': mdiFingerprint,
-    };
-
-    for (const [name, path] of Object.entries(icons)) {
-      this.iconRegistry.addSvgIconLiteral(
-        name,
-        this.sanitizer.bypassSecurityTrustHtml(
-          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"><path d="${path}"/></svg>`,
-        ), // NOSONAR: icon paths are compile-time constants from @mdi/js, not user input.
-      );
-    }
-  }
 }

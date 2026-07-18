@@ -193,7 +193,7 @@ h3 {
     transform 180ms ease;
 }
 
-.github-button mat-icon {
+.github-button app-path-icon {
   width: 18px;
   height: 18px;
   flex: 0 0 18px;
@@ -297,7 +297,7 @@ h3 {
   place-items: center;
 }
 
-.github-identity-panel__mark mat-icon {
+.github-identity-panel__mark app-path-icon {
   position: relative;
   z-index: 1;
   width: clamp(126px, 38vw, 205px);
@@ -382,7 +382,7 @@ h3 {
   text-transform: uppercase;
 }
 
-.github-section-kicker mat-icon {
+.github-section-kicker app-path-icon {
   width: 16px;
   height: 16px;
   flex: 0 0 16px;
@@ -593,7 +593,7 @@ h3 {
     color 170ms ease;
 }
 
-.repository-action mat-icon {
+.repository-action app-path-icon {
   width: 17px;
   height: 17px;
   flex: 0 0 17px;
@@ -612,11 +612,11 @@ h3 {
   color: #f0d58c;
 }
 
-.repository-action--external:hover mat-icon {
+.repository-action--external:hover app-path-icon {
   transform: translate(3px, -2px);
 }
 
-.repository-action--internal:hover mat-icon {
+.repository-action--internal:hover app-path-icon {
   transform: translateX(4px);
 }
 
@@ -651,8 +651,8 @@ h3 {
   text-transform: uppercase;
 }
 
-.repository-card__header mat-icon,
-.supporting-repository-card__topline mat-icon {
+.repository-card__header app-path-icon,
+.supporting-repository-card__topline app-path-icon {
   width: 24px;
   height: 24px;
   flex: 0 0 24px;
@@ -724,7 +724,7 @@ h3 {
   place-items: center;
 }
 
-.private-production-card__icon mat-icon {
+.private-production-card__icon app-path-icon {
   width: 25px;
   height: 25px;
 }
@@ -890,11 +890,11 @@ h3 {
   border-color: rgba(73, 85, 103, 0.14);
 }
 
-:host-context(.theme-resolved-light) .github-identity-panel__mark mat-icon,
+:host-context(.theme-resolved-light) .github-identity-panel__mark app-path-icon,
 :host-context(.theme-resolved-light) .profile-cta-card__icon,
 :host-context(.theme-resolved-light) .flagship-repository__icon,
-:host-context(.theme-resolved-light) .repository-card__header mat-icon,
-:host-context(.theme-resolved-light) .supporting-repository-card__topline mat-icon {
+:host-context(.theme-resolved-light) .repository-card__header app-path-icon,
+:host-context(.theme-resolved-light) .supporting-repository-card__topline app-path-icon {
   color: #202a38;
 }
 
@@ -1086,7 +1086,7 @@ h3 {
     min-height: 305px;
   }
 
-  .github-identity-panel__mark mat-icon {
+  .github-identity-panel__mark app-path-icon {
     width: clamp(176px, 15vw, 230px);
     height: clamp(176px, 15vw, 230px);
   }
@@ -1164,7 +1164,7 @@ h3 {
     min-height: 230px;
   }
 
-  .github-identity-panel__mark mat-icon {
+  .github-identity-panel__mark app-path-icon {
     width: 168px;
     height: 168px;
   }
@@ -1202,7 +1202,7 @@ h3 {
   .research-repository-card,
   .supporting-repository-card,
   .repository-action,
-  .repository-action mat-icon {
+  .repository-action app-path-icon {
     transition: none;
   }
 
@@ -1210,8 +1210,8 @@ h3 {
   .flagship-repository:hover,
   .research-repository-card:hover,
   .supporting-repository-card:hover,
-  .repository-action--external:hover mat-icon,
-  .repository-action--internal:hover mat-icon {
+  .repository-action--external:hover app-path-icon,
+  .repository-action--internal:hover app-path-icon {
     transform: none;
   }
 }

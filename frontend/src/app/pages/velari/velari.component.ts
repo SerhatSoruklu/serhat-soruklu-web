@@ -1,7 +1,5 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Component, inject, PLATFORM_ID } from '@angular/core';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import {
   mdiAccountGroupOutline,
@@ -22,6 +20,7 @@ import {
 } from '@mdi/js';
 
 import { TopNavigationService } from '../../core/navigation/top-navigation.service';
+import { PathIconComponent } from '../../shared/icons/path-icon.component';
 import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
 
 interface VelariEmblemPrinciple {
@@ -67,19 +66,36 @@ interface VelariText {
 
 @Component({
   selector: 'app-velari',
-  imports: [MatIconModule, RouterLink, TooltipDirective],
+  imports: [PathIconComponent, RouterLink, TooltipDirective],
   templateUrl: './velari.component.html',
   styleUrl: './velari.component.css',
 })
 export class VelariComponent {
   private readonly document = inject(DOCUMENT);
-  private readonly iconRegistry = inject(MatIconRegistry);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-  private readonly sanitizer = inject(DomSanitizer);
 
   readonly topNavigation = inject(TopNavigationService);
   readonly emblemPath = '/assets/brand/velari/velari-faith-emblem.jpg';
+  readonly emblemSrcset =
+    '/assets/brand/velari/velari-faith-emblem-540.webp 540w, /assets/brand/velari/velari-faith-emblem-1080.webp 1080w';
   readonly instagramUrl = 'https://www.instagram.com/velarifaith/';
+  readonly iconPaths: Readonly<Record<string, string>> = {
+    'velari-arrow': mdiArrowRight,
+    'velari-awaken': mdiEyeOutline,
+    'velari-become': mdiCompassOutline,
+    'velari-choice': mdiScaleBalance,
+    'velari-day': mdiWhiteBalanceSunny,
+    'velari-external': mdiArrowTopRight,
+    'velari-future': mdiInfinity,
+    'velari-instagram': mdiInstagram,
+    'velari-light': mdiLightbulbOnOutline,
+    'velari-morning': mdiWeatherSunsetUp,
+    'velari-night': mdiWeatherSunsetDown,
+    'velari-order': mdiAccountGroupOutline,
+    'velari-refine': mdiTuneVariant,
+    'velari-stewardship': mdiShieldCheckOutline,
+    'velari-text': mdiBookOpenPageVariantOutline,
+  };
 
   readonly emblemPrinciples: readonly VelariEmblemPrinciple[] = [
     {
@@ -261,10 +277,6 @@ export class VelariComponent {
     'No person should surrender finances, medical decisions or legal rights to leadership.',
   ] as const;
 
-  constructor() {
-    this.registerIcons();
-  }
-
   scrollToFramework(): void {
     if (!this.isBrowser) {
       return;
@@ -278,34 +290,5 @@ export class VelariComponent {
       behavior: prefersReducedMotion ? 'auto' : 'smooth',
       block: 'start',
     });
-  }
-
-  private registerIcons(): void {
-    const icons = {
-      'velari-arrow': mdiArrowRight,
-      'velari-awaken': mdiEyeOutline,
-      'velari-become': mdiCompassOutline,
-      'velari-choice': mdiScaleBalance,
-      'velari-day': mdiWhiteBalanceSunny,
-      'velari-external': mdiArrowTopRight,
-      'velari-future': mdiInfinity,
-      'velari-instagram': mdiInstagram,
-      'velari-light': mdiLightbulbOnOutline,
-      'velari-morning': mdiWeatherSunsetUp,
-      'velari-night': mdiWeatherSunsetDown,
-      'velari-order': mdiAccountGroupOutline,
-      'velari-refine': mdiTuneVariant,
-      'velari-stewardship': mdiShieldCheckOutline,
-      'velari-text': mdiBookOpenPageVariantOutline,
-    };
-
-    for (const [name, path] of Object.entries(icons)) {
-      this.iconRegistry.addSvgIconLiteral(
-        name,
-        this.sanitizer.bypassSecurityTrustHtml(
-          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"><path d="${path}"/></svg>`,
-        ), // NOSONAR: icon paths are compile-time constants from @mdi/js, not user input.
-      );
-    }
   }
 }

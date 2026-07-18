@@ -28,7 +28,7 @@ function normalizeSiteUrl(value) {
 }
 
 function renderMessageHtml(message) {
-  return escapeHtml(message).replace(/\n/g, '<br>');
+  return escapeHtml(message).replaceAll('\n', '<br>');
 }
 
 function renderLogo() {

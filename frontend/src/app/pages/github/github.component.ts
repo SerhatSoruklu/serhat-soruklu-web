@@ -1,6 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   mdiArrowRight,
@@ -12,6 +10,8 @@ import {
   mdiSourceRepository,
   mdiWeb,
 } from '@mdi/js';
+
+import { PathIconComponent } from '../../shared/icons/path-icon.component';
 
 interface PublicRepository {
   slug: string;
@@ -25,16 +25,23 @@ interface PublicRepository {
 
 @Component({
   selector: 'app-github-page',
-  imports: [MatIconModule, RouterLink],
+  imports: [PathIconComponent, RouterLink],
   templateUrl: './github.component.html',
   styleUrl: './github.component.css',
 })
 export class GitHubComponent {
-  private readonly iconRegistry = inject(MatIconRegistry);
-  private readonly sanitizer = inject(DomSanitizer);
-
   readonly profileUrl = 'https://github.com/SerhatSoruklu';
   readonly coupynUrl = 'https://coupyn.com';
+  readonly iconPaths: Readonly<Record<string, string>> = {
+    'github-arrow': mdiArrowRight,
+    'github-external': mdiArrowTopRight,
+    'github-code': mdiFileCodeOutline,
+    'github-mark': mdiGithub,
+    'github-private': mdiShieldLockOutline,
+    'github-research': mdiFlaskOutline,
+    'github-repository': mdiSourceRepository,
+    'github-web': mdiWeb,
+  };
 
   readonly flagshipRepository: PublicRepository = {
     slug: 'chatpdm',
@@ -90,30 +97,4 @@ export class GitHubComponent {
       githubUrl: 'https://github.com/SerhatSoruklu/zeroglare-continuity-system',
     },
   ];
-
-  constructor() {
-    this.registerIcons();
-  }
-
-  private registerIcons(): void {
-    const icons = {
-      'github-arrow': mdiArrowRight,
-      'github-external': mdiArrowTopRight,
-      'github-code': mdiFileCodeOutline,
-      'github-mark': mdiGithub,
-      'github-private': mdiShieldLockOutline,
-      'github-research': mdiFlaskOutline,
-      'github-repository': mdiSourceRepository,
-      'github-web': mdiWeb,
-    };
-
-    for (const [name, path] of Object.entries(icons)) {
-      this.iconRegistry.addSvgIconLiteral(
-        name,
-        this.sanitizer.bypassSecurityTrustHtml(
-          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"><path d="${path}"/></svg>`,
-        ), // NOSONAR: icon paths are compile-time constants from @mdi/js, not user input.
-      );
-    }
-  }
 }
