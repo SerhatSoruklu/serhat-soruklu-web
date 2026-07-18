@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD013 -->
+
 # Serhat Soruklu Web
 
 Personal platform, writing hub, and systems architecture portfolio of Serhat Soruklu.
@@ -236,15 +238,15 @@ SSR service and `/api` traffic on `api.serhatsoruklu.com` to the backend.
 
 Frontend SSR recognizes these runtime variables:
 
-| Variable                       | Production default       | Purpose |
-| ------------------------------ | ------------------------ | ------- |
-| `PORT`                         | `4000`                   | Frontend SSR listen port |
-| `FRONTEND_HOST`                | `127.0.0.1`              | Listen address; keep loopback behind a same-host proxy |
-| `FRONTEND_CANONICAL_HOST`      | `serhatsoruklu.com`      | Fixed destination for application HTTPS redirects |
-| `FRONTEND_TRUST_PROXY`         | `loopback`               | Explicit trusted proxy IPs/subnets or Express safe names, comma-separated |
-| `FRONTEND_ENFORCE_HTTPS`       | `true`                   | Redirect non-secure production requests with HTTP 308 |
-| `FRONTEND_ENABLE_HSTS`         | `true`                   | Emit one-year HSTS in production |
-| `FRONTEND_SHUTDOWN_TIMEOUT_MS` | `10000`                  | Bounded graceful-shutdown deadline |
+| Variable | Production default | Purpose |
+| --- | --- | --- |
+| `PORT` | `4000` | Frontend SSR listen port |
+| `FRONTEND_HOST` | `127.0.0.1` | Listen address; keep loopback behind a same-host proxy |
+| `FRONTEND_CANONICAL_HOST` | `serhatsoruklu.com` | Fixed destination for application HTTPS redirects |
+| `FRONTEND_TRUST_PROXY` | `loopback` | Explicit trusted proxy IPs/subnets or Express safe names, comma-separated |
+| `FRONTEND_ENFORCE_HTTPS` | `true` | Redirect non-secure production requests with HTTP 308 |
+| `FRONTEND_ENABLE_HSTS` | `true` | Emit one-year HSTS in production |
+| `FRONTEND_SHUTDOWN_TIMEOUT_MS` | `10000` | Bounded graceful-shutdown deadline |
 
 `FRONTEND_TRUST_PROXY` deliberately rejects unrestricted values such as `true`,
 `*`, `0.0.0.0/0`, and `::/0`. The default assumes nginx or another reverse proxy
