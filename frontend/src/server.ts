@@ -111,14 +111,16 @@ app.use((req, res, next) => {
       return;
     }
 
-    const queryIndex = req.originalUrl.indexOf('?');
-    const query = queryIndex === -1 ? '' : req.originalUrl.slice(queryIndex);
-    sendPermanentRedirect(res, createRelativeRedirectTarget(pathWithoutTrailingSlash, query));
+    if (!sendKnownRouteRedirect(res, pathWithoutTrailingSlash, false)) {
+      res.status(404).type('text/plain').send('Not Found');
+    }
     return;
   }
 
   if (enforceHttps && rawPath !== '/healthz' && !req.secure) {
-    sendPermanentRedirect(res, createCanonicalHttpsRedirect(req.originalUrl));
+    if (!sendKnownRouteRedirect(res, rawPath, true)) {
+      res.status(404).type('text/plain').send('Not Found');
+    }
     return;
   }
 
@@ -316,31 +318,79 @@ function getRawPath(originalUrl: string): string {
   return queryIndex === -1 ? originalUrl : originalUrl.slice(0, queryIndex);
 }
 
-function createRelativeRedirectTarget(pathname: string, query: string): string {
-  const isSafePath = pathname.startsWith('/') && !pathname.startsWith('//');
-  const isSafeQuery = query === '' || query.startsWith('?');
+function sendKnownRouteRedirect(
+  res: express.Response,
+  pathname: string,
+  useCanonicalOrigin: boolean,
+): boolean {
+  const origin = useCanonicalOrigin ? `https://${canonicalHost}` : '';
+  let location: string;
 
-  if (!isSafePath || !isSafeQuery || /[\r\n]/.test(`${pathname}${query}`)) {
-    throw new Error('Refused to create an unsafe relative redirect target.');
+  switch (pathname) {
+    case '/':
+      location = `${origin}/`;
+      break;
+    case '/404':
+      location = `${origin}/404`;
+      break;
+    case '/contact':
+      location = `${origin}/contact`;
+      break;
+    case '/favicon.ico':
+      location = `${origin}/favicon.ico`;
+      break;
+    case '/github':
+      location = `${origin}/github`;
+      break;
+    case '/manifest.json':
+      location = `${origin}/manifest.json`;
+      break;
+    case '/manifest.webmanifest':
+      location = `${origin}/manifest.webmanifest`;
+      break;
+    case '/robots.txt':
+      location = `${origin}/robots.txt`;
+      break;
+    case '/sitemap.xml':
+      location = `${origin}/sitemap.xml`;
+      break;
+    case '/soruklu-order':
+      location = `${origin}/soruklu-order`;
+      break;
+    case '/systems':
+      location = `${origin}/systems`;
+      break;
+    case '/systems/chatpdm':
+      location = `${origin}/systems/chatpdm`;
+      break;
+    case '/systems/continuity-identity-model':
+      location = `${origin}/systems/continuity-identity-model`;
+      break;
+    case '/systems/coupyn':
+      location = `${origin}/systems/coupyn`;
+      break;
+    case '/systems/deterministic-boundary-firewall':
+      location = `${origin}/systems/deterministic-boundary-firewall`;
+      break;
+    case '/theme-init.js':
+      location = `${origin}/theme-init.js`;
+      break;
+    case '/velari':
+      location = `${origin}/velari`;
+      break;
+    case '/work':
+      location = `${origin}/work`;
+      break;
+    case '/writing':
+      location = `${origin}/writing`;
+      break;
+    default:
+      return false;
   }
 
-  return `${pathname}${query}`;
-}
-
-function createCanonicalHttpsRedirect(originalUrl: string): string {
-  const canonicalOrigin = `https://${canonicalHost}`;
-  const redirectUrl = new URL(originalUrl, canonicalOrigin);
-
-  if (redirectUrl.origin !== canonicalOrigin || /[\r\n]/.test(redirectUrl.toString())) {
-    throw new Error('Refused to create a redirect outside the canonical HTTPS origin.');
-  }
-
-  return redirectUrl.toString();
-}
-
-function sendPermanentRedirect(res: express.Response, location: string): void {
   res.setHeader('Location', location);
   res.status(308).type('text/plain').send('Permanent Redirect');
+  return true;
 }
 
 function looksLikeStaticAsset(path: string): boolean {

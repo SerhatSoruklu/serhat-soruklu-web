@@ -45,6 +45,23 @@ try {
     'The HTTPS redirect must use the fixed canonical host.',
   );
 
+  const insecureKnownRouteResponse = await fetch(
+    `${baseUrl}/work?campaign=user-controlled`,
+    { redirect: 'manual' },
+  );
+  assert.equal(insecureKnownRouteResponse.status, 308);
+  assert.equal(
+    insecureKnownRouteResponse.headers.get('location'),
+    'https://serhatsoruklu.com/work',
+    'Known HTTPS redirects must come from the fixed route allowlist without reflecting query data.',
+  );
+
+  const insecureUnknownRouteResponse = await fetch(`${baseUrl}/unknown-http-route`, {
+    redirect: 'manual',
+  });
+  assert.equal(insecureUnknownRouteResponse.status, 404);
+  assert.equal(insecureUnknownRouteResponse.headers.get('location'), null);
+
   const homeResponse = await secureFetch('/');
   const homeHtml = await homeResponse.text();
   assert.equal(homeResponse.status, 200, 'The home route must SSR with HTTP 200.');
@@ -150,7 +167,11 @@ try {
     308,
     'A trailing slash must canonicalize with HTTP 308.',
   );
-  assert.equal(trailingSlashResponse.headers.get('location'), '/work?campaign=release-smoke');
+  assert.equal(
+    trailingSlashResponse.headers.get('location'),
+    '/work',
+    'Trailing-slash redirects must use the fixed route allowlist without reflecting query data.',
+  );
 
   const robotsResponse = await secureFetch('/robots.txt');
   assert.equal(robotsResponse.status, 200);
