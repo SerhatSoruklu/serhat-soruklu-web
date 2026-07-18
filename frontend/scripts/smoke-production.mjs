@@ -206,7 +206,7 @@ function getCspNonce(csp) {
 }
 
 function assertInlineExecutableScriptsUseNonce(html, nonce) {
-  const scriptPattern = /<script\b([^>]*)>([\s\S]*?)<\/script\s*>/gi;
+  const scriptPattern = /<script\b([^>]*)>([\s\S]*?)<\/script\b[^>]*>/gi;
   const inlineExecutableScripts = [...html.matchAll(scriptPattern)].filter((match) => {
     const attributes = match[1];
     if (/\bsrc\s*=/i.test(attributes)) {
