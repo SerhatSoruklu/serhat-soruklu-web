@@ -97,12 +97,12 @@ test.describe('GitHub page', () => {
     assertNoConsoleErrors();
   });
 
-  test('routes repository-labelled links on Systems, DBF, and CIM through /github', async ({ page }, testInfo) => {
+  test('routes repository links through /github and live products externally', async ({ page }, testInfo) => {
     const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
 
     await page.goto('/systems');
 
-    const systemCards = ['ChatPDM', 'Deterministic Boundary Firewall', 'Continuity Identity Model'];
+    const systemCards = ['Deterministic Boundary Firewall', 'Continuity Identity Model'];
 
     for (const system of systemCards) {
       const card = page.locator('.system-card').filter({ hasText: system });
@@ -118,6 +118,13 @@ test.describe('GitHub page', () => {
       'https://coupyn.com',
     );
     await expect(coupynCard.getByText('View GitHub')).toHaveCount(0);
+
+    const chatpdmCard = page.locator('.system-card').filter({ hasText: 'ChatPDM' });
+    const chatpdmLink = chatpdmCard.getByRole('link', { name: 'Open ChatPDM', exact: true });
+    await expect(chatpdmLink).toHaveAttribute('href', 'https://chatpdm.com');
+    await expect(chatpdmLink).toHaveAttribute('target', '_blank');
+    await expect(chatpdmLink).toHaveAttribute('rel', 'noopener noreferrer');
+    await expect(chatpdmCard.getByText('View GitHub')).toHaveCount(0);
 
     for (const path of [
       '/systems/deterministic-boundary-firewall',

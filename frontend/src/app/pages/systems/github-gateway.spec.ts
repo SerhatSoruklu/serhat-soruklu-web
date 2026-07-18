@@ -8,7 +8,7 @@ import { SystemsComponent } from './systems.component';
 
 describe('GitHub gateway policy', () => {
   const cases: ReadonlyArray<{ component: Type<unknown>; expectedLinks: number }> = [
-    { component: SystemsComponent, expectedLinks: 4 },
+    { component: SystemsComponent, expectedLinks: 3 },
     { component: DeterministicBoundaryFirewallSystemComponent, expectedLinks: 2 },
     { component: ContinuityIdentityModelSystemComponent, expectedLinks: 2 },
   ];

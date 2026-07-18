@@ -50,4 +50,23 @@ describe('page components', () => {
       expect((fixture.nativeElement as HTMLElement).querySelectorAll('main')).toHaveLength(0);
     });
   }
+
+  it('links the ChatPDM systems card to the live product', async () => {
+    await TestBed.configureTestingModule({
+      imports: [SystemsComponent],
+      providers: [provideRouter([])],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(SystemsComponent);
+    fixture.detectChanges();
+
+    const links = Array.from(
+      (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLAnchorElement>('a'),
+    );
+    const chatpdmLink = links.find((link) => link.textContent?.trim() === 'Open ChatPDM');
+
+    expect(chatpdmLink?.href).toBe('https://chatpdm.com/');
+    expect(chatpdmLink?.target).toBe('_blank');
+    expect(chatpdmLink?.rel).toContain('noopener');
+  });
 });
