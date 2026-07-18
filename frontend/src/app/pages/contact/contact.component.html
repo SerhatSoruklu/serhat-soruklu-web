@@ -1,6 +1,324 @@
-<section class="page-placeholder" aria-labelledby="contact-title">
-  <div class="page-placeholder__inner">
-    <p class="page-placeholder__eyebrow">CONTACT</p>
-    <h1 id="contact-title">Contact</h1>
-  </div>
-</section>
+<div class="contact-page">
+  <section class="contact-hero layout-section" aria-labelledby="contact-title">
+    <div class="contact-hero__inner layout-container--wide">
+      <div class="contact-hero__copy">
+        <p class="contact-eyebrow">CONTACT</p>
+        <h1 id="contact-title">Start With a Clear Message</h1>
+        <p class="contact-hero__summary">
+          Send a focused note about systems architecture, product engineering, infrastructure, or collaboration.
+          The form routes through authenticated mail and keeps the message path direct.
+        </p>
+      </div>
+
+      <aside class="contact-hero__panel" aria-label="Contact routing notes">
+        <div class="contact-signal-card">
+          <mat-icon class="contact-signal-card__icon" svgIcon="contact-email" aria-hidden="true"></mat-icon>
+          <div>
+            <span>Mail route</span>
+            <strong>Forwarded to Serhat</strong>
+          </div>
+        </div>
+        <div class="contact-signal-card">
+          <mat-icon class="contact-signal-card__icon" svgIcon="contact-clock" aria-hidden="true"></mat-icon>
+          <div>
+            <span>Response mode</span>
+            <strong>Direct and deliberate</strong>
+          </div>
+        </div>
+        <div class="contact-signal-card">
+          <mat-icon class="contact-signal-card__icon" svgIcon="contact-trust" aria-hidden="true"></mat-icon>
+          <div>
+            <span>Best notes</span>
+            <strong>Specific, practical, real</strong>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="contact-shell layout-section" aria-label="Contact form">
+    <div class="contact-shell__inner">
+      <div class="contact-frame">
+        <div class="contact-frame__intro">
+          <p class="contact-eyebrow">DIRECT ROUTE</p>
+          <h2>Describe What You’re Building</h2>
+          <p>
+            Keep it simple. A few concrete details are more useful than a long pitch.
+          </p>
+          <p class="contact-response-badge" aria-label="Response time usually within 48 hours">
+            <mat-icon svgIcon="contact-clock" aria-hidden="true"></mat-icon>
+            <span>Response: usually within 48h</span>
+          </p>
+        </div>
+
+        @if (isSubmitted()) {
+          <section class="contact-success" aria-live="polite" aria-labelledby="contact-success-title">
+            <mat-icon class="contact-success__icon" svgIcon="contact-check" aria-hidden="true"></mat-icon>
+            <p class="contact-eyebrow">
+              {{ deliveryStatus() === 'unknown' ? 'DELIVERY PENDING' : confirmationDelivered() ? 'MESSAGE SENT' : 'MESSAGE RECEIVED' }}
+            </p>
+            <h2 id="contact-success-title">
+              {{ deliveryStatus() === 'unknown' ? 'Delivery status pending.' : confirmationDelivered() ? 'Message sent.' : 'Message received.' }}
+            </h2>
+            <p>{{ submissionMessage() }}</p>
+            <button
+              class="contact-secondary-action"
+              type="button"
+              aria-label="Return to the contact form to submit another message"
+              (click)="resetForm()"
+            >
+              Return to contact form
+            </button>
+          </section>
+        } @else {
+          <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="submit()" [attr.aria-busy]="isSubmitting()" novalidate>
+            <input class="contact-honeypot" type="text" formControlName="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+            <div class="contact-form__grid">
+              <label class="contact-field" [class.contact-field--invalid]="shouldShowError('firstName')" for="contact-first-name">
+                <span class="contact-field__topline">
+                  <span>First name</span>
+                  <span class="contact-field__counter">{{ characterCounter('firstName', 60) }}</span>
+                </span>
+                <span class="contact-field__control-wrap">
+                  <mat-icon class="contact-field__icon" svgIcon="contact-name" aria-hidden="true"></mat-icon>
+                  <input
+                    id="contact-first-name"
+                    class="contact-field__control"
+                    type="text"
+                    formControlName="firstName"
+                    autocomplete="given-name"
+                    maxlength="60"
+                    placeholder="Serhat"
+                    aria-describedby="contact-first-name-feedback"
+                    [attr.aria-invalid]="shouldShowError('firstName')"
+                  >
+                </span>
+                <span
+                  id="contact-first-name-feedback"
+                  class="contact-field__feedback"
+                  [class.contact-field__feedback--error]="fieldError('firstName')"
+                >
+                  @if (fieldError('firstName')) {
+                    <mat-icon svgIcon="contact-alert" aria-hidden="true"></mat-icon>
+                    <span>{{ fieldError('firstName') }}</span>
+                  } @else {
+                    <span>2 to 60 characters.</span>
+                  }
+                </span>
+              </label>
+
+              <label class="contact-field" [class.contact-field--invalid]="shouldShowError('lastName')" for="contact-last-name">
+                <span class="contact-field__topline">
+                  <span>Last name</span>
+                  <span class="contact-field__counter">{{ characterCounter('lastName', 60) }}</span>
+                </span>
+                <span class="contact-field__control-wrap">
+                  <mat-icon class="contact-field__icon" svgIcon="contact-name" aria-hidden="true"></mat-icon>
+                  <input
+                    id="contact-last-name"
+                    class="contact-field__control"
+                    type="text"
+                    formControlName="lastName"
+                    autocomplete="family-name"
+                    maxlength="60"
+                    placeholder="Soruklu"
+                    aria-describedby="contact-last-name-feedback"
+                    [attr.aria-invalid]="shouldShowError('lastName')"
+                  >
+                </span>
+                <span
+                  id="contact-last-name-feedback"
+                  class="contact-field__feedback"
+                  [class.contact-field__feedback--error]="fieldError('lastName')"
+                >
+                  @if (fieldError('lastName')) {
+                    <mat-icon svgIcon="contact-alert" aria-hidden="true"></mat-icon>
+                    <span>{{ fieldError('lastName') }}</span>
+                  } @else {
+                    <span>2 to 60 characters.</span>
+                  }
+                </span>
+              </label>
+            </div>
+
+            <label class="contact-field" [class.contact-field--invalid]="shouldShowError('email')" for="contact-email">
+              <span class="contact-field__topline">
+                <span>Email</span>
+                <span class="contact-field__counter">{{ characterCounter('email', 160) }}</span>
+              </span>
+              <span class="contact-field__control-wrap">
+                <mat-icon class="contact-field__icon" svgIcon="contact-email" aria-hidden="true"></mat-icon>
+                <input
+                  id="contact-email"
+                  class="contact-field__control"
+                  type="email"
+                  formControlName="email"
+                  autocomplete="email"
+                maxlength="160"
+                inputmode="email"
+                placeholder="you@example.com"
+                aria-describedby="contact-email-feedback"
+                [attr.aria-invalid]="shouldShowError('email')"
+              >
+            </span>
+              <span
+                id="contact-email-feedback"
+                class="contact-field__feedback"
+                [class.contact-field__feedback--error]="fieldError('email')"
+              >
+                @if (fieldError('email')) {
+                  <mat-icon svgIcon="contact-alert" aria-hidden="true"></mat-icon>
+                  <span>{{ fieldError('email') }}</span>
+                } @else {
+                  <span>Used for the confirmation and reply path.</span>
+                }
+              </span>
+            </label>
+
+            <div class="contact-field contact-topic-field" [class.contact-field--invalid]="shouldShowError('topic')">
+              <span class="contact-field__topline">
+                <span id="contact-topic-label">Topic</span>
+                @if (selectedTopic) {
+                  <span class="contact-field__counter">Selected</span>
+                }
+              </span>
+              <div class="contact-field__control-wrap contact-field__control-wrap--topic contact-topic-picker">
+                <button
+                  id="contact-topic"
+                  class="contact-topic-trigger"
+                  type="button"
+                  role="combobox"
+                  aria-haspopup="listbox"
+                  aria-labelledby="contact-topic-label contact-topic-value"
+                  aria-controls="contact-topic-listbox"
+                  [attr.aria-expanded]="topicDropdownOpen()"
+                  [attr.aria-activedescendant]="topicDropdownOpen() ? topicOptionId(activeTopicIndex()) : null"
+                  aria-describedby="contact-topic-feedback"
+                  [attr.aria-invalid]="shouldShowError('topic')"
+                  [class.contact-topic-trigger--placeholder]="!selectedTopic"
+                  (click)="toggleTopicDropdown($event)"
+                  (keydown)="handleTopicKeydown($event)"
+                >
+                  <mat-icon class="contact-topic-trigger__icon" [svgIcon]="topicTriggerIcon" aria-hidden="true"></mat-icon>
+                  <span id="contact-topic-value">{{ topicTriggerLabel }}</span>
+                </button>
+                <mat-icon
+                  class="contact-field__chevron"
+                  [class.contact-field__chevron--open]="topicDropdownOpen()"
+                  svgIcon="contact-chevron"
+                  aria-hidden="true"
+                ></mat-icon>
+                @if (topicDropdownOpen()) {
+                  <div id="contact-topic-listbox" class="contact-topic-listbox" role="listbox" aria-labelledby="contact-topic-label">
+                    @for (topic of topics; track topic.label; let index = $index) {
+                      <button
+                        [id]="topicOptionId(index)"
+                        class="contact-topic-option"
+                        type="button"
+                        role="option"
+                        [attr.aria-selected]="contactForm.controls.topic.value === topic.label"
+                        [class.contact-topic-option--active]="activeTopicIndex() === index"
+                        [class.contact-topic-option--selected]="contactForm.controls.topic.value === topic.label"
+                        (click)="selectTopic(topic, index, $event)"
+                      >
+                        <mat-icon [svgIcon]="topic.icon" aria-hidden="true"></mat-icon>
+                        <span>{{ topic.label }}</span>
+                      </button>
+                    }
+                  </div>
+                }
+              </div>
+              <span
+                id="contact-topic-feedback"
+                class="contact-field__feedback"
+                [class.contact-field__feedback--error]="fieldError('topic')"
+              >
+                @if (fieldError('topic')) {
+                  <mat-icon svgIcon="contact-alert" aria-hidden="true"></mat-icon>
+                  <span>{{ fieldError('topic') }}</span>
+                } @else {
+                  <span>{{ selectedTopic?.note || 'Choose the closest fit. Other is fine when the note is clear.' }}</span>
+                }
+              </span>
+            </div>
+
+            <label class="contact-field contact-field--message" [class.contact-field--invalid]="shouldShowError('message')" for="contact-message">
+              <span class="contact-field__topline">
+                <span>Message</span>
+                <span class="contact-field__counter" [class.contact-field__counter--strong]="messageLength > 1800">{{ characterCounter('message', 2000) }}</span>
+              </span>
+              <span class="contact-field__control-wrap contact-field__control-wrap--textarea">
+                <mat-icon class="contact-field__icon" svgIcon="contact-message" aria-hidden="true"></mat-icon>
+                <textarea
+                  id="contact-message"
+                  class="contact-field__control contact-field__textarea"
+                  formControlName="message"
+                  maxlength="2000"
+                  rows="4"
+                  [placeholder]="messagePlaceholder"
+                  aria-describedby="contact-message-feedback"
+                  [attr.aria-invalid]="shouldShowError('message')"
+                ></textarea>
+                <span
+                  class="contact-textarea-grip"
+                  [class.contact-textarea-grip--active]="isMessageResizing()"
+                  aria-hidden="true"
+                  (pointerdown)="startMessageResize($event)"
+                  (pointermove)="resizeMessage($event)"
+                  (pointerup)="finishMessageResize($event)"
+                  (pointercancel)="finishMessageResize($event)"
+                ></span>
+              </span>
+              <span
+                id="contact-message-feedback"
+                class="contact-field__feedback"
+                [class.contact-field__feedback--error]="fieldError('message')"
+              >
+                @if (fieldError('message')) {
+                  <mat-icon svgIcon="contact-alert" aria-hidden="true"></mat-icon>
+                  <span>{{ fieldError('message') }}</span>
+                } @else {
+                  <span>{{ messageHint }}</span>
+                }
+              </span>
+            </label>
+
+            @if (submitError()) {
+              <p class="contact-form__alert" role="alert">
+                <mat-icon svgIcon="contact-alert" aria-hidden="true"></mat-icon>
+                <span>{{ submitError() }}</span>
+              </p>
+            }
+
+            <div class="contact-form__actions">
+              <button
+                class="contact-submit"
+                type="submit"
+                [class.contact-submit--loading]="isSubmitting()"
+                [disabled]="contactForm.invalid || isSubmitting()"
+              >
+                @if (isSubmitting()) {
+                  <mat-spinner
+                    class="contact-submit__spinner"
+                    mode="indeterminate"
+                    diameter="24"
+                    strokeWidth="3"
+                    aria-hidden="true"
+                  ></mat-spinner>
+                  <span>Sending...</span>
+                } @else {
+                  <mat-icon svgIcon="contact-send" aria-hidden="true"></mat-icon>
+                  <span>Send Message</span>
+                }
+              </button>
+              <p>
+                This sends through authenticated workspace mail. No public inbox credentials are exposed.
+              </p>
+            </div>
+          </form>
+        }
+      </div>
+    </div>
+  </section>
+</div>

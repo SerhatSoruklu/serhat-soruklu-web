@@ -3,14 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "engines": {
+    "node": ">=22.20.0 <23",
+    "npm": ">=10.9.0 <11"
+  },
   "scripts": {
-    "check": "node --check server.js",
-    "lint": "node ../frontend/node_modules/eslint/bin/eslint.js server.js",
-    "lint:fix": "node ../frontend/node_modules/eslint/bin/eslint.js server.js --fix",
+    "check": "node --check server.js && node --check contact.js && node --check emails/*.js && node --check emails/templates/*.js",
+    "lint": "node ../frontend/node_modules/eslint/bin/eslint.js server.js contact.js server.test.js templates/api-landing/index.js emails/*.js emails/templates/*.js",
+    "lint:fix": "node ../frontend/node_modules/eslint/bin/eslint.js server.js contact.js server.test.js templates/api-landing/index.js emails/*.js emails/templates/*.js --fix",
     "test": "node --test",
     "test:coverage": "c8 --reporter=lcov --reporter=text node --test",
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node server.js --production",
+    "start:production": "node server.js --production",
+    "dev": "nodemon server.js --development"
   },
   "keywords": [],
   "author": "",
@@ -22,11 +27,11 @@
     "express": "^5.2.1",
     "express-rate-limit": "^8.5.1",
     "helmet": "^8.1.0",
-    "mongodb": "^7.2.0",
     "mongoose": "^9.6.1",
-    "nodemon": "^3.1.14"
+    "nodemailer": "^9.0.3"
   },
   "devDependencies": {
-    "c8": "^11.0.0"
+    "c8": "^11.0.0",
+    "nodemon": "^3.1.14"
   }
 }
