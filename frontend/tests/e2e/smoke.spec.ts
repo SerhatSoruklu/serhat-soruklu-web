@@ -4,11 +4,23 @@ import { installConsoleErrorGuard } from './support/console-errors';
 
 const routes = [
   { path: '/', heading: /I build fast, structured web platforms.*architect.*founder/ },
-  { path: '/work', heading: 'Work' },
-  { path: '/systems', heading: 'Systems' },
-  { path: '/writing', heading: 'Writing' },
+  { path: '/work', heading: 'Built End-to-End, Owned Completely' },
+  { path: '/systems', heading: 'Systems Built To Hold Shape' },
+  {
+    path: '/systems/coupyn',
+    heading: 'A live public offer and referral intelligence platform.',
+  },
+  {
+    path: '/systems/chatpdm',
+    heading: 'Deterministic interpretation inside defined constraints.',
+  },
+  { path: '/systems/deterministic-boundary-firewall', heading: 'Deterministic Boundary Firewall' },
+  { path: '/systems/continuity-identity-model', heading: 'Continuity Identity Model' },
+  { path: '/writing', heading: 'Notes from building systems that have to stay standing.' },
   { path: '/github', heading: 'GitHub' },
-  { path: '/contact', heading: 'Contact' }
+  { path: '/soruklu-order', heading: 'The Soruklu Order' },
+  { path: '/velari', heading: /^Velari$/ },
+  { path: '/contact', heading: 'Start With a Clear Message' },
 ];
 
 test.describe('smoke routes', () => {

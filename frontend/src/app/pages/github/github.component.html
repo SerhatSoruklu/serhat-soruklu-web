@@ -1,6 +1,331 @@
-<section class="page-placeholder" aria-labelledby="github-title">
-  <div class="page-placeholder__inner">
-    <p class="page-placeholder__eyebrow">GITHUB</p>
-    <h1 id="github-title">GitHub</h1>
-  </div>
-</section>
+<div class="github-page">
+  <section
+    class="github-hero layout-section"
+    aria-labelledby="github-title"
+    data-testid="github-hero"
+  >
+    <div class="github-hero__inner layout-container--wide">
+      <div class="github-hero__copy">
+        <p class="github-eyebrow">
+          <span>Public engineering record</span>
+          <span aria-hidden="true">/</span>
+          <span>Source and specifications</span>
+        </p>
+        <h1 id="github-title">GitHub</h1>
+        <p class="github-hero__handle">&#64;SerhatSoruklu</p>
+        <p class="github-hero__summary">
+          Selected public repositories documenting deterministic systems, bounded architecture, and
+          the engineering principles behind my work.
+        </p>
+
+        <div class="github-hero__actions" aria-label="GitHub page actions">
+          <a
+            class="github-button github-button--primary"
+            [href]="profileUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="github-profile-hero-link"
+          >
+            <app-path-icon name="github-mark" [path]="iconPaths['github-mark']" aria-hidden="true"></app-path-icon>
+            <span>Open GitHub Profile</span>
+            <app-path-icon
+              class="github-button__arrow"
+              name="github-external" [path]="iconPaths['github-external']"
+              aria-hidden="true"
+            ></app-path-icon>
+          </a>
+          <a
+            class="github-button github-button--secondary"
+            routerLink="/github"
+            fragment="repositories"
+          >
+            <span>Explore Repositories</span>
+            <app-path-icon
+              class="github-button__arrow"
+              name="github-arrow" [path]="iconPaths['github-arrow']"
+              aria-hidden="true"
+            ></app-path-icon>
+          </a>
+        </div>
+      </div>
+
+      <aside class="github-identity-panel" aria-label="Public source record">
+        <div class="github-identity-panel__header">
+          <span>ENGINEERING / SOURCE</span>
+          <span>PUBLIC</span>
+        </div>
+        <div class="github-identity-panel__mark" aria-hidden="true">
+          <span class="github-identity-panel__axis github-identity-panel__axis--horizontal"></span>
+          <span class="github-identity-panel__axis github-identity-panel__axis--vertical"></span>
+          <app-path-icon name="github-mark" [path]="iconPaths['github-mark']"></app-path-icon>
+        </div>
+        <div class="github-identity-panel__footer">
+          <span>Selected record</span>
+          <strong>Implementation · specifications · documentation</strong>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section
+    id="repositories"
+    class="github-flagship layout-section"
+    aria-labelledby="github-flagship-title"
+  >
+    <div class="github-section-frame layout-container--wide">
+      <header class="github-section-heading">
+        <div>
+          <p class="github-section-kicker">
+            <app-path-icon name="github-repository" [path]="iconPaths['github-repository']" aria-hidden="true"></app-path-icon>
+            <span>Flagship repository</span>
+          </p>
+          <h2 id="github-flagship-title">The system at the centre of the public work.</h2>
+        </div>
+        <p>
+          Implementation and architecture are kept together, but presented for different kinds of
+          reading.
+        </p>
+      </header>
+
+      <article class="flagship-repository" data-repository="chatpdm">
+        <div class="flagship-repository__topline">
+          <span>{{ flagshipRepository.category }}</span>
+          <span class="repository-visibility">
+            <span aria-hidden="true"></span>
+            Public repository
+          </span>
+        </div>
+
+        <div class="flagship-repository__body">
+          <div class="flagship-repository__identity">
+            <app-path-icon
+              class="flagship-repository__icon"
+              name="github-mark" [path]="iconPaths['github-mark']"
+              aria-hidden="true"
+            ></app-path-icon>
+            <div>
+              <p class="repository-path">SerhatSoruklu / {{ flagshipRepository.slug }}</p>
+              <h3>{{ flagshipRepository.title }}</h3>
+            </div>
+          </div>
+          <p class="flagship-repository__description">{{ flagshipRepository.description }}</p>
+        </div>
+
+        <div class="flagship-repository__footer">
+          <ul
+            class="repository-chips"
+            [attr.aria-label]="flagshipRepository.title + ' technologies and themes'"
+          >
+            @for (technology of flagshipRepository.technologies; track technology) {
+              <li>{{ technology }}</li>
+            }
+          </ul>
+
+          <div class="repository-actions">
+            <a
+              class="repository-action repository-action--external"
+              [href]="flagshipRepository.githubUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="repository-chatpdm-link"
+            >
+              <span>Open Repository</span>
+              <app-path-icon name="github-external" [path]="iconPaths['github-external']" aria-hidden="true"></app-path-icon>
+            </a>
+            <a
+              class="repository-action repository-action--internal"
+              [routerLink]="flagshipRepository.systemPath"
+            >
+              <span>Read System Architecture</span>
+              <app-path-icon name="github-arrow" [path]="iconPaths['github-arrow']" aria-hidden="true"></app-path-icon>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="github-research layout-section" aria-labelledby="github-research-title">
+    <div class="github-section-frame layout-container--wide">
+      <header class="github-section-heading">
+        <div>
+          <p class="github-section-kicker">
+            <app-path-icon name="github-research" [path]="iconPaths['github-research']" aria-hidden="true"></app-path-icon>
+            <span>Research repositories</span>
+          </p>
+          <h2 id="github-research-title">Boundaries first. Continuity second.</h2>
+        </div>
+        <p>
+          Two connected models for controlling what a system may claim and what it may preserve
+          through change.
+        </p>
+      </header>
+
+      <div class="research-repository-grid">
+        @for (repository of researchRepositories; track repository.githubUrl) {
+          <article class="research-repository-card" [attr.data-repository]="repository.slug">
+            <div class="repository-card__header">
+              <app-path-icon name="github-mark" [path]="iconPaths['github-mark']" aria-hidden="true"></app-path-icon>
+              <span>{{ repository.category }}</span>
+            </div>
+            <p class="repository-path">SerhatSoruklu / {{ repository.slug }}</p>
+            <h3>{{ repository.title }}</h3>
+            <p class="repository-card__description">{{ repository.description }}</p>
+
+            <ul
+              class="repository-chips"
+              [attr.aria-label]="repository.title + ' technologies and themes'"
+            >
+              @for (technology of repository.technologies; track technology) {
+                <li>{{ technology }}</li>
+              }
+            </ul>
+
+            <div class="repository-actions">
+              <a
+                class="repository-action repository-action--external"
+                [href]="repository.githubUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                [attr.data-testid]="'repository-' + repository.slug + '-link'"
+              >
+                <span>Open Repository</span>
+                <app-path-icon name="github-external" [path]="iconPaths['github-external']" aria-hidden="true"></app-path-icon>
+              </a>
+              <a
+                class="repository-action repository-action--internal"
+                [routerLink]="repository.systemPath"
+              >
+                <span>Read System</span>
+                <app-path-icon name="github-arrow" [path]="iconPaths['github-arrow']" aria-hidden="true"></app-path-icon>
+              </a>
+            </div>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="github-supporting layout-section" aria-labelledby="github-supporting-title">
+    <div class="github-section-frame layout-container--wide">
+      <header class="github-section-heading github-section-heading--compact">
+        <div>
+          <p class="github-section-kicker">
+            <app-path-icon name="github-code" [path]="iconPaths['github-code']" aria-hidden="true"></app-path-icon>
+            <span>Other public work</span>
+          </p>
+          <h2 id="github-supporting-title">Smaller surfaces, specific purposes.</h2>
+        </div>
+        <p>Public source for the portfolio and a focused continuity-system laboratory.</p>
+      </header>
+
+      <div class="supporting-repository-grid">
+        @for (repository of supportingRepositories; track repository.githubUrl) {
+          <article class="supporting-repository-card" [attr.data-repository]="repository.slug">
+            <div class="supporting-repository-card__topline">
+              <span>{{ repository.category }}</span>
+              <app-path-icon
+                [name]="repository.slug === 'serhat-soruklu-web' ? 'github-web' : 'github-code'" [path]="iconPaths[repository.slug === 'serhat-soruklu-web' ? 'github-web' : 'github-code']"
+                aria-hidden="true"
+              ></app-path-icon>
+            </div>
+            <p class="repository-path">SerhatSoruklu / {{ repository.slug }}</p>
+            <h3>{{ repository.title }}</h3>
+            <p class="repository-card__description">{{ repository.description }}</p>
+            <ul
+              class="repository-chips"
+              [attr.aria-label]="repository.title + ' technologies and themes'"
+            >
+              @for (technology of repository.technologies; track technology) {
+                <li>{{ technology }}</li>
+              }
+            </ul>
+            <a
+              class="repository-action repository-action--external"
+              [href]="repository.githubUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.data-testid]="'repository-' + repository.slug + '-link'"
+            >
+              <span>Open Repository</span>
+              <app-path-icon name="github-external" [path]="iconPaths['github-external']" aria-hidden="true"></app-path-icon>
+            </a>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="github-private layout-section"
+    aria-labelledby="github-private-title"
+    data-testid="coupyn-private-section"
+  >
+    <div class="github-section-frame layout-container--wide">
+      <article class="private-production-card">
+        <div class="private-production-card__icon">
+          <app-path-icon name="github-private" [path]="iconPaths['github-private']" aria-hidden="true"></app-path-icon>
+        </div>
+        <div class="private-production-card__copy">
+          <p class="github-section-kicker">Private production system</p>
+          <h2 id="github-private-title">Coupyn production code remains private.</h2>
+          <p>
+            Coupyn is a live commercial platform. Its production repository remains private because
+            it contains proprietary implementation details, operational infrastructure, and
+            security-sensitive system behaviour. Public architecture pages document the system
+            without exposing production code.
+          </p>
+        </div>
+        <div class="private-production-card__actions">
+          <a class="repository-action repository-action--internal" routerLink="/systems/coupyn">
+            <span>Explore Coupyn Architecture</span>
+            <app-path-icon name="github-arrow" [path]="iconPaths['github-arrow']" aria-hidden="true"></app-path-icon>
+          </a>
+          <a
+            class="repository-action repository-action--external"
+            [href]="coupynUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>Open Coupyn</span>
+            <app-path-icon name="github-external" [path]="iconPaths['github-external']" aria-hidden="true"></app-path-icon>
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="github-profile-cta layout-section" aria-labelledby="github-profile-cta-title">
+    <div class="github-section-frame layout-container--wide">
+      <div class="profile-cta-card">
+        <app-path-icon
+          class="profile-cta-card__icon"
+          name="github-mark" [path]="iconPaths['github-mark']"
+          aria-hidden="true"
+        ></app-path-icon>
+        <div class="profile-cta-card__copy">
+          <p class="github-section-kicker">Full public record</p>
+          <h2 id="github-profile-cta-title">Follow the repositories, not a scoreboard.</h2>
+          <p>
+            The source, specifications, and commit history are available directly on my GitHub
+            profile.
+          </p>
+        </div>
+        <a
+          class="github-button github-button--primary"
+          [href]="profileUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-testid="github-profile-footer-link"
+        >
+          <span>View GitHub Profile</span>
+          <app-path-icon
+            class="github-button__arrow"
+            name="github-external" [path]="iconPaths['github-external']"
+            aria-hidden="true"
+          ></app-path-icon>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

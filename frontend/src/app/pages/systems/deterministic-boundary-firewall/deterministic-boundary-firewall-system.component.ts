@@ -27,7 +27,7 @@ import { HEADER_NAV_ITEMS } from '../../../layout/site-header/header-icons';
   styleUrls: ['../research-system-page.css', './deterministic-boundary-firewall-system.component.css']
 })
 export class DeterministicBoundaryFirewallSystemComponent {
-  readonly githubUrl = 'https://github.com/SerhatSoruklu/deterministic-boundary-firewall';
+  readonly githubPath = '/github';
   readonly githubIconPath = HEADER_NAV_ITEMS.find((item) => item.path === '/github')?.iconPath ?? '';
   readonly topNavigation = inject(TopNavigationService);
 

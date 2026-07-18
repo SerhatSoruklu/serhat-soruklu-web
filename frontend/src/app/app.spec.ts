@@ -15,6 +15,7 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
+    expect((fixture.nativeElement as HTMLElement).querySelectorAll('main')).toHaveLength(1);
   });
 
   it('tracks home and detail atmosphere route state', async () => {
@@ -38,10 +39,31 @@ describe('App', () => {
     expect(app.isHomeRoute()).toBe(false);
     expect(app.usesDetailAtmosphere()).toBe(false);
     expect(app.usesSystemsAtmosphere()).toBe(true);
+    expect(app.usesContactAtmosphere()).toBe(false);
 
     await router.navigateByUrl('/systems/continuity-identity-model');
     fixture.detectChanges();
     expect(app.usesDetailAtmosphere()).toBe(true);
     expect(app.usesSystemsAtmosphere()).toBe(false);
+    expect(app.usesContactAtmosphere()).toBe(false);
+
+    await router.navigateByUrl('/contact');
+    fixture.detectChanges();
+    expect(app.usesDetailAtmosphere()).toBe(false);
+    expect(app.usesSystemsAtmosphere()).toBe(false);
+    expect(app.usesContactAtmosphere()).toBe(true);
+    expect(app.usesOrderAtmosphere()).toBe(false);
+    expect(app.usesVelariAtmosphere()).toBe(false);
+
+    await router.navigateByUrl('/soruklu-order?from=test#the-order');
+    fixture.detectChanges();
+    expect(app.usesContactAtmosphere()).toBe(false);
+    expect(app.usesOrderAtmosphere()).toBe(true);
+    expect(app.usesVelariAtmosphere()).toBe(false);
+
+    await router.navigateByUrl('/velari?from=test#velari-framework');
+    fixture.detectChanges();
+    expect(app.usesOrderAtmosphere()).toBe(false);
+    expect(app.usesVelariAtmosphere()).toBe(true);
   });
 });

@@ -21,3 +21,27 @@
   font-display: swap;
   src: url("/assets/fonts/space-mono-latin-700.woff2") format("woff2");
 }
+
+@font-face {
+  font-family: "Coupyn Logo Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/open-sans-latin-700.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Coupyn Logo Pacifico";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/pacifico-coupyn-com.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "ChatPDM Logo Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/fonts/inter-latin-600.woff2") format("woff2");
+}

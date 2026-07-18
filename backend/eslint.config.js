@@ -15,6 +15,7 @@ module.exports = [
         __dirname: 'readonly',
         __filename: 'readonly',
         exports: 'writable',
+        fetch: 'readonly',
         global: 'readonly',
         module: 'writable',
         setImmediate: 'readonly',

@@ -74,6 +74,7 @@ web_modules/
 **/.env.*
 backend/.env
 backend/.env.production
+!**/.env.example
 
 # Angular cache
 .angular/
@@ -162,3 +163,6 @@ frontend/test-results/
 frontend/playwright-report/
 frontend/blob-report/
 frontend/.playwright/
+
+# Lighthouse may derive a Windows-style profile path when run inside WSL.
+*lighthouse.*/

@@ -1,6 +1,234 @@
-<section class="page-placeholder" aria-labelledby="writing-title">
-  <div class="page-placeholder__inner">
-    <p class="page-placeholder__eyebrow">WRITING</p>
-    <h1 id="writing-title">Writing</h1>
-  </div>
-</section>
+<div class="writing-page">
+  <section class="writing-hero layout-section" aria-labelledby="writing-title">
+    <div class="writing-hero__inner layout-container--wide">
+      <div class="writing-hero__copy">
+        <p class="writing-eyebrow">
+          <span>Writing</span>
+          <span aria-hidden="true">/</span>
+          <span>Field notes</span>
+        </p>
+        <h1 id="writing-title">Notes from building systems that have to stay standing.</h1>
+        <p class="writing-hero__summary">
+          I write when the work leaves something worth explaining: a failure mode, an operating constraint,
+          or a decision I would make differently next time.
+        </p>
+        <ul class="writing-hero__topics" aria-label="Writing themes">
+          <li>Architecture</li>
+          <li>Infrastructure</li>
+          <li>Product trust</li>
+          <li>Building alone</li>
+        </ul>
+      </div>
+
+      <aside class="writing-manifesto" aria-labelledby="writing-manifesto-title">
+        <p class="writing-manifesto__label">Notebook rule</p>
+        <p id="writing-manifesto-title" class="writing-manifesto__statement">
+          I don’t publish to keep a cadence. I publish when the work produces a useful note.
+        </p>
+        <p class="writing-manifesto__status">Selected essays · Technical notes · Operating principles</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="writing-featured layout-section" aria-labelledby="featured-writing-title">
+    <div class="writing-section-frame layout-container--wide">
+      <header class="writing-section-heading writing-section-heading--featured">
+        <div>
+          <p class="writing-section-kicker">
+            <mat-icon svgIcon="writing-featured" aria-hidden="true"></mat-icon>
+            <span>Featured essay</span>
+          </p>
+          <h2 id="featured-writing-title">One piece to start with.</h2>
+        </div>
+        <p>Infrastructure decisions are product decisions once real traffic arrives.</p>
+      </header>
+
+      <a
+        class="featured-article"
+        [href]="featuredArticle.url"
+        target="_blank"
+        rel="noopener noreferrer"
+        [attr.aria-label]="'Read ' + featuredArticle.title + ' on ' + featuredArticle.source + ' (opens in a new tab)'"
+      >
+        <article class="featured-article__inner">
+          <div class="featured-article__main">
+            <div class="article-meta article-meta--featured">
+              <span>{{ featuredArticle.topic }}</span>
+              <span>{{ featuredArticle.source }}</span>
+              <time [attr.datetime]="featuredArticle.publishedIso">{{ featuredArticle.publishedLabel }}</time>
+              <span>{{ featuredArticle.readTime }}</span>
+            </div>
+
+            <div class="featured-article__content">
+              <span class="featured-article__index" aria-hidden="true">{{ featuredArticle.index }}</span>
+              <h3>{{ featuredArticle.title }}</h3>
+              <p>{{ featuredArticle.description }}</p>
+            </div>
+
+            <span class="article-read-link">
+              Read the essay
+              <span class="article-read-link__arrow" aria-hidden="true">↗</span>
+            </span>
+          </div>
+
+          <blockquote class="featured-article__margin-note">
+            <span>From the piece</span>
+            <p>“Every byte transferred and every millisecond waited must have a reason to exist.”</p>
+          </blockquote>
+        </article>
+      </a>
+
+      <a
+        class="community-thread"
+        [href]="communityThread.url"
+        target="_blank"
+        rel="noopener noreferrer"
+        [attr.aria-label]="'Read the community discussion on ' + communityThread.community + ' (opens in a new tab)'"
+      >
+        <article class="community-thread__inner">
+          <div class="community-thread__marker">
+            <span>Community review</span>
+            <span class="community-thread__community">
+              <svg class="community-thread__reddit-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path [attr.d]="redditIconPath"></path>
+              </svg>
+              <strong>{{ communityThread.community }}</strong>
+            </span>
+          </div>
+
+          <div class="community-thread__content">
+            <div class="article-meta">
+              <time [attr.datetime]="communityThread.publishedIso">{{ communityThread.publishedLabel }}</time>
+              <span>{{ communityThread.scoreLabel }}</span>
+              <span>{{ communityThread.commentsLabel }}</span>
+            </div>
+            <h3>{{ communityThread.title }}</h3>
+            <p>{{ communityThread.description }}</p>
+          </div>
+
+          <span class="community-thread__link">
+            Read the thread
+            <span class="community-thread__arrow" aria-hidden="true">↗</span>
+          </span>
+        </article>
+      </a>
+    </div>
+  </section>
+
+  <section class="writing-library layout-section" aria-labelledby="writing-library-title">
+    <div class="writing-section-frame layout-container--wide">
+      <header class="writing-section-heading">
+        <div>
+          <p class="writing-section-kicker">
+            <mat-icon svgIcon="writing-selected" aria-hidden="true"></mat-icon>
+            <span>Selected writing</span>
+          </p>
+          <h2 id="writing-library-title">Field notes, not a content feed.</h2>
+        </div>
+        <p>A small set of pieces drawn from systems I have built, operated, broken, and repaired.</p>
+      </header>
+
+      <div class="writing-filter-shell">
+        <div class="writing-filters" role="group" aria-label="Filter writing by topic">
+          @for (topic of topics; track topic) {
+            <button
+              class="writing-filter"
+              [class.writing-filter--active]="activeTopic() === topic"
+              type="button"
+              [attr.aria-pressed]="activeTopic() === topic"
+              (click)="selectTopic(topic)"
+            >
+              {{ topic }}
+            </button>
+          }
+        </div>
+        <p class="writing-filter-count" aria-live="polite">{{ filteredArticles().length }} selected notes</p>
+      </div>
+
+      <ul class="writing-grid">
+        @for (article of filteredArticles(); track article.url) {
+          <li>
+            <a
+              class="writing-card"
+              [href]="article.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="'Read ' + article.title + ' on ' + article.source + ' (opens in a new tab)'"
+            >
+              <article>
+                <div class="writing-card__topline">
+                  <span class="writing-card__index" aria-hidden="true">{{ article.index }}</span>
+                  <span class="writing-card__topic">{{ article.topic }}</span>
+                  <span class="writing-card__source">{{ article.source }}</span>
+                </div>
+
+                <h3>{{ article.title }}</h3>
+                <p class="writing-card__description">{{ article.description }}</p>
+
+                <div class="writing-card__footer">
+                  <div class="article-meta">
+                    <time [attr.datetime]="article.publishedIso">{{ article.publishedLabel }}</time>
+                    <span>{{ article.readTime }}</span>
+                  </div>
+                  <span class="writing-card__arrow" aria-hidden="true">↗</span>
+                </div>
+              </article>
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="writing-archive layout-section" aria-labelledby="writing-archive-title">
+    <div class="writing-section-frame layout-container--wide">
+      <header class="writing-section-heading writing-section-heading--archive">
+        <div>
+          <p class="writing-section-kicker">
+            <mat-icon svgIcon="writing-archive" aria-hidden="true"></mat-icon>
+            <span>Archive</span>
+          </p>
+          <h2 id="writing-archive-title">Earlier notes.</h2>
+        </div>
+        <div class="writing-platforms" aria-label="Writing profiles">
+          <a href="https://medium.com/@coupyn" target="_blank" rel="noopener noreferrer">Medium <span aria-hidden="true">↗</span></a>
+          <a href="https://systemsbyserhat.hashnode.dev" target="_blank" rel="noopener noreferrer">Hashnode <span aria-hidden="true">↗</span></a>
+        </div>
+      </header>
+
+      <ul class="archive-list">
+        @for (article of archiveArticles; track article.url) {
+          <li>
+            <a
+              class="archive-row"
+              [href]="article.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="'Read ' + article.title + ' on ' + article.source + ' (opens in a new tab)'"
+            >
+              <time [attr.datetime]="article.publishedIso">{{ article.publishedLabel }}</time>
+              <span class="archive-row__title">{{ article.title }}</span>
+              <span class="archive-row__topic">{{ article.topic }}</span>
+              <span class="archive-row__time">{{ article.readTime }}</span>
+              <span class="archive-row__arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+        }
+      </ul>
+
+      <aside class="writing-editorial-note" aria-labelledby="writing-editorial-note-title">
+        <div>
+          <p class="writing-section-kicker">Editorial note</p>
+          <h2 id="writing-editorial-note-title">The notebook grows when the work earns a note.</h2>
+        </div>
+        <div>
+          <p>
+            These pieces are snapshots of systems in motion. When an implementation changes, the dated note stays
+            honest about what I believed and operated at the time.
+          </p>
+          <a routerLink="/systems">See the systems behind the writing <span aria-hidden="true">→</span></a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</div>

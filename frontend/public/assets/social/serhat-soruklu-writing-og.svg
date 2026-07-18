@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
-  <title id="title">Writing</title>
-  <desc id="desc">Open Graph artwork for Serhat Soruklu writing page.</desc>
+  <title id="title">Systems Architecture Writing</title>
+  <desc id="desc">Open Graph artwork for Serhat Soruklu's systems notebook.</desc>
   <rect width="1200" height="630" fill="#07090d"/>
   <rect x="72" y="72" width="1056" height="486" rx="28" fill="#10141c" stroke="#252b36" stroke-width="3"/>
   <path d="M112 184h976" stroke="#252b36" stroke-width="2"/>
@@ -8,10 +8,10 @@
   <circle cx="126" cy="126" r="8" fill="#d6a84f"/>
   <circle cx="160" cy="126" r="8" fill="#f0d58c"/>
   <circle cx="194" cy="126" r="8" fill="#a8b0bd"/>
-  <text x="116" y="296" fill="#f5f7fa" font-family="Arial, Helvetica, sans-serif" font-size="84" font-weight="700" letter-spacing="0">Writing</text>
+  <text x="116" y="296" fill="#f5f7fa" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="700" letter-spacing="0">Systems Notebook</text>
   <text fill="#a8b0bd" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="400" letter-spacing="0">
-    <tspan x="120" y="356">Notes on software, systems, architecture,</tspan>
-    <tspan x="120" y="396">execution, and long-term thinking.</tspan>
+    <tspan x="120" y="356">Field notes on architecture, infrastructure,</tspan>
+    <tspan x="120" y="396">product trust, and long-horizon software.</tspan>
   </text>
   <path d="M120 432h226" stroke="#d6a84f" stroke-width="6" stroke-linecap="round"/>
   <text x="120" y="516" fill="#f0d58c" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="600" letter-spacing="0">serhatsoruklu.com/writing</text>

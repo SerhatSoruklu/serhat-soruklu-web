@@ -3,9 +3,7 @@ import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
-import { pageSeoMetadata, seoConfig } from './seo.config';
-
-type RobotsDirective = 'index, follow' | 'noindex, nofollow' | 'noindex, follow';
+import { pageSeoMetadata, RobotsDirective, seoConfig, StructuredDataProfile } from './seo.config';
 
 export interface RouteSeoMetadata {
   label: string;
@@ -13,6 +11,12 @@ export interface RouteSeoMetadata {
   description: string;
   path: string;
   ogImage?: string;
+  ogImageAlt?: string;
+  ogImageHeight?: number;
+  ogImageType?: string;
+  ogImageWidth?: number;
+  robots?: RobotsDirective;
+  structuredData?: StructuredDataProfile;
 }
 
 interface SeoMetadata {
@@ -20,11 +24,15 @@ interface SeoMetadata {
   description?: string;
   canonicalUrl?: string;
   ogImage?: string;
+  ogImageAlt?: string;
+  ogImageHeight?: number;
+  ogImageType?: string;
+  ogImageWidth?: number;
   robots?: RobotsDirective;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SeoService {
   private readonly jsonLdScriptId = 'page-json-ld';
@@ -86,17 +94,25 @@ export class SeoService {
     this.meta.updateTag({ property: 'og:locale', content: seoConfig.defaultLocale });
 
     if (metadata.canonicalUrl) {
-      this.meta.updateTag({ property: 'og:url', content: this.toAbsoluteUrl(metadata.canonicalUrl) });
+      this.meta.updateTag({
+        property: 'og:url',
+        content: this.toAbsoluteUrl(metadata.canonicalUrl),
+      });
     }
 
     const ogImage = metadata.ogImage ?? seoConfig.defaultOgImage;
     this.meta.updateTag({ property: 'og:image', content: this.toAbsoluteUrl(ogImage) });
+    this.setOptionalMetaTag('property', 'og:image:type', metadata.ogImageType);
+    this.setOptionalMetaTag('property', 'og:image:width', metadata.ogImageWidth);
+    this.setOptionalMetaTag('property', 'og:image:height', metadata.ogImageHeight);
+    this.setOptionalMetaTag('property', 'og:image:alt', metadata.ogImageAlt);
   }
 
   setTwitterCardTags(metadata: SeoMetadata): void {
     const twitterImage = metadata.ogImage ?? seoConfig.defaultOgImage;
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     this.meta.updateTag({ name: 'twitter:image', content: this.toAbsoluteUrl(twitterImage) });
+    this.setOptionalMetaTag('name', 'twitter:image:alt', metadata.ogImageAlt);
 
     if (seoConfig.twitterHandle) {
       this.meta.updateTag({ name: 'twitter:site', content: seoConfig.twitterHandle });
@@ -136,7 +152,7 @@ export class SeoService {
       title: seoConfig.defaultTitle,
       description: seoConfig.defaultDescription,
       path: '/',
-      ogImage: seoConfig.defaultOgImage
+      ogImage: seoConfig.defaultOgImage,
     };
 
     this.setMetadata({
@@ -144,13 +160,34 @@ export class SeoService {
       description: routeSeo.description,
       canonicalUrl: routeSeo.path,
       ogImage: routeSeo.ogImage ?? seoConfig.defaultOgImage,
-      robots: 'index, follow'
+      ogImageAlt: routeSeo.ogImageAlt,
+      ogImageHeight: routeSeo.ogImageHeight,
+      ogImageType: routeSeo.ogImageType,
+      ogImageWidth: routeSeo.ogImageWidth,
+      robots: routeSeo.robots ?? 'index, follow',
     });
+
+    if (routeSeo.structuredData === 'none') {
+      this.removeJsonLd();
+      return;
+    }
+
+    if (routeSeo.structuredData === 'soruklu-order') {
+      this.setJsonLd(this.createSorukluOrderStructuredData(routeSeo));
+      return;
+    }
+
+    if (routeSeo.structuredData === 'velari') {
+      this.setJsonLd(this.createVelariStructuredData(routeSeo));
+      return;
+    }
+
     this.setJsonLd(this.createBreadcrumbStructuredData(routeSeo));
   }
 
   private canUseDocumentHead(): boolean {
-    const supportedPlatform = isPlatformBrowser(this.platformId) || isPlatformServer(this.platformId);
+    const supportedPlatform =
+      isPlatformBrowser(this.platformId) || isPlatformServer(this.platformId);
     return supportedPlatform && !!this.document?.head;
   }
 
@@ -175,10 +212,12 @@ export class SeoService {
     }
 
     const metadata = value as RouteSeoMetadata;
-    return typeof metadata.label === 'string'
-      && typeof metadata.title === 'string'
-      && typeof metadata.description === 'string'
-      && typeof metadata.path === 'string';
+    return (
+      typeof metadata.label === 'string' &&
+      typeof metadata.title === 'string' &&
+      typeof metadata.description === 'string' &&
+      typeof metadata.path === 'string'
+    );
   }
 
   private createBreadcrumbStructuredData(routeSeo: RouteSeoMetadata): object {
@@ -192,16 +231,25 @@ export class SeoService {
         '@type': 'ListItem',
         position: 1,
         name: pageSeoMetadata.home.label,
-        item: this.toAbsoluteUrl(pageSeoMetadata.home.path)
-      }
+        item: this.toAbsoluteUrl(pageSeoMetadata.home.path),
+      },
     ];
+
+    if (routeSeo.path.startsWith(`${pageSeoMetadata.systems.path}/`)) {
+      items.push({
+        '@type': 'ListItem',
+        position: 2,
+        name: pageSeoMetadata.systems.label,
+        item: this.toAbsoluteUrl(pageSeoMetadata.systems.path),
+      });
+    }
 
     if (routeSeo.path !== pageSeoMetadata.home.path) {
       items.push({
         '@type': 'ListItem',
-        position: 2,
+        position: items.length + 1,
         name: routeSeo.label,
-        item: this.toAbsoluteUrl(routeSeo.path)
+        item: this.toAbsoluteUrl(routeSeo.path),
       });
     }
 
@@ -209,41 +257,303 @@ export class SeoService {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       '@id': `${this.toAbsoluteUrl(routeSeo.path)}#breadcrumb`,
-      itemListElement: items
+      itemListElement: items,
     };
-
-    if (routeSeo.path !== pageSeoMetadata.home.path) {
-      return breadcrumb;
-    }
 
     const breadcrumbNode = {
       '@type': breadcrumb['@type'],
       '@id': breadcrumb['@id'],
-      itemListElement: breadcrumb.itemListElement
+      itemListElement: breadcrumb.itemListElement,
     };
 
     return {
       '@context': 'https://schema.org',
       '@graph': [
         breadcrumbNode,
+        this.createWebsiteStructuredData(),
+        this.createPersonStructuredData(),
+      ],
+    };
+  }
+
+  private createWebsiteStructuredData(): object {
+    const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
+
+    return {
+      '@type': 'WebSite',
+      '@id': `${homeUrl}#website`,
+      name: seoConfig.siteName,
+      alternateName: ['SerhatSoruklu.com', 'Serhat Soruklu Systems Architect'],
+      url: homeUrl,
+      description: pageSeoMetadata.home.description,
+      inLanguage: 'en-GB',
+      publisher: {
+        '@id': `${homeUrl}#person`,
+      },
+    };
+  }
+
+  private createPersonStructuredData(): object {
+    const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
+
+    return {
+      '@type': 'Person',
+      '@id': `${homeUrl}#person`,
+      name: seoConfig.authorName,
+      url: homeUrl,
+      image: this.toAbsoluteUrl(seoConfig.defaultPersonImage),
+      jobTitle: 'Founder, Systems Architect, Full-Stack Engineer',
+      description:
+        'Founder and systems architect focused on software engineering, digital infrastructure, scalable platforms, and long-term systems.',
+      knowsAbout: [
+        'Systems architecture',
+        'Software engineering',
+        'Full-stack development',
+        'Angular',
+        'Node.js',
+        'MongoDB',
+        'Digital infrastructure',
+        'Scalable platforms',
+        'SEO architecture',
+        'Trust systems',
+      ],
+      sameAs: ['https://github.com/SerhatSoruklu'],
+    };
+  }
+
+  private createSorukluOrderStructuredData(routeSeo: RouteSeoMetadata): object {
+    const routeUrl = this.toAbsoluteUrl(routeSeo.path);
+    const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
+    const personId = `${homeUrl}#person`;
+    const websiteId = `${homeUrl}#website`;
+    const orderId = `${routeUrl}#order`;
+    const webpageId = `${routeUrl}#webpage`;
+    const socialImageUrl = this.toAbsoluteUrl(routeSeo.ogImage ?? seoConfig.defaultOgImage);
+    const emblemUrl = this.toAbsoluteUrl(
+      '/assets/brand/soruklu-order/the-soruklu-order-emblem.png',
+    );
+
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
         {
-          '@type': 'Person',
-          '@id': `${this.toAbsoluteUrl(pageSeoMetadata.home.path)}#person`,
-          name: seoConfig.authorName,
-          url: this.toAbsoluteUrl(pageSeoMetadata.home.path),
-          image: this.toAbsoluteUrl(seoConfig.defaultPersonImage)
+          '@type': 'BreadcrumbList',
+          '@id': `${routeUrl}#breadcrumb`,
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: pageSeoMetadata.home.label,
+              item: homeUrl,
+            },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: routeSeo.label,
+              item: routeUrl,
+            },
+          ],
         },
         {
-          '@type': 'WebSite',
-          '@id': `${this.toAbsoluteUrl(pageSeoMetadata.home.path)}#website`,
-          name: seoConfig.siteName,
-          url: this.toAbsoluteUrl(pageSeoMetadata.home.path),
-          publisher: {
-            '@id': `${this.toAbsoluteUrl(pageSeoMetadata.home.path)}#person`
-          }
-        }
-      ]
+          '@type': 'WebPage',
+          '@id': webpageId,
+          name: routeSeo.title,
+          description: routeSeo.description,
+          url: routeUrl,
+          isPartOf: {
+            '@id': websiteId,
+          },
+          mainEntity: {
+            '@id': orderId,
+          },
+          about: {
+            '@id': orderId,
+          },
+          author: {
+            '@id': personId,
+          },
+          creator: {
+            '@id': personId,
+          },
+          primaryImageOfPage: {
+            '@type': 'ImageObject',
+            url: socialImageUrl,
+            width: 1200,
+            height: 630,
+          },
+          inLanguage: 'en-GB',
+        },
+        {
+          '@type': 'Organization',
+          '@id': orderId,
+          name: 'The Soruklu Order',
+          alternateName: 'Soruklu Order',
+          url: routeUrl,
+          description: routeSeo.description,
+          foundingDate: '2024',
+          slogan: 'May the Light guide us.',
+          founder: {
+            '@id': personId,
+          },
+          sameAs: ['https://x.com/sorukluorder'],
+          logo: {
+            '@type': 'ImageObject',
+            url: emblemUrl,
+            width: 400,
+            height: 400,
+          },
+          image: emblemUrl,
+        },
+        this.createWebsiteStructuredData(),
+        this.createPersonStructuredData(),
+      ],
     };
+  }
+
+  private createVelariStructuredData(routeSeo: RouteSeoMetadata): object {
+    const routeUrl = this.toAbsoluteUrl(routeSeo.path);
+    const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
+    const personId = `${homeUrl}#person`;
+    const websiteId = `${homeUrl}#website`;
+    const webpageId = `${routeUrl}#webpage`;
+    const velariId = `${routeUrl}#velari`;
+    const breadcrumbId = `${routeUrl}#breadcrumb`;
+    const socialImageUrl = this.toAbsoluteUrl(routeSeo.ogImage ?? seoConfig.defaultOgImage);
+    const emblemUrl = this.toAbsoluteUrl('/assets/brand/velari/velari-faith-emblem.jpg');
+    const textNodes = [
+      {
+        '@type': 'CreativeWork',
+        '@id': `${routeUrl}#book-of-light`,
+        name: 'The Book of Light',
+        description:
+          'Developing work on awareness, wisdom, discipline and the life-giving symbol of Light.',
+        creativeWorkStatus: 'Developing work',
+        isPartOf: {
+          '@id': velariId,
+        },
+        inLanguage: 'en-GB',
+      },
+      {
+        '@type': 'CreativeWork',
+        '@id': `${routeUrl}#book-of-shadow`,
+        name: 'The Book of Shadow',
+        description:
+          'Developing work on confusion, fear, error and the parts of the self that must be understood rather than denied.',
+        creativeWorkStatus: 'Developing work',
+        isPartOf: {
+          '@id': velariId,
+        },
+        inLanguage: 'en-GB',
+      },
+      {
+        '@type': 'CreativeWork',
+        '@id': `${routeUrl}#book-of-the-path`,
+        name: 'The Book of the Path',
+        description:
+          'Developing practical guidance for living, choosing, repairing and continuing.',
+        creativeWorkStatus: 'Developing work',
+        isPartOf: {
+          '@id': velariId,
+        },
+        inLanguage: 'en-GB',
+      },
+    ];
+
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'BreadcrumbList',
+          '@id': breadcrumbId,
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: pageSeoMetadata.home.label,
+              item: homeUrl,
+            },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: routeSeo.label,
+              item: routeUrl,
+            },
+          ],
+        },
+        {
+          '@type': 'WebPage',
+          '@id': webpageId,
+          name: routeSeo.title,
+          description: routeSeo.description,
+          url: routeUrl,
+          isPartOf: {
+            '@id': websiteId,
+          },
+          mainEntity: {
+            '@id': velariId,
+          },
+          about: {
+            '@id': velariId,
+          },
+          creator: {
+            '@id': personId,
+          },
+          primaryImageOfPage: {
+            '@type': 'ImageObject',
+            url: socialImageUrl,
+            width: 1200,
+            height: 630,
+            caption: routeSeo.ogImageAlt,
+          },
+          breadcrumb: {
+            '@id': breadcrumbId,
+          },
+          inLanguage: 'en-GB',
+        },
+        {
+          '@type': 'CreativeWork',
+          '@id': velariId,
+          name: 'Velari',
+          alternateName: ['Velari Faith', 'The Velarian Path'],
+          description: routeSeo.description,
+          url: routeUrl,
+          creator: {
+            '@id': personId,
+          },
+          image: emblemUrl,
+          sameAs: ['https://www.instagram.com/velarifaith/'],
+          slogan: 'May the Light guide us.',
+          inLanguage: 'en-GB',
+          mainEntityOfPage: {
+            '@id': webpageId,
+          },
+          hasPart: textNodes.map((node) => ({ '@id': node['@id'] })),
+        },
+        ...textNodes,
+        this.createWebsiteStructuredData(),
+        this.createPersonStructuredData(),
+      ],
+    };
+  }
+
+  private setOptionalMetaTag(
+    attribute: 'name' | 'property',
+    key: string,
+    value: number | string | undefined,
+  ): void {
+    if (value === undefined) {
+      this.meta.removeTag(`${attribute}='${key}'`);
+      return;
+    }
+
+    const content = String(value);
+
+    if (attribute === 'name') {
+      this.meta.updateTag({ name: key, content });
+      return;
+    }
+
+    this.meta.updateTag({ property: key, content });
   }
 
   private toAbsoluteUrl(url: string): string {

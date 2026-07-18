@@ -1,6 +1,269 @@
-<section class="page-placeholder" aria-labelledby="chatpdm-system-title">
-  <div class="page-placeholder__inner">
-    <p class="page-placeholder__eyebrow">SYSTEMS / CHATPDM</p>
-    <h1 id="chatpdm-system-title">ChatPDM</h1>
-  </div>
-</section>
+<div class="chatpdm-page">
+  <section class="chatpdm-hero layout-section" aria-labelledby="chatpdm-title">
+    <div class="chatpdm-hero__background" aria-hidden="true">
+      <div class="chatpdm-hero__grid"></div>
+      <div class="chatpdm-hero__boundary"></div>
+    </div>
+
+    <div class="chatpdm-hero__inner layout-container--wide">
+      <div class="chatpdm-hero__copy">
+        <p class="chatpdm-eyebrow">SYSTEM / CONSTRAINT GOVERNANCE</p>
+
+        <a
+          class="chatpdm-logo-link"
+          [href]="chatpdmUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open ChatPDM in a new tab"
+        >
+          <span class="chatpdm-logo" aria-hidden="true">
+            <span class="chatpdm-logo__mark">
+              <span class="chatpdm-logo__circle"></span>
+              <span class="chatpdm-logo__line"></span>
+              <span class="chatpdm-logo__square"></span>
+            </span>
+            <span class="chatpdm-logo__wordmark">
+              <span>Chat</span><strong>PDM</strong>
+            </span>
+          </span>
+        </a>
+
+        <p class="chatpdm-hero__subtitle">Pre-Deterministic Model</p>
+        <h1 id="chatpdm-title">Deterministic interpretation inside defined constraints.</h1>
+
+        <p class="chatpdm-hero__statement">
+          ChatPDM is an experimental concept-resolution and constraint-governance system for producing structured, consistent, bounded answers instead of drifting into unsupported generative expansion.
+        </p>
+
+        <div class="chatpdm-hero__actions" aria-label="ChatPDM page actions">
+          <a class="site-button site-button-primary" [href]="chatpdmUrl" target="_blank" rel="noopener noreferrer">
+            Open ChatPDM
+          </a>
+          <a class="site-button site-button-secondary" routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">
+            Back to Systems
+          </a>
+        </div>
+      </div>
+
+      <aside class="chatpdm-console" aria-label="ChatPDM deterministic runtime summary">
+        <div class="chatpdm-console__header">
+          <span>Constraint Runtime</span>
+          <strong>Resolve / Refuse</strong>
+        </div>
+
+        <div class="chatpdm-console__logic">
+          <div>
+            <small>Domain State</small>
+            <strong>Bounded</strong>
+          </div>
+          <div>
+            <small>Meaning</small>
+            <strong>Preserved</strong>
+          </div>
+          <div>
+            <small>Unsupported Input</small>
+            <strong>Refused</strong>
+          </div>
+        </div>
+
+        <ol class="chatpdm-console__trace" aria-label="Runtime trace">
+          <li>
+            <span>Input received</span>
+            <small>language object</small>
+          </li>
+          <li>
+            <span>Constraints checked</span>
+            <small>domain contract</small>
+          </li>
+          <li class="chatpdm-console__trace-decision">
+            <span>Resolve or refuse</span>
+            <small>safe terminal state</small>
+          </li>
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <section class="chatpdm-section layout-section" aria-labelledby="chatpdm-core-title">
+    <div class="chatpdm-section-frame chatpdm-section-frame--split layout-container--wide">
+      <div class="chatpdm-section-heading chatpdm-section-heading--sticky">
+        <p class="chatpdm-eyebrow">CORE IDEA</p>
+        <h2 id="chatpdm-core-title">It Does Not Try To Answer Everything</h2>
+        <p>
+          ChatPDM resolves meaning only where a domain, concept, and constraint surface are defined. If the request is unsupported, ambiguous, or outside scope, the correct behavior is refusal, not improvisation.
+        </p>
+      </div>
+
+      <div class="chatpdm-core-grid">
+        <article class="chatpdm-core-card">
+          <mat-icon svgIcon="chatpdm-core-boundary" aria-hidden="true"></mat-icon>
+          <h3>Defined domains first</h3>
+          <p>The system starts from explicit conceptual boundaries rather than open-ended completion.</p>
+        </article>
+        <article class="chatpdm-core-card">
+          <mat-icon svgIcon="chatpdm-core-resolution" aria-hidden="true"></mat-icon>
+          <h3>Resolve only when supported</h3>
+          <p>Answers are valid only when the input can be interpreted within the available constraint model.</p>
+        </article>
+        <article class="chatpdm-core-card">
+          <mat-icon svgIcon="chatpdm-core-refusal" aria-hidden="true"></mat-icon>
+          <h3>Refuse unsupported meaning</h3>
+          <p>Ambiguous or out-of-scope input should terminate cleanly instead of expanding beyond the system contract.</p>
+        </article>
+        <article class="chatpdm-core-card">
+          <mat-icon svgIcon="chatpdm-core-consistency" aria-hidden="true"></mat-icon>
+          <h3>Consistency over expansion</h3>
+          <p>The goal is stable interpretation, not maximum surface area or fluent speculation.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="chatpdm-section layout-section" aria-labelledby="chatpdm-principles-title">
+    <div class="chatpdm-section-frame layout-container--wide">
+      <div class="chatpdm-section-heading">
+        <p class="chatpdm-eyebrow">SYSTEM PRINCIPLES</p>
+        <h2 id="chatpdm-principles-title">Language Governance With Hard Edges</h2>
+      </div>
+
+      <div class="chatpdm-principles-grid">
+        <article class="chatpdm-principle-card">
+          <mat-icon svgIcon="chatpdm-principle-deterministic" aria-hidden="true"></mat-icon>
+          <h3>Deterministic resolution</h3>
+          <p>Comparable input should move through comparable checks and land in a predictable state.</p>
+        </article>
+        <article class="chatpdm-principle-card">
+          <mat-icon svgIcon="chatpdm-principle-bound" aria-hidden="true"></mat-icon>
+          <h3>Bounded domains</h3>
+          <p>Each domain carries its own scope, assumptions, and allowed interpretation surface.</p>
+        </article>
+        <article class="chatpdm-principle-card">
+          <mat-icon svgIcon="chatpdm-principle-refusal" aria-hidden="true"></mat-icon>
+          <h3>Refusal integrity</h3>
+          <p>Refusal is a valid system outcome when meaning cannot be supported safely.</p>
+        </article>
+        <article class="chatpdm-principle-card">
+          <mat-icon svgIcon="chatpdm-principle-meaning" aria-hidden="true"></mat-icon>
+          <h3>Meaning preservation</h3>
+          <p>The system should preserve the intended concept rather than rewrite it into something convenient.</p>
+        </article>
+        <article class="chatpdm-principle-card">
+          <mat-icon svgIcon="chatpdm-principle-drift" aria-hidden="true"></mat-icon>
+          <h3>Drift prevention</h3>
+          <p>Constraint checks exist to stop semantic movement before it becomes confident but unsupported output.</p>
+        </article>
+        <article class="chatpdm-principle-card">
+          <mat-icon svgIcon="chatpdm-principle-failure" aria-hidden="true"></mat-icon>
+          <h3>Safe failure</h3>
+          <p>When the model cannot resolve cleanly, it should fail in a visible, bounded, auditable way.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="chatpdm-section layout-section" aria-labelledby="chatpdm-runtime-title">
+    <div class="chatpdm-section-frame layout-container--wide">
+      <div class="chatpdm-section-heading">
+        <p class="chatpdm-eyebrow">RUNTIME MODEL</p>
+        <h2 id="chatpdm-runtime-title">From Input To Terminal State</h2>
+        <p>
+          The runtime is easier to evaluate when each stage has a narrow job: receive language, parse structure, classify domain, validate constraints, then resolve or refuse.
+        </p>
+      </div>
+
+      <ol class="chatpdm-runtime" aria-label="ChatPDM runtime flow">
+        <li>
+          <mat-icon svgIcon="chatpdm-runtime-input" aria-hidden="true"></mat-icon>
+          <span>Input</span>
+          <small>receive language object</small>
+        </li>
+        <li>
+          <mat-icon svgIcon="chatpdm-runtime-parse" aria-hidden="true"></mat-icon>
+          <span>Parse</span>
+          <small>extract structure</small>
+        </li>
+        <li>
+          <mat-icon svgIcon="chatpdm-runtime-classify" aria-hidden="true"></mat-icon>
+          <span>Classify</span>
+          <small>match domain surface</small>
+        </li>
+        <li>
+          <mat-icon svgIcon="chatpdm-runtime-validate" aria-hidden="true"></mat-icon>
+          <span>Validate</span>
+          <small>check constraints</small>
+        </li>
+        <li class="chatpdm-runtime__resolve">
+          <mat-icon svgIcon="chatpdm-runtime-resolve" aria-hidden="true"></mat-icon>
+          <span>Resolve</span>
+          <small>supported meaning</small>
+        </li>
+        <li class="chatpdm-runtime__refuse">
+          <mat-icon svgIcon="chatpdm-runtime-refuse" aria-hidden="true"></mat-icon>
+          <span>Refuse</span>
+          <small>safe boundary exit</small>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="chatpdm-section layout-section" aria-labelledby="chatpdm-why-title">
+    <div class="chatpdm-section-frame chatpdm-section-frame--why layout-container--wide">
+      <div class="chatpdm-section-heading">
+        <p class="chatpdm-eyebrow">WHY IT EXISTS</p>
+        <h2 id="chatpdm-why-title">Stability Matters When Language Becomes Infrastructure</h2>
+        <p>
+          Generative systems can drift: terms stretch, assumptions leak, and confident text can cross boundaries that were never meant to move. ChatPDM explores how structured language systems can remain stable by constraining interpretation before output is treated as valid.
+        </p>
+      </div>
+
+      <div class="chatpdm-why-grid">
+        <article class="chatpdm-why-card">
+          <mat-icon svgIcon="chatpdm-exists-drift" aria-hidden="true"></mat-icon>
+          <h3>Generative drift is real</h3>
+          <p>Fluent systems can move from defined meaning into adjacent claims without making that movement obvious.</p>
+        </article>
+        <article class="chatpdm-why-card">
+          <mat-icon svgIcon="chatpdm-exists-constraint" aria-hidden="true"></mat-icon>
+          <h3>Constraints are architectural</h3>
+          <p>The point is not to replace intelligence, but to make interpretation accountable to a defined structure.</p>
+        </article>
+        <article class="chatpdm-why-card">
+          <mat-icon svgIcon="chatpdm-exists-language" aria-hidden="true"></mat-icon>
+          <h3>Language needs boundaries</h3>
+          <p>Stable systems need clear terminal states for what they know, what they can infer, and what they must refuse.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="chatpdm-founder layout-section" aria-labelledby="chatpdm-founder-title">
+    <div class="chatpdm-founder__inner layout-container--wide">
+      <div>
+        <p class="chatpdm-eyebrow">FOUNDER-BUILT</p>
+        <h2 id="chatpdm-founder-title">Designed And Developed By Serhat Soruklu</h2>
+      </div>
+      <p>
+        ChatPDM sits inside a wider systems architecture practice: defining boundaries, reducing ambiguity, and treating safe refusal as part of system quality. It is built as a serious experimental project for language-level governance, not as another chatbot surface.
+      </p>
+    </div>
+  </section>
+
+  <section class="chatpdm-cta layout-section" aria-labelledby="chatpdm-next-title">
+    <div class="chatpdm-cta__inner layout-container--wide">
+      <div class="chatpdm-section-heading chatpdm-section-heading--compact">
+        <p class="chatpdm-eyebrow">NEXT</p>
+        <h2 id="chatpdm-next-title">Return To The Systems Map</h2>
+        <p>Compare ChatPDM with the production and research systems that surround it.</p>
+      </div>
+
+      <div class="chatpdm-cta__actions">
+        <a class="site-button site-button-primary" routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">
+          Back to Systems
+        </a>
+        <a class="site-button site-button-secondary" [href]="chatpdmUrl" target="_blank" rel="noopener noreferrer">
+          Open ChatPDM
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

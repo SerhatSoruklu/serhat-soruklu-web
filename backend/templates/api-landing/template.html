@@ -322,8 +322,8 @@
                 <p class="value">Serhat Soruklu systems interface</p>
               </div>
             </div>
-            <h1 id="api-title">Backend API is online.</h1>
-            <p class="lead">This service powers production-focused endpoints for Serhat Soruklu projects. Public browser traffic can verify service status here; application routes live under <code>/api</code>.</p>
+            <h1 id="api-title">Backend API process is online.</h1>
+            <p class="lead">This service powers production-focused endpoints for Serhat Soruklu projects. Liveness and dependency readiness are reported separately; application routes live under <code>/api</code>.</p>
           </div>
 
           <div class="status-grid" aria-label="API status">
@@ -331,7 +331,7 @@
               <span class="status-orbit status-orbit--green" aria-hidden="true"></span>
               <div>
                 <p class="label">Service status</p>
-                <p class="value">Listening and ready for requests.</p>
+                <p class="value">Listening. Check readiness before routing production traffic.</p>
               </div>
             </div>
             <div class="status-item">
@@ -339,6 +339,13 @@
               <div>
                 <p class="label">Health check</p>
                 <p class="value"><a href="/api/health">/api/health</a></p>
+              </div>
+            </div>
+            <div class="status-item">
+              <span class="status-orbit status-orbit--red" aria-hidden="true"></span>
+              <div>
+                <p class="label">Readiness</p>
+                <p class="value"><a href="/api/ready">/api/ready</a></p>
               </div>
             </div>
             <div class="status-item">

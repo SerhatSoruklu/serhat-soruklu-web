@@ -71,6 +71,58 @@ a:hover,
   color: #d6a84f;
 }
 
+html,
+body,
+.site-main,
+textarea,
+[role="listbox"],
+.cdk-overlay-pane {
+  scrollbar-color: rgba(160, 135, 87, 0.72) rgba(7, 9, 13, 0.52);
+  scrollbar-width: thin;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.site-main::-webkit-scrollbar,
+textarea::-webkit-scrollbar,
+[role="listbox"]::-webkit-scrollbar,
+.cdk-overlay-pane::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+.site-main::-webkit-scrollbar-track,
+textarea::-webkit-scrollbar-track,
+[role="listbox"]::-webkit-scrollbar-track,
+.cdk-overlay-pane::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: rgba(7, 9, 13, 0.52);
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+.site-main::-webkit-scrollbar-thumb,
+textarea::-webkit-scrollbar-thumb,
+[role="listbox"]::-webkit-scrollbar-thumb,
+.cdk-overlay-pane::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: rgba(160, 135, 87, 0.72);
+  background-clip: content-box;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+.site-main::-webkit-scrollbar-thumb:hover,
+textarea::-webkit-scrollbar-thumb:hover,
+[role="listbox"]::-webkit-scrollbar-thumb:hover,
+.cdk-overlay-pane::-webkit-scrollbar-thumb:hover {
+  background: rgba(240, 213, 140, 0.74);
+  background-clip: content-box;
+}
+
 .theme-light .theme-background,
 .theme-light.theme-background {
   background: #ffffff;
@@ -119,6 +171,44 @@ a:hover,
 .theme-light .theme-link:hover,
 .theme-light.theme-link:hover {
   color: #e7c46f;
+}
+
+.theme-resolved-light,
+.theme-resolved-light body,
+.theme-resolved-light .site-main,
+.theme-resolved-light textarea,
+.theme-resolved-light [role="listbox"],
+.theme-resolved-light .cdk-overlay-pane {
+  scrollbar-color: rgba(184, 135, 47, 0.54) rgba(229, 224, 214, 0.68);
+}
+
+.theme-resolved-light::-webkit-scrollbar-track,
+.theme-resolved-light body::-webkit-scrollbar-track,
+.theme-resolved-light .site-main::-webkit-scrollbar-track,
+.theme-resolved-light textarea::-webkit-scrollbar-track,
+.theme-resolved-light [role="listbox"]::-webkit-scrollbar-track,
+.theme-resolved-light .cdk-overlay-pane::-webkit-scrollbar-track {
+  background: rgba(229, 224, 214, 0.68);
+}
+
+.theme-resolved-light::-webkit-scrollbar-thumb,
+.theme-resolved-light body::-webkit-scrollbar-thumb,
+.theme-resolved-light .site-main::-webkit-scrollbar-thumb,
+.theme-resolved-light textarea::-webkit-scrollbar-thumb,
+.theme-resolved-light [role="listbox"]::-webkit-scrollbar-thumb,
+.theme-resolved-light .cdk-overlay-pane::-webkit-scrollbar-thumb {
+  background: rgba(184, 135, 47, 0.54);
+  background-clip: content-box;
+}
+
+.theme-resolved-light::-webkit-scrollbar-thumb:hover,
+.theme-resolved-light body::-webkit-scrollbar-thumb:hover,
+.theme-resolved-light .site-main::-webkit-scrollbar-thumb:hover,
+.theme-resolved-light textarea::-webkit-scrollbar-thumb:hover,
+.theme-resolved-light [role="listbox"]::-webkit-scrollbar-thumb:hover,
+.theme-resolved-light .cdk-overlay-pane::-webkit-scrollbar-thumb:hover {
+  background: rgba(184, 135, 47, 0.74);
+  background-clip: content-box;
 }
 
 @media (prefers-color-scheme: light) {

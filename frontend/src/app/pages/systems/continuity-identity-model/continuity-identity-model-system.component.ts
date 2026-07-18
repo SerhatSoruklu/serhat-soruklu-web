@@ -25,7 +25,7 @@ import { HEADER_NAV_ITEMS } from '../../../layout/site-header/header-icons';
   styleUrls: ['../research-system-page.css', './continuity-identity-model-system.component.css']
 })
 export class ContinuityIdentityModelSystemComponent {
-  readonly githubUrl = 'https://github.com/SerhatSoruklu/continuity-identity-model';
+  readonly githubPath = '/github';
   readonly githubIconPath = HEADER_NAV_ITEMS.find((item) => item.path === '/github')?.iconPath ?? '';
   readonly topNavigation = inject(TopNavigationService);
 

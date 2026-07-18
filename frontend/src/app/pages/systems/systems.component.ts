@@ -38,7 +38,8 @@ interface SystemHubCard {
   primaryLabel: string;
   primaryPath: string;
   secondaryLabel: string;
-  secondaryPath: string;
+  secondaryPath?: string;
+  secondaryUrl?: string;
 }
 
 interface PrincipleTile {
@@ -132,8 +133,8 @@ export class SystemsComponent {
       chips: ['950k+ company pages', 'Angular / Node / MongoDB', 'SEO-scale directory'],
       primaryLabel: 'View Coupyn System',
       primaryPath: '/systems/coupyn',
-      secondaryLabel: 'View GitHub',
-      secondaryPath: '/github'
+      secondaryLabel: 'Open Coupyn',
+      secondaryUrl: 'https://coupyn.com'
     },
     {
       icon: 'systems-card-chatpdm',

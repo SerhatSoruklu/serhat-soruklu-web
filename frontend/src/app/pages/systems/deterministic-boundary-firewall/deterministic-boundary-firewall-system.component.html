@@ -17,7 +17,7 @@
         </ul>
 
         <div class="research-hero__actions" aria-label="DBF actions">
-          <a class="site-button site-button-primary" routerLink="/github" (click)="topNavigation.handleLinkClick('/github')">View GitHub</a>
+          <a class="site-button site-button-primary" [routerLink]="githubPath" (click)="topNavigation.handleLinkClick(githubPath)">View GitHub</a>
           <a class="site-button site-button-secondary" routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">Back to Systems</a>
         </div>
       </div>
@@ -211,7 +211,7 @@
         </div>
 
         <nav class="research-cta__nav" aria-label="DBF next paths">
-          <a class="research-cta-card" routerLink="/github" (click)="topNavigation.handleLinkClick('/github')">
+          <a class="research-cta-card" [routerLink]="githubPath" (click)="topNavigation.handleLinkClick(githubPath)">
             <span class="research-cta-card__copy">
               <span class="research-cta-card__title">
                 <svg class="research-cta-card__title-icon research-cta-card__title-icon--github" viewBox="0 0 24 24" aria-hidden="true" focusable="false">

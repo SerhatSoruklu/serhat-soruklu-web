@@ -111,13 +111,17 @@ test.describe('portrait dialog', () => {
         await page.setViewportSize({ width: viewport.width, height: viewport.height });
         await page.goto('/');
         await openPortraitDialog(page);
-        await page.waitForTimeout(360);
+        const expectedLight = themeState.resolved === 'light';
+        const expectedDarkOpacity = expectedLight ? '0' : '1';
+        const expectedLightOpacity = expectedLight ? '1' : '0';
+
+        await expect.poll(async () => (await getDialogState(page)).darkOpacity).toBe(expectedDarkOpacity);
+        await expect.poll(async () => (await getDialogState(page)).lightOpacity).toBe(expectedLightOpacity);
 
         const state = await getDialogState(page);
-        const expectedLight = themeState.resolved === 'light';
 
-        expect(state.darkOpacity).toBe(expectedLight ? '0' : '1');
-        expect(state.lightOpacity).toBe(expectedLight ? '1' : '0');
+        expect(state.darkOpacity).toBe(expectedDarkOpacity);
+        expect(state.lightOpacity).toBe(expectedLightOpacity);
         expect(state.darkSrc).toContain('/assets/portfolio-image/serhat-soruklu-full-portrait-');
         expect(state.lightSrc).toContain('/assets/portfolio-image/serhat-soruklu-full-portrait-light-');
         expect(state.objectFit).toBe('contain');

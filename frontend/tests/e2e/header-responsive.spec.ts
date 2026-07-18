@@ -16,10 +16,6 @@ async function expectNoHorizontalOverflow(page: Page): Promise<void> {
   expect(hasOverflow).toBe(false);
 }
 
-async function getHeadingLeft(page: Page, headingName: string): Promise<number> {
-  return page.getByRole('heading', { name: headingName }).evaluate((element) => element.getBoundingClientRect().left);
-}
-
 async function getPrimaryHeadingLeft(page: Page): Promise<number> {
   return page.locator('h1').evaluate((element) => element.getBoundingClientRect().left);
 }
@@ -63,6 +59,21 @@ async function expectPanelBelowHeader(page: Page, panelTestId: string): Promise<
 }
 
 async function expectThemeMenuAnchoredToButton(page: Page): Promise<void> {
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const button = document.querySelector('[data-testid="mobile-theme-menu-button"]');
+        const menu = document.querySelector('[data-testid="mobile-theme-menu"]');
+
+        if (!button || !menu) {
+          return Number.NEGATIVE_INFINITY;
+        }
+
+        return menu.getBoundingClientRect().top - button.getBoundingClientRect().bottom;
+      }),
+    )
+    .toBeGreaterThanOrEqual(10);
+
   const geometry = await page.evaluate(() => {
     const button = document.querySelector('[data-testid="mobile-theme-menu-button"]');
     const menu = document.querySelector('[data-testid="mobile-theme-menu"]');
@@ -181,28 +192,28 @@ async function expectOnlyMobileNavItemActive(page: Page, expectedLabel: string |
   }
 }
 
-async function expectHeroStripeBehindFixedHeader(page: Page): Promise<void> {
+async function expectFirstVisualSectionBehindFixedHeader(page: Page): Promise<void> {
   const geometry = await page.evaluate(() => {
     const header = document.querySelector('[data-testid="mobile-header"]');
-    const stripe = document.querySelector('.page-stripe, .page-placeholder');
+    const firstVisualSection = document.querySelector('.page-stripe, .page-placeholder, .work-hero');
 
-    if (!header || !stripe) {
+    if (!header || !firstVisualSection) {
       return null;
     }
 
     const headerBox = header.getBoundingClientRect();
-    const stripeBox = stripe.getBoundingClientRect();
+    const firstVisualSectionBox = firstVisualSection.getBoundingClientRect();
 
     return {
       headerBottom: headerBox.bottom,
-      stripeTop: stripeBox.top,
-      stripeBottom: stripeBox.bottom
+      firstVisualSectionTop: firstVisualSectionBox.top,
+      firstVisualSectionBottom: firstVisualSectionBox.bottom
     };
   });
 
   expect(geometry).not.toBeNull();
-  expect(geometry!.stripeTop).toBeLessThan(geometry!.headerBottom);
-  expect(geometry!.stripeBottom).toBeGreaterThan(geometry!.headerBottom + 120);
+  expect(geometry!.firstVisualSectionTop).toBeLessThan(geometry!.headerBottom);
+  expect(geometry!.firstVisualSectionBottom).toBeGreaterThan(geometry!.headerBottom + 120);
 }
 
 async function sampleComputedColor(page: Page, selector: string): Promise<string[]> {
@@ -323,7 +334,9 @@ test.describe('responsive shell header', () => {
 
     await desktopHeader.getByRole('link', { name: 'Work' }).click();
     await expect(page).toHaveURL('/work');
-    await expect(page.getByRole('heading', { name: 'Work' })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Built End-to-End, Owned Completely', exact: true, level: 1 }),
+    ).toBeVisible();
     await expectNoHorizontalOverflow(page);
     expect(consoleMessages.some((message) => message.includes('NG0913'))).toBe(false);
     assertNoConsoleErrors();
@@ -403,8 +416,10 @@ test.describe('responsive shell header', () => {
     const homeLeft = await getPrimaryHeadingLeft(page);
 
     await page.goto('/work');
-    await expect(page.getByRole('heading', { name: 'Work' })).toBeVisible();
-    const workLeft = await getHeadingLeft(page, 'Work');
+    await expect(
+      page.getByRole('heading', { name: 'Built End-to-End, Owned Completely', exact: true, level: 1 }),
+    ).toBeVisible();
+    const workLeft = await getPrimaryHeadingLeft(page);
 
     expect(homeLeft).toBeGreaterThanOrEqual(20);
     expect(workLeft).toBeGreaterThanOrEqual(20);
@@ -526,7 +541,7 @@ test.describe('responsive shell header', () => {
 
       const mobileHeader = page.getByTestId('mobile-header');
       await expect(mobileHeader.getByRole('link', { name: 'Serhat Soruklu home' })).toBeVisible();
-      await expect(mobileHeader.getByText('Serhat Soruklu')).toBeVisible();
+      await expect(mobileHeader.locator('.mobile-brand__name')).toHaveText('Serhat Soruklu');
       await expect(mobileHeader.getByText('SYSTEMS ARCHITECT')).toBeVisible();
       await expect(mobileHeader.getByTestId('mobile-theme-menu-button')).toBeVisible();
       await expect(mobileHeader.getByTestId('mobile-menu-button')).toBeVisible();
@@ -568,7 +583,13 @@ test.describe('responsive shell header', () => {
       await mobileHeader.getByTestId('mobile-menu-button').click();
       await mobileNav.getByRole('link', { name: 'Work' }).click();
       await expect(page).toHaveURL('/work');
-      await expect(page.getByRole('heading', { name: 'Work' })).toBeVisible();
+      await expect(
+        page.getByRole('heading', {
+          name: 'Built End-to-End, Owned Completely',
+          exact: true,
+          level: 1,
+        }),
+      ).toBeVisible();
       await expect(mobileNav).toBeHidden();
       const focusInsideMobileNav = await mobileNav.evaluate((element) => element.contains(document.activeElement));
       expect(focusInsideMobileNav).toBe(false);
@@ -581,7 +602,7 @@ test.describe('responsive shell header', () => {
       await expect(page.locator('html')).toHaveClass(/theme-light/);
       await expectResolvedLogo(page, 'mobile', 'light');
       await expect(mobileHeader.getByRole('menu', { name: 'Theme options' })).toBeHidden();
-      await expectHeroStripeBehindFixedHeader(page);
+      await expectFirstVisualSectionBehindFixedHeader(page);
       await mobileHeader.getByTestId('mobile-theme-menu-button').click();
       await expect(mobileHeader.getByRole('menu', { name: 'Theme options' })).toBeVisible();
       await expectThemeMenuAnchoredToButton(page);

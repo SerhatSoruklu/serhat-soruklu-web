@@ -9,6 +9,7 @@ describe('PortraitDialogComponent', () => {
 
   beforeEach(async () => {
     closeCalled = false;
+    globalThis.localStorage.clear();
 
     await TestBed.configureTestingModule({
       imports: [PortraitDialogComponent],

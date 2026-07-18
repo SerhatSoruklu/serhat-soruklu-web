@@ -1,0 +1,2083 @@
+:host {
+  display: block;
+  background: #050914;
+  color: #f4efe4;
+}
+
+.velari-page {
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 76% 4%, rgba(231, 188, 91, 0.12), transparent 29%),
+    radial-gradient(ellipse at 18% 36%, rgba(70, 101, 151, 0.09), transparent 35%),
+    linear-gradient(180deg, #050914 0%, #07101c 43%, #060a13 76%, #050914 100%);
+}
+
+.velari-frame {
+  width: calc(100% - 40px);
+  max-width: 1360px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+blockquote {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: #f8f1e4;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 500;
+  text-wrap: balance;
+}
+
+.velari-eyebrow,
+.velari-action,
+.velari-facts,
+.velari-movement__top,
+.velari-principle-group__index,
+.velari-practice__phase,
+.velari-book-meta__status,
+.velari-book-meta__link,
+.velari-emblem figcaption {
+  font-family: 'Space Mono', 'IBM Plex Mono', 'JetBrains Mono', monospace;
+}
+
+.velari-eyebrow {
+  margin-bottom: 14px;
+  color: #ddb35b;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 1.55;
+  text-transform: uppercase;
+}
+
+.velari-hero {
+  position: relative;
+  border-bottom: 1px solid rgba(221, 179, 91, 0.15);
+}
+
+.velari-hero::before,
+.velari-hero::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  pointer-events: none;
+}
+
+.velari-hero::before {
+  background:
+    linear-gradient(rgba(221, 179, 91, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(221, 179, 91, 0.025) 1px, transparent 1px);
+  background-size: 74px 74px;
+  opacity: 0.52;
+  -webkit-mask-image: radial-gradient(ellipse at 76% 38%, #000, transparent 68%);
+  mask-image: radial-gradient(ellipse at 76% 38%, #000, transparent 68%);
+}
+
+.velari-hero::after {
+  background:
+    radial-gradient(circle at 12% 24%, rgba(240, 213, 140, 0.24) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 88% 17%, rgba(240, 213, 140, 0.2) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 64% 72%, rgba(168, 190, 221, 0.16) 0 1px, transparent 1.5px);
+  opacity: 0.58;
+}
+
+.velari-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 54px;
+  box-sizing: border-box;
+  padding-top: 126px;
+  padding-bottom: 74px;
+}
+
+.velari-hero__copy {
+  min-width: 0;
+}
+
+.velari-hero h1 {
+  margin-bottom: 18px;
+  font-size: clamp(68px, 19vw, 118px);
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+}
+
+.velari-hero__lead {
+  max-width: 680px;
+  margin-bottom: 22px;
+  color: #f1d792;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(23px, 5.5vw, 34px);
+  font-style: italic;
+  line-height: 1.38;
+}
+
+.velari-hero__definition {
+  max-width: 700px;
+  margin-bottom: 18px;
+  color: #d0d7e1;
+  font-size: clamp(17px, 2.4vw, 20px);
+  line-height: 1.72;
+  text-wrap: pretty;
+}
+
+.velari-hero__support {
+  margin-bottom: 0;
+  color: #9ca8b8;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.velari-hero__actions,
+.velari-closing__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.velari-action {
+  appearance: none;
+  display: inline-flex;
+  min-height: 48px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid rgba(221, 179, 91, 0.36);
+  border-radius: 3px;
+  padding: 12px 16px;
+  color: #f5efe4;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  line-height: 1.45;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.velari-action app-path-icon {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  font-size: 17px;
+  transition: transform 180ms ease;
+}
+
+.velari-action--primary {
+  border-color: #dbae51;
+  background: #dbae51;
+  color: #07101a;
+}
+
+.velari-action--secondary {
+  background: rgba(8, 14, 25, 0.76);
+}
+
+.velari-action--quiet {
+  border-color: rgba(161, 177, 198, 0.22);
+  background: transparent;
+  color: #b8c1ce;
+}
+
+.velari-action:hover {
+  border-color: #f0d58c;
+  transform: translateY(-2px);
+}
+
+.velari-action--primary:hover {
+  background: #f0d58c;
+  color: #07101a;
+}
+
+.velari-action--secondary:hover,
+.velari-action--quiet:hover {
+  color: #f0d58c;
+}
+
+.velari-action:hover .velari-action__arrow {
+  transform: translate(3px, -2px);
+}
+
+.velari-action:focus-visible {
+  outline: 2px solid #f0d58c;
+  outline-offset: 3px;
+}
+
+.velari-facts {
+  display: grid;
+  margin: 32px 0 0;
+  border-top: 1px solid rgba(221, 179, 91, 0.18);
+}
+
+.velari-facts > div {
+  display: grid;
+  grid-template-columns: minmax(126px, 0.8fr) minmax(0, 1.2fr);
+  gap: 18px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(221, 179, 91, 0.1);
+}
+
+.velari-facts dt,
+.velari-facts dd {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.velari-facts dt {
+  color: #79869a;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.velari-facts dd {
+  color: #e8e4dc;
+}
+
+.velari-emblem {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 26px;
+}
+
+.velari-emblem::before {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(227, 178, 67, 0.22),
+    rgba(227, 178, 67, 0.06) 42%,
+    transparent 70%
+  );
+  box-shadow: 0 0 90px rgba(214, 168, 79, 0.13);
+  content: '';
+}
+
+.velari-emblem__geometry,
+.velari-emblem__geometry span {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(221, 179, 91, 0.16);
+  border-radius: 50%;
+}
+
+.velari-emblem__geometry {
+  inset: 1px;
+}
+
+.velari-emblem__geometry::before,
+.velari-emblem__geometry::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: rgba(221, 179, 91, 0.18);
+  content: '';
+  transform: translate(-50%, -50%);
+}
+
+.velari-emblem__geometry::before {
+  width: 116%;
+  height: 1px;
+}
+
+.velari-emblem__geometry::after {
+  width: 1px;
+  height: 116%;
+}
+
+.velari-emblem__geometry span:nth-child(1) {
+  inset: 8%;
+}
+
+.velari-emblem__geometry span:nth-child(2) {
+  inset: 16%;
+  border-color: rgba(221, 179, 91, 0.1);
+}
+
+.velari-emblem__geometry span:nth-child(3) {
+  inset: 29%;
+  border-color: rgba(240, 213, 140, 0.12);
+}
+
+.velari-emblem__image {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  aspect-ratio: 1;
+  overflow: hidden;
+  place-items: center;
+  border: 1px solid rgba(221, 179, 91, 0.3);
+  border-radius: 50%;
+  padding: 10px;
+  background: rgba(3, 7, 14, 0.84);
+  box-shadow:
+    0 32px 90px rgba(0, 0, 0, 0.42),
+    inset 0 0 34px rgba(214, 168, 79, 0.08);
+}
+
+.velari-emblem__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.velari-emblem-principles {
+  position: absolute;
+  z-index: 3;
+  top: 26px;
+  right: 26px;
+  left: 26px;
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+
+.velari-emblem-principle {
+  position: absolute;
+  display: block;
+  appearance: none;
+  border: 1px solid rgba(221, 179, 91, 0.2);
+  border-radius: 2px;
+  padding: 4px 8px;
+  background: rgba(3, 7, 14, 0.84);
+  color: #b9a16b;
+  cursor: help;
+  font-family: 'Space Mono', 'IBM Plex Mono', 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.35;
+  margin: 0;
+  pointer-events: auto;
+  text-align: center;
+  text-transform: uppercase;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease,
+    text-shadow 180ms ease;
+}
+
+.velari-emblem-principle::before,
+.velari-emblem-principle::after {
+  position: absolute;
+  content: '';
+  transition:
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.velari-emblem-principle::before {
+  background: linear-gradient(90deg, rgba(221, 179, 91, 0.22), rgba(221, 179, 91, 0.68));
+}
+
+.velari-emblem-principle::after {
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(240, 213, 140, 0.68);
+  border-radius: 50%;
+  background: #8f6a2c;
+}
+
+.velari-emblem-principle--north {
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.velari-emblem-principle--north::before {
+  top: 100%;
+  left: 50%;
+  width: 1px;
+  height: 8px;
+  transform: translateX(-50%);
+}
+
+.velari-emblem-principle--north::after {
+  top: calc(100% + 7px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.velari-emblem-principle--east {
+  top: 50%;
+  right: -30px;
+  transform: translateY(-50%);
+}
+
+.velari-emblem-principle--east::before {
+  top: 50%;
+  right: 100%;
+  width: 30px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(221, 179, 91, 0.22), rgba(221, 179, 91, 0.68));
+}
+
+.velari-emblem-principle--east::after {
+  top: 50%;
+  right: calc(100% + 30px);
+  transform: translate(50%, -50%);
+}
+
+.velari-emblem-principle--south {
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.velari-emblem-principle--south::before {
+  bottom: 100%;
+  left: 50%;
+  width: 1px;
+  height: 8px;
+  transform: translateX(-50%);
+}
+
+.velari-emblem-principle--south::after {
+  bottom: calc(100% + 7px);
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+.velari-emblem-principle--west {
+  top: 50%;
+  left: -30px;
+  transform: translateY(-50%);
+}
+
+.velari-emblem-principle--west::before {
+  top: 50%;
+  left: 100%;
+  width: 30px;
+  height: 1px;
+}
+
+.velari-emblem-principle--west::after {
+  top: 50%;
+  left: calc(100% + 30px);
+  transform: translate(-50%, -50%);
+}
+
+.velari-emblem-principle:hover,
+.velari-emblem-principle:focus-visible {
+  border-color: rgba(240, 213, 140, 0.72);
+  outline: none;
+  background: rgba(10, 15, 24, 0.96);
+  color: #f0d58c;
+  text-shadow: 0 0 14px rgba(240, 213, 140, 0.4);
+}
+
+.velari-emblem-principle:hover::before,
+.velari-emblem-principle:focus-visible::before {
+  background-color: #f0d58c;
+}
+
+.velari-emblem-principle:hover::after,
+.velari-emblem-principle:focus-visible::after {
+  background: #f0d58c;
+  box-shadow: 0 0 11px rgba(240, 213, 140, 0.72);
+}
+
+.velari-emblem figcaption {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 20px;
+  color: #8f9aaa;
+  font-size: 8px;
+  letter-spacing: 0.11em;
+  line-height: 1.55;
+  text-transform: uppercase;
+}
+
+.velari-section {
+  position: relative;
+  padding: 82px 0;
+  border-bottom: 1px solid rgba(221, 179, 91, 0.1);
+}
+
+#velari-framework {
+  scroll-margin-top: 88px;
+}
+
+.velari-heading {
+  max-width: 880px;
+  margin-bottom: 38px;
+}
+
+.velari-heading h2,
+.velari-order-link h2,
+.velari-official h2,
+.velari-closing h2 {
+  margin-bottom: 0;
+  font-size: clamp(38px, 8vw, 68px);
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+}
+
+.velari-heading--split > p {
+  margin: 22px 0 0;
+  color: #aab4c2;
+  font-size: 15px;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.velari-prose {
+  display: grid;
+  gap: 20px;
+}
+
+.velari-prose p,
+.velari-order-link > div > p:last-child,
+.velari-official > div > p:last-child,
+.velari-closing__inner > div > p:last-child {
+  margin-bottom: 0;
+  color: #b8c1cd;
+  font-size: 15px;
+  line-height: 1.8;
+  text-wrap: pretty;
+}
+
+.velari-prose strong {
+  color: #f0d58c;
+}
+
+.velari-prose--lead p:first-child,
+.velari-stewardship__statement {
+  color: #ebe8e0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(22px, 3.5vw, 34px);
+  line-height: 1.5;
+}
+
+.velari-section--framework {
+  background:
+    radial-gradient(ellipse at 84% 48%, rgba(66, 100, 153, 0.08), transparent 34%),
+    rgba(6, 12, 22, 0.7);
+}
+
+.velari-framework__body {
+  display: grid;
+  gap: 38px;
+}
+
+.velari-quote {
+  position: relative;
+  align-self: start;
+  border: 1px solid rgba(221, 179, 91, 0.24);
+  padding: 28px;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(221, 179, 91, 0.1), transparent 38%),
+    rgba(8, 15, 26, 0.74);
+}
+
+.velari-quote app-path-icon {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 34px;
+  color: #e1b75d;
+}
+
+.velari-quote blockquote {
+  margin-bottom: 12px;
+  color: #f6e8c0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(28px, 5vw, 44px);
+  line-height: 1.15;
+}
+
+.velari-quote p {
+  margin-bottom: 0;
+  color: #8f9cad;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.velari-section--light {
+  background:
+    radial-gradient(circle at 24% 50%, rgba(221, 179, 91, 0.1), transparent 25%),
+    linear-gradient(115deg, rgba(8, 18, 32, 0.92), rgba(5, 10, 18, 0.75));
+}
+
+.velari-light-grid {
+  display: grid;
+  gap: 46px;
+  align-items: center;
+}
+
+.velari-light-symbol {
+  position: relative;
+  width: min(360px, 82vw);
+  aspect-ratio: 1;
+  margin: 0 auto;
+}
+
+.velari-light-symbol__core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(240, 213, 140, 0.8);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    #fff4c7 0 6%,
+    #e5b34e 22%,
+    rgba(214, 168, 79, 0.18) 50%,
+    transparent 70%
+  );
+  box-shadow: 0 0 56px rgba(214, 168, 79, 0.22);
+  transform: translate(-50%, -50%);
+}
+
+.velari-light-symbol__orbit {
+  position: absolute;
+  border: 1px solid rgba(221, 179, 91, 0.27);
+  border-radius: 50%;
+}
+
+.velari-light-symbol__orbit--one {
+  inset: 19%;
+}
+
+.velari-light-symbol__orbit--two {
+  inset: 3%;
+  border-color: rgba(136, 160, 195, 0.2);
+}
+
+.velari-light-symbol__ray {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent 49.8%, rgba(221, 179, 91, 0.18) 50%, transparent 50.2%),
+    linear-gradient(transparent 49.8%, rgba(221, 179, 91, 0.18) 50%, transparent 50.2%);
+  transform: rotate(45deg);
+}
+
+.velari-movements,
+.velari-principle-groups {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.velari-movements article {
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(221, 179, 91, 0.17);
+  padding: 26px;
+  background:
+    linear-gradient(145deg, rgba(221, 179, 91, 0.045), transparent 42%), rgba(7, 14, 25, 0.64);
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.velari-movements article:hover {
+  border-color: rgba(240, 213, 140, 0.5);
+  transform: translateY(-3px);
+}
+
+.velari-movement__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 42px;
+  color: #dcb25a;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+
+.velari-movement__top app-path-icon {
+  width: 27px;
+  height: 27px;
+}
+
+.velari-movements h3 {
+  margin-bottom: 14px;
+  font-size: 34px;
+  line-height: 1.1;
+}
+
+.velari-movements article > p {
+  min-height: 3.4em;
+  margin-bottom: 24px;
+  color: #b9c2cd;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.velari-movements ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.velari-movements ul li {
+  border: 1px solid rgba(161, 177, 198, 0.15);
+  border-radius: 999px;
+  padding: 6px 9px;
+  color: #8f9cad;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.velari-section--code {
+  background:
+    linear-gradient(rgba(132, 155, 189, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(132, 155, 189, 0.018) 1px, transparent 1px), #060c16;
+  background-size: 54px 54px;
+}
+
+.velari-principle-group {
+  border-top: 1px solid rgba(221, 179, 91, 0.25);
+  padding-top: 18px;
+}
+
+.velari-principle-group__index {
+  margin-bottom: 10px;
+  color: #748297;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+}
+
+.velari-principle-group > h3 {
+  margin-bottom: 24px;
+  font-size: 28px;
+}
+
+.velari-principle-list {
+  display: grid;
+}
+
+.velari-principle-list article {
+  display: grid;
+  grid-template-columns: minmax(84px, 0.45fr) minmax(0, 1.55fr);
+  gap: 15px;
+  padding: 17px 0;
+  border-top: 1px solid rgba(161, 177, 198, 0.1);
+}
+
+.velari-principle-list h4,
+.velari-principle-list p {
+  margin-bottom: 0;
+}
+
+.velari-principle-list h4 {
+  color: #f0d58c;
+  font-family: 'Sora', Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.velari-principle-list p {
+  color: #9ca8b8;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.velari-practice-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.velari-practice-grid article {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(221, 179, 91, 0.16);
+  padding: 26px;
+  background: rgba(7, 14, 25, 0.58);
+}
+
+.velari-practice-grid article::after {
+  position: absolute;
+  right: -46px;
+  bottom: -54px;
+  width: 150px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(221, 179, 91, 0.09);
+  border-radius: 50%;
+  content: '';
+}
+
+.velari-practice-grid app-path-icon {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 34px;
+  color: #dcb25a;
+}
+
+.velari-practice__phase {
+  margin-bottom: 10px;
+  color: #7f8ca0;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.velari-practice-grid h3 {
+  margin-bottom: 24px;
+  font-size: 29px;
+}
+
+.velari-practice-grid ul,
+.velari-commitments,
+.velari-boundaries {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.velari-practice-grid li,
+.velari-commitments li,
+.velari-boundaries li {
+  position: relative;
+  padding-left: 17px;
+  color: #9faab9;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.velari-practice-grid li::before,
+.velari-commitments li::before,
+.velari-boundaries li::before {
+  position: absolute;
+  top: 0.7em;
+  left: 0;
+  width: 6px;
+  height: 1px;
+  background: #dcb25a;
+  content: '';
+}
+
+.velari-section--choice {
+  background:
+    radial-gradient(ellipse at 78% 42%, rgba(221, 179, 91, 0.085), transparent 32%), #070e19;
+}
+
+.velari-choice {
+  display: grid;
+  gap: 40px;
+}
+
+.velari-heading__icon {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 26px;
+  color: #dcb25a;
+}
+
+.velari-choice__body {
+  display: grid;
+  gap: 30px;
+}
+
+.velari-safeguard {
+  border-left: 2px solid #dcb25a;
+  padding: 4px 0 4px 22px;
+}
+
+.velari-safeguard p {
+  margin-bottom: 12px;
+  color: #7f8ca0;
+  font-family: 'Space Mono', 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.velari-safeguard strong {
+  display: block;
+  color: #f0d58c;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.velari-many-paths__body {
+  display: grid;
+  gap: 38px;
+}
+
+.velari-commitments {
+  border-top: 1px solid rgba(221, 179, 91, 0.2);
+}
+
+.velari-commitments li {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 24px;
+  border-bottom: 1px solid rgba(161, 177, 198, 0.1);
+  color: #c2c9d2;
+  font-size: 13px;
+}
+
+.velari-commitments li::before {
+  top: 2em;
+}
+
+.velari-section--texts {
+  background:
+    radial-gradient(ellipse at 16% 21%, rgba(65, 97, 144, 0.12), transparent 34%),
+    linear-gradient(180deg, #050b15 0%, #060b13 58%, #050a12 100%);
+}
+
+.velari-text-grid {
+  display: grid;
+  gap: 58px 18px;
+}
+
+.velari-book-entry {
+  min-width: 0;
+}
+
+.velari-book-stage {
+  position: relative;
+  min-height: 470px;
+  display: grid;
+  place-items: center;
+  perspective: 1300px;
+  isolation: isolate;
+}
+
+.velari-book {
+  position: relative;
+  z-index: 2;
+  width: min(84%, 322px);
+  aspect-ratio: 0.69;
+  transform-style: preserve-3d;
+  transition:
+    transform 260ms cubic-bezier(0.2, 0.75, 0.25, 1),
+    filter 260ms ease;
+  filter: drop-shadow(0 26px 24px rgba(0, 0, 0, 0.43));
+}
+
+.velari-book-entry:nth-child(1) .velari-book {
+  transform: rotateX(2deg) rotateY(-5deg) rotateZ(-0.7deg);
+}
+
+.velari-book-entry:nth-child(2) .velari-book {
+  transform: rotateX(2deg) rotateY(1deg) rotateZ(0.35deg);
+}
+
+.velari-book-entry:nth-child(3) .velari-book {
+  transform: rotateX(2deg) rotateY(5deg) rotateZ(0.7deg);
+}
+
+.velari-book-entry:hover .velari-book {
+  transform: translateY(-9px) rotateX(1deg) rotateY(0deg) rotateZ(0deg) scale(1.012);
+  filter: drop-shadow(0 34px 28px rgba(0, 0, 0, 0.52));
+}
+
+.velari-book__cover {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border: 1px solid rgba(219, 174, 84, 0.62);
+  border-radius: 5px 11px 11px 5px;
+  background:
+    radial-gradient(circle at 49% 37%, rgba(201, 151, 61, 0.08), transparent 29%),
+    repeating-linear-gradient(
+      112deg,
+      rgba(255, 255, 255, 0.018) 0,
+      rgba(255, 255, 255, 0.018) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    linear-gradient(145deg, #101720 0%, #05080d 46%, #090d13 100%);
+  box-shadow:
+    inset 7px 0 12px rgba(0, 0, 0, 0.8),
+    inset 0 0 42px rgba(0, 0, 0, 0.62),
+    inset 0 0 0 4px rgba(4, 7, 11, 0.82),
+    0 1px 0 rgba(242, 213, 150, 0.22);
+  transform: translateZ(8px);
+}
+
+.velari-book__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.28;
+  background:
+    repeating-radial-gradient(
+      ellipse at 13% 22%,
+      transparent 0,
+      transparent 2px,
+      rgba(210, 177, 112, 0.035) 3px,
+      transparent 4px
+    ),
+    repeating-linear-gradient(
+      23deg,
+      transparent 0,
+      transparent 7px,
+      rgba(255, 255, 255, 0.025) 8px,
+      transparent 9px
+    );
+  pointer-events: none;
+}
+
+.velari-book__frame {
+  position: absolute;
+  inset: 15px 14px 15px 19px;
+  border: 1px solid rgba(213, 168, 79, 0.7);
+  border-radius: 2px 6px 6px 2px;
+  box-shadow:
+    inset 0 0 0 4px rgba(4, 7, 11, 0.88),
+    inset 0 0 0 5px rgba(167, 121, 47, 0.4);
+}
+
+.velari-book__frame::before,
+.velari-book__frame::after {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  height: 1px;
+  content: '';
+  background: linear-gradient(90deg, transparent, rgba(218, 172, 80, 0.68), transparent);
+}
+
+.velari-book__frame::before {
+  top: 48px;
+}
+
+.velari-book__frame::after {
+  bottom: 52px;
+}
+
+.velari-book__spine {
+  position: absolute;
+  z-index: -1;
+  top: 5px;
+  bottom: 5px;
+  left: -11px;
+  width: 23px;
+  border: 1px solid rgba(188, 139, 54, 0.48);
+  border-radius: 8px 2px 2px 8px;
+  background: linear-gradient(
+    90deg,
+    #020305 0%,
+    #17120d 28%,
+    #49341c 48%,
+    #120e0b 68%,
+    #030507 100%
+  );
+  box-shadow:
+    inset 2px 0 4px rgba(210, 166, 79, 0.18),
+    -5px 2px 8px rgba(0, 0, 0, 0.7);
+  transform: translateZ(-2px);
+}
+
+.velari-book__spine::after {
+  position: absolute;
+  inset: 20px 5px;
+  border-right: 1px solid rgba(220, 177, 89, 0.35);
+  border-left: 1px solid rgba(220, 177, 89, 0.22);
+  content: '';
+}
+
+.velari-book__pages {
+  position: absolute;
+  z-index: -2;
+  top: 8px;
+  right: -10px;
+  bottom: -8px;
+  left: 7px;
+  border-radius: 1px 10px 11px 3px;
+  background: repeating-linear-gradient(0deg, #c9b88e 0, #c9b88e 1px, #e0d2ad 1px, #e0d2ad 3px);
+  box-shadow:
+    9px 7px 14px rgba(0, 0, 0, 0.48),
+    inset -3px -3px 7px rgba(83, 57, 20, 0.35);
+  transform: translateZ(-8px);
+}
+
+.velari-book__brand {
+  position: absolute;
+  top: 19px;
+  right: 12px;
+  left: 12px;
+  margin: 0;
+  color: #d1a555;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(20px, 2.5vw, 28px);
+  letter-spacing: 0.28em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 1px 12px rgba(213, 168, 79, 0.18);
+}
+
+.velari-book-art {
+  position: absolute;
+  top: 17%;
+  left: 12%;
+  width: 76%;
+  height: 50%;
+  overflow: visible;
+  color: #d6a84f;
+  filter: drop-shadow(0 0 7px rgba(214, 168, 79, 0.18));
+}
+
+.velari-book-art__fine-lines {
+  fill: none;
+  stroke: rgba(199, 154, 69, 0.48);
+  stroke-width: 1;
+}
+
+.velari-book-art__rays {
+  fill: none;
+  stroke: rgba(225, 187, 106, 0.82);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.velari-book-art__halo {
+  fill: rgba(195, 144, 54, 0.16);
+  stroke: #d1a451;
+  stroke-width: 2;
+}
+
+.velari-book-art__core {
+  fill: rgba(225, 187, 106, 0.9);
+  stroke: #f0d58c;
+  stroke-width: 1;
+}
+
+.velari-book-art__stars {
+  fill: #dfb769;
+}
+
+.velari-book-art__corona {
+  fill: rgba(207, 160, 69, 0.45);
+  stroke: rgba(236, 204, 136, 0.76);
+  stroke-width: 0.8;
+}
+
+.velari-book-art__eclipse {
+  fill: #030509;
+  stroke: rgba(236, 204, 136, 0.78);
+  stroke-width: 1.5;
+}
+
+.velari-book-art__mountains {
+  fill: none;
+  stroke: rgba(174, 135, 65, 0.65);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.velari-book-art__path-shadow,
+.velari-book-art__path-line {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.velari-book-art__path-shadow {
+  stroke: rgba(112, 75, 25, 0.88);
+  stroke-width: 12;
+}
+
+.velari-book-art__path-line {
+  stroke: #dcb25a;
+  stroke-width: 5;
+  filter: drop-shadow(0 0 4px rgba(240, 213, 140, 0.68));
+}
+
+.velari-book-art__destination {
+  fill: #f0d58c;
+  stroke: #d6a84f;
+  stroke-width: 2;
+}
+
+.velari-book-art__destination-ray {
+  fill: none;
+  stroke: rgba(240, 213, 140, 0.86);
+  stroke-width: 1.5;
+}
+
+.velari-book__title {
+  position: absolute;
+  right: 16px;
+  bottom: 59px;
+  left: 16px;
+  text-align: center;
+}
+
+.velari-book__title span {
+  display: block;
+  margin-bottom: 7px;
+  color: #a87d37;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.velari-book__title h3 {
+  margin: 0;
+  color: #d9ae5e;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(21px, 2.3vw, 28px);
+  font-weight: 500;
+  line-height: 1.12;
+  text-shadow: 0 1px 9px rgba(214, 168, 79, 0.16);
+}
+
+.velari-book__keywords {
+  position: absolute;
+  right: 14px;
+  bottom: 21px;
+  left: 14px;
+  margin: 0;
+  color: #a88343;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 7px;
+  letter-spacing: 0.07em;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.velari-book-stage__shadow {
+  position: absolute;
+  z-index: 1;
+  bottom: 3px;
+  left: 50%;
+  width: min(82%, 340px);
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.58);
+  filter: blur(13px);
+  transform: translateX(-50%) scaleX(0.92);
+  transition:
+    opacity 260ms ease,
+    transform 260ms ease;
+}
+
+.velari-book-entry:hover .velari-book-stage__shadow {
+  opacity: 0.78;
+  transform: translateX(-50%) scaleX(0.8);
+}
+
+.velari-book-meta {
+  width: min(100%, 350px);
+  margin: 20px auto 0;
+}
+
+.velari-book-meta__status {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 13px;
+  color: #d1a451;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.velari-book-meta__status app-path-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.velari-book-meta > p:not(.velari-book-meta__status) {
+  min-height: 5.2em;
+  margin-bottom: 18px;
+  color: #9faab9;
+  font-size: 13px;
+  line-height: 1.72;
+}
+
+.velari-book-meta__link {
+  width: fit-content;
+  min-height: 44px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border-bottom: 1px solid rgba(214, 168, 79, 0.48);
+  padding: 7px 0;
+  color: #e0bb6d;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.velari-book-meta__link app-path-icon {
+  width: 17px;
+  height: 17px;
+}
+
+.velari-book-meta__link app-path-icon:last-child {
+  width: 15px;
+  height: 15px;
+  transition: transform 180ms ease;
+}
+
+.velari-book-meta__link:hover {
+  border-color: #f0d58c;
+  color: #f0d58c;
+}
+
+.velari-book-meta__link:hover app-path-icon:last-child {
+  transform: translate(2px, -2px);
+}
+
+.velari-book-meta__link:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid #f0d58c;
+  outline-offset: 5px;
+}
+
+@media (max-width: 767px) {
+  .velari-book-entry:nth-child(1) .velari-book {
+    transform: rotateX(1deg) rotateY(-2deg) rotateZ(-0.35deg);
+  }
+
+  .velari-book-entry:nth-child(2) .velari-book {
+    transform: rotateX(1deg) rotateY(0deg) rotateZ(0.2deg);
+  }
+
+  .velari-book-entry:nth-child(3) .velari-book {
+    transform: rotateX(1deg) rotateY(2deg) rotateZ(0.35deg);
+  }
+}
+
+.velari-stewardship {
+  display: grid;
+  gap: 38px;
+}
+
+.velari-stewardship__intro > app-path-icon {
+  width: 38px;
+  height: 38px;
+  margin-bottom: 30px;
+  color: #dcb25a;
+}
+
+.velari-stewardship__statement {
+  margin-bottom: 34px;
+}
+
+.velari-boundaries {
+  border-top: 1px solid rgba(221, 179, 91, 0.2);
+}
+
+.velari-boundaries li {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-left: 24px;
+  border-bottom: 1px solid rgba(161, 177, 198, 0.1);
+  font-size: 13px;
+}
+
+.velari-boundaries li::before {
+  top: 1.95em;
+}
+
+.velari-section--order {
+  background:
+    radial-gradient(circle at 12% 50%, rgba(221, 179, 91, 0.08), transparent 26%),
+    rgba(8, 13, 22, 0.82);
+}
+
+.velari-order-link {
+  display: grid;
+  gap: 28px;
+  align-items: center;
+}
+
+.velari-order-link > app-path-icon {
+  width: 42px;
+  height: 42px;
+  color: #dcb25a;
+}
+
+.velari-order-link h2,
+.velari-official h2 {
+  margin-bottom: 22px;
+  font-size: clamp(34px, 6vw, 56px);
+}
+
+.velari-order-link .velari-action {
+  justify-self: start;
+}
+
+.velari-official {
+  display: grid;
+  gap: 28px;
+  align-items: center;
+}
+
+.velari-official__mark {
+  display: grid;
+  width: 64px;
+  height: 64px;
+  place-items: center;
+  border: 1px solid rgba(221, 179, 91, 0.26);
+  border-radius: 50%;
+  color: #e1b75d;
+  background: rgba(221, 179, 91, 0.05);
+}
+
+.velari-official__mark app-path-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.velari-official .velari-action {
+  justify-self: start;
+}
+
+.velari-section--future {
+  border-bottom-color: transparent;
+  background:
+    radial-gradient(
+      ellipse 680px 300px at 18% 100%,
+      rgba(221, 179, 91, 0.1),
+      transparent 72%
+    ),
+    linear-gradient(180deg, #07101c 0%, #070d17 100%);
+}
+
+.velari-future {
+  display: grid;
+  gap: 28px;
+}
+
+.velari-future > app-path-icon {
+  width: 44px;
+  height: 44px;
+  color: #dcb25a;
+}
+
+.velari-closing {
+  position: relative;
+  padding: 94px 0 118px;
+  background:
+    radial-gradient(
+      ellipse 680px 300px at 18% 0%,
+      rgba(221, 179, 91, 0.1),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 600px 300px at 18% 48%,
+      rgba(221, 179, 91, 0.14),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 580px 290px at 18% 100%,
+      rgba(221, 179, 91, 0.095),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 640px 260px at 52% 100%,
+      rgba(70, 101, 151, 0.035),
+      transparent 74%
+    ),
+    linear-gradient(180deg, #070d17 0%, #050914 78%, #050914 100%);
+}
+
+.velari-closing__inner {
+  display: grid;
+  gap: 34px;
+  align-items: center;
+}
+
+.velari-closing__symbol {
+  position: relative;
+  width: 150px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(221, 179, 91, 0.24);
+  border-radius: 50%;
+}
+
+.velari-closing__symbol::before,
+.velari-closing__symbol::after,
+.velari-closing__symbol span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  content: '';
+  transform: translate(-50%, -50%);
+}
+
+.velari-closing__symbol::before {
+  width: 58%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(221, 179, 91, 0.38);
+}
+
+.velari-closing__symbol::after {
+  width: 18%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, #fff0b0, #d9a83f 45%, rgba(214, 168, 79, 0.12) 70%);
+  box-shadow: 0 0 32px rgba(214, 168, 79, 0.28);
+}
+
+.velari-closing__symbol span {
+  width: 118%;
+  height: 1px;
+  border-radius: 0;
+  background: linear-gradient(90deg, transparent, rgba(221, 179, 91, 0.3), transparent);
+}
+
+.velari-closing h2 {
+  font-size: clamp(42px, 8vw, 72px);
+}
+
+.velari-closing__inner > div > p:last-child {
+  margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+  .velari-hero__inner {
+    padding-top: 138px;
+    padding-bottom: 86px;
+  }
+
+  .velari-section {
+    padding-top: 104px;
+    padding-bottom: 104px;
+  }
+
+  .velari-framework__body,
+  .velari-many-paths__body,
+  .velari-choice__body {
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+    gap: 56px;
+  }
+
+  .velari-quote {
+    padding: 34px;
+  }
+
+  .velari-light-grid {
+    grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.25fr);
+    gap: 64px;
+  }
+
+  .velari-movements,
+  .velari-practice-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .velari-text-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 28px;
+  }
+
+  .velari-book-entry:last-child {
+    width: min(100%, calc((100% - 28px) / 2));
+    grid-column: 1 / -1;
+    justify-self: center;
+  }
+
+  .velari-book-stage {
+    min-height: 500px;
+  }
+
+  .velari-principle-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+  }
+
+  .velari-principle-group:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .velari-principle-group:last-child .velari-principle-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 30px;
+  }
+
+  .velari-stewardship {
+    grid-template-columns: minmax(260px, 0.7fr) minmax(0, 1.3fr);
+    gap: 62px;
+  }
+
+  .velari-order-link {
+    grid-template-columns: 62px minmax(0, 1fr);
+    column-gap: 34px;
+  }
+
+  .velari-order-link .velari-action {
+    grid-column: 2;
+  }
+
+  .velari-official {
+    grid-template-columns: 72px minmax(0, 1fr) auto;
+    gap: 32px;
+  }
+
+  .velari-future {
+    grid-template-columns: 62px minmax(0, 0.8fr) minmax(320px, 1.2fr);
+    gap: 36px;
+    align-items: start;
+  }
+
+  .velari-closing__inner {
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 46px;
+  }
+
+  .velari-closing__actions {
+    grid-column: 2;
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .velari-hero__inner {
+    grid-template-columns: minmax(0, 1.12fr) minmax(380px, 0.88fr);
+    gap: 72px;
+    align-items: center;
+    min-height: clamp(560px, 72vh, 760px);
+  }
+
+  .velari-emblem {
+    max-width: 500px;
+    margin-right: 0;
+  }
+
+  .velari-heading--split {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(290px, 0.85fr);
+    gap: 70px;
+    max-width: none;
+    align-items: end;
+  }
+
+  .velari-heading--split > p {
+    margin: 0;
+  }
+
+  .velari-principle-groups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .velari-principle-group:last-child {
+    grid-column: auto;
+  }
+
+  .velari-principle-group:last-child .velari-principle-list {
+    grid-template-columns: 1fr;
+  }
+
+  .velari-choice {
+    grid-template-columns: minmax(330px, 0.72fr) minmax(0, 1.28fr);
+    gap: 84px;
+  }
+
+  .velari-choice__body {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .velari-order-link {
+    grid-template-columns: 62px minmax(0, 1fr) auto;
+  }
+
+  .velari-order-link .velari-action {
+    grid-column: auto;
+  }
+
+  .velari-closing__inner {
+    grid-template-columns: 150px minmax(0, 1fr) minmax(260px, auto);
+  }
+
+  .velari-closing__actions {
+    grid-column: auto;
+    justify-content: flex-end;
+  }
+}
+
+@media (min-width: 1180px) {
+  .velari-text-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 26px;
+  }
+
+  .velari-book-entry:last-child {
+    width: auto;
+    grid-column: auto;
+  }
+}
+
+@media (min-width: 1280px) {
+  .velari-hero__inner {
+    gap: 100px;
+  }
+
+  .velari-movements article,
+  .velari-practice-grid article {
+    padding: 32px;
+  }
+
+  .velari-book-stage {
+    min-height: 525px;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 740px) {
+  .velari-hero__inner {
+    min-height: 560px;
+    padding-top: 108px;
+    padding-bottom: 48px;
+  }
+
+  .velari-hero h1 {
+    font-size: 90px;
+  }
+
+  .velari-hero__lead {
+    margin-bottom: 14px;
+    font-size: 27px;
+  }
+
+  .velari-hero__definition {
+    font-size: 16px;
+    line-height: 1.58;
+  }
+
+  .velari-hero__support {
+    display: none;
+  }
+
+  .velari-hero__actions {
+    margin-top: 20px;
+  }
+
+  .velari-facts {
+    margin-top: 20px;
+  }
+
+  .velari-facts > div {
+    padding: 8px 0;
+  }
+
+  .velari-emblem {
+    max-width: 410px;
+  }
+}
+
+@media (max-width: 767px) {
+  .velari-action {
+    width: 100%;
+  }
+
+  .velari-emblem {
+    max-width: 390px;
+    padding: 20px;
+  }
+
+  .velari-emblem-principles {
+    top: 20px;
+    right: 20px;
+    left: 20px;
+  }
+
+  .velari-emblem-principle {
+    padding: 3px 5px;
+    font-size: 8px;
+    letter-spacing: 0.08em;
+  }
+
+  .velari-emblem-principle--east {
+    right: 0;
+  }
+
+  .velari-emblem-principle--west {
+    left: 0;
+  }
+
+  .velari-emblem-principle--east::before,
+  .velari-emblem-principle--west::before {
+    width: 30px;
+  }
+
+  .velari-emblem-principle--east::after {
+    right: calc(100% + 30px);
+    left: auto;
+  }
+
+  .velari-emblem-principle--west::after {
+    right: auto;
+    left: calc(100% + 30px);
+  }
+
+  .velari-emblem figcaption {
+    display: grid;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .velari-principle-list article {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .velari-closing {
+    padding-top: 82px;
+    padding-bottom: 96px;
+  }
+}
+
+:host-context(.theme-resolved-light) {
+  background: #fbf6e9;
+  color: #202737;
+}
+
+:host-context(.theme-resolved-light) .velari-page {
+  background:
+    radial-gradient(ellipse at 76% 4%, rgba(184, 135, 47, 0.13), transparent 30%),
+    radial-gradient(ellipse at 18% 36%, rgba(69, 91, 126, 0.07), transparent 35%),
+    linear-gradient(180deg, #fffaf0 0%, #f8f1e2 48%, #fbf6e9 100%);
+}
+
+:host-context(.theme-resolved-light) h1,
+:host-context(.theme-resolved-light) h2,
+:host-context(.theme-resolved-light) h3,
+:host-context(.theme-resolved-light) h4 {
+  color: #202737;
+}
+
+:host-context(.theme-resolved-light) .velari-eyebrow,
+:host-context(.theme-resolved-light) .velari-principle-list h4,
+:host-context(.theme-resolved-light) .velari-prose strong {
+  color: #94691e;
+}
+
+:host-context(.theme-resolved-light) .velari-hero__lead {
+  color: #7d591b;
+}
+
+:host-context(.theme-resolved-light) .velari-hero__definition,
+:host-context(.theme-resolved-light) .velari-prose p,
+:host-context(.theme-resolved-light) .velari-order-link > div > p:last-child,
+:host-context(.theme-resolved-light) .velari-official > div > p:last-child,
+:host-context(.theme-resolved-light) .velari-closing__inner > div > p:last-child,
+:host-context(.theme-resolved-light) .velari-heading--split > p,
+:host-context(.theme-resolved-light) .velari-movements article > p,
+:host-context(.theme-resolved-light) .velari-principle-list p,
+:host-context(.theme-resolved-light) .velari-book-meta > p:not(.velari-book-meta__status),
+:host-context(.theme-resolved-light) .velari-practice-grid li,
+:host-context(.theme-resolved-light) .velari-commitments li,
+:host-context(.theme-resolved-light) .velari-boundaries li {
+  color: #596273;
+}
+
+:host-context(.theme-resolved-light) .velari-prose--lead p:first-child,
+:host-context(.theme-resolved-light) .velari-stewardship__statement {
+  color: #303746;
+}
+
+:host-context(.theme-resolved-light) .velari-hero__support,
+:host-context(.theme-resolved-light) .velari-facts dt,
+:host-context(.theme-resolved-light) .velari-quote p,
+:host-context(.theme-resolved-light) .velari-practice__phase,
+:host-context(.theme-resolved-light) .velari-principle-group__index {
+  color: #6c7584;
+}
+
+:host-context(.theme-resolved-light) .velari-facts dd {
+  color: #2c3442;
+}
+
+:host-context(.theme-resolved-light) .velari-section--framework,
+:host-context(.theme-resolved-light) .velari-section--light,
+:host-context(.theme-resolved-light) .velari-section--choice,
+:host-context(.theme-resolved-light) .velari-section--order {
+  background:
+    radial-gradient(ellipse at 84% 48%, rgba(184, 135, 47, 0.07), transparent 35%),
+    rgba(244, 235, 216, 0.72);
+}
+
+:host-context(.theme-resolved-light) .velari-section--code,
+:host-context(.theme-resolved-light) .velari-section--texts {
+  background-color: #f4ecdc;
+}
+
+:host-context(.theme-resolved-light) .velari-section--future {
+  background:
+    radial-gradient(
+      ellipse 680px 300px at 18% 100%,
+      rgba(184, 135, 47, 0.11),
+      transparent 72%
+    ),
+    linear-gradient(180deg, #f4ecdc 0%, #f4ecdc 100%);
+}
+
+:host-context(.theme-resolved-light) .velari-section--texts {
+  background:
+    radial-gradient(ellipse at 16% 21%, rgba(184, 135, 47, 0.1), transparent 34%),
+    linear-gradient(180deg, #f4ecdc 0%, #faf6ed 58%, #f4ecdc 100%);
+}
+
+:host-context(.theme-resolved-light) .velari-book__title h3 {
+  color: #d9ae5e;
+}
+
+:host-context(.theme-resolved-light) .velari-quote,
+:host-context(.theme-resolved-light) .velari-movements article,
+:host-context(.theme-resolved-light) .velari-practice-grid article {
+  border-color: rgba(148, 105, 30, 0.2);
+  background: rgba(255, 252, 245, 0.72);
+}
+
+:host-context(.theme-resolved-light) .velari-book-meta__status,
+:host-context(.theme-resolved-light) .velari-book-meta__link {
+  color: #8e641e;
+}
+
+:host-context(.theme-resolved-light) .velari-book-meta__link {
+  border-color: rgba(142, 100, 30, 0.5);
+}
+
+:host-context(.theme-resolved-light) .velari-book-meta__link:hover {
+  border-color: #6f4e16;
+  color: #6f4e16;
+}
+
+:host-context(.theme-resolved-light) .velari-quote blockquote,
+:host-context(.theme-resolved-light) .velari-safeguard strong {
+  color: #6f4e16;
+}
+
+:host-context(.theme-resolved-light) .velari-action--secondary,
+:host-context(.theme-resolved-light) .velari-action--quiet {
+  background: rgba(255, 252, 245, 0.74);
+  color: #394150;
+}
+
+:host-context(.theme-resolved-light) .velari-action--primary {
+  border-color: #b8872f;
+  background: #b8872f;
+  color: #ffffff;
+}
+
+:host-context(.theme-resolved-light) .velari-action--primary:hover {
+  background: #8f651e;
+  color: #ffffff;
+}
+
+:host-context(.theme-resolved-light) .velari-emblem__image {
+  border-color: rgba(148, 105, 30, 0.28);
+  background: #09101d;
+  box-shadow: 0 26px 70px rgba(81, 57, 20, 0.16);
+}
+
+:host-context(.theme-resolved-light) .velari-emblem figcaption {
+  color: #657082;
+}
+
+:host-context(.theme-resolved-light) .velari-practice-grid li::before,
+:host-context(.theme-resolved-light) .velari-commitments li::before,
+:host-context(.theme-resolved-light) .velari-boundaries li::before {
+  background: #9a6c1e;
+}
+
+:host-context(.theme-resolved-light) .velari-closing {
+  background:
+    radial-gradient(
+      ellipse 680px 300px at 18% 0%,
+      rgba(184, 135, 47, 0.11),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 600px 300px at 18% 48%,
+      rgba(184, 135, 47, 0.13),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 580px 290px at 18% 100%,
+      rgba(184, 135, 47, 0.095),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 640px 260px at 52% 100%,
+      rgba(69, 91, 126, 0.03),
+      transparent 74%
+    ),
+    linear-gradient(180deg, #f4ecdc 0%, #fbf6e9 78%, #fbf6e9 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .velari-action,
+  .velari-action app-path-icon,
+  .velari-movements article,
+  .velari-book,
+  .velari-book-stage__shadow,
+  .velari-book-meta__link,
+  .velari-book-meta__link app-path-icon:last-child,
+  .velari-emblem-principle,
+  .velari-emblem-principle::before,
+  .velari-emblem-principle::after {
+    transition: none;
+  }
+
+  .velari-action:hover,
+  .velari-movements article:hover {
+    transform: none;
+  }
+
+  .velari-book-entry:nth-child(1):hover .velari-book {
+    transform: rotateX(2deg) rotateY(-5deg) rotateZ(-0.7deg);
+  }
+
+  .velari-book-entry:nth-child(2):hover .velari-book {
+    transform: rotateX(2deg) rotateY(1deg) rotateZ(0.35deg);
+  }
+
+  .velari-book-entry:nth-child(3):hover .velari-book {
+    transform: rotateX(2deg) rotateY(5deg) rotateZ(0.7deg);
+  }
+
+  .velari-book-entry:hover .velari-book-stage__shadow {
+    opacity: 1;
+    transform: translateX(-50%) scaleX(0.92);
+  }
+
+  .velari-book-meta__link:hover app-path-icon:last-child {
+    transform: none;
+  }
+}

@@ -5,14 +5,18 @@ import { pageSeoMetadata } from '../../src/app/core/seo/seo.config';
 import { SITEMAP_ROUTES } from '../../src/app/core/seo/sitemap.config';
 import { installConsoleErrorGuard } from './support/console-errors';
 
-const routeSeoCases = [
-  pageSeoMetadata.home,
-  pageSeoMetadata.work,
-  pageSeoMetadata.systems,
-  pageSeoMetadata.writing,
-  pageSeoMetadata.github,
-  pageSeoMetadata.contact
-];
+const indexableSeoMetadata = Object.values(pageSeoMetadata).filter(
+  (metadata) => !('robots' in metadata) || metadata.robots !== 'noindex, follow',
+);
+const routeSeoCases = SITEMAP_ROUTES.map((route) => {
+  const metadata = indexableSeoMetadata.find((candidate) => candidate.path === route.path);
+
+  if (!metadata) {
+    throw new Error(`Missing SEO metadata for sitemap route: ${route.path}`);
+  }
+
+  return metadata;
+});
 const siteName = 'Serhat Soruklu';
 const canonicalBaseUrl = 'https://serhatsoruklu.com';
 const sitelinkRoutes = [
@@ -20,51 +24,9 @@ const sitelinkRoutes = [
   pageSeoMetadata.systems,
   pageSeoMetadata.writing,
   pageSeoMetadata.github,
-  pageSeoMetadata.contact
-];
-const ogImageCases = [
-  {
-    path: pageSeoMetadata.home.ogImage,
-    title: 'Serhat Soruklu',
-    subtitle: 'Systems architecture, software engineering,',
-    urlLabel: 'serhatsoruklu.com',
-    logoHref: /^data:image\/png;base64,/
-  },
-  {
-    path: pageSeoMetadata.work.ogImage,
-    title: 'Work',
-    subtitle: 'Projects, platforms, and systems built with',
-    urlLabel: 'serhatsoruklu.com/work',
-    logoHref: /^data:image\/png;base64,/
-  },
-  {
-    path: pageSeoMetadata.systems.ogImage,
-    title: 'Systems',
-    subtitle: 'Architecture, infrastructure, constraints,',
-    urlLabel: 'serhatsoruklu.com/systems',
-    logoHref: /^data:image\/png;base64,/
-  },
-  {
-    path: pageSeoMetadata.writing.ogImage,
-    title: 'Writing',
-    subtitle: 'Notes on software, systems, architecture,',
-    urlLabel: 'serhatsoruklu.com/writing',
-    logoHref: /^data:image\/png;base64,/
-  },
-  {
-    path: pageSeoMetadata.github.ogImage,
-    title: 'GitHub',
-    subtitle: 'Open-source work, repositories,',
-    urlLabel: 'serhatsoruklu.com/github',
-    logoHref: /^data:image\/png;base64,/
-  },
-  {
-    path: pageSeoMetadata.contact.ogImage,
-    title: 'Contact',
-    subtitle: 'Collaborations, engineering discussions,',
-    urlLabel: 'serhatsoruklu.com/contact',
-    logoHref: /^data:image\/png;base64,/
-  }
+  pageSeoMetadata.sorukluOrder,
+  pageSeoMetadata.velari,
+  pageSeoMetadata.contact,
 ];
 
 type JsonLdEntity = Record<string, unknown>;
@@ -100,7 +62,9 @@ function getCanonicalCount(html: string): number {
 }
 
 function getJsonLdEntities(html: string): JsonLdEntity[] {
-  const scripts = [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)];
+  const scripts = [
+    ...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g),
+  ];
 
   return scripts.flatMap((script) => {
     const parsed = JSON.parse(script[1].trim()) as JsonLdEntity;
@@ -129,7 +93,9 @@ function getBreadcrumbNames(entities: JsonLdEntity[]): string[] {
     return [];
   }
 
-  return items.map((item) => (item as JsonLdEntity)['name']).filter((name): name is string => typeof name === 'string');
+  return items
+    .map((item) => (item as JsonLdEntity)['name'])
+    .filter((name): name is string => typeof name === 'string');
 }
 
 function escapeRegExp(value: string): string {
@@ -137,13 +103,11 @@ function escapeRegExp(value: string): string {
 }
 
 function hasCrawlableAnchor(html: string, href: string, label: string): boolean {
-  const anchorPattern = new RegExp(`<a\\b[^>]*href="${escapeRegExp(href)}"[^>]*>[\\s\\S]*?${escapeRegExp(label)}[\\s\\S]*?<\\/a>`);
+  const anchorPattern = new RegExp(
+    `<a\\b[^>]*href="${escapeRegExp(href)}"[^>]*>[\\s\\S]*?${escapeRegExp(label)}[\\s\\S]*?<\\/a>`,
+  );
 
   return anchorPattern.test(html);
-}
-
-function exactText(value: string): RegExp {
-  return new RegExp(`^${escapeRegExp(value)}$`);
 }
 
 function getXmlElementValue(xml: string, tagName: string): string | null {
@@ -155,7 +119,7 @@ function getSitemapEntries(sitemap: string): SitemapEntry[] {
     loc: getXmlElementValue(match[1], 'loc'),
     lastmod: getXmlElementValue(match[1], 'lastmod'),
     changefreq: getXmlElementValue(match[1], 'changefreq'),
-    priority: getXmlElementValue(match[1], 'priority')
+    priority: getXmlElementValue(match[1], 'priority'),
   }));
 }
 
@@ -163,78 +127,29 @@ function formatSitemapPriority(priority: number): string {
   return priority.toFixed(1);
 }
 
-async function expectSvgTextInsideViewport(pageTextSelector: string, page: Page): Promise<void> {
-  const boxes = await page.locator(pageTextSelector).evaluateAll((elements) => elements.map((element) => {
-    const box = element.getBoundingClientRect();
-
-    return {
-      left: box.left,
-      top: box.top,
-      right: box.right,
-      bottom: box.bottom
-    };
-  }));
-
-  for (const box of boxes) {
-    expect(box.left).toBeGreaterThanOrEqual(0);
-    expect(box.top).toBeGreaterThanOrEqual(0);
-    expect(box.right).toBeLessThanOrEqual(1200);
-    expect(box.bottom).toBeLessThanOrEqual(630);
-  }
-}
-
 test.describe('seo metadata', () => {
-  for (const ogCase of ogImageCases) {
-    test(`${ogCase.path} renders standalone with route text and logo`, async ({ page, request }, testInfo) => {
-      const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
-      const response = await request.get(ogCase.path);
+  for (const metadata of routeSeoCases) {
+    test(`${metadata.ogImage} is a standalone 1200 by 630 PNG`, async ({ page, request }) => {
+      const response = await request.get(metadata.ogImage);
 
       expect(response.ok()).toBe(true);
+      expect(response.headers()['content-type']).toContain('image/png');
 
-      await page.setViewportSize({ width: 1200, height: 630 });
-      await page.goto(ogCase.path);
-
-      const svg = page.locator('svg');
-      await expect(svg).toBeVisible();
-      await expect(svg).toHaveAttribute('width', '1200');
-      await expect(svg).toHaveAttribute('height', '630');
-      await expect(svg).toHaveAttribute('viewBox', '0 0 1200 630');
-      await expect(page.locator('text').filter({ hasText: exactText(ogCase.title) })).toBeVisible();
-      await expect(page.locator('text').filter({ hasText: ogCase.subtitle })).toBeVisible();
-      await expect(page.locator('text').filter({ hasText: exactText(ogCase.urlLabel) })).toBeVisible();
-
-      const logo = page.locator('image').first();
-      await expect(logo).toBeVisible();
-      const logoHref = await logo.getAttribute('href');
-
-      if (typeof ogCase.logoHref === 'string') {
-        expect(logoHref).toBe(ogCase.logoHref);
-        expect((await request.get(ogCase.logoHref)).ok()).toBe(true);
-      } else {
-        expect(logoHref).toMatch(ogCase.logoHref);
-      }
-
-      const logoCard = page.locator('#brand-logo-card');
-      await expect(logoCard).toHaveAttribute('transform', 'translate(856 206)');
-      await expect(logoCard.locator('rect').nth(0)).toHaveAttribute('width', '220');
-      await expect(logoCard.locator('rect').nth(0)).toHaveAttribute('height', '220');
-      await expect(logoCard.locator('rect').nth(0)).toHaveAttribute('rx', '32');
-      await expect(logoCard.locator('rect').nth(0)).toHaveAttribute('stroke-width', '3');
-      await expect(logoCard.locator('rect').nth(1)).toHaveAttribute('x', '18');
-      await expect(logoCard.locator('rect').nth(1)).toHaveAttribute('y', '18');
-      await expect(logoCard.locator('rect').nth(1)).toHaveAttribute('width', '184');
-      await expect(logoCard.locator('rect').nth(1)).toHaveAttribute('height', '184');
-      await expect(logo).toHaveAttribute('x', '38');
-      await expect(logo).toHaveAttribute('y', '38');
-      await expect(logo).toHaveAttribute('width', '144');
-      await expect(logo).toHaveAttribute('height', '144');
-
-      await expectSvgTextInsideViewport('text', page);
-      assertNoConsoleErrors();
+      await page.goto(metadata.ogImage);
+      const image = page.locator('img');
+      await expect(image).toBeVisible();
+      expect(
+        await image.evaluate((element) => ({
+          width: (element as HTMLImageElement).naturalWidth,
+          height: (element as HTMLImageElement).naturalHeight,
+        })),
+      ).toEqual({ width: 1200, height: 630 });
     });
   }
 
-  test('home page keeps social metadata without unused OG preload warning', async ({ page }, testInfo) => {
+  test('home page keeps social metadata without unused OG preload warning', async ({
+    page,
+  }, testInfo) => {
     const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
     const consoleMessages: string[] = [];
     page.on('console', (message) => {
@@ -242,17 +157,29 @@ test.describe('seo metadata', () => {
     });
 
     await page.goto('/');
-    await expect(page.locator('link[rel="preload"][href*="serhat-soruklu-og.svg"]')).toHaveCount(0);
-    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', new URL(pageSeoMetadata.home.ogImage, canonicalBaseUrl).toString());
-    await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', new URL(pageSeoMetadata.home.ogImage, canonicalBaseUrl).toString());
+    await expect(page.locator('link[rel="preload"][href*="serhat-soruklu-og.png"]')).toHaveCount(0);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+      'content',
+      new URL(pageSeoMetadata.home.ogImage, canonicalBaseUrl).toString(),
+    );
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute(
+      'content',
+      new URL(pageSeoMetadata.home.ogImage, canonicalBaseUrl).toString(),
+    );
 
     await page.waitForLoadState('networkidle');
-    expect(consoleMessages.some((message) => message.includes('preloaded') && message.includes('serhat-soruklu-og.svg'))).toBe(false);
+    expect(
+      consoleMessages.some(
+        (message) => message.includes('preloaded') && message.includes('serhat-soruklu-og.png'),
+      ),
+    ).toBe(false);
     assertNoConsoleErrors();
   });
 
   for (const metadata of routeSeoCases) {
-    test(`direct route load has route-specific metadata for ${metadata.path}`, async ({ request }) => {
+    test(`direct route load has route-specific metadata for ${metadata.path}`, async ({
+      request,
+    }) => {
       const response = await request.get(metadata.path);
       const html = await response.text();
       const canonicalUrl = new URL(metadata.path, canonicalBaseUrl).toString();
@@ -270,25 +197,45 @@ test.describe('seo metadata', () => {
       expect(getMetaContent(html, 'property', 'og:description')).toBe(metadata.description);
       expect(getMetaContent(html, 'property', 'og:url')).toBe(canonicalUrl);
       expect(getMetaContent(html, 'property', 'og:site_name')).toBe(siteName);
-      expect(getMetaContent(html, 'property', 'og:image')).toBe(new URL(metadata.ogImage, canonicalBaseUrl).toString());
+      expect(getMetaContent(html, 'property', 'og:image')).toBe(
+        new URL(metadata.ogImage, canonicalBaseUrl).toString(),
+      );
+      expect(getMetaContent(html, 'property', 'og:image:type')).toBe('image/png');
+      expect(getMetaContent(html, 'property', 'og:image:width')).toBe('1200');
+      expect(getMetaContent(html, 'property', 'og:image:height')).toBe('630');
+      expect(getMetaContent(html, 'property', 'og:image:alt')).toBe(metadata.ogImageAlt);
       expect(getMetaContent(html, 'name', 'twitter:card')).toBe('summary_large_image');
       expect(getMetaContent(html, 'name', 'twitter:title')).toBe(metadata.title);
       expect(getMetaContent(html, 'name', 'twitter:description')).toBe(metadata.description);
-      expect(getMetaContent(html, 'name', 'twitter:image')).toBe(new URL(metadata.ogImage, canonicalBaseUrl).toString());
+      expect(getMetaContent(html, 'name', 'twitter:image')).toBe(
+        new URL(metadata.ogImage, canonicalBaseUrl).toString(),
+      );
+      expect(getMetaContent(html, 'name', 'twitter:image:alt')).toBe(metadata.ogImageAlt);
+      expect(
+        (html.match(/<script\b[^>]*type="application\/ld\+json"[^>]*>/g) ?? []).length,
+      ).toBe(1);
       expect(website?.['name']).toBe(siteName);
-      expect(website?.['alternateName']).toEqual(expect.arrayContaining(['SerhatSoruklu.com', 'Serhat Soruklu Systems Architect']));
+      expect(website?.['alternateName']).toEqual(
+        expect.arrayContaining(['SerhatSoruklu.com', 'Serhat Soruklu Systems Architect']),
+      );
       expect(website?.['url']).toBe(`${canonicalBaseUrl}/`);
       expect(website?.['inLanguage']).toBe('en-GB');
       expect(person?.['name']).toBe(siteName);
       expect(person?.['url']).toBe(`${canonicalBaseUrl}/`);
       expect(person?.['jobTitle']).toBe('Founder, Systems Architect, Full-Stack Engineer');
-      expect(person?.['sameAs']).toEqual(expect.arrayContaining(['https://github.com/SerhatSoruklu']));
+      expect(person?.['sameAs']).toEqual(
+        expect.arrayContaining(['https://github.com/SerhatSoruklu']),
+      );
 
-      const expectedBreadcrumbs = metadata.path === '/'
-        ? [pageSeoMetadata.home.label]
-        : [pageSeoMetadata.home.label, metadata.label];
+      const expectedBreadcrumbs = metadata.path.startsWith('/systems/')
+        ? [pageSeoMetadata.home.label, pageSeoMetadata.systems.label, metadata.label]
+        : metadata.path === '/'
+          ? [pageSeoMetadata.home.label]
+          : [pageSeoMetadata.home.label, metadata.label];
       expect(getBreadcrumbNames(jsonLdEntities)).toEqual(expectedBreadcrumbs);
-      expect(getBreadcrumbNames(jsonLdEntities).some((name) => name.includes('Serhat Soruklu |'))).toBe(false);
+      expect(
+        getBreadcrumbNames(jsonLdEntities).some((name) => name.includes('Serhat Soruklu |')),
+      ).toBe(false);
     });
   }
 
@@ -300,6 +247,26 @@ test.describe('seo metadata', () => {
 
     for (const metadata of sitelinkRoutes) {
       expect(hasCrawlableAnchor(html, metadata.path, metadata.label)).toBe(true);
+    }
+  });
+
+  test('not-found SSR is excluded from indexing and structured data', async ({ request }) => {
+    const response = await request.get('/does-not-exist');
+    const html = await response.text();
+
+    expect(response.status()).toBe(404);
+    expect(getTitle(html)).toBe(pageSeoMetadata.notFound.title);
+    expect(getMetaContent(html, 'name', 'description')).toBe(pageSeoMetadata.notFound.description);
+    expect(getMetaContent(html, 'name', 'robots')).toBe('noindex, follow');
+    expect(getCanonicalHref(html)).toBe(`${canonicalBaseUrl}/404`);
+    expect(html).toContain('Page not found');
+    expect(html).not.toContain('type="application/ld+json"');
+  });
+
+  test('every route renders exactly one primary main landmark', async ({ page }) => {
+    for (const metadata of [...routeSeoCases, pageSeoMetadata.notFound]) {
+      await page.goto(metadata.path);
+      await expect(page.locator('main')).toHaveCount(1);
     }
   });
 
@@ -316,20 +283,29 @@ test.describe('seo metadata', () => {
     expect(sitemap).not.toContain('localhost');
     expect(new Set(urls).size).toBe(urls.length);
     expect(entries).toHaveLength(SITEMAP_ROUTES.length);
+    expect([...urls].sort()).toEqual(
+      routeSeoCases.map((metadata) => new URL(metadata.path, canonicalBaseUrl).toString()).sort(),
+    );
+    expect(urls).not.toContain(new URL(pageSeoMetadata.notFound.path, canonicalBaseUrl).toString());
+    expect(urls.every((url) => url?.startsWith(`${canonicalBaseUrl}/`))).toBe(true);
 
     for (const route of SITEMAP_ROUTES) {
-      const entry = entries.find((candidate) => candidate.loc === new URL(route.path, canonicalBaseUrl).toString());
+      const entry = entries.find(
+        (candidate) => candidate.loc === new URL(route.path, canonicalBaseUrl).toString(),
+      );
 
       expect(entry).toEqual({
         loc: new URL(route.path, canonicalBaseUrl).toString(),
         lastmod: route.lastModified,
         changefreq: route.changeFrequency,
-        priority: formatSitemapPriority(route.priority)
+        priority: formatSitemapPriority(route.priority),
       });
     }
   });
 
-  test('robots.txt keeps public routes crawlable and references the sitemap', async ({ request }) => {
+  test('robots.txt keeps public routes crawlable and references the sitemap', async ({
+    request,
+  }) => {
     const response = await request.get('/robots.txt');
     const robots = await response.text();
 

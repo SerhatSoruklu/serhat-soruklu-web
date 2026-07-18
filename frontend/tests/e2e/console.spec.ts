@@ -16,9 +16,9 @@ test.describe('console health', () => {
 
     await page.goto('/');
     await page.getByTestId('desktop-header').getByRole('link', { name: 'Work' }).click();
-    await expect(page.getByRole('heading', { name: 'Work' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Built End-to-End, Owned Completely' })).toBeVisible();
     await page.getByTestId('desktop-header').getByRole('link', { name: 'Contact' }).click();
-    await expect(page.getByRole('heading', { name: 'Contact' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Start With a Clear Message' })).toBeVisible();
     assertNoConsoleErrors();
   });
 });

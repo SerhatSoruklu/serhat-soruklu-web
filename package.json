@@ -3,11 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
+  "packageManager": "npm@10.9.3",
+  "engines": {
+    "node": ">=22.20.0 <23",
+    "npm": ">=10.9.0 <11"
+  },
   "scripts": {
-    "postinstall": "npm --prefix frontend install && npm --prefix backend install",
+    "install:projects": "npm --prefix frontend ci --ignore-scripts && npm --prefix backend ci --ignore-scripts",
     "dev": "concurrently --names frontend-ssr,backend --prefix \"[{name}]\" --prefix-colors cyan,green \"npm --prefix frontend run dev:ssr\" \"npm --prefix backend run dev\"",
-    "build": "npm run build:frontend && npm run check:backend",
-    "build:frontend": "npm --prefix frontend run build:ssr",
+    "build": "npm run build:production",
+    "build:production": "npm run build:frontend && npm run check:backend",
+    "build:frontend": "npm --prefix frontend run build:production",
     "check": "npm run check:frontend && npm run check:backend",
     "check:frontend": "npm --prefix frontend run typecheck",
     "check:backend": "npm --prefix backend run check",
@@ -15,13 +21,24 @@
     "lint:frontend": "npm --prefix frontend run lint",
     "lint:backend": "npm --prefix backend run lint",
     "lint:fix": "npm --prefix frontend run lint -- --fix && npm --prefix backend run lint:fix",
-    "start": "npm --prefix backend start",
+    "test": "npm run test:frontend && npm run test:backend",
+    "test:frontend": "npm --prefix frontend test -- --watch=false",
+    "test:backend": "npm --prefix backend test",
+    "e2e": "npm --prefix frontend run e2e",
+    "e2e:smoke:cross-browser": "npm --prefix frontend run e2e:smoke:cross-browser",
+    "audit:production": "npm audit --omit=dev --audit-level=high && npm --prefix frontend audit --omit=dev --audit-level=high && npm --prefix backend audit --omit=dev --audit-level=high",
+    "assert:production": "npm --prefix frontend run verify:artifact",
+    "smoke:production": "npm --prefix frontend run smoke:production",
+    "validate:release": "npm run lint && npm run check && npm test && npm run e2e && npm run e2e:smoke:cross-browser && npm run audit:production && npm run build:production && npm run assert:production && npm run smoke:production",
+    "start": "npm run start:backend",
+    "start:frontend": "npm --prefix frontend run start:production",
+    "start:backend": "npm --prefix backend run start:production",
     "deploy": "bash scripts/deploy.sh"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "concurrently": "^9.2.1"
+  "devDependencies": {
+    "concurrently": "^10.0.3"
   }
 }
