@@ -137,9 +137,24 @@
                 <span>{{ card.primaryLabel }}</span>
                 <mat-icon class="system-card__arrow" svgIcon="systems-next-arrow" aria-hidden="true"></mat-icon>
               </a>
-              <a class="system-card__secondary" [routerLink]="card.secondaryPath" (click)="topNavigation.handleLinkClick(card.secondaryPath)">
-                {{ card.secondaryLabel }}
-              </a>
+              @if (card.secondaryPath) {
+                <a
+                  class="system-card__secondary"
+                  [routerLink]="card.secondaryPath"
+                  (click)="topNavigation.handleLinkClick(card.secondaryPath)"
+                >
+                  {{ card.secondaryLabel }}
+                </a>
+              } @else {
+                <a
+                  class="system-card__secondary"
+                  [href]="card.secondaryUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {{ card.secondaryLabel }}
+                </a>
+              }
             </div>
           </article>
         }
