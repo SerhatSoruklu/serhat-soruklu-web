@@ -50,7 +50,7 @@ The release-candidate gate passed locked installs, lint, static checks, 137 unit
 - `backend/.env` and `backend/.env.production` remain ignored and untracked; only the redacted `backend/.env.example` is committed.
 - Root, frontend, and backend production dependency audits each remain at `found 0 vulnerabilities`.
 - The corrected ChatPDM and Coupyn Open Graph PNGs and their approved SVG source files are present.
-- The PNGs are exact 1200 × 630 assets; the deterministic renderer reduces and recentres their internal right-side artwork without changing the approved SVG sources.
+- The PNGs are exact 1200 × 630 assets; the deterministic renderer loads the SVGs' exact local logo typefaces plus an Arial-compatible self-hosted face for card typography, checks for wordmark overlap, and directly rasterises each approved SVG without changing its internal artwork, layout, or composition.
 - Secret and history checks recorded by the release qualification found no high-confidence credential or forbidden environment-path finding.
 
 ## Post-merge validation
