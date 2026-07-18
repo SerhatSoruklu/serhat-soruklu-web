@@ -59,6 +59,21 @@ async function expectPanelBelowHeader(page: Page, panelTestId: string): Promise<
 }
 
 async function expectThemeMenuAnchoredToButton(page: Page): Promise<void> {
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const button = document.querySelector('[data-testid="mobile-theme-menu-button"]');
+        const menu = document.querySelector('[data-testid="mobile-theme-menu"]');
+
+        if (!button || !menu) {
+          return Number.NEGATIVE_INFINITY;
+        }
+
+        return menu.getBoundingClientRect().top - button.getBoundingClientRect().bottom;
+      }),
+    )
+    .toBeGreaterThanOrEqual(10);
+
   const geometry = await page.evaluate(() => {
     const button = document.querySelector('[data-testid="mobile-theme-menu-button"]');
     const menu = document.querySelector('[data-testid="mobile-theme-menu"]');

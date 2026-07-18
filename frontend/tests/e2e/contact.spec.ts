@@ -35,14 +35,16 @@ test.describe('contact page', () => {
       const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
       let requestBody: Record<string, unknown> | null = null;
       let idempotencyKey: string | undefined;
+      let releaseContactResponse: () => void = () => undefined;
+      const contactResponseGate = new Promise<void>((resolve) => {
+        releaseContactResponse = resolve;
+      });
 
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.route('**/api/contact', async (route) => {
         requestBody = route.request().postDataJSON() as Record<string, unknown>;
         idempotencyKey = route.request().headers()['idempotency-key'];
-        await new Promise((resolve) => {
-          setTimeout(resolve, 150);
-        });
+        await contactResponseGate;
         await route.fulfill({
           status: 200,
           contentType: 'application/json',
@@ -98,26 +100,30 @@ test.describe('contact page', () => {
       await expect(page.getByRole('button', { name: 'Sending...' })).toBeDisabled();
       await expect(page.locator('mat-spinner.contact-submit__spinner')).toBeVisible();
       await expect(page.locator('mat-spinner.contact-submit__spinner')).toHaveClass(/mat-mdc-progress-spinner/);
-      const spinnerMetrics = await page.locator('mat-spinner.contact-submit__spinner').evaluate((element) => {
-        const rect = element.getBoundingClientRect();
-        const circle = element.querySelector('circle');
-        const circleStyles = circle ? getComputedStyle(circle) : null;
+      try {
+        const spinnerMetrics = await page.locator('mat-spinner.contact-submit__spinner').evaluate((element) => {
+          const rect = element.getBoundingClientRect();
+          const circle = element.querySelector('circle');
+          const circleStyles = circle ? getComputedStyle(circle) : null;
 
-        return {
-          circleCount: element.querySelectorAll('circle').length,
-          height: rect.height,
-          indeterminateVisible: getComputedStyle(element.querySelector('.mdc-circular-progress__indeterminate-container') as Element).opacity,
-          stroke: circleStyles?.stroke || '',
-          width: rect.width
-        };
-      });
-      expect(spinnerMetrics.width).toBeGreaterThanOrEqual(23);
-      expect(spinnerMetrics.width).toBeLessThanOrEqual(25);
-      expect(spinnerMetrics.height).toBeGreaterThanOrEqual(23);
-      expect(spinnerMetrics.height).toBeLessThanOrEqual(25);
-      expect(spinnerMetrics.circleCount).toBeGreaterThanOrEqual(3);
-      expect(spinnerMetrics.indeterminateVisible).toBe('1');
-      expect(spinnerMetrics.stroke).not.toBe('none');
+          return {
+            circleCount: element.querySelectorAll('circle').length,
+            height: rect.height,
+            indeterminateVisible: getComputedStyle(element.querySelector('.mdc-circular-progress__indeterminate-container') as Element).opacity,
+            stroke: circleStyles?.stroke || '',
+            width: rect.width
+          };
+        });
+        expect(spinnerMetrics.width).toBeGreaterThanOrEqual(23);
+        expect(spinnerMetrics.width).toBeLessThanOrEqual(25);
+        expect(spinnerMetrics.height).toBeGreaterThanOrEqual(23);
+        expect(spinnerMetrics.height).toBeLessThanOrEqual(25);
+        expect(spinnerMetrics.circleCount).toBeGreaterThanOrEqual(3);
+        expect(spinnerMetrics.indeterminateVisible).toBe('1');
+        expect(spinnerMetrics.stroke).not.toBe('none');
+      } finally {
+        releaseContactResponse();
+      }
       await expect(page.getByRole('heading', { name: 'Message sent.' })).toBeVisible();
       await expectNoHorizontalOverflow(page);
 
