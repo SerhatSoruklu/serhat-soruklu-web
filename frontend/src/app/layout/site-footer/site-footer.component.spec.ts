@@ -8,13 +8,30 @@ import {
   mdiTranslate,
 } from '@mdi/js';
 
+import { LanguageDialogService } from '../../shared/dialogs/language-dialog/language-dialog.service';
 import { SiteFooterComponent } from './site-footer.component';
 
 describe('SiteFooterComponent', () => {
+  let languageDialogOpenCalls = 0;
+
   beforeEach(async () => {
+    languageDialogOpenCalls = 0;
+
     await TestBed.configureTestingModule({
       imports: [SiteFooterComponent],
-      providers: [provideRouter([])],
+      providers: [
+        provideRouter([]),
+        {
+          provide: LanguageDialogService,
+          useValue: {
+            open: () => {
+              languageDialogOpenCalls += 1;
+
+              return Promise.resolve();
+            },
+          },
+        },
+      ],
     }).compileComponents();
   });
 
@@ -115,5 +132,9 @@ describe('SiteFooterComponent', () => {
     expect(trigger).not.toBeNull();
     expect(trigger.getAttribute('aria-haspopup')).toBe('dialog');
     expect(trigger.textContent).toContain('40+ languages coming soon');
+
+    trigger.click();
+
+    expect(languageDialogOpenCalls).toBe(1);
   });
 });
