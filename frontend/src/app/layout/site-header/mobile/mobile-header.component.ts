@@ -1,12 +1,28 @@
 import { DOCUMENT, isPlatformBrowser, NgClass } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, HostListener, inject, OnDestroy, PLATFORM_ID, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  OnDestroy,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { mdiArrowRight, mdiHomeVariantOutline } from '@mdi/js';
 
 import { TopNavigationService } from '../../../core/navigation/top-navigation.service';
 import { ThemeService, ThemeSetting } from '../../../core/theme/theme.service';
+import { LanguageDialogService } from '../../../shared/dialogs/language-dialog/language-dialog.service';
 import { TooltipDirective } from '../../../shared/tooltip/tooltip.directive';
-import { HEADER_MENU_ICON_PATHS, HEADER_NAV_ITEMS, HEADER_THEME_OPTIONS, HEADER_THEME_TRIGGER_ICON_PATHS } from '../header-icons';
+import {
+  HEADER_LANGUAGE_ICON_PATH,
+  HEADER_MENU_ICON_PATHS,
+  HEADER_NAV_ITEMS,
+  HEADER_THEME_OPTIONS,
+  HEADER_THEME_TRIGGER_ICON_PATHS,
+} from '../header-icons';
 
 const SCROLLED_ENABLE_THRESHOLD = 20;
 const SCROLLED_DISABLE_THRESHOLD = 2;
@@ -15,7 +31,7 @@ const SCROLLED_DISABLE_THRESHOLD = 2;
   selector: 'app-mobile-header',
   imports: [NgClass, RouterLink, RouterLinkActive, TooltipDirective],
   templateUrl: './mobile-header.component.html',
-  styleUrls: ['./mobile-header.component.css', './mobile-header.theme.css']
+  styleUrls: ['./mobile-header.component.css', './mobile-header.theme.css'],
 })
 export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
   private animationFrameId: number | null = null;
@@ -40,6 +56,8 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
   private readonly router = inject(Router);
   readonly closeIconPath = HEADER_MENU_ICON_PATHS.close;
   readonly isScrolled = signal(this.getScrollTop() >= SCROLLED_ENABLE_THRESHOLD);
+  readonly languageDialog = inject(LanguageDialogService);
+  readonly languageIconPath = HEADER_LANGUAGE_ICON_PATH;
   readonly menuIconPath = HEADER_MENU_ICON_PATHS.menu;
   readonly navItems = HEADER_NAV_ITEMS;
   readonly menuOpen = signal(false);
@@ -57,7 +75,7 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
       path: '/systems/coupyn',
       externalUrl: 'https://coupyn.com',
       ariaLabel: 'View Coupyn system page',
-      externalAriaLabel: 'Open Coupyn.com in a new tab'
+      externalAriaLabel: 'Open Coupyn.com in a new tab',
     },
     {
       brand: 'chatpdm',
@@ -65,14 +83,14 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
       path: '/systems/chatpdm',
       externalUrl: 'https://chatpdm.com',
       ariaLabel: 'View ChatPDM system page',
-      externalAriaLabel: 'Open ChatPDM.com in a new tab'
-    }
+      externalAriaLabel: 'Open ChatPDM.com in a new tab',
+    },
   ];
   readonly systemChildLinks = [
     { label: 'Coupyn', path: '/systems/coupyn' },
     { label: 'ChatPDM', path: '/systems/chatpdm' },
     { label: 'DBF', path: '/systems/deterministic-boundary-firewall' },
-    { label: 'CIM', path: '/systems/continuity-identity-model' }
+    { label: 'CIM', path: '/systems/continuity-identity-model' },
   ];
 
   ngAfterViewInit(): void {
@@ -124,6 +142,12 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
     this.themeMenuOpen.set(false);
   }
 
+  openLanguageDialog(): void {
+    this.menuOpen.set(false);
+    this.themeMenuOpen.set(false);
+    void this.languageDialog.open();
+  }
+
   isExactRoute(path: string): boolean {
     return this.router.url.split(/[?#]/, 1)[0] === path;
   }
@@ -131,7 +155,9 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
   isSystemsRoute(): boolean {
     const currentPath = this.router.url.split(/[?#]/, 1)[0];
 
-    return currentPath === '/systems' || this.systemChildLinks.some((link) => link.path === currentPath);
+    return (
+      currentPath === '/systems' || this.systemChildLinks.some((link) => link.path === currentPath)
+    );
   }
 
   @HostListener('document:click', ['$event'])
@@ -153,7 +179,10 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
   private blurActiveElement(): void {
     const activeElement = this.elementRef.nativeElement.ownerDocument.activeElement;
 
-    if (activeElement instanceof HTMLElement && this.elementRef.nativeElement.contains(activeElement)) {
+    if (
+      activeElement instanceof HTMLElement &&
+      this.elementRef.nativeElement.contains(activeElement)
+    ) {
       activeElement.blur();
     }
   }
@@ -206,7 +235,8 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
     const scrollHeight = Math.max(documentElement.scrollHeight, body.scrollHeight);
     const viewportHeight = browserWindow.innerHeight || documentElement.clientHeight;
     const scrollableDistance = Math.max(0, scrollHeight - viewportHeight);
-    const progress = scrollableDistance > 0 ? Math.min(1, Math.max(0, scrollTop / scrollableDistance)) : 0;
+    const progress =
+      scrollableDistance > 0 ? Math.min(1, Math.max(0, scrollTop / scrollableDistance)) : 0;
 
     return Number(progress.toFixed(4));
   }

@@ -5,6 +5,7 @@ import {
   mdiNavigationVariantOutline,
   mdiShieldOutline,
   mdiSitemapOutline,
+  mdiTranslate,
 } from '@mdi/js';
 
 import { SiteFooterComponent } from './site-footer.component';
@@ -99,5 +100,20 @@ describe('SiteFooterComponent', () => {
       mdiShieldOutline,
       mdiEmailOutline,
     ]);
+  });
+
+  it('renders the shared language availability trigger', () => {
+    const fixture = TestBed.createComponent(SiteFooterComponent);
+    fixture.detectChanges();
+
+    const component = fixture.componentInstance;
+    const trigger = fixture.nativeElement.querySelector(
+      '[data-testid="footer-language-button"]',
+    ) as HTMLButtonElement;
+
+    expect(component.languageIconPath).toBe(mdiTranslate);
+    expect(trigger).not.toBeNull();
+    expect(trigger.getAttribute('aria-haspopup')).toBe('dialog');
+    expect(trigger.textContent).toContain('40+ languages coming soon');
   });
 });

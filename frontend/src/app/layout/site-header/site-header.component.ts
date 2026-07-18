@@ -1,11 +1,26 @@
 import { DOCUMENT, isPlatformBrowser, NgClass } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, HostListener, inject, OnDestroy, PLATFORM_ID, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  OnDestroy,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { TopNavigationService } from '../../core/navigation/top-navigation.service';
 import { ThemeService, ThemeSetting } from '../../core/theme/theme.service';
+import { LanguageDialogService } from '../../shared/dialogs/language-dialog/language-dialog.service';
 import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
-import { HEADER_NAV_ITEMS, HEADER_THEME_OPTIONS, HEADER_THEME_TRIGGER_ICON_PATHS } from './header-icons';
+import {
+  HEADER_LANGUAGE_ICON_PATH,
+  HEADER_NAV_ITEMS,
+  HEADER_THEME_OPTIONS,
+  HEADER_THEME_TRIGGER_ICON_PATHS,
+} from './header-icons';
 import { MobileHeaderComponent } from './mobile/mobile-header.component';
 
 const SCROLLED_ENABLE_THRESHOLD = 20;
@@ -15,7 +30,11 @@ const SCROLLED_DISABLE_THRESHOLD = 2;
   selector: 'app-site-header',
   imports: [MobileHeaderComponent, NgClass, RouterLink, RouterLinkActive, TooltipDirective],
   templateUrl: './site-header.component.html',
-  styleUrls: ['./site-header.component.css', './site-header.theme.css', './site-header.responsive.css']
+  styleUrls: [
+    './site-header.component.css',
+    './site-header.theme.css',
+    './site-header.responsive.css',
+  ],
 })
 export class SiteHeaderComponent implements AfterViewInit, OnDestroy {
   private animationFrameId: number | null = null;
@@ -38,6 +57,8 @@ export class SiteHeaderComponent implements AfterViewInit, OnDestroy {
   readonly themeService = inject(ThemeService);
   readonly topNavigation = inject(TopNavigationService);
   readonly isScrolled = signal(this.getScrollTop() >= SCROLLED_ENABLE_THRESHOLD);
+  readonly languageDialog = inject(LanguageDialogService);
+  readonly languageIconPath = HEADER_LANGUAGE_ICON_PATH;
   readonly navItems = HEADER_NAV_ITEMS;
   readonly scrollProgress = signal(this.getScrollProgress());
   readonly themeMenuOpen = signal(false);
@@ -79,6 +100,11 @@ export class SiteHeaderComponent implements AfterViewInit, OnDestroy {
   setTheme(setting: ThemeSetting): void {
     this.themeService.setTheme(setting);
     this.themeMenuOpen.set(false);
+  }
+
+  openLanguageDialog(): void {
+    this.themeMenuOpen.set(false);
+    void this.languageDialog.open();
   }
 
   @HostListener('document:click', ['$event'])
@@ -141,7 +167,8 @@ export class SiteHeaderComponent implements AfterViewInit, OnDestroy {
     const scrollHeight = Math.max(documentElement.scrollHeight, body.scrollHeight);
     const viewportHeight = browserWindow.innerHeight || documentElement.clientHeight;
     const scrollableDistance = Math.max(0, scrollHeight - viewportHeight);
-    const progress = scrollableDistance > 0 ? Math.min(1, Math.max(0, scrollTop / scrollableDistance)) : 0;
+    const progress =
+      scrollableDistance > 0 ? Math.min(1, Math.max(0, scrollTop / scrollableDistance)) : 0;
 
     return Number(progress.toFixed(4));
   }

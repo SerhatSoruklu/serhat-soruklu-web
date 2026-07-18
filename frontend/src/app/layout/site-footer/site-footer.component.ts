@@ -5,9 +5,11 @@ import {
   mdiNavigationVariantOutline,
   mdiShieldOutline,
   mdiSitemapOutline,
+  mdiTranslate,
 } from '@mdi/js';
 
 import { TopNavigationService } from '../../core/navigation/top-navigation.service';
+import { LanguageDialogService } from '../../shared/dialogs/language-dialog/language-dialog.service';
 
 interface FooterLink {
   label: string;
@@ -22,6 +24,8 @@ interface FooterLink {
 })
 export class SiteFooterComponent {
   readonly currentYear = new Date().getFullYear();
+  readonly languageDialog = inject(LanguageDialogService);
+  readonly languageIconPath = mdiTranslate;
   readonly topNavigation = inject(TopNavigationService);
   readonly groupIconPaths = {
     identity: mdiShieldOutline,
@@ -51,4 +55,8 @@ export class SiteFooterComponent {
   ];
 
   readonly reachLinks: FooterLink[] = [{ label: 'Contact', path: '/contact' }];
+
+  openLanguageDialog(): void {
+    void this.languageDialog.open();
+  }
 }

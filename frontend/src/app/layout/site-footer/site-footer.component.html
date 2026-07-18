@@ -36,6 +36,25 @@
       <p class="site-footer__statement">
         Building long-horizon internet systems with clarity, control, and operational discipline.
       </p>
+
+      <button
+        class="site-footer__language"
+        type="button"
+        aria-label="Language availability: 40 plus languages coming soon"
+        aria-haspopup="dialog"
+        data-testid="footer-language-button"
+        (click)="openLanguageDialog()"
+      >
+        <span class="site-footer__language-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path [attr.d]="languageIconPath"></path>
+          </svg>
+        </span>
+        <span class="site-footer__language-copy">
+          <span>Global access</span>
+          <strong>40+ languages coming soon</strong>
+        </span>
+      </button>
     </div>
 
     <nav class="site-footer__nav" aria-label="Footer navigation">

@@ -1,16 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { mdiThemeLightDark, mdiWeatherNight, mdiWhiteBalanceSunny } from '@mdi/js';
+import { mdiThemeLightDark, mdiTranslate, mdiWeatherNight, mdiWhiteBalanceSunny } from '@mdi/js';
 
 import { routes } from '../../app.routes';
-import { HEADER_NAV_ITEMS, HEADER_THEME_OPTIONS, HEADER_THEME_TRIGGER_ICON_PATHS } from './header-icons';
+import {
+  HEADER_LANGUAGE_ICON_PATH,
+  HEADER_NAV_ITEMS,
+  HEADER_THEME_OPTIONS,
+  HEADER_THEME_TRIGGER_ICON_PATHS,
+} from './header-icons';
 import { SiteHeaderComponent } from './site-header.component';
 
 describe('SiteHeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SiteHeaderComponent],
-      providers: [provideRouter(routes)]
+      providers: [provideRouter(routes)],
     }).compileComponents();
   });
 
@@ -32,10 +37,24 @@ describe('SiteHeaderComponent', () => {
 
     expect(component.navItems).toBe(HEADER_NAV_ITEMS);
     expect(component.themeOptions).toBe(HEADER_THEME_OPTIONS);
+    expect(component.languageIconPath).toBe(HEADER_LANGUAGE_ICON_PATH);
+    expect(component.languageIconPath).toBe(mdiTranslate);
     expect(component.themeTriggerIconPaths).toBe(HEADER_THEME_TRIGGER_ICON_PATHS);
     expect(component.themeTriggerIconPaths.dark).toBe(mdiWeatherNight);
     expect(component.themeTriggerIconPaths.light).toBe(mdiWhiteBalanceSunny);
     expect(component.themeTriggerIconPaths.system).toBe(mdiThemeLightDark);
+  });
+
+  it('renders the language availability dialog trigger', () => {
+    const fixture = TestBed.createComponent(SiteHeaderComponent);
+    fixture.detectChanges();
+
+    const trigger = fixture.nativeElement.querySelector(
+      '[data-testid="desktop-language-button"]',
+    ) as HTMLButtonElement;
+
+    expect(trigger).not.toBeNull();
+    expect(trigger.getAttribute('aria-haspopup')).toBe('dialog');
   });
 
   it('closes the theme menu on outside click and escape', () => {

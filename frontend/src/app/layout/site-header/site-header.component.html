@@ -5,7 +5,12 @@
   [style.--scroll-progress]="scrollProgress()"
 >
   <div class="site-header__inner">
-    <a class="site-brand" routerLink="/" aria-label="Serhat Soruklu home" (click)="topNavigation.handleBrandClick()">
+    <a
+      class="site-brand"
+      routerLink="/"
+      aria-label="Serhat Soruklu home"
+      (click)="topNavigation.handleBrandClick()"
+    >
       <span class="site-brand__mark">
         <img
           class="site-brand__logo site-brand__logo--dark"
@@ -16,7 +21,7 @@
           loading="eager"
           decoding="async"
           data-testid="desktop-brand-logo-dark"
-        >
+        />
         <img
           class="site-brand__logo site-brand__logo--light"
           src="/assets/brand/logo/serhat_soruklu_s_light_header.png"
@@ -26,7 +31,7 @@
           loading="eager"
           decoding="async"
           data-testid="desktop-brand-logo-light"
-        >
+        />
       </span>
       <span class="site-brand__text">
         <span class="site-brand__name">Serhat Soruklu</span>
@@ -44,7 +49,13 @@
           class="site-nav__link"
           (click)="topNavigation.handleLinkClick(item.path)"
         >
-          <svg class="site-nav__icon" [ngClass]="{ 'site-nav__github-icon': item.iconClass === 'github-icon' }" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <svg
+            class="site-nav__icon"
+            [ngClass]="{ 'site-nav__github-icon': item.iconClass === 'github-icon' }"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            focusable="false"
+          >
             <path [attr.d]="item.iconPath"></path>
           </svg>
           <span>{{ item.label }}</span>
@@ -52,50 +63,91 @@
       }
     </nav>
 
-    <div class="theme-selector">
+    <div class="site-header__actions">
       <button
-        class="theme-selector__trigger"
+        class="language-trigger"
         type="button"
-        aria-label="Select theme"
-        [attr.aria-expanded]="themeMenuOpen()"
-        aria-haspopup="menu"
-        [appTooltip]="themeService.themeTooltipText()"
+        aria-label="Language availability: 40 plus languages coming soon"
+        aria-haspopup="dialog"
+        appTooltip="40+ languages coming soon"
         appTooltipPlacement="bottom"
-        data-testid="desktop-theme-menu-button"
-        (click)="toggleThemeMenu()"
+        data-testid="desktop-language-button"
+        (click)="openLanguageDialog()"
       >
-        <span class="theme-selector__trigger-icons" aria-hidden="true">
-          <svg class="theme-selector__icon theme-selector__icon--dark" viewBox="0 0 24 24" focusable="false">
-            <path [attr.d]="themeTriggerIconPaths.dark"></path>
-          </svg>
-          <svg class="theme-selector__icon theme-selector__icon--light" viewBox="0 0 24 24" focusable="false">
-            <path [attr.d]="themeTriggerIconPaths.light"></path>
-          </svg>
-          <svg class="theme-selector__icon theme-selector__icon--system" viewBox="0 0 24 24" focusable="false">
-            <path [attr.d]="themeTriggerIconPaths.system"></path>
-          </svg>
-        </span>
+        <svg
+          class="language-trigger__icon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path [attr.d]="languageIconPath"></path>
+        </svg>
       </button>
 
-      @if (themeMenuOpen()) {
-        <div class="theme-selector__menu" role="menu" aria-label="Theme options">
-          @for (option of themeOptions; track option.value) {
-            <button
-              class="theme-selector__option"
-              [ngClass]="{ 'theme-selector__option--active': themeService.setting() === option.value }"
-              type="button"
-              role="menuitemradio"
-              [attr.aria-checked]="themeService.setting() === option.value"
-              (click)="setTheme(option.value)"
+      <div class="theme-selector">
+        <button
+          class="theme-selector__trigger"
+          type="button"
+          aria-label="Select theme"
+          [attr.aria-expanded]="themeMenuOpen()"
+          aria-haspopup="menu"
+          [appTooltip]="themeService.themeTooltipText()"
+          appTooltipPlacement="bottom"
+          data-testid="desktop-theme-menu-button"
+          (click)="toggleThemeMenu()"
+        >
+          <span class="theme-selector__trigger-icons" aria-hidden="true">
+            <svg
+              class="theme-selector__icon theme-selector__icon--dark"
+              viewBox="0 0 24 24"
+              focusable="false"
             >
-              <svg class="theme-selector__option-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path [attr.d]="option.iconPath"></path>
-              </svg>
-              <span>{{ option.label }}</span>
-            </button>
-          }
-        </div>
-      }
+              <path [attr.d]="themeTriggerIconPaths.dark"></path>
+            </svg>
+            <svg
+              class="theme-selector__icon theme-selector__icon--light"
+              viewBox="0 0 24 24"
+              focusable="false"
+            >
+              <path [attr.d]="themeTriggerIconPaths.light"></path>
+            </svg>
+            <svg
+              class="theme-selector__icon theme-selector__icon--system"
+              viewBox="0 0 24 24"
+              focusable="false"
+            >
+              <path [attr.d]="themeTriggerIconPaths.system"></path>
+            </svg>
+          </span>
+        </button>
+
+        @if (themeMenuOpen()) {
+          <div class="theme-selector__menu" role="menu" aria-label="Theme options">
+            @for (option of themeOptions; track option.value) {
+              <button
+                class="theme-selector__option"
+                [ngClass]="{
+                  'theme-selector__option--active': themeService.setting() === option.value,
+                }"
+                type="button"
+                role="menuitemradio"
+                [attr.aria-checked]="themeService.setting() === option.value"
+                (click)="setTheme(option.value)"
+              >
+                <svg
+                  class="theme-selector__option-icon"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path [attr.d]="option.iconPath"></path>
+                </svg>
+                <span>{{ option.label }}</span>
+              </button>
+            }
+          </div>
+        }
+      </div>
     </div>
   </div>
 

@@ -21,7 +21,7 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  content: "";
+  content: '';
   opacity: 0;
   background:
     radial-gradient(circle at 72% 0%, rgba(214, 168, 79, 0.055), transparent 36%),
@@ -39,12 +39,14 @@
   z-index: 1;
   height: 100vh;
   pointer-events: none;
-  content: "";
+  content: '';
   background: rgba(7, 9, 13, 0.32);
   -webkit-backdrop-filter: blur(8px) saturate(94%);
   backdrop-filter: blur(8px) saturate(94%);
   opacity: 0;
-  transition: opacity 180ms ease, visibility 180ms ease;
+  transition:
+    opacity 180ms ease,
+    visibility 180ms ease;
   visibility: hidden;
 }
 
@@ -97,7 +99,12 @@
   display: block;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, rgba(214, 168, 79, 0.48), #f0d58c 52%, rgba(214, 168, 79, 0.78));
+  background: linear-gradient(
+    90deg,
+    rgba(214, 168, 79, 0.48),
+    #f0d58c 52%,
+    rgba(214, 168, 79, 0.78)
+  );
   box-shadow: 0 0 10px rgba(214, 168, 79, 0.16);
   transform: scaleX(var(--scroll-progress, 0));
   transform-origin: left center;
@@ -124,7 +131,10 @@
   border-radius: 8px;
   background: #020306;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
-  transition: border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    opacity 160ms ease;
 }
 
 .mobile-brand__logo {
@@ -143,19 +153,21 @@
 .mobile-brand__name {
   overflow: hidden;
   color: #f5f7fa;
-  font-family: "Sora", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-family: 'Sora', Inter, ui-sans-serif, system-ui, sans-serif;
   font-size: 23px;
   font-weight: 700;
   line-height: 1;
   text-overflow: ellipsis;
-  transition: color 160ms ease, opacity 160ms ease;
+  transition:
+    color 160ms ease,
+    opacity 160ms ease;
   white-space: nowrap;
 }
 
 .mobile-brand__subtitle,
 .mobile-nav__link,
 .mobile-theme__option {
-  font-family: "Space Mono", "IBM Plex Mono", monospace;
+  font-family: 'Space Mono', 'IBM Plex Mono', monospace;
 }
 
 .mobile-brand__subtitle {
@@ -204,7 +216,11 @@
   background: #10141c;
   color: #f0d58c;
   cursor: pointer;
-  transition: border-color 160ms ease, box-shadow 160ms ease, color 160ms ease, background 160ms ease;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease,
+    background 160ms ease;
 }
 
 .mobile-header__icon-button:hover,
@@ -238,7 +254,9 @@
   width: 20px;
   height: 20px;
   fill: currentColor;
-  transition: opacity 180ms ease, transform 180ms ease;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
 }
 
 .menu-toggle__icon--open {
@@ -250,12 +268,12 @@
   transform: rotate(-90deg);
 }
 
-.menu-button[aria-expanded="true"] .menu-toggle__icon--open {
+.menu-button[aria-expanded='true'] .menu-toggle__icon--open {
   opacity: 0;
   transform: rotate(90deg);
 }
 
-.menu-button[aria-expanded="true"] .menu-toggle__icon--close {
+.menu-button[aria-expanded='true'] .menu-toggle__icon--close {
   opacity: 1;
   transform: none;
 }
@@ -274,7 +292,10 @@
   pointer-events: none;
   opacity: 0;
   transform: translateY(-4px);
-  transition: opacity 160ms ease, transform 160ms ease, visibility 160ms ease;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    visibility 160ms ease;
   visibility: hidden;
 }
 
@@ -353,7 +374,11 @@
   background: rgba(7, 9, 13, 0.34);
   color: #a8b0bd;
   text-decoration: none;
-  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease, color 160ms ease;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
 }
 
 .mobile-nav__home-icon {
@@ -365,7 +390,10 @@
   border-radius: 8px;
   background: rgba(2, 3, 6, 0.54);
   color: #a8b0bd;
-  transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease;
 }
 
 .mobile-nav__home-icon svg {
@@ -386,7 +414,7 @@
 .mobile-nav__quick-link,
 .mobile-nav__copyright,
 .mobile-nav__notice {
-  font-family: "Space Mono", "IBM Plex Mono", monospace;
+  font-family: 'Space Mono', 'IBM Plex Mono', monospace;
 }
 
 .mobile-nav__home-label {
@@ -443,7 +471,7 @@
   width: 1px;
   height: 14px;
   background: rgba(214, 168, 79, 0.62);
-  content: "";
+  content: '';
 }
 
 .mobile-nav__system-child {
@@ -457,7 +485,7 @@
   border-radius: 6px;
   background: rgba(2, 3, 6, 0.2);
   color: #a8b0bd;
-  font-family: "Space Mono", "IBM Plex Mono", monospace;
+  font-family: 'Space Mono', 'IBM Plex Mono', monospace;
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -465,7 +493,11 @@
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
-  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease, color 160ms ease;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
 }
 
 .mobile-nav__footer {
@@ -503,13 +535,17 @@
   background: rgba(7, 9, 13, 0.42);
   color: #d7dce5;
   text-decoration: none;
-  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease, color 160ms ease;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
 }
 
 .mobile-nav__quick-link::before {
   width: 18px;
   height: 18px;
-  content: "";
+  content: '';
 }
 
 .mobile-nav__quick-link .mobile-nav-brand {
@@ -524,7 +560,10 @@
   color: #d6a84f;
   fill: currentColor;
   opacity: 0.82;
-  transition: color 160ms ease, opacity 160ms ease, transform 160ms ease;
+  transition:
+    color 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
 }
 
 .mobile-nav__quick-link .mobile-nav-brand--chatpdm {
@@ -556,7 +595,7 @@
   justify-self: center;
   max-width: 100%;
   color: #8f98a7;
-  font-family: "Space Mono", "IBM Plex Mono", "JetBrains Mono", monospace;
+  font-family: 'Space Mono', 'IBM Plex Mono', 'JetBrains Mono', monospace;
   font-size: clamp(9px, 2.65vw, 11px);
   font-weight: 700;
   letter-spacing: 0;
@@ -565,7 +604,9 @@
   text-align: center;
   text-decoration: none;
   text-transform: none;
-  transition: color 160ms ease, text-decoration-color 160ms ease;
+  transition:
+    color 160ms ease,
+    text-decoration-color 160ms ease;
 }
 
 .mobile-nav-brand {
@@ -583,7 +624,7 @@
 
 .mobile-nav-brand__coupyn-word {
   color: #f8fafc;
-  font-family: "Coupyn Logo Open Sans", "Open Sans", Arial, sans-serif;
+  font-family: 'Coupyn Logo Open Sans', 'Open Sans', Arial, sans-serif;
   font-size: clamp(18px, 5.1vw, 22px);
   font-weight: 700;
   letter-spacing: -0.04em;
@@ -594,7 +635,8 @@
 .mobile-nav-brand__coupyn-script {
   margin-left: -1px;
   color: #72acf3;
-  font-family: "Coupyn Logo Pacifico", "Pacifico", "Caveat", "Segoe Script", "Brush Script MT", cursive;
+  font-family:
+    'Coupyn Logo Pacifico', 'Pacifico', 'Caveat', 'Segoe Script', 'Brush Script MT', cursive;
   font-size: clamp(13px, 3.8vw, 16px);
   font-weight: 400;
   letter-spacing: 0.02em;
@@ -638,7 +680,7 @@
   display: inline-flex;
   min-width: 0;
   align-items: baseline;
-  font-family: "ChatPDM Logo Inter", Inter, Arial, sans-serif;
+  font-family: 'ChatPDM Logo Inter', Inter, Arial, sans-serif;
   font-size: clamp(18px, 5vw, 21px);
   font-weight: 600;
   letter-spacing: -0.035em;
@@ -750,8 +792,7 @@
 .mobile-nav__home--active {
   border-color: rgba(214, 168, 79, 0.58);
   background:
-    linear-gradient(135deg, rgba(214, 168, 79, 0.1), rgba(214, 168, 79, 0.025) 52%),
-    #07090d;
+    linear-gradient(135deg, rgba(214, 168, 79, 0.1), rgba(214, 168, 79, 0.025) 52%), #07090d;
   box-shadow: inset 3px 0 0 #d6a84f;
 }
 
@@ -791,28 +832,66 @@
   text-underline-offset: 3px;
 }
 
-@media (max-width: 389px) {
+@media (max-width: 479px) {
   .mobile-header__bar {
-    min-height: 80px;
-    gap: 10px;
+    gap: 8px;
   }
 
   .mobile-brand {
-    gap: 10px;
+    gap: 9px;
   }
 
   .mobile-brand__mark {
-    width: 48px;
-    height: 48px;
+    width: 46px;
+    height: 46px;
   }
 
   .mobile-brand__logo {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
   }
 
   .mobile-brand__name {
-    font-size: 18.5px;
+    font-size: 19px;
+  }
+
+  .mobile-brand__subtitle {
+    font-size: 9px;
+    letter-spacing: 0.09em;
+  }
+
+  .mobile-header__actions {
+    gap: 5px;
+  }
+
+  .mobile-header__icon-button {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 389px) {
+  .mobile-header__bar {
+    min-height: 80px;
+    gap: 7px;
+  }
+
+  .mobile-brand {
+    gap: 8px;
+  }
+
+  .mobile-brand__mark {
+    width: 44px;
+    height: 44px;
+  }
+
+  .mobile-brand__logo {
+    width: 35px;
+    height: 35px;
+  }
+
+  .mobile-brand__name {
+    font-size: 15.5px;
   }
 
   .mobile-brand__subtitle {
@@ -824,6 +903,10 @@
   .mobile-header__icon-button {
     width: 40px;
     height: 40px;
+  }
+
+  .mobile-header__actions {
+    gap: 4px;
   }
 
   .mobile-nav {
@@ -926,6 +1009,39 @@
   .mobile-nav__notice {
     max-width: 250px;
     font-size: 10px;
+  }
+}
+
+@media (max-width: 339px) {
+  .mobile-header__bar {
+    gap: 6px;
+  }
+
+  .mobile-brand {
+    gap: 6px;
+  }
+
+  .mobile-brand__mark {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mobile-brand__logo {
+    width: 32px;
+    height: 32px;
+  }
+
+  .mobile-brand__name {
+    font-size: 13px;
+  }
+
+  .mobile-brand__subtitle {
+    font-size: 7.5px;
+    letter-spacing: 0.04em;
+  }
+
+  .mobile-header__actions {
+    gap: 3px;
   }
 }
 

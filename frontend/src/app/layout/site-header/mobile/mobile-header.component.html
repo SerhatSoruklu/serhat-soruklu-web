@@ -3,13 +3,18 @@
   [ngClass]="{
     'mobile-header--nav-open': menuOpen(),
     'mobile-header--panel-open': menuOpen() || themeMenuOpen(),
-    'mobile-header--scrolled': isScrolled()
+    'mobile-header--scrolled': isScrolled(),
   }"
   data-testid="mobile-header"
   [style.--scroll-progress]="scrollProgress()"
 >
   <div class="mobile-header__bar">
-    <a class="mobile-brand" routerLink="/" aria-label="Serhat Soruklu home" (click)="topNavigation.handleBrandClick(); closeMenu()">
+    <a
+      class="mobile-brand"
+      routerLink="/"
+      aria-label="Serhat Soruklu home"
+      (click)="topNavigation.handleBrandClick(); closeMenu()"
+    >
       <span class="mobile-brand__mark">
         <img
           class="mobile-brand__logo mobile-brand__logo--dark"
@@ -20,7 +25,7 @@
           loading="eager"
           decoding="async"
           data-testid="mobile-brand-logo-dark"
-        >
+        />
         <img
           class="mobile-brand__logo mobile-brand__logo--light"
           src="/assets/brand/logo/serhat_soruklu_s_light_header.png"
@@ -30,7 +35,7 @@
           loading="eager"
           decoding="async"
           data-testid="mobile-brand-logo-light"
-        >
+        />
       </span>
       <span class="mobile-brand__text">
         <span class="mobile-brand__name">Serhat Soruklu</span>
@@ -39,6 +44,21 @@
     </a>
 
     <div class="mobile-header__actions">
+      <button
+        class="mobile-header__icon-button"
+        type="button"
+        aria-label="Language availability: 40 plus languages coming soon"
+        aria-haspopup="dialog"
+        appTooltip="40+ languages coming soon"
+        appTooltipPlacement="bottom"
+        data-testid="mobile-language-button"
+        (click)="openLanguageDialog()"
+      >
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path [attr.d]="languageIconPath"></path>
+        </svg>
+      </button>
+
       <div class="mobile-theme">
         <button
           class="mobile-header__icon-button"
@@ -75,7 +95,9 @@
           @for (option of themeOptions; track option.value) {
             <button
               class="mobile-theme__option"
-              [ngClass]="{ 'mobile-theme__option--active': themeService.setting() === option.value }"
+              [ngClass]="{
+                'mobile-theme__option--active': themeService.setting() === option.value,
+              }"
               type="button"
               role="menuitemradio"
               [attr.aria-checked]="themeService.setting() === option.value"
@@ -101,10 +123,18 @@
         (click)="toggleMenu()"
       >
         <span class="menu-toggle" aria-hidden="true">
-          <svg class="menu-toggle__icon menu-toggle__icon--open" viewBox="0 0 24 24" focusable="false">
+          <svg
+            class="menu-toggle__icon menu-toggle__icon--open"
+            viewBox="0 0 24 24"
+            focusable="false"
+          >
             <path [attr.d]="menuIconPath"></path>
           </svg>
-          <svg class="menu-toggle__icon menu-toggle__icon--close" viewBox="0 0 24 24" focusable="false">
+          <svg
+            class="menu-toggle__icon menu-toggle__icon--close"
+            viewBox="0 0 24 24"
+            focusable="false"
+          >
             <path [attr.d]="closeIconPath"></path>
           </svg>
         </span>
@@ -155,7 +185,13 @@
         [attr.tabindex]="menuOpen() ? 0 : -1"
         (click)="topNavigation.handleLinkClick(item.path); closeMenu()"
       >
-        <svg class="mobile-nav__icon" [ngClass]="{ 'mobile-nav__github-icon': item.iconClass === 'github-icon' }" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <svg
+          class="mobile-nav__icon"
+          [ngClass]="{ 'mobile-nav__github-icon': item.iconClass === 'github-icon' }"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+        >
           <path [attr.d]="item.iconPath"></path>
         </svg>
         <span>{{ item.label }}</span>
@@ -204,11 +240,17 @@
                     <span class="mobile-nav-brand__chatpdm-square"></span>
                   </span>
                   <span class="mobile-nav-brand__chatpdm-wordmark">
-                    <span class="mobile-nav-brand__chatpdm-chat">Chat</span><span class="mobile-nav-brand__chatpdm-pdm">PDM</span>
+                    <span class="mobile-nav-brand__chatpdm-chat">Chat</span
+                    ><span class="mobile-nav-brand__chatpdm-pdm">PDM</span>
                   </span>
                 </span>
               }
-              <svg class="mobile-nav__quick-link-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <svg
+                class="mobile-nav__quick-link-arrow"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                focusable="false"
+              >
                 <path [attr.d]="quickLinkArrowPath"></path>
               </svg>
             </a>
@@ -230,9 +272,7 @@
         <span class="mobile-nav__copyright-mark" aria-hidden="true">&copy;</span>
         <span class="mobile-nav__copyright-text">{{ currentYear }} Serhat Soruklu</span>
       </p>
-      <p class="mobile-nav__notice">
-        Built and maintained as an independent systems portfolio.
-      </p>
+      <p class="mobile-nav__notice">Built and maintained as an independent systems portfolio.</p>
     </footer>
   </nav>
 </header>
