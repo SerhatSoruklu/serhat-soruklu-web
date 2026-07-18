@@ -1,1 +1,896 @@
-/* ChatPDM system page-specific styles extend the shared standard page shell. */
+:host {
+  display: block;
+  color: #f5f7fa;
+}
+
+.chatpdm-page {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: transparent;
+}
+
+.chatpdm-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 760px;
+  background: transparent;
+}
+
+.chatpdm-hero::after {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 0;
+  height: 360px;
+  background: linear-gradient(180deg, transparent 0%, rgba(8, 11, 17, 0.12) 54%, transparent 100%);
+  content: "";
+  pointer-events: none;
+}
+
+.chatpdm-hero__background {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.chatpdm-hero__grid {
+  position: absolute;
+  inset: -2px;
+  background:
+    linear-gradient(90deg, rgba(168, 176, 189, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(168, 176, 189, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, transparent, rgba(47, 111, 181, 0.06), transparent);
+  background-size: 76px 76px, 76px 76px, 100% 100%;
+  opacity: 0.62;
+  -webkit-mask-image: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.74) 70%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0.74) 70%, transparent 100%);
+}
+
+.chatpdm-hero__boundary {
+  position: absolute;
+  inset: 7% -12% auto auto;
+  width: min(56vw, 760px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(47, 111, 181, 0.22);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 42%, rgba(47, 111, 181, 0.075) 43%, transparent 44%),
+    radial-gradient(circle, transparent 62%, rgba(214, 168, 79, 0.06) 63%, transparent 64%);
+  opacity: 0.72;
+}
+
+.chatpdm-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 34px;
+  align-items: center;
+  min-height: 760px;
+  padding-top: 126px;
+  padding-bottom: 72px;
+}
+
+.chatpdm-hero__copy,
+.chatpdm-section-heading,
+.chatpdm-founder__inner > div {
+  min-width: 0;
+}
+
+.chatpdm-eyebrow {
+  margin: 0;
+  color: #d6a84f;
+  font-family: "Space Mono", "IBM Plex Mono", "JetBrains Mono", monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.chatpdm-logo-link {
+  display: inline-flex;
+  max-width: 100%;
+  margin-top: 22px;
+  color: inherit;
+  text-decoration: none;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.chatpdm-logo-link:hover {
+  opacity: 0.84;
+  transform: translateY(-2px);
+}
+
+.chatpdm-logo-link:focus-visible {
+  border-radius: 6px;
+  outline: 2px solid rgba(240, 213, 140, 0.78);
+  outline-offset: 6px;
+}
+
+.chatpdm-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 24px);
+  max-width: 100%;
+  color: inherit;
+  white-space: nowrap;
+}
+
+.chatpdm-logo__mark {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.chatpdm-logo__circle {
+  width: clamp(36px, 6vw, 74px);
+  height: clamp(36px, 6vw, 74px);
+  border: clamp(4px, 0.55vw, 7px) solid #e2e8f0;
+  border-radius: 999px;
+}
+
+.chatpdm-logo__line {
+  width: clamp(32px, 5vw, 68px);
+  height: clamp(4px, 0.55vw, 7px);
+  background: #e2e8f0;
+}
+
+.chatpdm-logo__square {
+  width: clamp(26px, 4.4vw, 54px);
+  height: clamp(26px, 4.4vw, 54px);
+  margin-left: clamp(9px, 1.5vw, 18px);
+  border-radius: 4px;
+  background: #e2e8f0;
+}
+
+.chatpdm-logo__wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: "Sora", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(56px, 9vw, 132px);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.1),
+    0 28px 72px rgba(0, 0, 0, 0.5);
+}
+
+.chatpdm-logo__wordmark span {
+  color: #f8fafc;
+}
+
+.chatpdm-logo__wordmark strong {
+  color: #72acf3;
+  font: inherit;
+}
+
+.chatpdm-hero__subtitle {
+  display: inline-flex;
+  margin: 42px 0 0;
+  border: 1px solid rgba(47, 111, 181, 0.4);
+  border-radius: 999px;
+  padding: 9px 12px;
+  background: rgba(7, 9, 13, 0.46);
+  color: #d7e7ff;
+  font-family: "Space Mono", "IBM Plex Mono", monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  color: #f5f7fa;
+  font-family: "Sora", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+h1 {
+  max-width: 880px;
+  margin-top: 22px;
+  font-size: clamp(38px, 6vw, 78px);
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+h2 {
+  margin-top: 12px;
+  font-size: clamp(28px, 4.6vw, 54px);
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+h3 {
+  font-size: 18px;
+  line-height: 1.22;
+}
+
+.chatpdm-hero__statement,
+.chatpdm-section-heading p,
+.chatpdm-founder__inner > p,
+.chatpdm-cta .chatpdm-section-heading p {
+  color: #d5dae3;
+  font-size: 17px;
+  line-height: 1.62;
+  text-wrap: pretty;
+}
+
+.chatpdm-hero__statement {
+  max-width: 790px;
+  margin: 24px 0 0;
+  font-size: clamp(18px, 2.1vw, 23px);
+  line-height: 1.5;
+}
+
+.chatpdm-hero__actions,
+.chatpdm-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.chatpdm-console {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(47, 111, 181, 0.28);
+  border-radius: 8px;
+  padding: 18px;
+  background:
+    radial-gradient(circle at 82% 16%, rgba(47, 111, 181, 0.18), transparent 38%),
+    linear-gradient(180deg, rgba(16, 20, 28, 0.94), rgba(7, 9, 13, 0.86));
+  box-shadow:
+    0 34px 88px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.055);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.chatpdm-console:hover {
+  border-color: rgba(114, 172, 243, 0.42);
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.46),
+    0 0 0 1px rgba(114, 172, 243, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: translateY(-4px);
+}
+
+.chatpdm-console::before {
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(168, 176, 189, 0.08);
+  border-radius: 6px;
+  content: "";
+  pointer-events: none;
+}
+
+.chatpdm-console::after {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, #72acf3, rgba(214, 168, 79, 0.7), transparent);
+  content: "";
+}
+
+.chatpdm-console__header,
+.chatpdm-console__logic,
+.chatpdm-console__trace {
+  position: relative;
+  z-index: 1;
+}
+
+.chatpdm-console__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid rgba(37, 43, 54, 0.9);
+  padding: 2px 0 16px;
+  color: #a8b0bd;
+  font-family: "Space Mono", "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.chatpdm-console__header strong {
+  color: #d7e7ff;
+}
+
+.chatpdm-console__logic {
+  display: grid;
+  gap: 1px;
+  overflow: hidden;
+  margin-top: 20px;
+  border: 1px solid rgba(37, 43, 54, 0.88);
+  border-radius: 8px;
+  background: rgba(37, 43, 54, 0.88);
+}
+
+.chatpdm-console__logic div {
+  display: grid;
+  gap: 6px;
+  padding: 15px;
+  background: rgba(7, 9, 13, 0.72);
+}
+
+.chatpdm-console__logic small,
+.chatpdm-console__trace small,
+.chatpdm-runtime small {
+  color: #a8b0bd;
+  font-family: "Space Mono", "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.chatpdm-console__logic strong {
+  color: #f5f7fa;
+  font-family: "Sora", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 24px;
+  line-height: 1.05;
+}
+
+.chatpdm-console__trace,
+.chatpdm-runtime {
+  padding: 0;
+  margin: 18px 0 0;
+  list-style: none;
+}
+
+.chatpdm-console__trace {
+  display: grid;
+  gap: 10px;
+}
+
+.chatpdm-console__trace li {
+  position: relative;
+  display: grid;
+  gap: 5px;
+  border: 1px solid rgba(37, 43, 54, 0.9);
+  border-left: 3px solid rgba(114, 172, 243, 0.58);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: rgba(7, 9, 13, 0.56);
+}
+
+.chatpdm-console__trace li:not(:last-child)::after {
+  position: absolute;
+  bottom: -11px;
+  left: 20px;
+  width: 2px;
+  height: 11px;
+  background: rgba(114, 172, 243, 0.42);
+  content: "";
+}
+
+.chatpdm-console__trace-decision {
+  border-left-color: rgba(214, 168, 79, 0.72);
+}
+
+.chatpdm-console__trace span {
+  color: #f5f7fa;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.18;
+}
+
+.chatpdm-section,
+.chatpdm-founder,
+.chatpdm-cta {
+  position: relative;
+  padding-top: 20px;
+  padding-bottom: 16px;
+}
+
+.chatpdm-hero + .chatpdm-section {
+  margin-top: -88px;
+  padding-top: 0;
+}
+
+.chatpdm-hero + .chatpdm-section .chatpdm-section-frame {
+  background:
+    radial-gradient(ellipse at 72% 0%, rgba(47, 111, 181, 0.046), transparent 46%),
+    rgba(7, 9, 13, 0.22);
+}
+
+.chatpdm-section-frame,
+.chatpdm-founder__inner,
+.chatpdm-cta__inner {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(168, 176, 189, 0.075);
+  border-top-color: rgba(47, 111, 181, 0.18);
+  border-radius: 8px;
+  padding: 18px;
+  background: rgba(7, 9, 13, 0.24);
+}
+
+.chatpdm-section-frame::before,
+.chatpdm-founder__inner::before,
+.chatpdm-cta__inner::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(114, 172, 243, 0.5), rgba(214, 168, 79, 0.2), transparent);
+  content: "";
+  pointer-events: none;
+}
+
+.chatpdm-section-frame--split {
+  display: grid;
+  gap: 28px;
+}
+
+.chatpdm-section-frame--why {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(47, 111, 181, 0.09), transparent 34%),
+    rgba(7, 9, 13, 0.24);
+}
+
+.chatpdm-section-heading {
+  max-width: 860px;
+}
+
+.chatpdm-section-heading--compact {
+  max-width: 720px;
+}
+
+.chatpdm-section-heading p {
+  margin: 16px 0 0;
+}
+
+.chatpdm-core-grid,
+.chatpdm-principles-grid,
+.chatpdm-why-grid {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.chatpdm-section-frame--split .chatpdm-core-grid {
+  margin-top: 0;
+}
+
+.chatpdm-core-card,
+.chatpdm-principle-card,
+.chatpdm-why-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(37, 43, 54, 0.92);
+  border-radius: 8px;
+  padding: 18px;
+  background:
+    linear-gradient(180deg, rgba(16, 20, 28, 0.82), rgba(7, 9, 13, 0.66)),
+    rgba(16, 20, 28, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.chatpdm-core-card:hover,
+.chatpdm-principle-card:hover,
+.chatpdm-why-card:hover {
+  border-color: rgba(114, 172, 243, 0.28);
+  box-shadow:
+    0 18px 44px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transform: translateY(-4px);
+}
+
+.chatpdm-core-card::before,
+.chatpdm-principle-card::before,
+.chatpdm-why-card::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(114, 172, 243, 0.68), rgba(214, 168, 79, 0.32), transparent);
+  content: "";
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.chatpdm-core-card:hover::before,
+.chatpdm-principle-card:hover::before,
+.chatpdm-why-card:hover::before {
+  opacity: 1;
+}
+
+.chatpdm-core-card mat-icon,
+.chatpdm-principle-card mat-icon,
+.chatpdm-why-card mat-icon,
+.chatpdm-runtime mat-icon {
+  width: 26px;
+  height: 26px;
+  color: #72acf3;
+}
+
+.chatpdm-core-card h3,
+.chatpdm-principle-card h3,
+.chatpdm-why-card h3 {
+  margin-top: 16px;
+}
+
+.chatpdm-core-card p,
+.chatpdm-principle-card p,
+.chatpdm-why-card p {
+  margin: 10px 0 0;
+  color: #a8b0bd;
+  font-size: 15px;
+  line-height: 1.58;
+}
+
+.chatpdm-principle-card:nth-child(3n) mat-icon,
+.chatpdm-principle-card:nth-child(4n) mat-icon,
+.chatpdm-why-card:nth-child(2) mat-icon {
+  color: #d6a84f;
+}
+
+.chatpdm-runtime {
+  display: grid;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.chatpdm-runtime li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 5px 12px;
+  align-items: start;
+  border: 1px solid rgba(37, 43, 54, 0.92);
+  border-radius: 8px;
+  padding: 16px;
+  background: rgba(7, 9, 13, 0.58);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.chatpdm-runtime li::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: rgba(114, 172, 243, 0.66);
+  content: "";
+}
+
+.chatpdm-runtime li:hover {
+  border-color: rgba(114, 172, 243, 0.34);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.18);
+  transform: translateY(-3px);
+}
+
+.chatpdm-runtime__resolve::before {
+  background: rgba(92, 184, 137, 0.72);
+}
+
+.chatpdm-runtime__refuse::before {
+  background: rgba(214, 168, 79, 0.76);
+}
+
+.chatpdm-runtime span {
+  color: #f5f7fa;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.16;
+}
+
+.chatpdm-runtime mat-icon {
+  grid-row: 1 / span 2;
+}
+
+.chatpdm-founder__inner {
+  display: grid;
+  gap: 22px;
+  background:
+    linear-gradient(115deg, rgba(47, 111, 181, 0.1), transparent 34%),
+    rgba(7, 9, 13, 0.28);
+}
+
+.chatpdm-founder__inner > p {
+  margin: 0;
+}
+
+.chatpdm-cta {
+  padding-bottom: clamp(58px, 7vw, 104px);
+}
+
+.chatpdm-cta__inner {
+  display: grid;
+  gap: 22px;
+  align-items: center;
+}
+
+.chatpdm-cta__actions {
+  margin-top: 0;
+}
+
+@media (min-width: 768px) {
+  .chatpdm-hero__inner {
+    gap: 42px;
+    padding-top: 136px;
+    padding-bottom: 86px;
+  }
+
+  .chatpdm-console {
+    padding: 22px;
+  }
+
+  .chatpdm-console__logic {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .chatpdm-core-grid,
+  .chatpdm-principles-grid,
+  .chatpdm-why-grid,
+  .chatpdm-runtime {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .chatpdm-section-frame,
+  .chatpdm-founder__inner,
+  .chatpdm-cta__inner {
+    padding: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .chatpdm-hero__inner {
+    grid-template-columns: minmax(0, 1.04fr) minmax(360px, 0.76fr);
+    column-gap: clamp(64px, 6vw, 112px);
+    min-height: 820px;
+  }
+
+  .chatpdm-console {
+    align-self: center;
+  }
+
+  .chatpdm-section-frame--split {
+    grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+    align-items: start;
+  }
+
+  .chatpdm-section-heading--sticky {
+    position: sticky;
+    top: 112px;
+  }
+
+  .chatpdm-principles-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .chatpdm-runtime {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .chatpdm-runtime li {
+    min-height: 168px;
+  }
+
+  .chatpdm-founder__inner,
+  .chatpdm-cta__inner {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 0.78fr);
+  }
+
+  .chatpdm-cta__actions {
+    justify-content: flex-end;
+  }
+}
+
+@media (min-width: 1280px) {
+  .chatpdm-section-frame,
+  .chatpdm-founder__inner,
+  .chatpdm-cta__inner {
+    padding: 30px;
+  }
+
+  .chatpdm-why-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1440px) {
+  .chatpdm-hero,
+  .chatpdm-hero__inner {
+    min-height: 860px;
+  }
+}
+
+@media (max-width: 767px) {
+  .chatpdm-hero {
+    min-height: auto;
+  }
+
+  .chatpdm-hero__inner {
+    min-height: auto;
+  }
+
+  .chatpdm-logo {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .chatpdm-hero__actions .site-button,
+  .chatpdm-cta__actions .site-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .chatpdm-logo__wordmark {
+    font-size: clamp(44px, 15vw, 62px);
+  }
+
+  .chatpdm-console__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+:host-context(.theme-resolved-light) {
+  color: #111827;
+}
+
+:host-context(.theme-resolved-light) .chatpdm-hero {
+  background: transparent;
+}
+
+:host-context(.theme-resolved-light) .chatpdm-hero::after {
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.12) 54%, transparent 100%);
+}
+
+:host-context(.theme-resolved-light) .chatpdm-hero__grid {
+  background:
+    linear-gradient(90deg, rgba(95, 102, 115, 0.09) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(95, 102, 115, 0.075) 1px, transparent 1px),
+    linear-gradient(90deg, transparent, rgba(47, 111, 181, 0.05), transparent);
+}
+
+:host-context(.theme-resolved-light) .chatpdm-hero__boundary {
+  border-color: rgba(47, 111, 181, 0.18);
+  background:
+    radial-gradient(circle, transparent 42%, rgba(47, 111, 181, 0.055) 43%, transparent 44%),
+    radial-gradient(circle, transparent 62%, rgba(184, 135, 47, 0.06) 63%, transparent 64%);
+}
+
+:host-context(.theme-resolved-light) .chatpdm-hero + .chatpdm-section .chatpdm-section-frame {
+  background:
+    radial-gradient(ellipse at 72% 0%, rgba(47, 111, 181, 0.04), transparent 46%),
+    rgba(255, 255, 255, 0.62);
+}
+
+:host-context(.theme-resolved-light) h1,
+:host-context(.theme-resolved-light) h2,
+:host-context(.theme-resolved-light) h3,
+:host-context(.theme-resolved-light) .chatpdm-logo__wordmark span,
+:host-context(.theme-resolved-light) .chatpdm-console__logic strong,
+:host-context(.theme-resolved-light) .chatpdm-console__trace span,
+:host-context(.theme-resolved-light) .chatpdm-runtime span {
+  color: #111827;
+}
+
+:host-context(.theme-resolved-light) .chatpdm-logo__circle {
+  border-color: #0f172a;
+}
+
+:host-context(.theme-resolved-light) .chatpdm-logo__line,
+:host-context(.theme-resolved-light) .chatpdm-logo__square {
+  background: #0f172a;
+}
+
+:host-context(.theme-resolved-light) .chatpdm-logo__wordmark strong,
+:host-context(.theme-resolved-light) .chatpdm-core-card mat-icon,
+:host-context(.theme-resolved-light) .chatpdm-principle-card mat-icon,
+:host-context(.theme-resolved-light) .chatpdm-why-card mat-icon,
+:host-context(.theme-resolved-light) .chatpdm-runtime mat-icon {
+  color: #2563eb;
+}
+
+:host-context(.theme-resolved-light) .chatpdm-eyebrow,
+:host-context(.theme-resolved-light) .chatpdm-principle-card:nth-child(3n) mat-icon,
+:host-context(.theme-resolved-light) .chatpdm-principle-card:nth-child(4n) mat-icon,
+:host-context(.theme-resolved-light) .chatpdm-why-card:nth-child(2) mat-icon {
+  color: #b8872f;
+}
+
+:host-context(.theme-resolved-light) .chatpdm-hero__statement,
+:host-context(.theme-resolved-light) .chatpdm-section-heading p,
+:host-context(.theme-resolved-light) .chatpdm-founder__inner > p,
+:host-context(.theme-resolved-light) .chatpdm-cta .chatpdm-section-heading p {
+  color: #3f4653;
+}
+
+:host-context(.theme-resolved-light) .chatpdm-hero__subtitle,
+:host-context(.theme-resolved-light) .chatpdm-console,
+:host-context(.theme-resolved-light) .chatpdm-section-frame,
+:host-context(.theme-resolved-light) .chatpdm-founder__inner,
+:host-context(.theme-resolved-light) .chatpdm-cta__inner,
+:host-context(.theme-resolved-light) .chatpdm-core-card,
+:host-context(.theme-resolved-light) .chatpdm-principle-card,
+:host-context(.theme-resolved-light) .chatpdm-why-card,
+:host-context(.theme-resolved-light) .chatpdm-runtime li {
+  border-color: rgba(229, 224, 214, 0.95);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 247, 243, 0.82)),
+    #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86);
+}
+
+:host-context(.theme-resolved-light) .chatpdm-console__header {
+  border-bottom-color: rgba(229, 224, 214, 0.95);
+  color: #5f6673;
+}
+
+:host-context(.theme-resolved-light) .chatpdm-console__header strong,
+:host-context(.theme-resolved-light) .chatpdm-hero__subtitle {
+  color: #1f4c8f;
+}
+
+:host-context(.theme-resolved-light) .chatpdm-console__logic {
+  border-color: #e5e0d6;
+  background: #e5e0d6;
+}
+
+:host-context(.theme-resolved-light) .chatpdm-console__logic div {
+  background: #ffffff;
+}
+
+:host-context(.theme-resolved-light) .chatpdm-console__logic small,
+:host-context(.theme-resolved-light) .chatpdm-console__trace small,
+:host-context(.theme-resolved-light) .chatpdm-runtime small,
+:host-context(.theme-resolved-light) .chatpdm-core-card p,
+:host-context(.theme-resolved-light) .chatpdm-principle-card p,
+:host-context(.theme-resolved-light) .chatpdm-why-card p {
+  color: #5f6673;
+}
+
+:host-context(.theme-resolved-light) .chatpdm-console__trace li {
+  border-color: rgba(229, 224, 214, 0.95);
+  border-left-color: rgba(37, 99, 235, 0.45);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chatpdm-logo-link,
+  .chatpdm-console,
+  .chatpdm-core-card,
+  .chatpdm-principle-card,
+  .chatpdm-why-card,
+  .chatpdm-runtime li {
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      opacity 160ms ease;
+  }
+
+  .chatpdm-logo-link:hover,
+  .chatpdm-console:hover,
+  .chatpdm-core-card:hover,
+  .chatpdm-principle-card:hover,
+  .chatpdm-why-card:hover,
+  .chatpdm-runtime li:hover {
+    transform: none;
+  }
+}

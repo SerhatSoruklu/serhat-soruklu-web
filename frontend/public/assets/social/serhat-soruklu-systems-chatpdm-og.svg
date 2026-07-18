@@ -44,7 +44,7 @@
     <rect x="22" y="22" width="268" height="214" rx="22" fill="none" stroke="#1a202b" stroke-width="2"/>
     <text x="34" y="48" fill="#d6a84f" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700" letter-spacing="1.8">DETERMINISTIC GOVERNANCE</text>
 
-    <g id="chatpdm-og-logo" transform="translate(0 -8)">
+    <g id="chatpdm-og-logo" transform="translate(26 2) scale(0.82)">
       <circle cx="47" cy="94" r="14" fill="none" stroke="#e2e8f0" stroke-width="3.4"/>
       <path d="M61 94H82" stroke="#e2e8f0" stroke-width="3.4" stroke-linecap="square"/>
       <rect x="94" y="84" width="21" height="21" rx="2" fill="#e2e8f0"/>
@@ -52,13 +52,13 @@
       <text x="202" y="107" fill="#2563eb" font-family="Inter, Arial, Helvetica, sans-serif" font-size="36" font-weight="600" letter-spacing="-1.2">PDM</text>
     </g>
 
-    <g id="chatpdm-og-diagram" transform="translate(0 -8)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M58 166H96" stroke="#a8b0bd" stroke-width="2.5"/>
-      <path d="M132 166H170" stroke="#a8b0bd" stroke-width="2.5"/>
-      <path d="M206 166H236" stroke="#d6a84f" stroke-width="3"/>
+    <g id="chatpdm-og-diagram" transform="translate(31 27) scale(0.8)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M74 166H96" stroke="#a8b0bd" stroke-width="2.5"/>
+      <path d="M140 166H162" stroke="#a8b0bd" stroke-width="2.5"/>
+      <path d="M214 166H236" stroke="#d6a84f" stroke-width="3"/>
       <path d="M254 154C270 148 272 136 268 126" stroke="#2f6fb5" stroke-width="3"/>
       <path d="M254 178C270 184 272 198 268 210" stroke="#c75f5f" stroke-width="3"/>
-      <path d="M52 190V222H156" stroke="#a8b0bd" stroke-width="2" stroke-dasharray="5 7"/>
+      <path d="M38 185V228H156" stroke="#a8b0bd" stroke-width="2" stroke-dasharray="5 7"/>
 
       <rect x="30" y="147" width="44" height="38" rx="9" stroke="#a8b0bd" stroke-width="2"/>
       <rect x="96" y="147" width="44" height="38" rx="9" stroke="#a8b0bd" stroke-width="2"/>
@@ -73,13 +73,13 @@
       <path d="M261 124l6 6 11-14" stroke="#88d49b" stroke-width="2.5"/>
       <path d="M261 205l14 14M275 205l-14 14" stroke="#f3a4a4" stroke-width="2.5"/>
 
-      <text x="52" y="201" fill="#a8b0bd" stroke="none" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="700">Input</text>
-      <text x="118" y="201" fill="#a8b0bd" stroke="none" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="700">Parse</text>
-      <text x="188" y="201" fill="#f0d58c" stroke="none" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="700">Gate</text>
-      <text x="193" y="229" fill="#a8b0bd" stroke="none" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="700">Audit Trace</text>
+      <text x="52" y="201" fill="#a8b0bd" stroke="none" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700">Input</text>
+      <text x="118" y="201" fill="#a8b0bd" stroke="none" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700">Parse</text>
+      <text x="188" y="201" fill="#f0d58c" stroke="none" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700">Gate</text>
+      <text x="193" y="229" fill="#a8b0bd" stroke="none" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="700">Audit Trace</text>
     </g>
 
-    <circle cx="268" cy="116" r="28" fill="#2f6fb5" opacity="0.16" filter="url(#soft-glow)"/>
-    <circle cx="268" cy="204" r="28" fill="#c75f5f" opacity="0.11" filter="url(#soft-glow)"/>
+    <circle cx="245" cy="126" r="22" fill="#2f6fb5" opacity="0.16" filter="url(#soft-glow)"/>
+    <circle cx="245" cy="197" r="22" fill="#c75f5f" opacity="0.11" filter="url(#soft-glow)"/>
   </g>
 </svg>

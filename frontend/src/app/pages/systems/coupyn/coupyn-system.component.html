@@ -1,6 +1,277 @@
-<section class="page-placeholder" aria-labelledby="coupyn-system-title">
-  <div class="page-placeholder__inner">
-    <p class="page-placeholder__eyebrow">SYSTEMS / COUPYN</p>
-    <h1 id="coupyn-system-title">Coupyn</h1>
-  </div>
-</section>
+<div class="coupyn-page">
+  <section class="coupyn-hero layout-section" aria-labelledby="coupyn-title">
+    <div class="coupyn-hero__background" aria-hidden="true">
+      <div class="coupyn-hero__grid"></div>
+      <div class="coupyn-hero__scanline"></div>
+    </div>
+
+    <div class="coupyn-hero__inner layout-container--wide">
+      <div class="coupyn-hero__copy">
+        <p class="coupyn-eyebrow">SYSTEM / COMMERCE INTELLIGENCE</p>
+
+        <a
+          class="coupyn-logo-link"
+          [href]="coupynUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Coupyn.com in a new tab"
+        >
+          <span class="coupyn-logo" aria-hidden="true">
+            <span class="coupyn-logo__word">Coupyn</span>
+            <span class="coupyn-logo__script">.com</span>
+          </span>
+        </a>
+
+        <h1 id="coupyn-title">A live public offer and referral intelligence platform.</h1>
+
+        <p class="coupyn-hero__statement">
+          Coupyn is a large-scale commerce directory built from scratch by Serhat Soruklu to organize public coupon codes, referral links, merchant pages, discovery surfaces, trust signals, and long-term deal data into one searchable system.
+        </p>
+
+        <div class="coupyn-hero__actions" aria-label="Coupyn page actions">
+          <a class="site-button site-button-primary" [href]="coupynUrl" target="_blank" rel="noopener noreferrer">
+            Open Coupyn.com
+          </a>
+          <a class="site-button site-button-secondary" routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">
+            Back to Systems
+          </a>
+        </div>
+      </div>
+
+      <aside class="coupyn-command" aria-label="Coupyn system scale">
+        <div class="coupyn-command__topline">
+          <span>Public Directory Runtime</span>
+          <strong>Live System</strong>
+        </div>
+
+        <div class="coupyn-command__rank">
+          <span class="coupyn-command__rank-label">Indexed Companies</span>
+          <strong>950K+</strong>
+          <small>merchant and company page surface</small>
+        </div>
+
+        <dl class="coupyn-command__metrics">
+          <div>
+            <dt>Categories</dt>
+            <dd>150+</dd>
+          </div>
+          <div>
+            <dt>Industry Tags</dt>
+            <dd>1500+</dd>
+          </div>
+          <div>
+            <dt>Offer Surface</dt>
+            <dd>Public</dd>
+          </div>
+        </dl>
+
+        <div class="coupyn-command__pipeline" aria-label="Coupyn signal flow">
+          <span>Merchant</span>
+          <mat-icon svgIcon="coupyn-arrow" aria-hidden="true"></mat-icon>
+          <span>Offer</span>
+          <mat-icon svgIcon="coupyn-arrow" aria-hidden="true"></mat-icon>
+          <span>Trust</span>
+          <mat-icon svgIcon="coupyn-arrow" aria-hidden="true"></mat-icon>
+          <span>Visibility</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="coupyn-stats layout-section" aria-labelledby="coupyn-snapshot-title">
+    <div class="coupyn-section-frame layout-container--wide">
+      <div class="coupyn-section-heading">
+        <p class="coupyn-eyebrow">SYSTEM SNAPSHOT</p>
+        <h2 id="coupyn-snapshot-title">A Commerce Surface Built For Scale</h2>
+      </div>
+
+      <div class="coupyn-snapshot-grid">
+        <article class="coupyn-snapshot-card">
+          <mat-icon svgIcon="coupyn-snapshot-companies" aria-hidden="true"></mat-icon>
+          <strong>950K+</strong>
+          <span>companies and merchant pages</span>
+        </article>
+        <article class="coupyn-snapshot-card">
+          <mat-icon svgIcon="coupyn-snapshot-categories" aria-hidden="true"></mat-icon>
+          <strong>150+</strong>
+          <span>deal categories</span>
+        </article>
+        <article class="coupyn-snapshot-card">
+          <mat-icon svgIcon="coupyn-snapshot-industries" aria-hidden="true"></mat-icon>
+          <strong>1500+</strong>
+          <span>industry tags</span>
+        </article>
+        <article class="coupyn-snapshot-card">
+          <mat-icon svgIcon="coupyn-snapshot-submissions" aria-hidden="true"></mat-icon>
+          <strong>User</strong>
+          <span>submitted public offers</span>
+        </article>
+        <article class="coupyn-snapshot-card">
+          <mat-icon svgIcon="coupyn-snapshot-ranking" aria-hidden="true"></mat-icon>
+          <strong>Rank</strong>
+          <span>visibility and signal mechanics</span>
+        </article>
+        <article class="coupyn-snapshot-card">
+          <mat-icon svgIcon="coupyn-snapshot-directory" aria-hidden="true"></mat-icon>
+          <strong>Directory</strong>
+          <span>public merchant discovery layer</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="coupyn-section layout-section" aria-labelledby="coupyn-does-title">
+    <div class="coupyn-section-frame coupyn-section-frame--split layout-container--wide">
+      <div class="coupyn-section-heading coupyn-section-heading--sticky">
+        <p class="coupyn-eyebrow">WHAT COUPYN DOES</p>
+        <h2 id="coupyn-does-title">Organizes Fragmented Deal Activity Into A Searchable System</h2>
+        <p>
+          Coupyn gives users a direct path to public coupon codes, referral links, promos, and deals while giving each company a durable page where offer activity and useful signals can accumulate over time.
+        </p>
+      </div>
+
+      <div class="coupyn-purpose-list">
+        <article class="coupyn-purpose-card">
+          <mat-icon svgIcon="coupyn-what-search" aria-hidden="true"></mat-icon>
+          <h3>Discover public offers</h3>
+          <p>Users can browse coupon codes, referral links, promotions, and deal pages across merchants, categories, and industry surfaces.</p>
+        </article>
+        <article class="coupyn-purpose-card">
+          <mat-icon svgIcon="coupyn-what-submit" aria-hidden="true"></mat-icon>
+          <h3>Accept user submissions</h3>
+          <p>The system includes a submission path for public offers so useful commerce signals can enter the directory instead of staying scattered.</p>
+        </article>
+        <article class="coupyn-purpose-card">
+          <mat-icon svgIcon="coupyn-what-directory" aria-hidden="true"></mat-icon>
+          <h3>Collect merchant context</h3>
+          <p>Company pages act as long-lived public containers for offers, metadata, discovery routes, and trust-oriented signals.</p>
+        </article>
+        <article class="coupyn-purpose-card">
+          <mat-icon svgIcon="coupyn-what-deals" aria-hidden="true"></mat-icon>
+          <h3>Keep deal discovery practical</h3>
+          <p>The page model is built around real shopping intent: find the merchant, inspect the available offer surface, and move cleanly to the next action.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="coupyn-section layout-section" aria-labelledby="coupyn-architecture-title">
+    <div class="coupyn-section-frame layout-container--wide">
+      <div class="coupyn-section-heading">
+        <p class="coupyn-eyebrow">ARCHITECTURE</p>
+        <h2 id="coupyn-architecture-title">Public-Facing Infrastructure Without Exposing Sensitive Internals</h2>
+        <p>
+          Coupyn is presented here at the level that matters publicly: frontend delivery, backend routing, data persistence, search-friendly surfaces, and scalable directory structure.
+        </p>
+      </div>
+
+      <div class="coupyn-architecture">
+        <div class="coupyn-architecture__diagram" aria-label="Coupyn public architecture flow">
+          <div class="coupyn-architecture__node coupyn-architecture__node--source">
+            <mat-icon svgIcon="coupyn-architecture-frontend" aria-hidden="true"></mat-icon>
+            <span>Angular Frontend</span>
+          </div>
+          <div class="coupyn-architecture__rail" aria-hidden="true"></div>
+          <div class="coupyn-architecture__node">
+            <mat-icon svgIcon="coupyn-architecture-api" aria-hidden="true"></mat-icon>
+            <span>Node / Express API</span>
+          </div>
+          <div class="coupyn-architecture__rail" aria-hidden="true"></div>
+          <div class="coupyn-architecture__node">
+            <mat-icon svgIcon="coupyn-architecture-data" aria-hidden="true"></mat-icon>
+            <span>MongoDB Data Layer</span>
+          </div>
+          <div class="coupyn-architecture__rail" aria-hidden="true"></div>
+          <div class="coupyn-architecture__node coupyn-architecture__node--trusted">
+            <mat-icon svgIcon="coupyn-architecture-directory" aria-hidden="true"></mat-icon>
+            <span>Merchant Directory</span>
+          </div>
+        </div>
+
+        <div class="coupyn-architecture__grid">
+          <article>
+            <mat-icon svgIcon="coupyn-architecture-seo" aria-hidden="true"></mat-icon>
+            <h3>SEO-oriented public pages</h3>
+            <p>Company, category, tag, and discovery surfaces are designed to be stable public entry points.</p>
+          </article>
+          <article>
+            <mat-icon svgIcon="coupyn-architecture-dynamic" aria-hidden="true"></mat-icon>
+            <h3>Dynamic merchant surfaces</h3>
+            <p>The directory model supports large numbers of merchant pages without treating each one as a manually designed page.</p>
+          </article>
+          <article>
+            <mat-icon svgIcon="coupyn-architecture-directory" aria-hidden="true"></mat-icon>
+            <h3>Scalable directory model</h3>
+            <p>The system is built around repeatable commerce objects: companies, offers, categories, tags, rankings, and visibility signals.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="coupyn-section layout-section" aria-labelledby="coupyn-trust-title">
+    <div class="coupyn-section-frame coupyn-section-frame--trust layout-container--wide">
+      <div class="coupyn-section-heading">
+        <p class="coupyn-eyebrow">TRUST / RANKING</p>
+        <h2 id="coupyn-trust-title">Visibility Depends On Signals, Not Decoration</h2>
+        <p>
+          Coupyn treats offers and merchant pages as signal-bearing objects. Trust markers, community feedback, ranking updates, and quality cues help decide what deserves attention.
+        </p>
+      </div>
+
+      <div class="coupyn-trust-grid">
+        <article class="coupyn-trust-card">
+          <mat-icon svgIcon="coupyn-trust-shield" aria-hidden="true"></mat-icon>
+          <h3>Verified and trust signals</h3>
+          <p>Public markers help separate stronger merchant and offer surfaces from weaker or uncertain ones.</p>
+        </article>
+        <article class="coupyn-trust-card">
+          <mat-icon svgIcon="coupyn-trust-community" aria-hidden="true"></mat-icon>
+          <h3>Community feedback</h3>
+          <p>User activity and submission paths give the system a way to capture practical commerce feedback.</p>
+        </article>
+        <article class="coupyn-trust-card">
+          <mat-icon svgIcon="coupyn-trust-ranking" aria-hidden="true"></mat-icon>
+          <h3>Ranking updates</h3>
+          <p>Visibility can respond to quality, relevance, merchant context, and offer-level usefulness.</p>
+        </article>
+        <article class="coupyn-trust-card">
+          <mat-icon svgIcon="coupyn-trust-quality" aria-hidden="true"></mat-icon>
+          <h3>Offer quality cues</h3>
+          <p>The system favors organized, usable offer information over noisy coupon clutter.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="coupyn-founder layout-section" aria-labelledby="coupyn-founder-title">
+    <div class="coupyn-founder__inner layout-container--wide">
+      <div>
+        <p class="coupyn-eyebrow">FOUNDER-BUILT</p>
+        <h2 id="coupyn-founder-title">Designed, Built, Shipped, And Maintained By Serhat Soruklu</h2>
+      </div>
+      <p>
+        Coupyn is not a thin marketing surface. It is a founder-built system with product, frontend, backend, data model, SEO surface, operations, and long-term maintenance decisions held together by one architectural line. The work is calm by design: public pages, practical discovery, disciplined signals, and infrastructure that can keep expanding without losing its shape.
+      </p>
+    </div>
+  </section>
+
+  <section class="coupyn-cta layout-section" aria-labelledby="coupyn-next-title">
+    <div class="coupyn-cta__inner layout-container--wide">
+      <div class="coupyn-section-heading coupyn-section-heading--compact">
+        <p class="coupyn-eyebrow">NEXT</p>
+        <h2 id="coupyn-next-title">Inspect The Live System</h2>
+        <p>Open Coupyn directly, or return to the broader systems map for the rest of Serhat Soruklu&rsquo;s public architecture surface.</p>
+      </div>
+
+      <div class="coupyn-cta__actions">
+        <a class="site-button site-button-primary" [href]="coupynUrl" target="_blank" rel="noopener noreferrer">
+          Open Coupyn.com
+        </a>
+        <a class="site-button site-button-secondary" routerLink="/systems" (click)="topNavigation.handleLinkClick('/systems')">
+          Back to Systems
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
