@@ -57,6 +57,11 @@ try {
   const homeCsp = homeResponse.headers.get('content-security-policy') ?? '';
   assert.match(homeCsp, /frame-ancestors 'none'/);
   assert.match(homeCsp, /connect-src 'self' https:\/\/api\.serhatsoruklu\.com/);
+  assert.match(
+    homeCsp,
+    /(?:^|;)upgrade-insecure-requests(?:;|$)/,
+    'Production CSP must upgrade insecure subresources.',
+  );
   const homeNonce = getCspNonce(homeCsp);
   assert.equal(homeHtml.includes('__CSP_NONCE__'), false, 'The CSP nonce sentinel must not leak.');
   assertInlineExecutableScriptsUseNonce(homeHtml, homeNonce);
@@ -333,6 +338,11 @@ async function verifyNonProductionHstsIsDisabled() {
       response.headers.get('strict-transport-security'),
       null,
       'HSTS must be disabled outside production by default.',
+    );
+    assert.doesNotMatch(
+      response.headers.get('content-security-policy') ?? '',
+      /(?:^|;)upgrade-insecure-requests(?:;|$)/,
+      'Development CSP must not upgrade the HTTP test server to HTTPS.',
     );
   } finally {
     if (developmentChild.exitCode === null) {

@@ -62,7 +62,7 @@ app.use(
         scriptSrcAttr: ["'none'"],
         styleSrc: ["'self'", "'unsafe-inline'"],
         workerSrc: ["'self'", 'blob:'],
-        ...(isProduction ? { upgradeInsecureRequests: [] } : {}),
+        upgradeInsecureRequests: isProduction ? [] : null,
       },
     },
     crossOriginEmbedderPolicy: false,
