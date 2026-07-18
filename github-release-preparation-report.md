@@ -12,7 +12,7 @@ Pull request: <https://github.com/SerhatSoruklu/serhat-soruklu-web/pull/14>
 
 GITHUB RELEASE CANDIDATE READY FOR REVIEW
 
-The release-candidate code is verified at `bb1500668b2712ce5ddaca13c99e455a2e43def9`. All seven GitHub checks on that exact head are green, including the complete release-candidate gate, SonarQube analysis, and SonarCloud Code Analysis. The Sonar credential was renewed and the findings from the first authenticated analysis were fixed in source without skipping, weakening, or suppressing the quality gate. Pull request 14 remains deliberately open and unmerged for review.
+The release-candidate code before the final OG raster correction is verified at `74449eab8cf34ac0c954c839f9834513ae1a98ed`. All seven GitHub checks on that exact head are green, including the complete release-candidate gate, SonarQube analysis, and SonarCloud Code Analysis. The Sonar credential was renewed and the findings from the first authenticated analysis were fixed in source without skipping, weakening, or suppressing the quality gate. The final checked-in OG renderer and corrected PNGs must receive the same exact-head qualification before pull request 14 is merged.
 
 ## 2. Recovery evidence
 
@@ -31,7 +31,7 @@ The archive contains the 59 required files that were untracked at the backup poi
 - Starting SHA: `3f1f4f98fcbec5b79b51e0fdd63b365e3c616462`
 - Release branch: `release/serhatsoruklu-production-ready-2026-07-18`
 - Pushed application-code evidence SHA: `39dcab09037d0b89173873e00aab63e3b5dbcdcc`
-- Final verified release-candidate SHA: `bb1500668b2712ce5ddaca13c99e455a2e43def9`
+- Last verified pre-OG-correction SHA: `74449eab8cf34ac0c954c839f9834513ae1a98ed`
 - Pull request: <https://github.com/SerhatSoruklu/serhat-soruklu-web/pull/14>
 - Target branch: `main`
 - Pull-request state: open, ready for review, and deliberately unmerged
@@ -56,6 +56,7 @@ The logical commits through the verified release-candidate code head are:
 | `d12fadc6febda9af651c6e427fab1f7d56ed781d` | `docs(release): record GitHub release preparation` |
 | `7b7e7a9d3c00893cd7db27e92e1f647a71f917a0` | `Fix Sonar security and reliability gate` |
 | `bb1500668b2712ce5ddaca13c99e455a2e43def9` | `Allowlist canonical redirect targets` |
+| `74449eab8cf34ac0c954c839f9834513ae1a98ed` | `docs(release): record green quality gates` |
 
 This report is carried by one final explicit-path documentation commit after the verified code head. Its immutable SHA is recorded by the release branch and PR head because a commit cannot embed its own SHA without changing that SHA; the final operator handoff records the exact pushed head and confirms it matches GitHub.
 
@@ -63,9 +64,9 @@ Every commit was staged from an explicit path list. Before each commit, the cach
 
 ## 4. Release boundary
 
-The documented baseline was 133 release-critical files: 74 modified required files and 59 untracked required files. The final committed boundary is 140 files: 78 modified files and 62 added files, with no deletion.
+The documented baseline was 133 release-critical files: 74 modified required files and 59 untracked required files. The final intended boundary is 141 files: 78 modified files and 63 added files, with no deletion.
 
-The seven added paths relative to the documented baseline are:
+The eight added paths relative to the documented baseline are:
 
 1. `frontend/public/assets/social/serhat-soruklu-systems-chatpdm-og.svg` — tracked source corrected for the ChatPDM preview composition.
 2. `frontend/public/assets/social/serhat-soruklu-systems-coupyn-og.svg` — tracked source corrected for the Coupyn preview composition.
@@ -74,10 +75,11 @@ The seven added paths relative to the documented baseline are:
 5. `github-release-preparation-report.md` — required release-preparation evidence.
 6. `backend/start.js` — explicit production entrypoint separated from the importable backend server module.
 7. `frontend/src/app/shared/icons/path-icon.component.ts` — safe compile-time SVG path rendering without an Angular sanitisation bypass.
+8. `frontend/scripts/render-system-social-previews.mjs` — deterministic Chromium renderer for the final ChatPDM and Coupyn PNG compositions.
 
 Removed paths versus the documented baseline: none.
 
-The regenerated ChatPDM and Coupyn PNGs were already in the original 59-file untracked allowlist; their two SVG sources explain the OG-related count change. Both PNGs are exact 1200 × 630, visually contained, uncropped, non-overlapping, readable, evenly padded, and consistent with the existing premium dark black/gold/blue identity.
+The regenerated ChatPDM and Coupyn PNGs were already in the original 59-file untracked allowlist; their two SVG sources and the renderer explain the OG-related count change. The approved SVG sources remain unchanged by the final correction. The checked-in renderer applies PNG-specific internal scaling and centring so both 1200 × 630 PNGs are visually contained, uncropped, non-overlapping, readable, evenly padded, and consistent with the existing premium dark black/gold/blue identity.
 
 All required source, configuration, tests, documentation, and assets are committed. The local and paginated GitHub PR path sets match. No real environment file, credential, generated build, test result, coverage file, browser profile, Lighthouse report, screenshot, trace, video, cache, or source map is introduced by the release diff. `backend/.env` and `backend/.env.production` remain ignored and untracked; only the redacted `backend/.env.example` is committed.
 
@@ -98,6 +100,7 @@ All required source, configuration, tests, documentation, and assets are committ
 | Production build | Passed; browser initial bundle 499.39 kB raw/123.28 kB estimated transfer and SSR server bundle 852.56 kB |
 | Production artifact assertion | Passed: 116 browser files, hashed bundles, production API replacement, SSR entry, and 0 emitted source maps |
 | Production HTTP smoke | Passed headers, CSP nonce uniqueness, compression, caching, status/redirect semantics, startup, and graceful shutdown |
+| OG raster validation | 2/2 targeted Chromium asset tests passed; deterministic rerender hashes matched and both PNGs were visually inspected at full 1200 × 630 size |
 | Dependency audits | 3/3 production and 3/3 full-tree audits passed with `found 0 vulnerabilities` |
 | Secret scans | 0 high-confidence findings in 252 release source files; 0 in valid branch/tag/remote history; 0 sensitive environment-path commits |
 | Markdown lint | 5/5 changed Markdown files passed with 0 issues |
@@ -119,7 +122,7 @@ The final local production build, artifact assertion, and production smoke valid
 | SonarQube analysis | PASS | Credential rotation authenticated; tests, coverage, build, scanner execution, and analysis acceptance completed successfully |
 | SonarCloud Code Analysis | PASS | New reliability, security, and maintainability ratings are A; coverage is 81.8%; duplication is 0.5%; security-hotspot review is 100% |
 
-The renewed token exposed genuine quality-gate findings after the first authenticated scan. The remediation removed Angular sanitisation bypasses, eliminated reflected redirect input through a fixed route allowlist, replaced insecure random identifiers with Web Crypto, corrected reliability and accessibility defects, and separated the backend production entrypoint from its importable server module. The final scan and every other check are green on `bb1500668b2712ce5ddaca13c99e455a2e43def9`.
+The renewed token exposed genuine quality-gate findings after the first authenticated scan. The remediation removed Angular sanitisation bypasses, eliminated reflected redirect input through a fixed route allowlist, replaced insecure random identifiers with Web Crypto, corrected reliability and accessibility defects, and separated the backend production entrypoint from its importable server module. The final scan and every other check are green on the last verified head, `74449eab8cf34ac0c954c839f9834513ae1a98ed`. The operator handoff records the later exact OG-correction head after its fresh checks complete.
 
 ## 7. Remaining deployment work
 
@@ -138,6 +141,6 @@ The dedicated-server folder does not currently exist, nginx is not configured, f
 
 ## 8. Next exact action
 
-Review pull request 14. Its verified code parent is `bb1500668b2712ce5ddaca13c99e455a2e43def9`; the final report-only head is recorded in the operator handoff. If intended, explicitly authorise merging pull request 14 into `main`. Dedicated-server or production deployment remains a separate authorisation and must not be inferred from this GitHub publication.
+Merge authorisation has been granted. Push the final OG-correction commit, require all checks to pass on that exact head, then merge pull request 14 under repository policy. Dedicated-server or production deployment remains a separate authorisation and must not be inferred from this GitHub publication.
 
 GITHUB PR READY FOR REVIEW: ALL REQUIRED CHECKS PASS

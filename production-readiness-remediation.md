@@ -14,13 +14,13 @@ All release-blocking defects that can reasonably be corrected in this repository
 
 The public Cloudflare 520/origin outage recorded by P0-1 cannot be fixed or safely retested from this repository. Production server provisioning, reverse-proxy and Cloudflare configuration, production secret injection, hosted monitoring, and an explicitly authorised live SMTP delivery remain Serhat's deployment responsibilities. No Cloudflare, DNS, nginx, systemd, PM2, firewall, TLS, OS-package, server-user, production-host, deployment, or live-email action was performed. Release-branch, commit, push, pull-request, and CI evidence is recorded in `github-release-preparation-report.md`.
 
-The 138-path release boundary in section 8 is the intended release candidate. P0-2 is closed at the repository boundary because that exact allowlist is committed on the release branch; Git/PR/CI evidence for the publication step is recorded separately in `github-release-preparation-report.md`.
+The 141-path release boundary in section 8 is the intended release candidate. P0-2 is closed at the repository boundary because that exact allowlist is committed on the release branch; Git/PR/CI evidence for the publication step is recorded separately in `github-release-preparation-report.md`.
 
 ## 2. Files changed
 
-No file was removed. There are 78 modified release files and 60 created release files: 138 release-critical paths in total.
+No file was removed. There are 78 modified release files and 63 created release files: 141 release-critical paths in total.
 
-The five-path increase from the original 133-file remediation boundary is explained by the later release work: the tracked ChatPDM and Coupyn social-preview SVG sources, two deterministic portrait-dialog regression tests discovered during full local and CI validation, and `github-release-preparation-report.md`. The already-listed generated OG PNG derivatives remain in the boundary. No unrelated path was added.
+The eight-path increase from the original 133-file remediation boundary is explained by the later release work: the tracked ChatPDM and Coupyn social-preview SVG sources, two deterministic portrait-dialog regression tests, `github-release-preparation-report.md`, the explicit backend production entrypoint, the safe SVG path renderer, and the deterministic system-social-preview renderer. The already-listed generated OG PNG derivatives remain in the boundary. No unrelated path was added.
 
 ### Modified source, configuration, tests, documentation, and assets
 
@@ -117,6 +117,7 @@ backend/emails/templates/contactConfirmation.js
 backend/emails/templates/contactNotification.js
 backend/emails/templates/footer.js
 backend/emails/templates/layout.js
+backend/start.js
 frontend/playwright.smoke.config.ts
 frontend/public/assets/brand/favicons/favicon-16x16.png
 frontend/public/assets/brand/favicons/favicon-32x32.png
@@ -143,6 +144,7 @@ frontend/public/assets/social/serhat-soruklu-work-og.png
 frontend/public/assets/social/serhat-soruklu-writing-og.png
 frontend/public/theme-init.js
 frontend/scripts/assert-production-build.mjs
+frontend/scripts/render-system-social-previews.mjs
 frontend/scripts/smoke-production.mjs
 frontend/scripts/start-production.mjs
 frontend/src/app/app.routes.server.spec.ts
@@ -161,6 +163,7 @@ frontend/src/app/pages/velari/velari.component.html
 frontend/src/app/pages/velari/velari.component.spec.ts
 frontend/src/app/pages/velari/velari.component.ts
 frontend/src/app/pages/writing/writing.component.spec.ts
+frontend/src/app/shared/icons/path-icon.component.ts
 frontend/tests/e2e/contact.spec.ts
 frontend/tests/e2e/github.spec.ts
 frontend/tests/e2e/identity.spec.ts
@@ -194,7 +197,7 @@ The following generated evidence remains intentionally ignored and is not part o
 - **Status:** Closed at the repository boundary; the committed release branch and PR match the reconciled allowlist.
 - **Change:** Required contact/email/Soruklu Order/Velari sources, assets, and tests are present; `.gitignore` admits `.env.example` but excludes secrets and generated evidence; lockfile-only CI packages an immutable release artifact.
 - **Files and proof:** `.gitignore`, `.github/workflows/ci.yml`, package/lock files, release scripts, and every untracked application file listed in sections 2 and 8. Three clean `npm ci --ignore-scripts` installs, build assertion, smoke, E2E, and status/ignore checks pass.
-- **Limitation:** The release report captures the Git and PR proof. The external Sonar authorisation blocker must be resolved before review/merge; production deployment remains a separate decision.
+- **Limitation:** The release report captures the Git and PR proof. Sonar authorisation is restored and the authenticated quality gate is green; production deployment remains a separate decision.
 
 ### P1-1 — No real 404 or static-miss behavior
 
@@ -235,7 +238,7 @@ The following generated evidence remains intentionally ignored and is not part o
 ### P1-7 — Validation can replace production output with a development build
 
 - **Change:** Angular checking is `ngc --noEmit`; the production build follows every output-mutating check; an artifact scanner enforces hashed optimized output, production API replacement, and no source maps/development endpoint.
-- **Files and proof:** Package scripts, CI, deploy gate, README, and `assert-production-build.mjs`. The final build remained the last command to write `frontend/dist/frontend`; 115 browser files pass artifact inspection.
+- **Files and proof:** Package scripts, CI, deploy gate, README, and `assert-production-build.mjs`. The final build remained the last command to write `frontend/dist/frontend`; 116 browser files pass artifact inspection.
 - **Limitation:** Deploy the exact reviewed artifact from the intended Git SHA, not a later rebuild from another checkout.
 
 ### P1-8 — Production startup and environment selection are not deterministic
@@ -302,8 +305,8 @@ The following generated evidence remains intentionally ignored and is not part o
 ### P2-8 — Social previews are incomplete and not live-verifiable
 
 - **Status:** Repository side fixed.
-- **Change:** All 12 indexable routes use 1200×630 PNG cards with absolute URL, PNG MIME type, dimensions, and alt metadata for Open Graph and Twitter/X. The ChatPDM and Coupyn source SVGs were subsequently corrected so their right-side diagrams use smaller, balanced internal layouts with non-overlapping wordmarks, nodes, symbols, and labels.
-- **Files and proof:** Social PNGs and SVG sources, especially `serhat-soruklu-systems-chatpdm-og.svg`/`.png` and `serhat-soruklu-systems-coupyn-og.svg`/`.png`, plus SEO config/service/specs, index, and SEO E2E. Every card is measured at exactly 1200×630; the two corrected cards were rerendered from source and visually inspected at full size for containment, cropping, padding, legibility, and brand consistency.
+- **Change:** All 12 indexable routes use 1200×630 PNG cards with absolute URL, PNG MIME type, dimensions, and alt metadata for Open Graph and Twitter/X. The approved ChatPDM and Coupyn SVG sources remain intact; the checked-in raster renderer reduces and recentres only the PNGs' internal right-side wordmarks and diagrams so their nodes, symbols, and labels do not crowd or overlap.
+- **Files and proof:** Social PNGs and SVG sources, `frontend/scripts/render-system-social-previews.mjs`, the frontend render command, SEO config/service/specs, index, and SEO E2E. Every card is measured at exactly 1200×630; the two corrected PNGs reproduce deterministically and were visually inspected at full size for containment, cropping, padding, legibility, and brand consistency.
 - **Limitation:** Public fetch and social-debugger validation await restored origins and CDN purge.
 
 ### P2-9 — Remote fonts duplicate a self-hosted asset strategy
@@ -335,7 +338,7 @@ The following generated evidence remains intentionally ignored and is not part o
 
 - **Status:** Practical safe remediation complete; deeper refactoring deferred.
 - **Change:** Preserved lazy routes, removed unused dependencies and transfer-heavy shared assets, and avoided globally introducing page-specific functionality. Sampled unused JS is approximately 22–24 KB per route.
-- **Files and proof:** Route config, package files, assets/fonts/styles, final build, and Lighthouse. The initial bundle remains under the 500 kB warning threshold at 498.79 kB raw/123.26 kB estimated transfer.
+- **Files and proof:** Route config, package files, assets/fonts/styles, final build, and Lighthouse. The initial bundle remains under the 500 kB warning threshold at 499.39 kB raw/123.28 kB estimated transfer.
 - **Limitation:** Headroom remains narrow. Deeper shared-library/CSS refactoring is a non-blocking follow-up, not a safe pre-launch micro-optimisation.
 
 ### P2-14 — Environment documentation contains stale or mismatched keys
@@ -407,9 +410,9 @@ Lockfile integrity was proved with clean `npm ci --ignore-scripts` installs at r
 | Firefox smoke | 12/12 routes passed |
 | WebKit smoke | 0 application cases executed; all 12 launches were blocked before app startup by missing WSL native GTK/GStreamer/libevent libraries |
 | Lighthouse | 5/5 required routes completed using stable Chrome 136 |
-| OG visual correction | ChatPDM and Coupyn: 2/2 SVG sources rerendered to exact 1200×630 PNGs and visually passed containment, overlap, cropping, spacing, text, and branding checks |
-| Production build | Passed: browser initial bundle 498.79 kB raw/123.26 kB estimated transfer; SSR server bundle 851.49 kB |
-| Artifact assertion | 115 browser files verified; hashed production bundles, production API replacement, and 0 source maps |
+| OG visual correction | ChatPDM and Coupyn: 2/2 deterministic PNG renders and targeted Chromium asset tests passed; full-size visual review passed containment, overlap, cropping, spacing, text, and branding checks; SVG sources remained unchanged |
+| Production build | Passed: browser initial bundle 499.39 kB raw/123.28 kB estimated transfer; SSR server bundle 852.56 kB |
+| Artifact assertion | 116 browser files verified; hashed production bundles, production API replacement, and 0 source maps |
 | Production smoke | Passed security headers, nonce uniqueness, compression, cache policy, statuses, redirects, hydration assets, graceful startup, and invalid-integer environment checks |
 | Backend production startup | Passed on isolated port 3001: liveness 200, readiness 200 with safe synthetic config and verification disabled, landing/assets 200, allowed CORS 200, denied CORS 403, unknown API 404, clean SIGINT |
 | Dependency audits | 3/3 production audits and 3/3 full-tree audits passed with 0 vulnerabilities |
@@ -435,8 +438,8 @@ Lighthouse values are comparative local evidence, not promises of live productio
 
 | Artifact metric | Before | After | Interpretation |
 | --------------- | -----: | ----: | -------------- |
-| Initial browser bundle, raw | 494.23 kB | 498.79 kB | Still below the 500 kB warning budget; security/reliability code used some remaining headroom |
-| Initial browser bundle, estimated transfer | 121.80 kB | 123.26 kB | Increase of 1.46 kB while total route transfer fell by about 86–89% |
+| Initial browser bundle, raw | 494.23 kB | 499.39 kB | Still below the 500 kB warning budget; security/reliability code used some remaining headroom |
+| Initial browser bundle, estimated transfer | 121.80 kB | 123.28 kB | Increase of 1.48 kB while total route transfer fell by about 86–89% |
 | Optimised favicon SVG file | 1,802,859 bytes | 1,667 bytes | Original emblem preserved without embedded high-resolution payload |
 | Total icon transfer observed | 1,818,590 bytes | 8,656 bytes | Includes SVG/PNG/ICO requests seen by the browser |
 
@@ -581,7 +584,7 @@ package.json
 scripts/deploy.sh
 ```
 
-The release commits also include these exact 60 created required files, including all three release records:
+The release commits also include these exact 63 created required files, including all three release records:
 
 ```text
 backend/.env.example
@@ -593,6 +596,7 @@ backend/emails/templates/contactConfirmation.js
 backend/emails/templates/contactNotification.js
 backend/emails/templates/footer.js
 backend/emails/templates/layout.js
+backend/start.js
 frontend/playwright.smoke.config.ts
 frontend/public/assets/brand/favicons/favicon-16x16.png
 frontend/public/assets/brand/favicons/favicon-32x32.png
@@ -619,6 +623,7 @@ frontend/public/assets/social/serhat-soruklu-work-og.png
 frontend/public/assets/social/serhat-soruklu-writing-og.png
 frontend/public/theme-init.js
 frontend/scripts/assert-production-build.mjs
+frontend/scripts/render-system-social-previews.mjs
 frontend/scripts/smoke-production.mjs
 frontend/scripts/start-production.mjs
 frontend/src/app/app.routes.server.spec.ts
@@ -637,6 +642,7 @@ frontend/src/app/pages/velari/velari.component.html
 frontend/src/app/pages/velari/velari.component.spec.ts
 frontend/src/app/pages/velari/velari.component.ts
 frontend/src/app/pages/writing/writing.component.spec.ts
+frontend/src/app/shared/icons/path-icon.component.ts
 frontend/tests/e2e/contact.spec.ts
 frontend/tests/e2e/github.spec.ts
 frontend/tests/e2e/identity.spec.ts
@@ -671,4 +677,4 @@ The remediation pass itself did not stage, commit, push, publish, or deploy file
 
 ## 9. Final repository recommendation
 
-CODE READY: RESOLVE CI AUTHORISATION BEFORE REVIEW OR MERGE
+CODE READY: MERGE VERIFIED RELEASE PR
