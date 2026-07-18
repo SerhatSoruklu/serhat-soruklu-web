@@ -10,9 +10,9 @@ Pull request: <https://github.com/SerhatSoruklu/serhat-soruklu-web/pull/14>
 
 ## 1. Outcome
 
-PR BLOCKED BY CI
+GITHUB RELEASE CANDIDATE READY FOR REVIEW
 
-The repository release boundary, local qualification, Git history, pushed release branch, pull-request diff, and all in-repository GitHub checks are valid. The mandatory SonarQube analysis remains red after its tests, coverage, build, and Java 21 scanner setup pass because SonarCloud rejects the analysis-engine request with HTTP 403. The scanner reports that the Sonar token or project authorisation must be checked. The scan has not been skipped, weakened, or suppressed.
+The release-candidate code is verified at `bb1500668b2712ce5ddaca13c99e455a2e43def9`. All seven GitHub checks on that exact head are green, including the complete release-candidate gate, SonarQube analysis, and SonarCloud Code Analysis. The Sonar credential was renewed and the findings from the first authenticated analysis were fixed in source without skipping, weakening, or suppressing the quality gate. Pull request 14 remains deliberately open and unmerged for review.
 
 ## 2. Recovery evidence
 
@@ -31,11 +31,12 @@ The archive contains the 59 required files that were untracked at the backup poi
 - Starting SHA: `3f1f4f98fcbec5b79b51e0fdd63b365e3c616462`
 - Release branch: `release/serhatsoruklu-production-ready-2026-07-18`
 - Pushed application-code evidence SHA: `39dcab09037d0b89173873e00aab63e3b5dbcdcc`
+- Final verified release-candidate SHA: `bb1500668b2712ce5ddaca13c99e455a2e43def9`
 - Pull request: <https://github.com/SerhatSoruklu/serhat-soruklu-web/pull/14>
 - Target branch: `main`
-- Pull-request state: open, ready for review when CI is green, and deliberately unmerged
+- Pull-request state: open, ready for review, and deliberately unmerged
 
-The logical commits through the application-code evidence freeze are:
+The logical commits through the verified release-candidate code head are:
 
 | SHA | Commit |
 | --- | ------ |
@@ -52,22 +53,27 @@ The logical commits through the application-code evidence freeze are:
 | `c980b40c7b5efa421fb98d883b81c29ad248ee75` | `fix(ci): provide scanner runtime and harden script matching` |
 | `894eb113d8cd751beef10e50d3ca65c57b533ee2` | `fix(ci): keep local browser smoke on HTTP` |
 | `39dcab09037d0b89173873e00aab63e3b5dbcdcc` | `test(e2e): stabilize animated and loading states` |
+| `d12fadc6febda9af651c6e427fab1f7d56ed781d` | `docs(release): record GitHub release preparation` |
+| `7b7e7a9d3c00893cd7db27e92e1f647a71f917a0` | `Fix Sonar security and reliability gate` |
+| `bb1500668b2712ce5ddaca13c99e455a2e43def9` | `Allowlist canonical redirect targets` |
 
-This report and the reconciled remediation allowlist are carried by one final explicit-path documentation commit after the evidence freeze. Its immutable SHA is recorded by the release branch and PR head because a commit cannot embed its own SHA without changing that SHA; the final operator handoff records the exact pushed head and confirms it matches GitHub.
+This report is carried by one final explicit-path documentation commit after the verified code head. Its immutable SHA is recorded by the release branch and PR head because a commit cannot embed its own SHA without changing that SHA; the final operator handoff records the exact pushed head and confirms it matches GitHub.
 
 Every commit was staged from an explicit path list. Before each commit, the cached path set, cached diff, `git diff --cached --check`, allowlist membership, environment-file exclusion, and generated-artifact exclusion were verified. No reset, clean, force push, history rewrite, broad add, CI bypass, merge, or deployment was used.
 
 ## 4. Release boundary
 
-The documented baseline was 133 release-critical files: 74 modified required files and 59 untracked required files. The final committed boundary is 138 files: 78 modified files and 60 added files, with no deletion.
+The documented baseline was 133 release-critical files: 74 modified required files and 59 untracked required files. The final committed boundary is 140 files: 78 modified files and 62 added files, with no deletion.
 
-The five added paths relative to the documented baseline are:
+The seven added paths relative to the documented baseline are:
 
 1. `frontend/public/assets/social/serhat-soruklu-systems-chatpdm-og.svg` — tracked source corrected for the ChatPDM preview composition.
 2. `frontend/public/assets/social/serhat-soruklu-systems-coupyn-og.svg` — tracked source corrected for the Coupyn preview composition.
 3. `frontend/tests/e2e/portrait-dialog.spec.ts` — deterministic browser regression coverage for the CSS crossfade transition found by full validation.
 4. `frontend/src/app/shared/dialogs/portrait-dialog/portrait-dialog.component.spec.ts` — deterministic theme-state isolation found by CI.
 5. `github-release-preparation-report.md` — required release-preparation evidence.
+6. `backend/start.js` — explicit production entrypoint separated from the importable backend server module.
+7. `frontend/src/app/shared/icons/path-icon.component.ts` — safe compile-time SVG path rendering without an Angular sanitisation bypass.
 
 Removed paths versus the documented baseline: none.
 
@@ -89,8 +95,8 @@ All required source, configuration, tests, documentation, and assets are committ
 | Firefox smoke | 12/12 local route cases passed |
 | WebKit CI smoke | 12/12 route cases passed after CI installed the required native dependencies |
 | Production route/runtime audit | 48/48 direct/reload route loads passed across 2 viewports; 944 link and 164 button observations; 0 console, page, or network errors |
-| Production build | Passed; browser initial bundle 498.79 kB raw/123.26 kB estimated transfer and SSR server bundle 851.49 kB |
-| Production artifact assertion | Passed: 115 browser files, hashed bundles, production API replacement, SSR entry, and 0 emitted source maps |
+| Production build | Passed; browser initial bundle 499.39 kB raw/123.28 kB estimated transfer and SSR server bundle 852.56 kB |
+| Production artifact assertion | Passed: 116 browser files, hashed bundles, production API replacement, SSR entry, and 0 emitted source maps |
 | Production HTTP smoke | Passed headers, CSP nonce uniqueness, compression, caching, status/redirect semantics, startup, and graceful shutdown |
 | Dependency audits | 3/3 production and 3/3 full-tree audits passed with `found 0 vulnerabilities` |
 | Secret scans | 0 high-confidence findings in 252 release source files; 0 in valid branch/tag/remote history; 0 sensitive environment-path commits |
@@ -99,7 +105,7 @@ All required source, configuration, tests, documentation, and assets are committ
 
 Local WebKit could not launch because this WSL host lacks required native GTK, GStreamer, and libevent libraries and the task prohibited OS-package changes. No application case was misreported as a local pass. GitHub CI installs browser host dependencies with Playwright's `--with-deps` path and executed all 12 WebKit route cases.
 
-The final production build was the last local command that wrote `frontend/dist/frontend`. Later qualification and documentation work was read-only with respect to that ignored deployable output.
+The final local production build, artifact assertion, and production smoke validation were rerun after the Sonar remediation. The ignored deployable output remains uncommitted.
 
 ## 6. CI result
 
@@ -110,9 +116,10 @@ The final production build was the last local command that wrote `frontend/dist/
 | Release candidate gate | PASS | Locked installs, lint, static checks, 137 unit tests, 207 Chromium E2E cases, 24 Firefox/WebKit smoke cases, audit, build, artifact assertion, production smoke, and artifact upload passed |
 | GitGuardian Security Checks | PASS | GitGuardian reported success |
 | Repository summary | PASS | Repository summary job completed successfully |
-| SonarQube analysis | FAIL | Tests, coverage, build, explicit Java 21 setup, and scanner startup pass; SonarCloud returns HTTP 403 for `/analysis/engine` and instructs that `SONAR_TOKEN` or project authorisation be checked |
+| SonarQube analysis | PASS | Credential rotation authenticated; tests, coverage, build, scanner execution, and analysis acceptance completed successfully |
+| SonarCloud Code Analysis | PASS | New reliability, security, and maintainability ratings are A; coverage is 81.8%; duplication is 0.5%; security-hotspot review is 100% |
 
-The Sonar failure is an external credential or Sonar project-configuration blocker. Repository attempts addressed the original deterministic test failure and provided an explicit supported Java runtime without suppressing analysis. A valid authorised GitHub `SONAR_TOKEN` and matching SonarCloud project access are required before the mandatory check can turn green.
+The renewed token exposed genuine quality-gate findings after the first authenticated scan. The remediation removed Angular sanitisation bypasses, eliminated reflected redirect input through a fixed route allowlist, replaced insecure random identifiers with Web Crypto, corrected reliability and accessibility defects, and separated the backend production entrypoint from its importable server module. The final scan and every other check are green on `bb1500668b2712ce5ddaca13c99e455a2e43def9`.
 
 ## 7. Remaining deployment work
 
@@ -131,6 +138,6 @@ The dedicated-server folder does not currently exist, nginx is not configured, f
 
 ## 8. Next exact action
 
-Serhat must renew, replace, or reauthorise the GitHub `SONAR_TOKEN` for the matching SonarCloud project and rerun the failed SonarQube analysis until it is green. Serhat must then review pull request 14 and explicitly authorise merging before any dedicated-server or production deployment work begins. Do not merge or deploy before that authorisation.
+Review pull request 14. Its verified code parent is `bb1500668b2712ce5ddaca13c99e455a2e43def9`; the final report-only head is recorded in the operator handoff. If intended, explicitly authorise merging pull request 14 into `main`. Dedicated-server or production deployment remains a separate authorisation and must not be inferred from this GitHub publication.
 
-GITHUB PR NOT READY: CI OR RELEASE BOUNDARY REQUIRES ATTENTION
+GITHUB PR READY FOR REVIEW: ALL REQUIRED CHECKS PASS
