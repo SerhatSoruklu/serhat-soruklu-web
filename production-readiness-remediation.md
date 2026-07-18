@@ -12,15 +12,15 @@ REPOSITORY READY WITH DOCUMENTED NON-CODE BLOCKERS
 
 All release-blocking defects that can reasonably be corrected in this repository have been remediated and independently reviewed. The final production artifact passes locked installation, lint, no-output type/syntax checks, 137 unit tests, 207 Chromium E2E tests in both development and production-artifact runs, production smoke and route audits, artifact inspection, and separate root/frontend/backend dependency audits with zero vulnerabilities.
 
-The public Cloudflare 520/origin outage recorded by P0-1 cannot be fixed or safely retested from this repository. Production server provisioning, reverse-proxy and Cloudflare configuration, production secret injection, hosted monitoring, and an explicitly authorised live SMTP delivery remain Serhat's deployment responsibilities. No Cloudflare, DNS, nginx, systemd, PM2, firewall, TLS, OS-package, server-user, production-host, Git staging/commit/push/deploy, or live-email action was performed.
+The public Cloudflare 520/origin outage recorded by P0-1 cannot be fixed or safely retested from this repository. Production server provisioning, reverse-proxy and Cloudflare configuration, production secret injection, hosted monitoring, and an explicitly authorised live SMTP delivery remain Serhat's deployment responsibilities. No Cloudflare, DNS, nginx, systemd, PM2, firewall, TLS, OS-package, server-user, production-host, deployment, or live-email action was performed. Release-branch, commit, push, pull-request, and CI evidence is recorded in `github-release-preparation-report.md`.
 
-The 135-path working tree in section 8 is the intended release candidate. P0-2 is closed at the repository boundary when that exact allowlist is committed on the release branch; Git/PR/CI evidence for the publication step is recorded separately in `github-release-preparation-report.md`.
+The 138-path release boundary in section 8 is the intended release candidate. P0-2 is closed at the repository boundary because that exact allowlist is committed on the release branch; Git/PR/CI evidence for the publication step is recorded separately in `github-release-preparation-report.md`.
 
 ## 2. Files changed
 
-No file was removed. There are 76 modified release files and, including this report, 59 untracked release files: 135 release-critical paths in total.
+No file was removed. There are 78 modified release files and 60 created release files: 138 release-critical paths in total.
 
-The two-path increase from the original 133-file remediation boundary is explained entirely by the later ChatPDM and Coupyn social-preview correction. Their tracked SVG sources were clean at the original snapshot and are now modified alongside the already-listed generated PNG derivatives; no unrelated path was added.
+The five-path increase from the original 133-file remediation boundary is explained by the later release work: the tracked ChatPDM and Coupyn social-preview SVG sources, two deterministic portrait-dialog regression tests discovered during full local and CI validation, and `github-release-preparation-report.md`. The already-listed generated OG PNG derivatives remain in the boundary. No unrelated path was added.
 
 ### Modified source, configuration, tests, documentation, and assets
 
@@ -89,12 +89,14 @@ frontend/src/app/pages/work/work.component.css
 frontend/src/app/pages/writing/writing.component.css
 frontend/src/app/pages/writing/writing.component.html
 frontend/src/app/pages/writing/writing.component.ts
+frontend/src/app/shared/dialogs/portrait-dialog/portrait-dialog.component.spec.ts
 frontend/src/index.html
 frontend/src/server.ts
 frontend/src/styles/fonts.css
 frontend/src/styles/theme.css
 frontend/tests/e2e/console.spec.ts
 frontend/tests/e2e/header-responsive.spec.ts
+frontend/tests/e2e/portrait-dialog.spec.ts
 frontend/tests/e2e/seo.spec.ts
 frontend/tests/e2e/smoke.spec.ts
 frontend/tests/e2e/theme.spec.ts
@@ -163,6 +165,7 @@ frontend/tests/e2e/contact.spec.ts
 frontend/tests/e2e/github.spec.ts
 frontend/tests/e2e/identity.spec.ts
 frontend/tests/e2e/velari.spec.ts
+github-release-preparation-report.md
 production-readiness-audit.md
 production-readiness-remediation.md
 ```
@@ -188,10 +191,10 @@ The following generated evidence remains intentionally ignored and is not part o
 
 ### P0-2 — Current audited release is not reproducible from tracked Git state
 
-- **Status:** Repository remediation complete; release-boundary action remains.
+- **Status:** Closed at the repository boundary; the committed release branch and PR match the reconciled allowlist.
 - **Change:** Required contact/email/Soruklu Order/Velari sources, assets, and tests are present; `.gitignore` admits `.env.example` but excludes secrets and generated evidence; lockfile-only CI packages an immutable release artifact.
 - **Files and proof:** `.gitignore`, `.github/workflows/ci.yml`, package/lock files, release scripts, and every untracked application file listed in sections 2 and 8. Three clean `npm ci --ignore-scripts` installs, build assertion, smoke, E2E, and status/ignore checks pass.
-- **Limitation:** The release-preparation workflow must prove that every allowlisted path is committed and no forbidden path enters Git. Review, merge, and production deployment remain separate decisions.
+- **Limitation:** The release report captures the Git and PR proof. The external Sonar authorisation blocker must be resolved before review/merge; production deployment remains a separate decision.
 
 ### P1-1 — No real 404 or static-miss behavior
 
@@ -411,7 +414,7 @@ Lockfile integrity was proved with clean `npm ci --ignore-scripts` installs at r
 | Backend production startup | Passed on isolated port 3001: liveness 200, readiness 200 with safe synthetic config and verification disabled, landing/assets 200, allowed CORS 200, denied CORS 403, unknown API 404, clean SIGINT |
 | Dependency audits | 3/3 production audits and 3/3 full-tree audits passed with 0 vulnerabilities |
 | Secret/history scan | 252 working-tree release files scanned with 0 high-confidence findings; 0 high-confidence findings and 0 sensitive environment-path commits across valid branches/tags/remotes |
-| Markdown audit | `production-readiness-audit.md` and this report: 2/2 files, 0 markdownlint issues |
+| Markdown audit | Five changed Markdown files, including both readiness records and the GitHub release report: 5/5 files, 0 markdownlint issues |
 | Diff hygiene | `git diff --check` passed |
 
 The final production build was the last command that wrote the deployable `frontend/dist/frontend` directory. Later E2E, smoke, audit, inspection, and documentation checks were read-only with respect to that artifact.
@@ -495,7 +498,7 @@ curl -fsS http://127.0.0.1:3000/api/ready
 
 ## 8. Release-critical file list
 
-The release commit must include every path below. These are the exact 76 modified files in the current intended working tree:
+The release commits include every path below. These are the exact 78 modified files in the intended release boundary:
 
 ```text
 .github/workflows/ci.yml
@@ -562,12 +565,14 @@ frontend/src/app/pages/work/work.component.css
 frontend/src/app/pages/writing/writing.component.css
 frontend/src/app/pages/writing/writing.component.html
 frontend/src/app/pages/writing/writing.component.ts
+frontend/src/app/shared/dialogs/portrait-dialog/portrait-dialog.component.spec.ts
 frontend/src/index.html
 frontend/src/server.ts
 frontend/src/styles/fonts.css
 frontend/src/styles/theme.css
 frontend/tests/e2e/console.spec.ts
 frontend/tests/e2e/header-responsive.spec.ts
+frontend/tests/e2e/portrait-dialog.spec.ts
 frontend/tests/e2e/seo.spec.ts
 frontend/tests/e2e/smoke.spec.ts
 frontend/tests/e2e/theme.spec.ts
@@ -576,7 +581,7 @@ package.json
 scripts/deploy.sh
 ```
 
-The release commit must also include these exact 59 currently untracked required files, including both audit records:
+The release commits also include these exact 60 created required files, including all three release records:
 
 ```text
 backend/.env.example
@@ -636,6 +641,7 @@ frontend/tests/e2e/contact.spec.ts
 frontend/tests/e2e/github.spec.ts
 frontend/tests/e2e/identity.spec.ts
 frontend/tests/e2e/velari.spec.ts
+github-release-preparation-report.md
 production-readiness-audit.md
 production-readiness-remediation.md
 ```
@@ -665,4 +671,4 @@ The remediation pass itself did not stage, commit, push, publish, or deploy file
 
 ## 9. Final repository recommendation
 
-CODE READY: PROCEED TO SERVER DEPLOYMENT
+CODE READY: RESOLVE CI AUTHORISATION BEFORE REVIEW OR MERGE
