@@ -16,7 +16,8 @@ From the project root:
 
 ```bash
 cd ~/code/serhatsoruklu
-npm install
+npm ci --ignore-scripts
+npm run install:projects
 npm run dev
 ```
 
@@ -33,10 +34,12 @@ Default local URLs:
 ## Build
 
 ```bash
-npm run build
+npm run build:production
 ```
 
-This builds the Angular SSR frontend.
+This creates the optimized Angular SSR artifact in `frontend/dist/frontend`.
+`npm run check` performs a no-emit Angular compiler check and cannot replace
+that production artifact with a development build.
 
 ## Frontend Playwright E2E
 
@@ -161,15 +164,20 @@ Codex workflow for this repository:
 
 ## CI
 
-GitHub Actions runs lightweight checks for the Angular frontend and Express backend on pushes and pull requests to `main`.
+The release-candidate workflow uses locked installs and gates lint, no-emit type
+and syntax checks, frontend and backend unit tests, production dependency
+audits, Playwright, the final production build, compiled-output assertions, and
+a production SSR smoke test. The final build is the last gate that writes to
+`frontend/dist/frontend`, and the workflow uploads an artifact named for the
+Git commit SHA.
 
 Local equivalents:
 
 ```bash
-npm --prefix frontend ci
-npm --prefix frontend run build
-npm --prefix backend ci
-node --check backend/server.js
+npm ci --ignore-scripts
+npm run install:projects
+npm --prefix frontend run e2e:install
+npm run validate:release
 ```
 
 CodeQL runs without extra secrets. SonarQube runs as an optional check when the required GitHub Actions secrets are configured:
@@ -178,6 +186,97 @@ CodeQL runs without extra secrets. SonarQube runs as an optional check when the 
 - `SONAR_HOST_URL`
 - `SONAR_ORGANIZATION`
 - `SONAR_PROJECT_KEY`
+
+## Production Release Workflow
+
+The supported runtime is Node.js `>=22.20.0 <23` with npm
+`>=10.9.0 <11`. The repository records npm `10.9.3` as the package manager used
+for the validated lockfiles.
+
+Prepare a release candidate from the exact commit that will be deployed:
+
+```bash
+npm ci --ignore-scripts
+npm run install:projects
+npm --prefix frontend run e2e:install
+npm run validate:release
+```
+
+Alternatively, `npm run deploy` runs that repository-side preparation sequence.
+Despite its historical name, the script does not upload files, restart services,
+or modify a production host. It stops after producing and validating the local
+release candidate.
+
+The deployable frontend artifact is `frontend/dist/frontend`. It must contain
+hashed browser bundles, optimized production code, the production API endpoint,
+the SSR server entry, no source maps, and no development endpoint. CI verifies
+those invariants before uploading the exact frontend artifact together with the
+backend runtime source and both application lockfiles. Deploy the artifact from
+the intended Git SHA; do not rebuild a different checkout on the server.
+
+Install runtime dependencies from the included lockfiles on the target host:
+
+```bash
+npm --prefix frontend ci --omit=dev --ignore-scripts
+npm --prefix backend ci --omit=dev --ignore-scripts
+```
+
+Start the frontend and backend as separate supervised services:
+
+```bash
+npm run start:frontend
+npm run start:backend
+```
+
+Both commands select production mode internally and work from Linux shells,
+Windows PowerShell, and `cmd.exe`; operators do not need to prepend
+`NODE_ENV=production`. The frontend defaults to `127.0.0.1:4000`. The backend
+defaults to port `3000`. A reverse proxy should route the website to the frontend
+SSR service and `/api` traffic on `api.serhatsoruklu.com` to the backend.
+
+Frontend SSR recognizes these runtime variables:
+
+| Variable                       | Production default       | Purpose |
+| ------------------------------ | ------------------------ | ------- |
+| `PORT`                         | `4000`                   | Frontend SSR listen port |
+| `FRONTEND_HOST`                | `127.0.0.1`              | Listen address; keep loopback behind a same-host proxy |
+| `FRONTEND_CANONICAL_HOST`      | `serhatsoruklu.com`      | Fixed destination for application HTTPS redirects |
+| `FRONTEND_TRUST_PROXY`         | `loopback`               | Explicit trusted proxy IPs/subnets or Express safe names, comma-separated |
+| `FRONTEND_ENFORCE_HTTPS`       | `true`                   | Redirect non-secure production requests with HTTP 308 |
+| `FRONTEND_ENABLE_HSTS`         | `true`                   | Emit one-year HSTS in production |
+| `FRONTEND_SHUTDOWN_TIMEOUT_MS` | `10000`                  | Bounded graceful-shutdown deadline |
+
+`FRONTEND_TRUST_PROXY` deliberately rejects unrestricted values such as `true`,
+`*`, `0.0.0.0/0`, and `::/0`. The default assumes nginx or another reverse proxy
+connects from the same host. For a container or remote proxy, set only its exact
+address or subnet. The application never uses a forwarded host to construct a
+redirect.
+
+The application provides defence-in-depth HTTPS handling: it trusts forwarded
+protocol only from the configured proxy, redirects a non-secure request to the
+fixed apex host, and skips the redirect for the loopback health probe at
+`/healthz`. The reverse proxy must overwrite, rather than append or pass through,
+client-supplied `X-Forwarded-Proto`; it must send `https` after TLS was terminated.
+This prevents application redirect loops. The public nginx/Cloudflare layer must
+also enforce HTTP-to-HTTPS before traffic reaches the origin and must keep the
+frontend and backend listen ports inaccessible from the public Internet. Enable
+HSTS only with working HTTPS on the apex and intended subdomains.
+
+Health endpoints:
+
+- Frontend liveness: `http://127.0.0.1:4000/healthz`
+- Backend liveness: `http://127.0.0.1:3000/api/health`
+- Backend readiness: `http://127.0.0.1:3000/api/ready`
+
+The frontend and backend handle `SIGTERM` and `SIGINT`, stop accepting new
+connections, and use a bounded forced-exit deadline. A service supervisor should
+wait for graceful exit before replacing an artifact.
+
+Keep at least one previously verified artifact and its matching environment
+configuration. Rollback means stopping the current services gracefully,
+restoring that exact artifact and lockfile set, installing only from those
+lockfiles, starting both services, and checking liveness/readiness. Do not rebuild
+the previous release during an incident.
 
 ## Environment Files
 
@@ -189,3 +288,57 @@ Real environment files are ignored by Git:
 - `backend/.env.production`
 
 Local ignored backend env files may include placeholder keys for reference, but GitHub Actions secrets are the source of truth for CI. Do not commit real tokens, licenses, or production secrets.
+
+## Contact Email Delivery
+
+The `/api/contact` endpoint sends through authenticated Gmail Workspace SMTP. `mail@serhatsoruklu.com` is a Fasthosts forwarder only, so it receives contact notifications but is not used as an SMTP login.
+
+Required backend environment variables:
+
+```bash
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_REQUIRE_TLS=true
+SMTP_NAME=mail.coupyn.com
+SMTP_USER=admin@coupyn.com
+SMTP_PASS=<secret>
+SERHAT_SITE_URL=https://serhatsoruklu.com
+CONTACT_INTERNAL_TO=mail@serhatsoruklu.com
+CONTACT_REPLY_TO=mail@serhatsoruklu.com
+CONTACT_MAIL_TIMEOUT_MS=5000
+CONTACT_RATE_LIMIT_MAX=5
+CONTACT_RATE_LIMIT_WINDOW_MS=3600000
+CONTACT_IDEMPOTENCY_TTL_MS=900000
+CONTACT_IDEMPOTENCY_MAX_ENTRIES=1000
+```
+
+Expected flow:
+
+- Internal notification: from `SerhatSoruklu.com Contact <admin@coupyn.com>` to `mail@serhatsoruklu.com`, with `Reply-To` set to the submitter email.
+- User confirmation: from `Serhat Soruklu <admin@coupyn.com>` to the submitter, with `Reply-To` set to `mail@serhatsoruklu.com`.
+- `SERHAT_SITE_URL` controls email CTA links. It defaults to `https://serhatsoruklu.com` and can be set to `http://localhost:4200` for local email tests.
+- `CONTACT_MAIL_TIMEOUT_MS` defaults to 5000 ms and is capped at 6000 ms. It
+  configures Nodemailer's connection, greeting, and socket-inactivity limits
+  for both sequential sends. Delivery is not wrapped in an uncancellable outer
+  timer, so an in-flight idempotent request remains authoritative until the
+  SMTP transport settles.
+- The browser uses a 45-second request window. This exceeds the planning budget
+  for two sequential messages across the capped connection, greeting, and
+  socket-inactivity phases, with additional network margin. An unchanged retry
+  reuses the same idempotency key.
+- A provider error after SMTP DATA may have an unknowable delivery outcome. The
+  API returns terminal `202 CONTACT_DELIVERY_UNKNOWN`, retains the idempotency
+  record, and tells the browser not to resubmit rather than risking a duplicate
+  internal notification.
+- Every `/api/contact` attempt counts toward the default limit of 5 requests per
+  IP per hour. The maximum and window are configurable through
+  `CONTACT_RATE_LIMIT_MAX` and `CONTACT_RATE_LIMIT_WINDOW_MS`.
+- Clients send a stable `Idempotency-Key` for retries. The backend keeps a
+  bounded in-memory TTL record so the same submission cannot create duplicate
+  internal notifications in one process. This cache is not shared across
+  processes; `backend/README.md` documents the deployment limit and response
+  contract.
+- `/api/health` is process liveness. `/api/ready` verifies that required contact
+  configuration and the SMTP transporter are ready.
+- Do not spoof `From: mail@serhatsoruklu.com` unless that address later has authenticated sending configured.
