@@ -146,8 +146,8 @@ export class SystemsComponent {
       chips: ['Meaning boundaries', 'Refusal-first logic', 'Governance layer'],
       primaryLabel: 'View ChatPDM System',
       primaryPath: '/systems/chatpdm',
-      secondaryLabel: 'View GitHub',
-      secondaryPath: '/github'
+      secondaryLabel: 'Open ChatPDM',
+      secondaryUrl: 'https://chatpdm.com'
     },
     {
       icon: 'systems-card-dbf',
