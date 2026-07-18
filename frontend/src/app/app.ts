@@ -12,7 +12,7 @@ import { SiteHeaderComponent } from './layout/site-header/site-header.component'
   selector: 'app-root',
   imports: [RouterOutlet, SiteFooterComponent, SiteHeaderComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   private readonly document = inject(DOCUMENT);
@@ -23,25 +23,49 @@ export class App {
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd),
       map((event) => this.isHomeUrl(event.urlAfterRedirects)),
-      startWith(this.isHomeUrl(this.currentLocationPath()))
+      startWith(this.isHomeUrl(this.currentLocationPath())),
     ),
-    { initialValue: this.isHomeUrl(this.currentLocationPath()) }
+    { initialValue: this.isHomeUrl(this.currentLocationPath()) },
   );
   readonly usesDetailAtmosphere = toSignal(
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd),
       map((event) => this.isDetailAtmosphereUrl(event.urlAfterRedirects)),
-      startWith(this.isDetailAtmosphereUrl(this.currentLocationPath()))
+      startWith(this.isDetailAtmosphereUrl(this.currentLocationPath())),
     ),
-    { initialValue: this.isDetailAtmosphereUrl(this.currentLocationPath()) }
+    { initialValue: this.isDetailAtmosphereUrl(this.currentLocationPath()) },
   );
   readonly usesSystemsAtmosphere = toSignal(
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd),
       map((event) => this.isSystemsAtmosphereUrl(event.urlAfterRedirects)),
-      startWith(this.isSystemsAtmosphereUrl(this.currentLocationPath()))
+      startWith(this.isSystemsAtmosphereUrl(this.currentLocationPath())),
     ),
-    { initialValue: this.isSystemsAtmosphereUrl(this.currentLocationPath()) }
+    { initialValue: this.isSystemsAtmosphereUrl(this.currentLocationPath()) },
+  );
+  readonly usesContactAtmosphere = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event) => this.isContactAtmosphereUrl(event.urlAfterRedirects)),
+      startWith(this.isContactAtmosphereUrl(this.currentLocationPath())),
+    ),
+    { initialValue: this.isContactAtmosphereUrl(this.currentLocationPath()) },
+  );
+  readonly usesOrderAtmosphere = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event) => this.isOrderAtmosphereUrl(event.urlAfterRedirects)),
+      startWith(this.isOrderAtmosphereUrl(this.currentLocationPath())),
+    ),
+    { initialValue: this.isOrderAtmosphereUrl(this.currentLocationPath()) },
+  );
+  readonly usesVelariAtmosphere = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event) => this.isVelariAtmosphereUrl(event.urlAfterRedirects)),
+      startWith(this.isVelariAtmosphereUrl(this.currentLocationPath())),
+    ),
+    { initialValue: this.isVelariAtmosphereUrl(this.currentLocationPath()) },
   );
 
   constructor() {
@@ -61,13 +85,29 @@ export class App {
   private isDetailAtmosphereUrl(url: string): boolean {
     const path = url.split(/[?#]/)[0];
 
-    return path === '/work'
-      || path === '/systems/deterministic-boundary-firewall'
-      || path === '/systems/continuity-identity-model';
+    return (
+      path === '/work' ||
+      path === '/systems/coupyn' ||
+      path === '/systems/chatpdm' ||
+      path === '/systems/deterministic-boundary-firewall' ||
+      path === '/systems/continuity-identity-model'
+    );
   }
 
   private isSystemsAtmosphereUrl(url: string): boolean {
     return url.split(/[?#]/)[0] === '/systems';
+  }
+
+  private isContactAtmosphereUrl(url: string): boolean {
+    return url.split(/[?#]/)[0] === '/contact';
+  }
+
+  private isOrderAtmosphereUrl(url: string): boolean {
+    return url.split(/[?#]/)[0] === '/soruklu-order';
+  }
+
+  private isVelariAtmosphereUrl(url: string): boolean {
+    return url.split(/[?#]/)[0] === '/velari';
   }
 
   private disableNativeScrollRestoration(): void {

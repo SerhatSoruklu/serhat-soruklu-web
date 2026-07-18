@@ -3,6 +3,8 @@ import { pageSeoMetadata } from './core/seo/seo.config';
 import { ContactComponent } from './pages/contact/contact.component';
 import { GitHubComponent } from './pages/github/github.component';
 import { HomeComponent } from './pages/home/home.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { SorukluOrderComponent } from './pages/soruklu-order/soruklu-order.component';
 import { ChatpdmSystemComponent } from './pages/systems/chatpdm/chatpdm-system.component';
 import { ContinuityIdentityModelSystemComponent } from './pages/systems/continuity-identity-model/continuity-identity-model-system.component';
 import { CoupynSystemComponent } from './pages/systems/coupyn/coupyn-system.component';
@@ -10,10 +12,25 @@ import { DeterministicBoundaryFirewallSystemComponent } from './pages/systems/de
 import { SystemsComponent } from './pages/systems/systems.component';
 import { WorkComponent } from './pages/work/work.component';
 import { WritingComponent } from './pages/writing/writing.component';
+import { VelariComponent } from './pages/velari/velari.component';
 
 describe('routes', () => {
+  it('renders the dedicated noindex not-found page for explicit and unknown routes', async () => {
+    const explicitNotFound = routes.find((route) => route.path === '404');
+    const wildcard = routes.find((route) => route.path === '**');
+
+    for (const route of [explicitNotFound, wildcard]) {
+      expect(route?.redirectTo).toBeUndefined();
+      expect(route?.data?.['seo']).toBe(pageSeoMetadata.notFound);
+      expect(route?.data?.['statusCode']).toBe(404);
+      expect(await route?.loadComponent?.()).toBe(NotFoundComponent);
+    }
+  });
+
   it('keeps public route paths and SEO metadata aligned', () => {
-    const publicRoutes = routes.filter((route) => route.path !== '**');
+    const publicRoutes = routes.filter(
+      (route) => route.path !== '404' && route.path !== '**',
+    );
 
     expect(publicRoutes.map((route) => route.path)).toEqual([
       '',
@@ -25,7 +42,9 @@ describe('routes', () => {
       'systems',
       'writing',
       'github',
-      'contact'
+      'soruklu-order',
+      'velari',
+      'contact',
     ]);
     expect(publicRoutes.map((route) => route.data?.['seo'])).toEqual([
       pageSeoMetadata.home,
@@ -37,7 +56,9 @@ describe('routes', () => {
       pageSeoMetadata.systems,
       pageSeoMetadata.writing,
       pageSeoMetadata.github,
-      pageSeoMetadata.contact
+      pageSeoMetadata.sorukluOrder,
+      pageSeoMetadata.velari,
+      pageSeoMetadata.contact,
     ]);
   });
 
@@ -56,11 +77,19 @@ describe('routes', () => {
     expect(componentByPath.get('work')).toBe(WorkComponent);
     expect(componentByPath.get('systems/coupyn')).toBe(CoupynSystemComponent);
     expect(componentByPath.get('systems/chatpdm')).toBe(ChatpdmSystemComponent);
-    expect(componentByPath.get('systems/deterministic-boundary-firewall')).toBe(DeterministicBoundaryFirewallSystemComponent);
-    expect(componentByPath.get('systems/continuity-identity-model')).toBe(ContinuityIdentityModelSystemComponent);
+    expect(componentByPath.get('systems/deterministic-boundary-firewall')).toBe(
+      DeterministicBoundaryFirewallSystemComponent,
+    );
+    expect(componentByPath.get('systems/continuity-identity-model')).toBe(
+      ContinuityIdentityModelSystemComponent,
+    );
     expect(componentByPath.get('systems')).toBe(SystemsComponent);
     expect(componentByPath.get('writing')).toBe(WritingComponent);
     expect(componentByPath.get('github')).toBe(GitHubComponent);
+    expect(componentByPath.get('soruklu-order')).toBe(SorukluOrderComponent);
+    expect(componentByPath.get('velari')).toBe(VelariComponent);
     expect(componentByPath.get('contact')).toBe(ContactComponent);
+    expect(componentByPath.get('404')).toBe(NotFoundComponent);
+    expect(componentByPath.get('**')).toBe(NotFoundComponent);
   });
 });
