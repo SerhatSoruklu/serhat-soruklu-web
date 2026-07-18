@@ -54,7 +54,10 @@ test.describe('contact page', () => {
         });
       });
 
-      await page.goto('/contact');
+      // Wait for client hydration to settle before exercising reactive-form state.
+      // Under a fully parallel run, interacting with the SSR control too early can
+      // let hydration restore its initial empty value after Playwright fills it.
+      await page.goto('/contact', { waitUntil: 'networkidle' });
 
       await expect(page.getByRole('heading', { name: 'Start With a Clear Message' })).toBeVisible();
       await expect(page.getByText('Response: usually within 48h')).toBeVisible();
@@ -76,14 +79,17 @@ test.describe('contact page', () => {
       const emailTopBeforeError = await page.locator('#contact-email').evaluate((element) => {
         return element.getBoundingClientRect().top + window.scrollY;
       });
-      await page.locator('#contact-email').fill('bad');
-      await page.locator('#contact-email').blur();
+      const emailInput = page.locator('#contact-email');
+      await emailInput.fill('bad');
+      await expect(emailInput).toHaveValue('bad');
+      await emailInput.blur();
+      await expect(emailInput).toHaveValue('bad');
       await expect(page.locator('#contact-email-feedback')).toContainText('Enter a valid email address.');
       const emailTopAfterError = await page.locator('#contact-email').evaluate((element) => {
         return element.getBoundingClientRect().top + window.scrollY;
       });
       expect(Math.abs(emailTopAfterError - emailTopBeforeError)).toBeLessThanOrEqual(1);
-      await page.locator('#contact-email').fill('');
+      await emailInput.fill('');
       await fillValidContactForm(page);
       await expect(page.getByRole('button', { name: 'Send Message' })).toBeEnabled();
       await expectNoHorizontalOverflow(page);
