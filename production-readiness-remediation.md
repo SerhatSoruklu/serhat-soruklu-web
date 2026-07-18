@@ -305,8 +305,8 @@ The following generated evidence remains intentionally ignored and is not part o
 ### P2-8 — Social previews are incomplete and not live-verifiable
 
 - **Status:** Repository side fixed.
-- **Change:** All 12 indexable routes use 1200×630 PNG cards with absolute URL, PNG MIME type, dimensions, and alt metadata for Open Graph and Twitter/X. The approved ChatPDM and Coupyn SVG sources remain intact; the checked-in raster renderer reduces and recentres only the PNGs' internal right-side wordmarks and diagrams so their nodes, symbols, and labels do not crowd or overlap.
-- **Files and proof:** Social PNGs and SVG sources, `frontend/scripts/render-system-social-previews.mjs`, the frontend render command, SEO config/service/specs, index, and SEO E2E. Every card is measured at exactly 1200×630; the two corrected PNGs reproduce deterministically and were visually inspected at full size for containment, cropping, padding, legibility, and brand consistency.
+- **Change:** All 12 indexable routes use 1200×630 PNG cards with absolute URL, PNG MIME type, dimensions, and alt metadata for Open Graph and Twitter/X. The approved ChatPDM and Coupyn SVG sources remain intact; the checked-in raster renderer loads their exact local logo typefaces and Arial-compatible self-hosted card typefaces, then converts each SVG directly to PNG without changing its internal artwork, layout, or composition.
+- **Files and proof:** Social PNGs and SVG sources, local Inter, Open Sans, and Liberation Sans font assets, their OFL notice, `frontend/scripts/render-system-social-previews.mjs`, the frontend render command, SEO config/service/specs, index, and SEO E2E. Every card is measured at exactly 1200×630; generation asserts that the required fonts load and internal wordmarks do not overlap, the two PNGs reproduce deterministically, match their SVG source compositions, and were visually inspected at full size for containment, cropping, padding, legibility, and brand consistency.
 - **Limitation:** Public fetch and social-debugger validation await restored origins and CDN purge.
 
 ### P2-9 — Remote fonts duplicate a self-hosted asset strategy
