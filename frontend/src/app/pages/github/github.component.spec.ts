@@ -121,7 +121,11 @@ describe('GitHubComponent', () => {
     expect(coupynSection?.textContent).toContain('operational infrastructure');
     expect(coupynSection?.textContent).toContain('security-sensitive system behaviour');
     expect(coupynSection?.textContent).not.toContain('View GitHub');
-    expect(coupynLinks.some((link) => link.href.includes('github.com'))).toBe(false);
+    expect(coupynLinks.some((link) => {
+      const hostname = new URL(link.href).hostname.toLowerCase();
+
+      return hostname === 'github.com' || hostname.endsWith('.github.com');
+    })).toBe(false);
     expect(coupynLinks.map((link) => link.getAttribute('href'))).toEqual([
       '/systems/coupyn',
       'https://coupyn.com',

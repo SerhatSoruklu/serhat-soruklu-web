@@ -122,7 +122,11 @@ describe('SorukluOrderComponent', () => {
     const links = Array.from(nativeElement.querySelectorAll<HTMLAnchorElement>('a'));
 
     expect(domain?.textContent?.trim()).toBe('sorukluorder.org');
-    expect(links.some((link) => link.href.includes('sorukluorder.org'))).toBe(false);
+    expect(links.some((link) => {
+      const hostname = new URL(link.href).hostname.toLowerCase();
+
+      return hostname === 'sorukluorder.org' || hostname.endsWith('.sorukluorder.org');
+    })).toBe(false);
   });
 
   it('does not introduce recruiting, enforcement, or threatening language', () => {
