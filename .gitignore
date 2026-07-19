@@ -9,6 +9,10 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+# Local operational reports
+/server-reconnaissance-report.md
+/serhatsoruklu-production-deployment-report.md
+
 # Runtime data
 pids
 *.pid

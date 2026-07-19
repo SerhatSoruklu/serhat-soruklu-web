@@ -1,0 +1,44 @@
+[Unit]
+Description=SerhatSoruklu.com isolated MongoDB logical backup
+After=network-online.target mongod.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+UMask=0077
+EnvironmentFile=/etc/serhatsoruklu/backup.env
+ExecStart=/usr/local/sbin/serhatsoruklu-mongodb-backup
+RuntimeDirectory=serhatsoruklu-backup
+RuntimeDirectoryMode=0700
+Nice=15
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+NoNewPrivileges=true
+PrivateDevices=true
+PrivateTmp=true
+ProtectClock=true
+ProtectControlGroups=true
+ProtectHome=true
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectSystem=strict
+ReadWritePaths=/var/backups/serhatsoruklu /run/serhatsoruklu-backup
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+LockPersonality=true
+SystemCallArchitectures=native
+CapabilityBoundingSet=
+AmbientCapabilities=
+InaccessiblePaths=/srv/chatpdm /var/www/coupyn /var/www/coupyn-staging /home/deploy /home/chatpdmops
+LimitNOFILE=1024
+TasksMax=64
+MemoryMax=512M
+CPUQuota=50%
+TimeoutStartSec=30m
+SyslogIdentifier=serhatsoruklu-backup

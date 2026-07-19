@@ -1,0 +1,12 @@
+[Unit]
+Description=Daily SerhatSoruklu.com MongoDB backup schedule
+
+[Timer]
+OnCalendar=*-*-* 03:37:00 UTC
+RandomizedDelaySec=20m
+Persistent=true
+AccuracySec=1m
+Unit=serhatsoruklu-mongodb-backup.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,48 @@
+[Unit]
+Description=SerhatSoruklu.com Express backend
+After=network-online.target mongod.service
+Wants=network-online.target
+StartLimitIntervalSec=120
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=serhatsoruklu
+Group=serhatsoruklu
+UMask=0027
+WorkingDirectory=/srv/serhatsoruklu/current/backend
+EnvironmentFile=/etc/serhatsoruklu/backend.env
+ExecStart=/usr/bin/node --require /srv/serhatsoruklu/current/ops/runtime/force-loopback.cjs /srv/serhatsoruklu/current/backend/start.js
+Restart=on-failure
+RestartSec=5s
+TimeoutStartSec=45s
+TimeoutStopSec=20s
+KillSignal=SIGTERM
+NoNewPrivileges=true
+PrivateDevices=true
+PrivateTmp=true
+ProtectClock=true
+ProtectControlGroups=true
+ProtectHome=true
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectSystem=strict
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+LockPersonality=true
+SystemCallArchitectures=native
+CapabilityBoundingSet=
+AmbientCapabilities=
+InaccessiblePaths=/srv/chatpdm /var/www/coupyn /var/www/coupyn-staging /home/deploy /home/chatpdmops
+LimitNOFILE=4096
+TasksMax=256
+MemoryMax=512M
+CPUQuota=100%
+SyslogIdentifier=serhatsoruklu-backend
+
+[Install]
+WantedBy=multi-user.target

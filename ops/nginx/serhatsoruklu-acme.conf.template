@@ -1,0 +1,46 @@
+# ACME bootstrap configuration. Replaced transactionally by the TLS template.
+server {
+    listen 80;
+    listen [::]:80;
+    server_name serhatsoruklu.com www.serhatsoruklu.com;
+
+    # Override any host-wide real-IP header so access control evaluates the
+    # actual peer (Cloudflare or loopback), not an untrusted visitor header.
+    real_ip_header X-Serhat-Origin-Only;
+    include /etc/nginx/snippets/serhatsoruklu-cloudflare-origin-only.conf;
+
+    access_log /var/log/nginx/serhatsoruklu.com.access.log;
+    error_log /var/log/nginx/serhatsoruklu.com.error.log warn;
+    autoindex off;
+
+    location ^~ /.well-known/acme-challenge/ {
+        root /srv/serhatsoruklu/shared/acme;
+        default_type text/plain;
+        try_files $uri =404;
+    }
+
+    location / {
+        return 308 https://serhatsoruklu.com$request_uri;
+    }
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name api.serhatsoruklu.com;
+    real_ip_header X-Serhat-Origin-Only;
+    include /etc/nginx/snippets/serhatsoruklu-cloudflare-origin-only.conf;
+    access_log /var/log/nginx/api.serhatsoruklu.com.access.log;
+    error_log /var/log/nginx/api.serhatsoruklu.com.error.log warn;
+    autoindex off;
+
+    location ^~ /.well-known/acme-challenge/ {
+        root /srv/serhatsoruklu/shared/acme;
+        default_type text/plain;
+        try_files $uri =404;
+    }
+
+    location / {
+        return 308 https://api.serhatsoruklu.com$request_uri;
+    }
+}
