@@ -129,9 +129,9 @@ export const pageSeoMetadata = {
   },
   velari: {
     label: 'Velari',
-    title: 'Velari Faith | A Modern Belief Framework',
+    title: 'Velari | Light, Discipline and Responsibility',
     description:
-      'Velari is a modern spiritual and philosophical framework founded by Serhat Soruklu, centred on Light, wisdom, discipline, compassion and self-mastery.',
+      'Velari is a voluntary spiritual philosophy founded by Serhat Soruklu, centred on Light, discipline, compassion, truth, free will and responsibility.',
     path: '/velari',
     ogImage: '/assets/social/serhat-soruklu-velari-og.png',
     ogImageAlt: 'Velari emblem with the words A path of Light, wisdom and discipline.',

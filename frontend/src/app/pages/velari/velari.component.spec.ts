@@ -22,12 +22,23 @@ describe('VelariComponent', () => {
     expect(nativeElement.querySelector('h1')?.textContent?.trim()).toBe('Velari');
     expect(text).toContain('A path of Light, wisdom and discipline.');
     expect(text).toContain('What Is Velari?');
+    expect(text).toContain(
+      'Velari is a voluntary personal philosophy. It has no priesthood, compulsory membership, financial obligations or claim to supernatural authority.',
+    );
+    expect(text).toContain('What Velari Is Not');
     expect(text).toContain('Become. Refine. Awaken.');
     expect(text).toContain('Principles That Must Be Practised');
     expect(text).toContain('Freedom Carries Responsibility');
     expect(text).toContain('Many paths, one Light.');
     expect(text).toContain('May the Light guide us.');
     expect(text).not.toContain('Public material is being prepared.');
+
+    const introduction = nativeElement.querySelector('#velari-framework');
+    const boundaries = nativeElement.querySelector('.velari-section--boundaries');
+    const sections = Array.from(nativeElement.querySelectorAll('.velari-page > section'));
+    expect(sections.indexOf(introduction as HTMLElement)).toBeLessThan(
+      sections.indexOf(boundaries as HTMLElement),
+    );
   });
 
   it('states the exact leadership and wider-family identity boundaries', () => {
@@ -37,7 +48,7 @@ describe('VelariComponent', () => {
     const text = (fixture.nativeElement as HTMLElement).textContent?.replace(/\s+/g, ' ') ?? '';
 
     expect(text).toContain(
-      'He serves as its present leader and custodian, not as a prophet, deity, divine messenger or infallible authority.',
+      'He serves as its founder, writer and current steward, not as a prophet, deity, divine messenger or infallible authority.',
     );
     expect(text).toContain(
       'Velari is the spiritual and philosophical framework associated with the Soruklu Order. It does not define or represent the beliefs of the wider Soruklu family, and no person is assumed to follow Velari merely through family name or ancestry.',
@@ -58,7 +69,7 @@ describe('VelariComponent', () => {
       ),
     );
 
-    expect(emblem?.alt).toBe('Velari faith emblem');
+    expect(emblem?.alt).toBe('Velari emblem: a gold flame within an oval geometric seal');
     expect(emblem?.getAttribute('width')).toBe('1080');
     expect(emblem?.getAttribute('height')).toBe('1080');
     expect(emblem?.getAttribute('srcset')).toBe(
@@ -137,8 +148,14 @@ describe('VelariComponent', () => {
     expect(text).toContain(
       'A reflection on confusion, fear, error and the parts of the self that must be understood rather than denied.',
     );
-    expect(section?.querySelectorAll('.velari-book-meta__status').length).toBe(3);
+    expect(section?.querySelectorAll('.velari-book-meta__facts').length).toBe(3);
+    expect(section?.querySelectorAll('.velari-book-meta__facts dt').length).toBe(6);
+    expect(text.match(/Developing work/g)).toHaveLength(3);
+    expect(text.match(/Not yet published/g)).toHaveLength(3);
     expect(text).toContain('not completed or commercially available books');
+    expect(text).toContain(
+      'Fuller readable editions will be published when sufficiently developed.',
+    );
     expect(sourceLinks.map((link) => link.getAttribute('href'))).toEqual(expectedLinks);
     expect(sourceLinks.every((link) => link.target === '_blank')).toBe(true);
     expect(sourceLinks.every((link) => link.rel === 'noopener noreferrer')).toBe(true);
@@ -182,6 +199,8 @@ describe('VelariComponent', () => {
       'everyone will follow',
       'all soruklu family members follow',
       'divinely guaranteed',
+      'present leader and custodian',
+      'future generations',
     ];
 
     for (const phrase of prohibited) {

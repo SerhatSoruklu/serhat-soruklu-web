@@ -6,6 +6,7 @@
 
 .velari-page {
   overflow: hidden;
+  overflow-wrap: break-word;
   background:
     radial-gradient(ellipse at 76% 4%, rgba(231, 188, 91, 0.12), transparent 29%),
     radial-gradient(ellipse at 18% 36%, rgba(70, 101, 151, 0.09), transparent 35%),
@@ -44,16 +45,16 @@ h4 {
 .velari-movement__top,
 .velari-principle-group__index,
 .velari-practice__phase,
-.velari-book-meta__status,
+.velari-book-meta__facts,
 .velari-book-meta__link,
 .velari-emblem figcaption {
   font-family: 'Space Mono', 'IBM Plex Mono', 'JetBrains Mono', monospace;
 }
 
 .velari-eyebrow {
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   color: #ddb35b;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.18em;
   line-height: 1.55;
@@ -98,7 +99,7 @@ h4 {
   gap: 54px;
   box-sizing: border-box;
   padding-top: 126px;
-  padding-bottom: 74px;
+  padding-bottom: 64px;
 }
 
 .velari-hero__copy {
@@ -131,10 +132,21 @@ h4 {
   text-wrap: pretty;
 }
 
+.velari-hero__trust {
+  max-width: 700px;
+  margin-bottom: 14px;
+  border-left: 2px solid rgba(221, 179, 91, 0.7);
+  padding: 9px 0 9px 16px;
+  color: #c4ccd7;
+  font-size: 15px;
+  line-height: 1.72;
+  text-wrap: pretty;
+}
+
 .velari-hero__support {
   margin-bottom: 0;
   color: #9ca8b8;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.7;
 }
 
@@ -159,7 +171,7 @@ h4 {
   padding: 12px 16px;
   color: #f5efe4;
   cursor: pointer;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.025em;
   line-height: 1.45;
@@ -237,12 +249,12 @@ h4 {
 .velari-facts dt,
 .velari-facts dd {
   margin: 0;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.55;
 }
 
 .velari-facts dt {
-  color: #79869a;
+  color: #909daf;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -364,7 +376,7 @@ h4 {
   color: #b9a16b;
   cursor: help;
   font-family: 'Space Mono', 'IBM Plex Mono', 'JetBrains Mono', monospace;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.12em;
   line-height: 1.35;
@@ -482,10 +494,14 @@ h4 {
 .velari-emblem-principle:hover,
 .velari-emblem-principle:focus-visible {
   border-color: rgba(240, 213, 140, 0.72);
-  outline: none;
   background: rgba(10, 15, 24, 0.96);
   color: #f0d58c;
   text-shadow: 0 0 14px rgba(240, 213, 140, 0.4);
+}
+
+.velari-emblem-principle:focus-visible {
+  outline: 2px solid #f0d58c;
+  outline-offset: 3px;
 }
 
 .velari-emblem-principle:hover::before,
@@ -507,7 +523,7 @@ h4 {
   gap: 18px;
   margin-top: 20px;
   color: #8f9aaa;
-  font-size: 8px;
+  font-size: 9px;
   letter-spacing: 0.11em;
   line-height: 1.55;
   text-transform: uppercase;
@@ -515,7 +531,7 @@ h4 {
 
 .velari-section {
   position: relative;
-  padding: 82px 0;
+  padding: 74px 0;
   border-bottom: 1px solid rgba(221, 179, 91, 0.1);
 }
 
@@ -525,7 +541,7 @@ h4 {
 
 .velari-heading {
   max-width: 880px;
-  margin-bottom: 38px;
+  margin-bottom: 32px;
 }
 
 .velari-heading h2,
@@ -541,8 +557,8 @@ h4 {
 .velari-heading--split > p {
   margin: 22px 0 0;
   color: #aab4c2;
-  font-size: 15px;
-  line-height: 1.75;
+  font-size: 16px;
+  line-height: 1.78;
   text-wrap: pretty;
 }
 
@@ -557,8 +573,8 @@ h4 {
 .velari-closing__inner > div > p:last-child {
   margin-bottom: 0;
   color: #b8c1cd;
-  font-size: 15px;
-  line-height: 1.8;
+  font-size: 16px;
+  line-height: 1.82;
   text-wrap: pretty;
 }
 
@@ -583,6 +599,55 @@ h4 {
 .velari-framework__body {
   display: grid;
   gap: 38px;
+}
+
+.velari-section--boundaries {
+  background:
+    linear-gradient(rgba(221, 179, 91, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(221, 179, 91, 0.018) 1px, transparent 1px), rgba(5, 11, 20, 0.88);
+  background-size: 62px 62px;
+}
+
+.velari-framework-boundaries__intro {
+  max-width: 780px;
+  margin: 22px 0 0;
+  color: #c2cad5;
+  font-size: 17px;
+  line-height: 1.76;
+  text-wrap: pretty;
+}
+
+.velari-framework-boundaries__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.velari-framework-boundaries__list li {
+  min-width: 0;
+  border-top: 1px solid rgba(221, 179, 91, 0.32);
+  padding: 18px 16px 4px 0;
+}
+
+.velari-framework-boundaries__list span {
+  display: block;
+  margin-bottom: 12px;
+  color: #9aa6b7;
+  font-family: 'Space Mono', 'IBM Plex Mono', 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.velari-framework-boundaries__list p {
+  margin: 0;
+  color: #d4dae2;
+  font-size: 15px;
+  line-height: 1.72;
+  text-wrap: pretty;
 }
 
 .velari-quote {
@@ -730,8 +795,8 @@ h4 {
   min-height: 3.4em;
   margin-bottom: 24px;
   color: #b9c2cd;
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 15px;
+  line-height: 1.74;
 }
 
 .velari-movements ul {
@@ -748,7 +813,7 @@ h4 {
   border-radius: 999px;
   padding: 6px 9px;
   color: #8f9cad;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.35;
 }
 
@@ -766,8 +831,8 @@ h4 {
 
 .velari-principle-group__index {
   margin-bottom: 10px;
-  color: #748297;
-  font-size: 9px;
+  color: #919daf;
+  font-size: 10px;
   letter-spacing: 0.14em;
 }
 
@@ -796,15 +861,15 @@ h4 {
 .velari-principle-list h4 {
   color: #f0d58c;
   font-family: 'Sora', Inter, ui-sans-serif, system-ui, sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.5;
 }
 
 .velari-principle-list p {
-  color: #9ca8b8;
-  font-size: 12px;
-  line-height: 1.7;
+  color: #aeb8c6;
+  font-size: 14px;
+  line-height: 1.72;
 }
 
 .velari-practice-grid {
@@ -840,8 +905,8 @@ h4 {
 
 .velari-practice__phase {
   margin-bottom: 10px;
-  color: #7f8ca0;
-  font-size: 9px;
+  color: #929fb1;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -867,9 +932,9 @@ h4 {
 .velari-boundaries li {
   position: relative;
   padding-left: 17px;
-  color: #9faab9;
-  font-size: 12px;
-  line-height: 1.65;
+  color: #aeb8c6;
+  font-size: 14px;
+  line-height: 1.7;
 }
 
 .velari-practice-grid li::before,
@@ -887,6 +952,13 @@ h4 {
 .velari-section--choice {
   background:
     radial-gradient(ellipse at 78% 42%, rgba(221, 179, 91, 0.085), transparent 32%), #070e19;
+}
+
+.velari-section--coexistence,
+.velari-section--order,
+.velari-section--future {
+  padding-top: 68px;
+  padding-bottom: 68px;
 }
 
 .velari-choice {
@@ -913,9 +985,9 @@ h4 {
 
 .velari-safeguard p {
   margin-bottom: 12px;
-  color: #7f8ca0;
+  color: #929fb1;
   font-family: 'Space Mono', 'IBM Plex Mono', monospace;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -945,7 +1017,7 @@ h4 {
   padding-left: 24px;
   border-bottom: 1px solid rgba(161, 177, 198, 0.1);
   color: #c2c9d2;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .velari-commitments li::before {
@@ -960,7 +1032,7 @@ h4 {
 
 .velari-text-grid {
   display: grid;
-  gap: 58px 18px;
+  gap: 48px 18px;
 }
 
 .velari-book-entry {
@@ -1297,29 +1369,50 @@ h4 {
   margin: 20px auto 0;
 }
 
-.velari-book-meta__status {
+.velari-book-meta__facts {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 15px;
+}
+
+.velari-book-meta__facts > div {
+  display: grid;
+  grid-template-columns: minmax(96px, 0.75fr) minmax(0, 1.25fr);
+  gap: 12px;
+}
+
+.velari-book-meta__facts dt,
+.velari-book-meta__facts dd {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.velari-book-meta__facts dt {
   display: flex;
   align-items: center;
-  gap: 9px;
-  margin-bottom: 13px;
-  color: #d1a451;
-  font-size: 8px;
+  gap: 7px;
+  color: #9aa6b7;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.velari-book-meta__status app-path-icon {
+.velari-book-meta__facts dd {
+  color: #dbb867;
+}
+
+.velari-book-meta__facts app-path-icon {
   width: 18px;
   height: 18px;
 }
 
-.velari-book-meta > p:not(.velari-book-meta__status) {
+.velari-book-meta > p {
   min-height: 5.2em;
   margin-bottom: 18px;
   color: #9faab9;
-  font-size: 13px;
-  line-height: 1.72;
+  font-size: 14px;
+  line-height: 1.76;
 }
 
 .velari-book-meta__link {
@@ -1332,7 +1425,7 @@ h4 {
   border-bottom: 1px solid rgba(214, 168, 79, 0.48);
   padding: 7px 0;
   color: #e0bb6d;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-decoration: none;
@@ -1406,7 +1499,7 @@ h4 {
   padding-bottom: 14px;
   padding-left: 24px;
   border-bottom: 1px solid rgba(161, 177, 198, 0.1);
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .velari-boundaries li::before {
@@ -1470,11 +1563,7 @@ h4 {
 .velari-section--future {
   border-bottom-color: transparent;
   background:
-    radial-gradient(
-      ellipse 680px 300px at 18% 100%,
-      rgba(221, 179, 91, 0.1),
-      transparent 72%
-    ),
+    radial-gradient(ellipse 680px 300px at 18% 100%, rgba(221, 179, 91, 0.1), transparent 72%),
     linear-gradient(180deg, #07101c 0%, #070d17 100%);
 }
 
@@ -1491,28 +1580,12 @@ h4 {
 
 .velari-closing {
   position: relative;
-  padding: 94px 0 118px;
+  padding: 80px 0 94px;
   background:
-    radial-gradient(
-      ellipse 680px 300px at 18% 0%,
-      rgba(221, 179, 91, 0.1),
-      transparent 72%
-    ),
-    radial-gradient(
-      ellipse 600px 300px at 18% 48%,
-      rgba(221, 179, 91, 0.14),
-      transparent 72%
-    ),
-    radial-gradient(
-      ellipse 580px 290px at 18% 100%,
-      rgba(221, 179, 91, 0.095),
-      transparent 72%
-    ),
-    radial-gradient(
-      ellipse 640px 260px at 52% 100%,
-      rgba(70, 101, 151, 0.035),
-      transparent 74%
-    ),
+    radial-gradient(ellipse 680px 300px at 18% 0%, rgba(221, 179, 91, 0.1), transparent 72%),
+    radial-gradient(ellipse 600px 300px at 18% 48%, rgba(221, 179, 91, 0.14), transparent 72%),
+    radial-gradient(ellipse 580px 290px at 18% 100%, rgba(221, 179, 91, 0.095), transparent 72%),
+    radial-gradient(ellipse 640px 260px at 52% 100%, rgba(70, 101, 151, 0.035), transparent 74%),
     linear-gradient(180deg, #070d17 0%, #050914 78%, #050914 100%);
 }
 
@@ -1572,12 +1645,19 @@ h4 {
 @media (min-width: 768px) {
   .velari-hero__inner {
     padding-top: 138px;
-    padding-bottom: 86px;
+    padding-bottom: 74px;
   }
 
   .velari-section {
-    padding-top: 104px;
-    padding-bottom: 104px;
+    padding-top: 90px;
+    padding-bottom: 90px;
+  }
+
+  .velari-section--coexistence,
+  .velari-section--order,
+  .velari-section--future {
+    padding-top: 82px;
+    padding-bottom: 82px;
   }
 
   .velari-framework__body,
@@ -1720,15 +1800,6 @@ h4 {
   .velari-order-link .velari-action {
     grid-column: auto;
   }
-
-  .velari-closing__inner {
-    grid-template-columns: 150px minmax(0, 1fr) minmax(260px, auto);
-  }
-
-  .velari-closing__actions {
-    grid-column: auto;
-    justify-content: flex-end;
-  }
 }
 
 @media (min-width: 1180px) {
@@ -1756,9 +1827,18 @@ h4 {
   .velari-book-stage {
     min-height: 525px;
   }
+
+  .velari-closing__inner {
+    grid-template-columns: 150px minmax(320px, 1fr) minmax(260px, auto);
+  }
+
+  .velari-closing__actions {
+    grid-column: auto;
+    justify-content: flex-end;
+  }
 }
 
-@media (min-width: 1024px) and (max-height: 740px) {
+@media (min-width: 1024px) and (max-height: 820px) {
   .velari-hero__inner {
     min-height: 560px;
     padding-top: 108px;
@@ -1777,6 +1857,14 @@ h4 {
   .velari-hero__definition {
     font-size: 16px;
     line-height: 1.58;
+  }
+
+  .velari-hero__trust {
+    margin-bottom: 10px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-size: 14px;
+    line-height: 1.55;
   }
 
   .velari-hero__support {
@@ -1818,7 +1906,7 @@ h4 {
 
   .velari-emblem-principle {
     padding: 3px 5px;
-    font-size: 8px;
+    font-size: 9px;
     letter-spacing: 0.08em;
   }
 
@@ -1857,8 +1945,8 @@ h4 {
   }
 
   .velari-closing {
-    padding-top: 82px;
-    padding-bottom: 96px;
+    padding-top: 72px;
+    padding-bottom: 82px;
   }
 }
 
@@ -1892,6 +1980,9 @@ h4 {
 }
 
 :host-context(.theme-resolved-light) .velari-hero__definition,
+:host-context(.theme-resolved-light) .velari-hero__trust,
+:host-context(.theme-resolved-light) .velari-framework-boundaries__intro,
+:host-context(.theme-resolved-light) .velari-framework-boundaries__list p,
 :host-context(.theme-resolved-light) .velari-prose p,
 :host-context(.theme-resolved-light) .velari-order-link > div > p:last-child,
 :host-context(.theme-resolved-light) .velari-official > div > p:last-child,
@@ -1899,7 +1990,7 @@ h4 {
 :host-context(.theme-resolved-light) .velari-heading--split > p,
 :host-context(.theme-resolved-light) .velari-movements article > p,
 :host-context(.theme-resolved-light) .velari-principle-list p,
-:host-context(.theme-resolved-light) .velari-book-meta > p:not(.velari-book-meta__status),
+:host-context(.theme-resolved-light) .velari-book-meta > p,
 :host-context(.theme-resolved-light) .velari-practice-grid li,
 :host-context(.theme-resolved-light) .velari-commitments li,
 :host-context(.theme-resolved-light) .velari-boundaries li {
@@ -1916,14 +2007,24 @@ h4 {
 :host-context(.theme-resolved-light) .velari-quote p,
 :host-context(.theme-resolved-light) .velari-practice__phase,
 :host-context(.theme-resolved-light) .velari-principle-group__index {
-  color: #6c7584;
+  color: #5f697a;
 }
 
 :host-context(.theme-resolved-light) .velari-facts dd {
   color: #2c3442;
 }
 
+:host-context(.theme-resolved-light) .velari-framework-boundaries__list span,
+:host-context(.theme-resolved-light) .velari-book-meta__facts dt {
+  color: #5f697a;
+}
+
+:host-context(.theme-resolved-light) .velari-book-meta__facts dd {
+  color: #7d591b;
+}
+
 :host-context(.theme-resolved-light) .velari-section--framework,
+:host-context(.theme-resolved-light) .velari-section--boundaries,
 :host-context(.theme-resolved-light) .velari-section--light,
 :host-context(.theme-resolved-light) .velari-section--choice,
 :host-context(.theme-resolved-light) .velari-section--order {
@@ -1939,11 +2040,7 @@ h4 {
 
 :host-context(.theme-resolved-light) .velari-section--future {
   background:
-    radial-gradient(
-      ellipse 680px 300px at 18% 100%,
-      rgba(184, 135, 47, 0.11),
-      transparent 72%
-    ),
+    radial-gradient(ellipse 680px 300px at 18% 100%, rgba(184, 135, 47, 0.11), transparent 72%),
     linear-gradient(180deg, #f4ecdc 0%, #f4ecdc 100%);
 }
 
@@ -1964,7 +2061,7 @@ h4 {
   background: rgba(255, 252, 245, 0.72);
 }
 
-:host-context(.theme-resolved-light) .velari-book-meta__status,
+:host-context(.theme-resolved-light) .velari-book-meta__facts dd,
 :host-context(.theme-resolved-light) .velari-book-meta__link {
   color: #8e641e;
 }
@@ -2007,7 +2104,7 @@ h4 {
 }
 
 :host-context(.theme-resolved-light) .velari-emblem figcaption {
-  color: #657082;
+  color: #5f697a;
 }
 
 :host-context(.theme-resolved-light) .velari-practice-grid li::before,
@@ -2018,26 +2115,10 @@ h4 {
 
 :host-context(.theme-resolved-light) .velari-closing {
   background:
-    radial-gradient(
-      ellipse 680px 300px at 18% 0%,
-      rgba(184, 135, 47, 0.11),
-      transparent 72%
-    ),
-    radial-gradient(
-      ellipse 600px 300px at 18% 48%,
-      rgba(184, 135, 47, 0.13),
-      transparent 72%
-    ),
-    radial-gradient(
-      ellipse 580px 290px at 18% 100%,
-      rgba(184, 135, 47, 0.095),
-      transparent 72%
-    ),
-    radial-gradient(
-      ellipse 640px 260px at 52% 100%,
-      rgba(69, 91, 126, 0.03),
-      transparent 74%
-    ),
+    radial-gradient(ellipse 680px 300px at 18% 0%, rgba(184, 135, 47, 0.11), transparent 72%),
+    radial-gradient(ellipse 600px 300px at 18% 48%, rgba(184, 135, 47, 0.13), transparent 72%),
+    radial-gradient(ellipse 580px 290px at 18% 100%, rgba(184, 135, 47, 0.095), transparent 72%),
+    radial-gradient(ellipse 640px 260px at 52% 100%, rgba(69, 91, 126, 0.03), transparent 74%),
     linear-gradient(180deg, #f4ecdc 0%, #fbf6e9 78%, #fbf6e9 100%);
 }
 
