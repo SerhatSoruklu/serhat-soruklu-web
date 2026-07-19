@@ -57,6 +57,8 @@ grep -Fq 'serhatsoruklu-deploy-helper' "$OPS_ROOT/deploy/ci-deploy.sh"
 grep -Fq 'install-backend-environment' "$OPS_ROOT/deploy/ci-deploy.sh"
 grep -Fq 'install_backend_environment' "$OPS_ROOT/deploy/root-helper.sh"
 grep -Fq 'SERHATSORUKLU_BACKEND_ENV' "$OPS_ROOT/deploy/publish-backend-environment.sh"
-grep -Fq 'coupyn|chatpdm' "$OPS_ROOT/deploy/publish-backend-environment.sh"
+grep -Fq 'APPROVED_COMPANY_MAILBOX=admin@coupyn.com' "$OPS_ROOT/deploy/publish-backend-environment.sh"
+grep -Fq 'approved_company_mailbox=admin@coupyn.com' "$OPS_ROOT/deploy/root-helper.sh"
+grep -Fq 'example\.com|chatpdm' "$OPS_ROOT/deploy/publish-backend-environment.sh"
 
 printf 'infrastructure validation passed\n'
