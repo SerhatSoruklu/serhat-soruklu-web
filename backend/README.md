@@ -7,9 +7,10 @@ then start this service with:
 npm --prefix backend run start:production
 ```
 
-That command sets production mode before dotenv selects `.env.production`. Do
-not commit either runtime environment file. Use `.env.example` as the variable
-schema and inject secrets through the production host's secret mechanism.
+That command sets production mode before dotenv selects `.env.production`.
+The ignored local `.env.production` is the canonical final runtime form; do
+not commit it or any other runtime environment file. Production uses
+`/etc/serhatsoruklu/backend.env`, with secrets injected only on the host.
 
 ## Health and readiness
 

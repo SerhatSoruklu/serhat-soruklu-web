@@ -10,7 +10,7 @@ server {
     autoindex off;
 
     location ^~ /.well-known/acme-challenge/ {
-        root /srv/serhatsoruklu/shared/acme;
+        root /var/lib/serhatsoruklu/acme;
         default_type text/plain;
         try_files $uri =404;
     }
@@ -29,7 +29,7 @@ server {
     autoindex off;
 
     location ^~ /.well-known/acme-challenge/ {
-        root /srv/serhatsoruklu/shared/acme;
+        root /var/lib/serhatsoruklu/acme;
         default_type text/plain;
         try_files $uri =404;
     }
@@ -40,8 +40,8 @@ server {
 }
 
 server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
+    listen 443 ssl;
+    listen [::]:443 ssl;
     server_name www.serhatsoruklu.com;
     real_ip_header X-Serhat-Origin-Only;
     include /etc/nginx/snippets/serhatsoruklu-cloudflare-origin-only.conf;
@@ -56,8 +56,8 @@ server {
 }
 
 server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
+    listen 443 ssl;
+    listen [::]:443 ssl;
     server_name serhatsoruklu.com;
     real_ip_header X-Serhat-Origin-Only;
     include /etc/nginx/snippets/serhatsoruklu-cloudflare-origin-only.conf;
@@ -100,8 +100,8 @@ server {
 }
 
 server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
+    listen 443 ssl;
+    listen [::]:443 ssl;
     server_name api.serhatsoruklu.com;
     real_ip_header X-Serhat-Origin-Only;
     include /etc/nginx/snippets/serhatsoruklu-cloudflare-origin-only.conf;

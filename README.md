@@ -289,11 +289,17 @@ Real environment files are ignored by Git:
 - `backend/.env`
 - `backend/.env.production`
 
-Local ignored backend env files may include placeholder keys for reference, but GitHub Actions secrets are the source of truth for CI. Do not commit real tokens, licenses, or production secrets.
+The ignored `backend/.env.production` is the canonical final backend runtime
+form. Keep sensitive values blank in local working copies and inject them only
+through the production host's root-controlled environment file. Do not commit
+real tokens, licenses, credentials, or production environment files.
 
 ## Contact Email Delivery
 
-The `/api/contact` endpoint sends through authenticated Gmail Workspace SMTP. `mail@serhatsoruklu.com` is a Fasthosts forwarder only, so it receives contact notifications but is not used as an SMTP login.
+The `/api/contact` endpoint requires an authenticated SMTP identity dedicated
+to SerhatSoruklu.com. The notification and reply recipients must be real,
+monitored mailboxes. They may use another domain when dedicated to this site,
+but must not reuse a Coupyn or ChatPDM sender, password, or SMTP identity.
 
 Required backend environment variables:
 
@@ -302,12 +308,12 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_SECURE=false
 SMTP_REQUIRE_TLS=true
-SMTP_NAME=mail.coupyn.com
-SMTP_USER=admin@coupyn.com
+SMTP_NAME=serhatsoruklu.com
+SMTP_USER=<dedicated-serhatsoruklu-sender>
 SMTP_PASS=<secret>
 SERHAT_SITE_URL=https://serhatsoruklu.com
-CONTACT_INTERNAL_TO=mail@serhatsoruklu.com
-CONTACT_REPLY_TO=mail@serhatsoruklu.com
+CONTACT_INTERNAL_TO=<real-monitored-recipient>
+CONTACT_REPLY_TO=<real-monitored-reply-address>
 CONTACT_MAIL_TIMEOUT_MS=5000
 CONTACT_RATE_LIMIT_MAX=5
 CONTACT_RATE_LIMIT_WINDOW_MS=3600000
@@ -317,8 +323,10 @@ CONTACT_IDEMPOTENCY_MAX_ENTRIES=1000
 
 Expected flow:
 
-- Internal notification: from `SerhatSoruklu.com Contact <admin@coupyn.com>` to `mail@serhatsoruklu.com`, with `Reply-To` set to the submitter email.
-- User confirmation: from `Serhat Soruklu <admin@coupyn.com>` to the submitter, with `Reply-To` set to `mail@serhatsoruklu.com`.
+- Internal notification: from the dedicated SerhatSoruklu.com SMTP identity to
+  the configured monitored recipient, with `Reply-To` set to the submitter email.
+- User confirmation: from the same dedicated SerhatSoruklu.com SMTP identity
+  to the submitter, with `Reply-To` set to the configured monitored reply address.
 - `SERHAT_SITE_URL` controls email CTA links. It defaults to `https://serhatsoruklu.com` and can be set to `http://localhost:4200` for local email tests.
 - `CONTACT_MAIL_TIMEOUT_MS` defaults to 5000 ms and is capped at 6000 ms. It
   configures Nodemailer's connection, greeting, and socket-inactivity limits
@@ -343,4 +351,5 @@ Expected flow:
   contract.
 - `/api/health` is process liveness. `/api/ready` verifies that required contact
   configuration and the SMTP transporter are ready.
-- Do not spoof `From: mail@serhatsoruklu.com` unless that address later has authenticated sending configured.
+- Do not spoof a SerhatSoruklu.com `From` address unless that exact address has
+  authenticated sending configured.

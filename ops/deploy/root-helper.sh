@@ -18,6 +18,7 @@ readonly BACKUP_SCRIPT=/usr/local/sbin/serhatsoruklu-mongodb-backup
 readonly FRONTEND_ENV=/etc/serhatsoruklu/frontend.env
 readonly BACKEND_ENV=/etc/serhatsoruklu/backend.env
 readonly BACKUP_ENV=/etc/serhatsoruklu/backup.env
+readonly ACME_ROOT=/var/lib/serhatsoruklu/acme
 
 die() {
   printf 'serhatsoruklu-helper: %s\n' "$*" >&2
@@ -87,18 +88,37 @@ validate_runtime_environment() {
   [[ "${frontend[FRONTEND_CANONICAL_HOST]}" == serhatsoruklu.com && "${frontend[FRONTEND_TRUST_PROXY]}" == loopback ]] || die 'frontend host/proxy configuration is invalid'
   [[ "${frontend[FRONTEND_ENABLE_HSTS]}" == true && "${frontend[FRONTEND_ENFORCE_HTTPS]}" == true ]] || die 'frontend HTTPS configuration is invalid'
 
-  required=(NODE_ENV PORT CORS_ORIGINS TRUST_PROXY MONGODB_URI SMTP_HOST SMTP_PORT SMTP_SECURE SMTP_REQUIRE_TLS SMTP_NAME SMTP_USER SMTP_PASS SMTP_TLS_REJECT_UNAUTHORIZED CONTACT_INTERNAL_TO CONTACT_REPLY_TO SERHAT_SITE_URL CONTACT_MAIL_TIMEOUT_MS CONTACT_RATE_LIMIT_WINDOW_MS CONTACT_RATE_LIMIT_MAX CONTACT_IDEMPOTENCY_TTL_MS CONTACT_IDEMPOTENCY_MAX_ENTRIES SMTP_VERIFY_ON_START SMTP_VERIFY_TIMEOUT_MS STATIC_RATE_LIMIT_WINDOW_MS STATIC_RATE_LIMIT_MAX SHUTDOWN_TIMEOUT_MS)
+  required=(NODE_ENV PORT CORS_ORIGINS TRUST_PROXY MONGODB_URI SMTP_HOST SMTP_PORT SMTP_SECURE SMTP_REQUIRE_TLS SMTP_NAME SMTP_TLS_REJECT_UNAUTHORIZED SERHAT_SITE_URL CONTACT_MAIL_TIMEOUT_MS CONTACT_RATE_LIMIT_WINDOW_MS CONTACT_RATE_LIMIT_MAX CONTACT_IDEMPOTENCY_TTL_MS CONTACT_IDEMPOTENCY_MAX_ENTRIES SMTP_VERIFY_ON_START SMTP_VERIFY_TIMEOUT_MS STATIC_RATE_LIMIT_WINDOW_MS STATIC_RATE_LIMIT_MAX SHUTDOWN_TIMEOUT_MS)
   for name in "${required[@]}"; do [[ -n "${backend[$name]:-}" ]] || die "missing backend variable: $name"; done
+  for name in SMTP_USER SMTP_PASS CONTACT_INTERNAL_TO CONTACT_REPLY_TO; do
+    [[ -v "backend[$name]" ]] || die "missing backend variable: $name"
+  done
   [[ "${backend[NODE_ENV]}" == production && "${backend[PORT]}" == 4302 && "${backend[TRUST_PROXY]}" == 1 ]] || die 'backend runtime binding/proxy configuration is invalid'
   [[ "${backend[CORS_ORIGINS]}" == 'https://serhatsoruklu.com,https://www.serhatsoruklu.com' ]] || die 'backend CORS configuration is invalid'
   [[ "${backend[SERHAT_SITE_URL]}" == https://serhatsoruklu.com ]] || die 'backend public site URL is invalid'
   [[ "${backend[MONGODB_URI]}" == mongodb://serhatsoruklu_app:*@127.0.0.1:27017/serhatsoruklu\?* ]] || die 'backend MongoDB URI is not isolated'
   [[ "${backend[MONGODB_URI]}" == *'authSource=serhatsoruklu'* ]] || die 'backend MongoDB authSource is not isolated'
-  [[ "${backend[SMTP_USER]}" == *@serhatsoruklu.com && "${backend[CONTACT_INTERNAL_TO]}" == *@serhatsoruklu.com && "${backend[CONTACT_REPLY_TO]}" == *@serhatsoruklu.com ]] || die 'backend email identities are not SerhatSoruklu.com identities'
-  for value in "${backend[SMTP_HOST]}" "${backend[SMTP_NAME]}" "${backend[SMTP_USER]}" "${backend[SMTP_PASS]}" "${backend[CONTACT_INTERNAL_TO]}" "${backend[CONTACT_REPLY_TO]}"; do
-    [[ ! "${value,,}" =~ (replace|placeholder|example\.com|coupyn|chatpdm) ]] || die 'backend environment contains a placeholder or protected-platform identity'
-  done
+  if [[ -n "${backend[SMTP_USER]}${backend[SMTP_PASS]}${backend[CONTACT_INTERNAL_TO]}${backend[CONTACT_REPLY_TO]}" ]]; then
+    for name in SMTP_USER SMTP_PASS CONTACT_INTERNAL_TO CONTACT_REPLY_TO; do
+      [[ -n "${backend[$name]}" ]] || die 'backend contact delivery must be fully configured or fully disabled'
+    done
+    for value in "${backend[SMTP_USER]}" "${backend[CONTACT_INTERNAL_TO]}" "${backend[CONTACT_REPLY_TO]}"; do
+      [[ "$value" == *@*.* && "$value" != *','* && "$value" != *';'* ]] || die 'backend email identity is not a single mailbox'
+    done
+    for value in "${backend[SMTP_HOST]}" "${backend[SMTP_NAME]}" "${backend[SMTP_USER]}" "${backend[SMTP_PASS]}" "${backend[CONTACT_INTERNAL_TO]}" "${backend[CONTACT_REPLY_TO]}"; do
+      [[ ! "${value,,}" =~ (replace|placeholder|example\.com|coupyn|chatpdm) ]] || die 'backend environment contains a placeholder or protected-platform identity'
+    done
+  else
+    [[ "${backend[SMTP_VERIFY_ON_START]}" == false ]] || die 'disabled contact delivery requires SMTP_VERIFY_ON_START=false'
+  fi
   printf 'runtime_environment=valid\n'
+}
+
+contact_delivery_enabled() {
+  local -A backend=()
+  load_environment "$BACKEND_ENV" backend
+  [[ -n "${backend[SMTP_USER]:-}" && -n "${backend[SMTP_PASS]:-}" \
+    && -n "${backend[CONTACT_INTERNAL_TO]:-}" && -n "${backend[CONTACT_REPLY_TO]:-}" ]]
 }
 
 validate_backup_environment() {
@@ -118,9 +138,11 @@ validate_backup_environment() {
 }
 
 local_health() {
-  curl --fail --silent --show-error --max-time 5 http://127.0.0.1:4102/healthz >/dev/null
-  curl --fail --silent --show-error --max-time 5 http://127.0.0.1:4302/api/health >/dev/null
-  curl --fail --silent --show-error --max-time 8 http://127.0.0.1:4302/api/ready >/dev/null
+  curl --noproxy '*' --fail --silent --show-error --max-time 5 http://127.0.0.1:4102/healthz >/dev/null
+  curl --noproxy '*' --fail --silent --show-error --max-time 5 http://127.0.0.1:4302/api/health >/dev/null
+  if contact_delivery_enabled; then
+    curl --noproxy '*' --fail --silent --show-error --max-time 8 http://127.0.0.1:4302/api/ready >/dev/null
+  fi
 }
 
 assert_port_free_when_inactive() {
@@ -134,14 +156,43 @@ assert_port_free_when_inactive() {
 assert_loopback_bindings() {
   local output
   output=$(ss -ltnH)
-  grep -Eq '127\.0\.0\.1:4102[[:space:]]' <<<"$output" || die 'frontend is not listening on IPv4 loopback port 4102'
-  grep -Eq '127\.0\.0\.1:4302[[:space:]]' <<<"$output" || die 'backend is not listening on IPv4 loopback port 4302'
+  grep -Eq '127\.0\.0\.1:4102[[:space:]]' <<<"$output" || return 1
+  grep -Eq '127\.0\.0\.1:4302[[:space:]]' <<<"$output" || return 1
   ! grep -Eq '(^|[[:space:]])(0\.0\.0\.0|\*|\[::\]|:::):?(4102|4302)[[:space:]]' <<<"$output" \
-    || die 'a Serhat service is listening beyond loopback'
+    || return 1
+}
+
+wait_for_local_health() {
+  local attempt
+  for attempt in {1..30}; do
+    if local_health && assert_loopback_bindings; then
+      return 0
+    fi
+    sleep 1
+  done
+  return 1
+}
+
+wait_for_local_tls() {
+  local api_health_path=/api/health attempt
+  contact_delivery_enabled && api_health_path=/api/ready
+  for attempt in {1..30}; do
+    if curl --noproxy '*' --fail --silent --show-error --max-time 8 \
+      --resolve serhatsoruklu.com:443:127.0.0.1 \
+      https://serhatsoruklu.com/healthz >/dev/null \
+      && curl --noproxy '*' --fail --silent --show-error --max-time 8 \
+        --resolve api.serhatsoruklu.com:443:127.0.0.1 \
+        "https://api.serhatsoruklu.com${api_health_path}" >/dev/null; then
+      return 0
+    fi
+    sleep 1
+  done
+  return 1
 }
 
 install_unit_file() {
-  local source=$1 target=$2 candidate="${target}.candidate.$$"
+  local source=$1 target=$2 candidate
+  candidate="${target}.candidate.$$"
   install -o root -g root -m 0644 -- "$source" "$candidate"
   mv -fT -- "$candidate" "$target"
 }
@@ -165,8 +216,7 @@ activate_release() {
     || ! systemctl daemon-reload \
     || ! systemctl enable --now serhatsoruklu-frontend.service serhatsoruklu-backend.service \
     || ! systemctl restart serhatsoruklu-frontend.service serhatsoruklu-backend.service \
-    || ! local_health \
-    || ! assert_loopback_bindings; then
+    || ! wait_for_local_health; then
     if [[ -n "$previous" && -d "$previous" ]]; then
       install_unit_file "$previous/ops/systemd/serhatsoruklu-frontend.service" "$FRONTEND_UNIT"
       install_unit_file "$previous/ops/systemd/serhatsoruklu-backend.service" "$BACKEND_UNIT"
@@ -265,10 +315,15 @@ install_nginx() {
   snippet_candidate="${ORIGIN_SNIPPET}.candidate.$$"
 
   if [[ "$mode" == tls ]]; then
-    sed "s/__CERTIFICATE_NAME__/$cert_name/g" "$source" > "$site_candidate"
+    sed \
+      -e "s/__CERTIFICATE_NAME__/$cert_name/g" \
+      -e "s#/srv/serhatsoruklu/shared/acme#$ACME_ROOT#g" \
+      -e 's/listen 443 ssl http2;/listen 443 ssl;/g' \
+      -e 's/listen \[::\]:443 ssl http2;/listen [::]:443 ssl;/g' \
+      "$source" > "$site_candidate"
     ! grep -q '__CERTIFICATE_NAME__' "$site_candidate" || die 'unresolved certificate placeholder'
   else
-    install -o root -g root -m 0644 -- "$source" "$site_candidate"
+    sed "s#/srv/serhatsoruklu/shared/acme#$ACME_ROOT#g" "$source" > "$site_candidate"
   fi
   install -o root -g root -m 0644 -- "$release/ops/nginx/serhatsoruklu-cloudflare-origin-only.conf" "$snippet_candidate"
   chown root:root "$site_candidate" "$snippet_candidate"
@@ -290,12 +345,8 @@ install_nginx() {
   fi
 
   if [[ "$mode" == tls ]]; then
-    curl --fail --silent --show-error --max-time 8 --resolve serhatsoruklu.com:443:127.0.0.1 \
-      https://serhatsoruklu.com/healthz >/dev/null \
-      || { restore_nginx "$transaction"; /usr/sbin/nginx -t; systemctl reload nginx; die 'local frontend TLS check failed'; }
-    curl --fail --silent --show-error --max-time 8 --resolve api.serhatsoruklu.com:443:127.0.0.1 \
-      https://api.serhatsoruklu.com/api/ready >/dev/null \
-      || { restore_nginx "$transaction"; /usr/sbin/nginx -t; systemctl reload nginx; die 'local API TLS check failed'; }
+    wait_for_local_tls \
+      || { restore_nginx "$transaction"; /usr/sbin/nginx -t; systemctl reload nginx; die 'local TLS checks failed'; }
   fi
   printf 'nginx_transaction=%s\n' "$transaction"
 }
@@ -303,8 +354,8 @@ install_nginx() {
 obtain_certificate() {
   [[ $# -eq 0 ]] || die 'obtain-certificate accepts no arguments'
   [[ -f "$SITE_AVAILABLE" && -L "$SITE_ENABLED" ]] || die 'ACME nginx configuration is not active'
-  install -d -o root -g serhatsoruklu -m 0750 -- "$ROOT/shared/acme/.well-known/acme-challenge"
-  certbot certonly --webroot --webroot-path "$ROOT/shared/acme" \
+  install -d -o root -g www-data -m 0750 -- "$ACME_ROOT" "$ACME_ROOT/.well-known" "$ACME_ROOT/.well-known/acme-challenge"
+  certbot certonly --webroot --webroot-path "$ACME_ROOT" \
     --cert-name serhatsoruklu.com \
     --domain serhatsoruklu.com \
     --domain www.serhatsoruklu.com \

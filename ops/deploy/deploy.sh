@@ -25,7 +25,7 @@ available_blocks=$(df -Pk "$RELEASES_DIR" | awk 'NR == 2 { print $4 }')
 (( available_blocks >= 10485760 )) || die 'less than 10 GiB of disk space is available'
 cpu_count=$(getconf _NPROCESSORS_ONLN)
 read -r load_one _ < /proc/loadavg
-awk -v load="$load_one" -v cpus="$cpu_count" 'BEGIN { exit !(load < cpus * 1.5) }' || die 'one-minute load is above the release safety threshold'
+awk -v load_value="$load_one" -v cpus="$cpu_count" 'BEGIN { exit !(load_value < cpus * 1.5) }' || die 'one-minute load is above the release safety threshold'
 
 if [[ ! -d "$REPOSITORY_DIR/.git" ]]; then
   [[ -z "$(find "$REPOSITORY_DIR" -mindepth 1 -maxdepth 1 -print -quit)" ]] || die 'repository directory is not empty'
@@ -86,8 +86,8 @@ run_low_priority npm run smoke:production
 if find frontend/dist/frontend -type f -name '*.map' -print -quit | grep -q .; then
   die 'production source map detected'
 fi
-if rg -l --fixed-strings 'http://localhost' frontend/dist/frontend >/dev/null \
-  || rg -l --fixed-strings 'http://127.0.0.1' frontend/dist/frontend >/dev/null; then
+if rg -l --fixed-strings 'http://localhost' frontend/dist/frontend/browser >/dev/null \
+  || rg -l --fixed-strings 'http://127.0.0.1' frontend/dist/frontend/browser >/dev/null; then
   die 'localhost reference detected in browser output'
 fi
 

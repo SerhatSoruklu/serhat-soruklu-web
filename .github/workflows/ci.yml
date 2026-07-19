@@ -87,7 +87,6 @@ jobs:
             frontend/scripts/start-production.mjs
             frontend/public/favicon.ico
             frontend/public/assets/brand/favicons/web-app-manifest-192x192.png
-            backend/.env.example
             backend/README.md
             backend/assets/
             backend/emails/
