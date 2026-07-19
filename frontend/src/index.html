@@ -1,6 +1,32 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      nonce="__CSP_NONCE__"
+      src="https://www.googletagmanager.com/gtag/js?id=G-WQC8FJF6SL"
+    ></script>
+    <script nonce="__CSP_NONCE__">
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+      });
+      gtag('js', new Date());
+      if (
+        window.location.hostname === 'serhatsoruklu.com' ||
+        window.location.hostname === 'www.serhatsoruklu.com'
+      ) {
+        gtag('config', 'G-WQC8FJF6SL');
+      }
+    </script>
+
     <meta charset="utf-8" />
     <base href="/" />
     <title>Serhat Soruklu | Systems Architect</title>

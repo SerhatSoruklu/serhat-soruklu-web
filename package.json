@@ -33,6 +33,7 @@
     "start": "npm run start:backend",
     "start:frontend": "npm --prefix frontend run start:production",
     "start:backend": "npm --prefix backend run start:production",
+    "publish:production-env": "bash ops/deploy/publish-backend-environment.sh",
     "deploy": "bash scripts/deploy.sh"
   },
   "keywords": [],

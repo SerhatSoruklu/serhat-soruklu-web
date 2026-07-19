@@ -36,12 +36,14 @@ jobs:
           DEPLOY_SHA: ${{ github.event.workflow_run.head_sha }}
           DEPLOY_SSH_KEY: ${{ secrets.SERHATSORUKLU_DEPLOY_SSH_KEY }}
           DEPLOY_KNOWN_HOSTS: ${{ secrets.SERHATSORUKLU_DEPLOY_KNOWN_HOSTS }}
+          DEPLOY_BACKEND_ENV: ${{ secrets.SERHATSORUKLU_BACKEND_ENV }}
         run: |
           set -euo pipefail
           : "${DEPLOY_HOST:?missing production deploy host}"
           : "${DEPLOY_PORT:?missing production deploy port}"
           : "${DEPLOY_SSH_KEY:?missing production deploy SSH key}"
           : "${DEPLOY_KNOWN_HOSTS:?missing production known-hosts data}"
+          : "${DEPLOY_BACKEND_ENV:?missing production backend environment}"
           [[ "$DEPLOY_PORT" =~ ^[0-9]{1,5}$ ]]
           [[ "$DEPLOY_SHA" =~ ^[0-9a-f]{40}$ ]]
 
@@ -49,7 +51,8 @@ jobs:
           trap 'rm -rf -- "$key_dir"' EXIT
           printf '%s\n' "$DEPLOY_SSH_KEY" > "$key_dir/deploy_key"
           printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > "$key_dir/known_hosts"
-          chmod 0600 "$key_dir/deploy_key" "$key_dir/known_hosts"
+          printf '%s\n' "$DEPLOY_BACKEND_ENV" > "$key_dir/backend.env"
+          chmod 0600 "$key_dir/deploy_key" "$key_dir/known_hosts" "$key_dir/backend.env"
           ssh-keygen -y -f "$key_dir/deploy_key" >/dev/null
 
           ssh_output="$key_dir/deploy-output"
@@ -65,7 +68,7 @@ jobs:
             -o StrictHostKeyChecking=yes \
             -o UserKnownHostsFile="$key_dir/known_hosts" \
             "serhatsoruklu-deploy@$DEPLOY_HOST" \
-            "deploy $DEPLOY_SHA" | tee "$ssh_output"
+            "deploy $DEPLOY_SHA" < "$key_dir/backend.env" | tee "$ssh_output"
 
           grep -Fxq "deployed_sha=$DEPLOY_SHA" "$ssh_output"
 
