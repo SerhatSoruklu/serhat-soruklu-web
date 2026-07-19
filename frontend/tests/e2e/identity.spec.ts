@@ -9,8 +9,10 @@ const officialXUrl = 'https://x.com/sorukluorder';
 const emblemPath = '/assets/brand/soruklu-order/the-soruklu-order-emblem.png';
 const socialSourcePath = '/assets/social/serhat-soruklu-soruklu-order-og.svg';
 const viewports = [
+  { width: 360, height: 800 },
   { width: 390, height: 844 },
   { width: 430, height: 932 },
+  { width: 640, height: 900 },
   { width: 768, height: 1024 },
   { width: 1024, height: 768 },
   { width: 1280, height: 800 },
@@ -58,20 +60,52 @@ test.describe('identity routes', () => {
 
     await expect(page.getByRole('heading', { level: 1, name: 'The Soruklu Order' })).toBeVisible();
     await expect(page.getByText('Serhat Soruklu', { exact: true }).first()).toBeVisible();
-    await expect(
-      page.getByText('Approximately 5–10 selected members', { exact: true }),
-    ).toBeVisible();
+    await expect(page.getByText('Small voluntary membership', { exact: true })).toBeVisible();
     await expect(page.getByText('May the Light guide us.', { exact: true }).first()).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Official Website Clarification' }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'A Small, Voluntary Family Initiative' }),
+    ).toBeVisible();
+    await expect(
+      page.getByText(
+        /not a government, police force, court, legal authority, military organisation/,
+      ),
+    ).toBeVisible();
     await expect(
       page.getByRole('heading', { name: 'The Order Is Not the Entire Family' }),
     ).toBeVisible();
-    await expect(page.getByText(/potentially thousands of individuals/)).toBeVisible();
+    await expect(
+      page.getByText(
+        'The wider family is not centrally controlled and is not collectively represented by this initiative.',
+      ),
+    ).toBeVisible();
     await expect(
       page.getByRole('heading', { name: 'Safeguarding, Evidence and Due Process' }),
     ).toBeVisible();
     await expect(
       page.getByRole('heading', { name: 'Official Identity Clarification' }),
     ).toBeVisible();
+    await expect(page.locator('.order-role-grid h3')).toHaveText([
+      'Founder and Steward',
+      'Senior Family Adviser',
+      'Safeguarding and Preparedness',
+      'Family Adviser',
+      'Legal Liaison',
+      'Records and Continuity',
+    ]);
+    await expect(page.getByText(/does not automatically create a solicitor-client/)).toBeVisible();
+    await expect(
+      page.getByText(/does not replace them or investigate offences itself/),
+    ).toBeVisible();
+
+    const sectionClasses = await page
+      .locator('.order-page > section')
+      .evaluateAll((sections) => sections.map((section) => section.className));
+    expect(sectionClasses[1]).toContain('order-section--official-note');
+    expect(sectionClasses[2]).toContain('order-section');
+    expect(sectionClasses[2]).not.toContain('order-section--official-note');
 
     const officialLinks = page.locator(`a[href="${officialXUrl}"]`);
     await expect(officialLinks).toHaveCount(3);
@@ -84,14 +118,40 @@ test.describe('identity routes', () => {
       );
     }
 
-    await expect(page.locator(`img[src="${emblemPath}"]`)).toHaveCount(2);
+    const emblems = page.locator(`img[src="${emblemPath}"]`);
+    await expect(emblems).toHaveCount(2);
+    await expect(emblems.first()).toHaveAttribute(
+      'alt',
+      'Soruklu Order emblem: an interwoven gold family sigil within a circular seal',
+    );
+    await expect(emblems.last()).toHaveAttribute('alt', '');
+    await expect(emblems.last()).toHaveAttribute('aria-hidden', 'true');
     const emblemResponse = await request.get(emblemPath);
     expect(emblemResponse.ok()).toBe(true);
     expect(emblemResponse.headers()['content-type']).toMatch(/^image\//);
 
-    await expect(page.getByText('sorukluorder.org', { exact: true })).toBeVisible();
+    await expect(page.getByText('sorukluorder.org', { exact: true })).toHaveCount(2);
     await expect(page.locator('a[href*="sorukluorder.org"]')).toHaveCount(0);
     await expect(page.locator('h1')).toHaveCount(1);
+    await expect(page.getByText('Approximately 5–10 selected members')).toHaveCount(0);
+    await expect(page.getByText('Founder and Leader', { exact: true })).toHaveCount(0);
+
+    const headingLevels = await page
+      .locator('.order-page h1, .order-page h2, .order-page h3')
+      .evaluateAll((headings) => headings.map((heading) => Number(heading.tagName.slice(1))));
+    expect(headingLevels[0]).toBe(1);
+    expect(
+      headingLevels.every((level, index) => index === 0 || level <= headingLevels[index - 1] + 1),
+    ).toBe(true);
+    expect(
+      await page
+        .locator('.order-page a')
+        .evaluateAll((links) =>
+          links.every((link) =>
+            Boolean(link.textContent?.trim() || link.getAttribute('aria-label')),
+          ),
+        ),
+    ).toBe(true);
     assertNoConsoleErrors();
   });
 
@@ -280,6 +340,10 @@ test.describe('identity routes', () => {
       `${canonicalBaseUrl}/assets/social/serhat-soruklu-soruklu-order-og.png`,
     );
     expect(getMetaContent(html, 'name', 'twitter:card')).toBe('summary_large_image');
+    expect(getMetaContent(html, 'name', 'twitter:title')).toBe(pageSeoMetadata.sorukluOrder.title);
+    expect(getMetaContent(html, 'name', 'twitter:description')).toBe(
+      pageSeoMetadata.sorukluOrder.description,
+    );
     expect(graph.map((entity) => entity['@type'])).toEqual([
       'BreadcrumbList',
       'WebPage',
@@ -304,6 +368,9 @@ test.describe('identity routes', () => {
       }),
     );
     expect(JSON.stringify(graph)).not.toContain('sorukluorder.org');
+    expect(JSON.stringify(graph)).not.toMatch(
+      /GovernmentOrganization|PoliceStation|Courthouse|LegalService|MilitaryOrganization/,
+    );
   });
 
   test('Velari is public, self-canonical, and represented once in the sitemap', async ({

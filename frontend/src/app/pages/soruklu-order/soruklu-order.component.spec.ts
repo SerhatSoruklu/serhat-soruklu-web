@@ -23,13 +23,22 @@ describe('SorukluOrderComponent', () => {
     expect(nativeElement.querySelector('h1')?.textContent?.trim()).toBe('The Soruklu Order');
     expect(text).toContain('Established 2024');
     expect(text).toContain('Serhat Soruklu');
-    expect(text).toContain('Approximately 5–10 selected members');
+    expect(text).toContain('Small voluntary membership');
     expect(text).toContain('May the Light guide us.');
     expect(text).toContain('Family is inherited. Membership is chosen.');
+    expect(text).toContain('Official Website Clarification');
+    expect(text).toContain('A Small, Voluntary Family Initiative');
+    expect(text).toContain(
+      'The Order is not a government, police force, court, legal authority, military organisation or public institution.',
+    );
     expect(text).toContain('The Order Is Not the Entire Family');
-    expect(text).toContain('potentially thousands of individuals');
+    expect(text).toContain(
+      'The wider family is not centrally controlled and is not collectively represented by this initiative.',
+    );
     expect(text).toContain('Roles, Not Ranks');
     expect(text).toContain('Safeguarding, Evidence and Due Process');
+    expect(text).toContain('Official Identity Clarification');
+    expect(text).not.toContain('Approximately 5–10 selected members');
   });
 
   it('uses the official emblem with meaningful, dimensioned image markup', () => {
@@ -43,7 +52,11 @@ describe('SorukluOrderComponent', () => {
     );
 
     expect(emblems.length).toBe(2);
-    expect(emblems.every((emblem) => emblem.alt === 'The Soruklu Order emblem')).toBe(true);
+    expect(emblems[0].alt).toBe(
+      'Soruklu Order emblem: an interwoven gold family sigil within a circular seal',
+    );
+    expect(emblems[1].alt).toBe('');
+    expect(emblems[1].getAttribute('aria-hidden')).toBe('true');
     expect(emblems.every((emblem) => emblem.getAttribute('width') === '400')).toBe(true);
     expect(emblems.every((emblem) => emblem.getAttribute('height') === '400')).toBe(true);
   });
@@ -118,15 +131,51 @@ describe('SorukluOrderComponent', () => {
     fixture.detectChanges();
 
     const nativeElement = fixture.nativeElement as HTMLElement;
-    const domain = nativeElement.querySelector('.order-domain');
+    const domains = Array.from(nativeElement.querySelectorAll('.order-domain'));
     const links = Array.from(nativeElement.querySelectorAll<HTMLAnchorElement>('a'));
 
-    expect(domain?.textContent?.trim()).toBe('sorukluorder.org');
-    expect(links.some((link) => {
-      const hostname = new URL(link.href).hostname.toLowerCase();
+    expect(domains).toHaveLength(2);
+    expect(domains.every((domain) => domain.textContent?.trim() === 'sorukluorder.org')).toBe(true);
+    expect(
+      links.some((link) => {
+        const hostname = new URL(link.href).hostname.toLowerCase();
 
-      return hostname === 'sorukluorder.org' || hostname.endsWith('.sorukluorder.org');
-    })).toBe(false);
+        return hostname === 'sorukluorder.org' || hostname.endsWith('.sorukluorder.org');
+      }),
+    ).toBe(false);
+  });
+
+  it('uses responsibility-based role names and preserves their authority boundaries', () => {
+    const fixture = TestBed.createComponent(SorukluOrderComponent);
+    fixture.detectChanges();
+
+    const nativeElement = fixture.nativeElement as HTMLElement;
+    const text = nativeElement.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+    const roleNames = Array.from(nativeElement.querySelectorAll('.order-role-grid h3')).map(
+      (heading) => heading.textContent?.trim(),
+    );
+
+    expect(roleNames).toEqual([
+      'Founder and Steward',
+      'Senior Family Adviser',
+      'Safeguarding and Preparedness',
+      'Family Adviser',
+      'Legal Liaison',
+      'Records and Continuity',
+    ]);
+    expect(text).toContain('They are not hereditary offices, professional licences');
+    expect(text).toContain('does not automatically create a solicitor-client relationship');
+    expect(text).toContain('The Order does not replace them or investigate offences itself.');
+
+    for (const oldRole of [
+      'Founder and Leader',
+      'Patriarch',
+      'Protector',
+      'Legal Perspective',
+      'Future-Generation Stewardship',
+    ]) {
+      expect(text).not.toContain(oldRole);
+    }
   });
 
   it('does not introduce recruiting, enforcement, or threatening language', () => {

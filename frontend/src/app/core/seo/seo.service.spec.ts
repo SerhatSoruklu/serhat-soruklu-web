@@ -294,7 +294,7 @@ describe('SeoService', () => {
     const webpage = graph['@graph'].find((entity) => entity['@type'] === 'WebPage');
     const serializedGraph = JSON.stringify(graph);
 
-    expect(title.getTitle()).toBe('The Soruklu Order | Founded by Serhat Soruklu');
+    expect(title.getTitle()).toBe('The Soruklu Order | Official Family Initiative');
     expect(
       globalThis.document.querySelector('meta[name="description"]')?.getAttribute('content'),
     ).toBe(pageSeoMetadata.sorukluOrder.description);
