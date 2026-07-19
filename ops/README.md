@@ -62,8 +62,13 @@ without displaying it or adding it to Git:
 npm run publish:production-env
 ```
 
-The publisher refuses partial contact configuration, placeholder values, and
-any Coupyn or ChatPDM identity before updating the GitHub Environment secret.
+The publisher refuses partial contact configuration, placeholder values,
+ChatPDM identities, and unapproved Coupyn identities before updating the GitHub
+Environment secret. Production contact delivery has one narrow company-mail
+exception: `admin@coupyn.com` may be the authenticated sender, internal
+recipient, and confirmation reply address through `smtp.gmail.com`. This does
+not authorize access to any other Coupyn service, account, file, database, or
+credential.
 
 The frontend file provides production mode, port `4102`, host `127.0.0.1`, the
 canonical host, HTTPS/HSTS enablement, loopback proxy trust, and a bounded

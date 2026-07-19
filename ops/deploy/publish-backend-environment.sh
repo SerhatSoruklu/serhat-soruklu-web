@@ -5,6 +5,9 @@ readonly REPOSITORY=SerhatSoruklu/serhat-soruklu-web
 readonly ENVIRONMENT=production
 readonly SECRET_NAME=SERHATSORUKLU_BACKEND_ENV
 readonly ENV_FILE=${1:-backend/.env.production}
+readonly APPROVED_COMPANY_MAILBOX=admin@coupyn.com
+readonly APPROVED_SMTP_HOST=smtp.gmail.com
+readonly APPROVED_SMTP_NAME=serhatsoruklu.com
 
 die() {
   printf 'publish-backend-environment: %s\n' "$*" >&2
@@ -57,9 +60,17 @@ if [[ -n "${environment[SMTP_USER]}${environment[SMTP_PASS]}${environment[CONTAC
     [[ -n "${environment[$name]}" ]] || die 'contact delivery must be fully configured or fully disabled'
   done
   for value in "${environment[SMTP_HOST]}" "${environment[SMTP_NAME]}" "${environment[SMTP_USER]}" "${environment[SMTP_PASS]}" "${environment[CONTACT_INTERNAL_TO]}" "${environment[CONTACT_REPLY_TO]}"; do
-    [[ ! "${value,,}" =~ (replace|placeholder|example\.com|coupyn|chatpdm) ]] \
-      || die 'contact delivery contains a placeholder or protected-platform identity'
+    [[ ! "${value,,}" =~ (replace|placeholder|example\.com|chatpdm) ]] \
+      || die 'contact delivery contains a placeholder or forbidden identity'
   done
+  [[ "${environment[SMTP_HOST],,}" == "$APPROVED_SMTP_HOST" \
+    && "${environment[SMTP_NAME],,}" == "$APPROVED_SMTP_NAME" \
+    && "${environment[SMTP_USER],,}" == "$APPROVED_COMPANY_MAILBOX" \
+    && "${environment[CONTACT_INTERNAL_TO],,}" == "$APPROVED_COMPANY_MAILBOX" \
+    && "${environment[CONTACT_REPLY_TO],,}" == "$APPROVED_COMPANY_MAILBOX" ]] \
+    || die 'contact delivery is not restricted to the approved company mailbox'
+  [[ "${environment[SMTP_VERIFY_ON_START]}" == true ]] \
+    || die 'enabled contact delivery requires SMTP_VERIFY_ON_START=true'
 else
   [[ "${environment[SMTP_VERIFY_ON_START]}" == false ]] \
     || die 'disabled contact delivery requires SMTP_VERIFY_ON_START=false'

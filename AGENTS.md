@@ -218,7 +218,10 @@ Recognized explicit publish commands include:
 - `yeet deploy`
 - `full live merge yeet`
 
-For this repo, `deploy` in these phrases means publish the requested code changes to GitHub only. It does not mean production hosting, server deployment, Docker, PM2, Vercel, or infrastructure changes unless the user explicitly names that target.
+For this repo, these phrases authorize the GitHub publish flow. Do not perform
+separate manual production, Docker, PM2, Vercel, or infrastructure mutations
+unless the user explicitly names that target. Merging into `main` still invokes
+the repository's existing automatic production workflow as described below.
 
 When a publish command is given, use this flow:
 
@@ -233,6 +236,30 @@ When a publish command is given, use this flow:
 - Use a unique, specific commit message and PR title/body that describe the actual change. Do not use vague messages like `update`, `changes`, `fix stuff`, or repeated boilerplate.
 - PR descriptions should explain what changed, why it changed, how it was validated, and any remaining risk.
 - Never stage unrelated user changes silently.
+
+## Automatic Production Deployment
+
+- Production deployment is automatic only after a change reaches `main` and the
+  GitHub `CI` release-candidate gate passes. A feature-branch push alone is not
+  deployed.
+- The deployment uses a GitHub-hosted runner and the isolated
+  `serhatsoruklu-deploy` account. Never reuse or modify Coupyn/ChatPDM runners,
+  accounts, services, files, databases, or credentials. The sole exception is
+  the explicitly approved `admin@coupyn.com` SMTP identity used by the Serhat
+  contact form; this exception does not authorize any other Coupyn or ChatPDM
+  access.
+- Production uses the isolated `serhatsoruklu-frontend.service` and
+  `serhatsoruklu-backend.service` systemd units, not PM2.
+- Do not bypass the CI gate or manually SSH-deploy ordinary code changes. Expect
+  a normal verified deployment to take about seven to eight minutes after the
+  merge to `main`.
+- `backend/.env.production` is intentionally ignored by Git. When its production
+  values change, run `npm run publish:production-env` before merging into `main`.
+  This updates the protected GitHub `production` Environment secret without
+  committing or printing it; the next verified `main` deployment installs it.
+- For a requested full live publish, monitor both the `main` CI run and the
+  subsequent `Deploy production` run. Report success only after the public site
+  and API respond successfully.
 
 ## Validation
 

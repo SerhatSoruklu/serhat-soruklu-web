@@ -76,6 +76,9 @@ load_environment() {
 validate_runtime_environment() {
   [[ $# -le 1 ]] || die 'runtime validation accepts at most one backend environment path'
   local backend_path=${1:-$BACKEND_ENV} name value
+  local approved_company_mailbox=admin@coupyn.com
+  local approved_smtp_host=smtp.gmail.com
+  local approved_smtp_name=serhatsoruklu.com
   local -a required=()
   local -A frontend=() backend=()
   validate_environment_file "$FRONTEND_ENV" 640
@@ -107,8 +110,16 @@ validate_runtime_environment() {
       [[ "$value" == *@*.* && "$value" != *','* && "$value" != *';'* ]] || die 'backend email identity is not a single mailbox'
     done
     for value in "${backend[SMTP_HOST]}" "${backend[SMTP_NAME]}" "${backend[SMTP_USER]}" "${backend[SMTP_PASS]}" "${backend[CONTACT_INTERNAL_TO]}" "${backend[CONTACT_REPLY_TO]}"; do
-      [[ ! "${value,,}" =~ (replace|placeholder|example\.com|coupyn|chatpdm) ]] || die 'backend environment contains a placeholder or protected-platform identity'
+      [[ ! "${value,,}" =~ (replace|placeholder|example\.com|chatpdm) ]] || die 'backend environment contains a placeholder or forbidden identity'
     done
+    [[ "${backend[SMTP_HOST],,}" == "$approved_smtp_host" \
+      && "${backend[SMTP_NAME],,}" == "$approved_smtp_name" \
+      && "${backend[SMTP_USER],,}" == "$approved_company_mailbox" \
+      && "${backend[CONTACT_INTERNAL_TO],,}" == "$approved_company_mailbox" \
+      && "${backend[CONTACT_REPLY_TO],,}" == "$approved_company_mailbox" ]] \
+      || die 'backend contact delivery is not restricted to the approved company mailbox'
+    [[ "${backend[SMTP_VERIFY_ON_START]}" == true ]] \
+      || die 'enabled backend contact delivery requires SMTP_VERIFY_ON_START=true'
   else
     [[ "${backend[SMTP_VERIFY_ON_START]}" == false ]] || die 'disabled contact delivery requires SMTP_VERIFY_ON_START=false'
   fi
