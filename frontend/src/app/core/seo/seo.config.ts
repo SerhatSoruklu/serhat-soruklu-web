@@ -117,9 +117,9 @@ export const pageSeoMetadata = {
   },
   sorukluOrder: {
     label: 'Soruklu Order',
-    title: 'The Soruklu Order | Founded by Serhat Soruklu',
+    title: 'The Soruklu Order | Official Family Initiative',
     description:
-      'The Soruklu Order is a selective family initiative founded and led by Serhat Soruklu in 2024, centred on discipline, responsibility and continuity.',
+      'Official page of the Soruklu Order, a small voluntary family initiative founded by Serhat Soruklu around discipline, continuity and responsibility.',
     path: '/soruklu-order',
     ogImage: '/assets/social/serhat-soruklu-soruklu-order-og.png',
     ogImageAlt: 'The Soruklu Order emblem and identity in black and gold.',

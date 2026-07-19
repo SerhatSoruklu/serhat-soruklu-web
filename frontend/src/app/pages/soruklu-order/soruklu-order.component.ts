@@ -25,6 +25,7 @@ interface OrderPrinciple {
 interface OrderRole {
   title: string;
   description: string;
+  clarification?: string;
 }
 
 @Component({
@@ -67,7 +68,7 @@ export class SorukluOrderComponent {
       index: '01',
       title: 'Family continuity',
       description:
-        'Preserve history, shared principles, and long-term records with enough context to remain useful.',
+        'Preserve authorised family context, historical records and shared principles with enough context to remain useful.',
     },
     {
       index: '02',
@@ -85,13 +86,13 @@ export class SorukluOrderComponent {
       index: '04',
       title: 'Digital preservation',
       description:
-        'Maintain a durable digital record of the initiative, its boundaries, and its principles.',
+        'Maintain a durable digital record of the initiative’s authorised materials, boundaries and principles.',
     },
     {
       index: '05',
       title: 'Future generations',
       description:
-        'Preserve context and values so they can be understood rather than repeatedly reinvented.',
+        'Preserve authorised context and values so future family members may understand them rather than repeatedly reconstructing them.',
     },
   ];
 
@@ -106,7 +107,7 @@ export class SorukluOrderComponent {
     },
     {
       title: 'Responsibility',
-      description: 'Accept ownership for decisions, obligations, and their consequences.',
+      description: 'Accept ownership for decisions, obligations and their consequences.',
     },
     {
       title: 'Loyalty',
@@ -114,15 +115,16 @@ export class SorukluOrderComponent {
     },
     {
       title: 'Truth',
-      description: 'Prefer evidence, accuracy, and correction over convenience or appearance.',
+      description: 'Prefer evidence, accuracy and correction over convenience or appearance.',
     },
     {
       title: 'Self-mastery',
-      description: 'Develop judgment, restraint, and the ability to govern one’s own conduct.',
+      description: 'Develop judgement, restraint and the ability to govern one’s own conduct.',
     },
     {
       title: 'Lawful conduct',
-      description: 'Act within the law and respect due process, rights, and public institutions.',
+      description:
+        'Act within the law and respect due process, individual rights and public institutions.',
     },
     {
       title: 'Continuity',
@@ -132,29 +134,35 @@ export class SorukluOrderComponent {
 
   readonly roles: readonly OrderRole[] = [
     {
-      title: 'Founder and Leader',
-      description: 'Maintains the initiative’s purpose, boundaries, and long-term direction.',
-    },
-    {
-      title: 'Patriarch',
-      description: 'Provides family perspective, historical context, and measured counsel.',
-    },
-    {
-      title: 'Protector',
-      description: 'Supports wellbeing, preparedness, and responsible safeguarding practices.',
-    },
-    {
-      title: 'Counsel',
-      description: 'Offers considered advice and helps members examine difficult decisions.',
-    },
-    {
-      title: 'Legal Perspective',
+      title: 'Founder and Steward',
       description:
-        'Encourages lawful process and identifies when qualified professional advice is needed.',
+        'Maintains the initiative’s purpose, boundaries, authorised records and long-term direction.',
     },
     {
-      title: 'Future-Generation Stewardship',
-      description: 'Preserves records and context for those who may carry the work forward.',
+      title: 'Senior Family Adviser',
+      description: 'Provides family perspective, historical context and measured counsel.',
+    },
+    {
+      title: 'Safeguarding and Preparedness',
+      description:
+        'Supports wellbeing, lawful safeguarding, responsible preparedness and practical emergency planning.',
+    },
+    {
+      title: 'Family Adviser',
+      description:
+        'Offers considered advice and helps members examine difficult decisions without holding binding authority.',
+    },
+    {
+      title: 'Legal Liaison',
+      description:
+        'Encourages lawful process and identifies when qualified independent legal advice may be needed.',
+      clarification:
+        'This role does not automatically create a solicitor-client relationship, represent the wider family, replace independent qualified legal advice, or confer judicial or enforcement authority.',
+    },
+    {
+      title: 'Records and Continuity',
+      description:
+        'Preserves authorised records and context for members who may carry the initiative’s work forward.',
     },
   ];
 }
