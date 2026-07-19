@@ -45,10 +45,9 @@ try {
     'The HTTPS redirect must use the fixed canonical host.',
   );
 
-  const insecureKnownRouteResponse = await fetch(
-    `${baseUrl}/work?campaign=user-controlled`,
-    { redirect: 'manual' },
-  );
+  const insecureKnownRouteResponse = await fetch(`${baseUrl}/work?campaign=user-controlled`, {
+    redirect: 'manual',
+  });
   assert.equal(insecureKnownRouteResponse.status, 308);
   assert.equal(
     insecureKnownRouteResponse.headers.get('location'),
@@ -74,6 +73,9 @@ try {
   const homeCsp = homeResponse.headers.get('content-security-policy') ?? '';
   assert.match(homeCsp, /frame-ancestors 'none'/);
   assert.match(homeCsp, /connect-src 'self' https:\/\/api\.serhatsoruklu\.com/);
+  assert.match(homeCsp, /script-src[^;]*https:\/\/\*\.googletagmanager\.com/);
+  assert.match(homeCsp, /connect-src[^;]*https:\/\/\*\.google-analytics\.com/);
+  assert.match(homeCsp, /img-src[^;]*https:\/\/\*\.google-analytics\.com/);
   assert.match(
     homeCsp,
     /(?:^|;)upgrade-insecure-requests(?:;|$)/,
@@ -82,6 +84,7 @@ try {
   const homeNonce = getCspNonce(homeCsp);
   assert.equal(homeHtml.includes('__CSP_NONCE__'), false, 'The CSP nonce sentinel must not leak.');
   assertInlineExecutableScriptsUseNonce(homeHtml, homeNonce);
+  assertGoogleTag(homeHtml, homeNonce);
   assert.match(homeResponse.headers.get('strict-transport-security') ?? '', /max-age=31536000/);
   assert.equal(homeResponse.headers.get('content-encoding'), 'gzip');
   assert.equal(homeResponse.headers.get('cache-control'), 'no-store');
@@ -251,6 +254,38 @@ function assertInlineExecutableScriptsUseNonce(html, nonce) {
       match[1],
       new RegExp(`\\bnonce=["']${escapeRegExp(nonce)}["']`),
       'Every inline executable SSR script must use the response CSP nonce.',
+    );
+  }
+}
+
+function assertGoogleTag(html, nonce) {
+  const measurementId = 'G-WQC8FJF6SL';
+  const externalTags = [
+    ...html.matchAll(
+      /<script\b([^>]*)src=["']https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=G-WQC8FJF6SL["'][^>]*><\/script>/gi,
+    ),
+  ];
+  assert.equal(externalTags.length, 1, 'SSR must emit exactly one Google tag loader.');
+  assert.match(
+    externalTags[0][1],
+    new RegExp(`\\bnonce=["']${escapeRegExp(nonce)}["']`),
+    'The Google tag loader must use the response CSP nonce.',
+  );
+  assert.equal(
+    (html.match(new RegExp(`gtag\\('config', '${measurementId}'\\)`, 'g')) ?? []).length,
+    1,
+    'SSR must configure the approved Google measurement ID exactly once.',
+  );
+  for (const consentType of [
+    'ad_storage',
+    'ad_user_data',
+    'ad_personalization',
+    'analytics_storage',
+  ]) {
+    assert.match(
+      html,
+      new RegExp(`${consentType}: 'denied'`),
+      `Google consent must default ${consentType} to denied.`,
     );
   }
 }

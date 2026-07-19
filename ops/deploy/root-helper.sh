@@ -74,13 +74,14 @@ load_environment() {
 }
 
 validate_runtime_environment() {
-  local name value
+  [[ $# -le 1 ]] || die 'runtime validation accepts at most one backend environment path'
+  local backend_path=${1:-$BACKEND_ENV} name value
   local -a required=()
   local -A frontend=() backend=()
   validate_environment_file "$FRONTEND_ENV" 640
-  validate_environment_file "$BACKEND_ENV" 640
+  validate_environment_file "$backend_path" 640
   load_environment "$FRONTEND_ENV" frontend
-  load_environment "$BACKEND_ENV" backend
+  load_environment "$backend_path" backend
 
   required=(NODE_ENV PORT FRONTEND_HOST FRONTEND_CANONICAL_HOST FRONTEND_ENABLE_HSTS FRONTEND_ENFORCE_HTTPS FRONTEND_SHUTDOWN_TIMEOUT_MS FRONTEND_TRUST_PROXY)
   for name in "${required[@]}"; do [[ -n "${frontend[$name]:-}" ]] || die "missing frontend variable: $name"; done
@@ -112,6 +113,26 @@ validate_runtime_environment() {
     [[ "${backend[SMTP_VERIFY_ON_START]}" == false ]] || die 'disabled contact delivery requires SMTP_VERIFY_ON_START=false'
   fi
   printf 'runtime_environment=valid\n'
+}
+
+install_backend_environment() {
+  [[ $# -eq 1 ]] || die 'install-backend-environment requires one candidate path'
+  local source=$1 resolved metadata target_candidate="${BACKEND_ENV}.candidate.$$"
+  [[ ! -L "$source" && -f "$source" ]] || die 'backend environment candidate must be a regular file'
+  resolved=$(realpath -e -- "$source")
+  [[ "$resolved" == "$source" && "$resolved" =~ ^/home/serhatsoruklu-deploy/\.runtime/backend\.env\.[A-Za-z0-9]{8}$ ]] \
+    || die 'backend environment candidate path is invalid'
+  metadata=$(stat -c '%U:%G %a %s' "$resolved")
+  [[ "$metadata" =~ ^serhatsoruklu-deploy:serhatsoruklu-deploy\ 600\ ([1-9][0-9]{0,4})$ ]] \
+    || die 'backend environment candidate metadata is invalid'
+  (( ${BASH_REMATCH[1]} <= 65536 )) || die 'backend environment candidate exceeds 64 KiB'
+
+  trap 'rm -f -- "$target_candidate"' EXIT
+  install -o root -g serhatsoruklu -m 0640 -- "$resolved" "$target_candidate"
+  validate_runtime_environment "$target_candidate"
+  mv -fT -- "$target_candidate" "$BACKEND_ENV"
+  trap - EXIT
+  printf 'backend_environment=installed\n'
 }
 
 contact_delivery_enabled() {
@@ -407,6 +428,7 @@ shift
 
 case "$command" in
   activate-release) activate_release "$@" ;;
+  install-backend-environment) install_backend_environment "$@" ;;
   validate-environment) [[ $# -eq 1 ]] || die 'validate-environment requires runtime or backup'; case "$1" in runtime) validate_runtime_environment ;; backup) validate_backup_environment ;; *) die 'invalid environment scope' ;; esac ;;
   install-nginx-acme) [[ $# -eq 0 ]] || die 'install-nginx-acme accepts no arguments'; install_nginx acme ;;
   obtain-certificate) obtain_certificate "$@" ;;

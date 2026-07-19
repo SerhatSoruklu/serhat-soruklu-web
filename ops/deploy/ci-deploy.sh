@@ -33,12 +33,21 @@ main_sha=$(git -C "$REPOSITORY_DIR" rev-parse --verify 'origin/main^{commit}')
 [[ "$main_sha" == "$REQUESTED_SHA" ]] \
   || die 'requested SHA is not the current GitHub origin/main SHA'
 
+install -d -m 0700 "$HOME/.runtime"
+runtime_environment=$(mktemp "$HOME/.runtime/backend.env.XXXXXXXX")
 release_script=$(mktemp)
 deployment_output=$(mktemp)
 cleanup() {
-  rm -f -- "$release_script" "$deployment_output"
+  rm -f -- "$runtime_environment" "$release_script" "$deployment_output"
 }
 trap cleanup EXIT
+
+dd bs=65537 count=1 status=none > "$runtime_environment"
+[[ -s "$runtime_environment" ]] || die 'the production backend environment is empty'
+(( $(stat -c '%s' "$runtime_environment") <= 65536 )) \
+  || die 'the production backend environment exceeds 64 KiB'
+grep -Iq . "$runtime_environment" || die 'the production backend environment is not text'
+chmod 0600 "$runtime_environment"
 
 git -C "$REPOSITORY_DIR" show "$REQUESTED_SHA:ops/deploy/deploy.sh" \
   > "$release_script"
@@ -52,6 +61,7 @@ readonly RELEASE_DIR=${release_paths[0]}
 [[ "$RELEASE_DIR" =~ ^/srv/serhatsoruklu/releases/[0-9]{8}T[0-9]{6}Z-[0-9a-f]{12}$ ]] \
   || die 'release build emitted an invalid release path'
 
+sudo -n "$DEPLOY_HELPER" install-backend-environment "$runtime_environment"
 sudo -n "$DEPLOY_HELPER" activate-release "$RELEASE_DIR"
 sudo -n "$DEPLOY_HELPER" install-nginx-tls serhatsoruklu.com
 

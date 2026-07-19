@@ -16,6 +16,12 @@ Serhat nginx configuration.
 The root-owned deploy helper remains a separately reviewed security boundary;
 GitHub Actions cannot replace it. Its narrow sudo policy and the dedicated
 `serhatsoruklu-deploy` account must not be shared with another application.
+The production workflow receives `SERHATSORUKLU_BACKEND_ENV` from the GitHub
+`production` Environment, sends it only over the forced-command SSH channel,
+and asks the root helper to validate and atomically install it before activating
+a release. The release build is secret-free; the environment is installed only
+after the build succeeds and before activation. The workflow never prints the
+file or stores it in a release.
 
 For initial provisioning or manual recovery:
 
@@ -42,10 +48,22 @@ Root creates `/etc/serhatsoruklu/frontend.env`, `backend.env`, and `backup.env`.
 The service files read them directly; no environment file is stored in a
 release. Validate presence and ownership without logging values.
 
-Production environment changes deliberately do not travel through GitHub.
-Edit `/etc/serhatsoruklu/backend.env` on the host, validate it with the
-root-owned helper, and restart `serhatsoruklu-backend.service`. The site uses
-systemd, not PM2.
+Production environment files deliberately do not travel through Git history.
+Update the environment-scoped `SERHATSORUKLU_BACKEND_ENV` Actions secret when
+runtime values change; the next verified `main` deployment validates, installs,
+and activates it. Emergency operators may still edit
+`/etc/serhatsoruklu/backend.env` directly and validate it with the root-owned
+helper. The site uses systemd, not PM2.
+
+From an authenticated local checkout, publish the ignored canonical environment
+without displaying it or adding it to Git:
+
+```bash
+npm run publish:production-env
+```
+
+The publisher refuses partial contact configuration, placeholder values, and
+any Coupyn or ChatPDM identity before updating the GitHub Environment secret.
 
 The frontend file provides production mode, port `4102`, host `127.0.0.1`, the
 canonical host, HTTPS/HSTS enablement, loopback proxy trust, and a bounded

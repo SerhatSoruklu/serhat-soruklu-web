@@ -48,17 +48,29 @@ app.use(
         defaultSrc: ["'self'"],
         baseUri: ["'self'"],
         connectSrc: isProduction
-          ? ["'self'", 'https://api.serhatsoruklu.com']
+          ? [
+              "'self'",
+              'https://api.serhatsoruklu.com',
+              'https://*.google-analytics.com',
+              'https://*.analytics.google.com',
+              'https://*.googletagmanager.com',
+            ]
           : ["'self'", 'http://localhost:3000', 'http://127.0.0.1:3000', 'ws:', 'wss:'],
         fontSrc: ["'self'", 'data:'],
         formAction: ["'self'"],
         frameAncestors: ["'none'"],
         frameSrc: ["'none'"],
-        imgSrc: ["'self'", 'data:', 'blob:'],
+        imgSrc: [
+          "'self'",
+          'data:',
+          'blob:',
+          'https://*.google-analytics.com',
+          'https://*.googletagmanager.com',
+        ],
         manifestSrc: ["'self'"],
         mediaSrc: ["'self'"],
         objectSrc: ["'none'"],
-        scriptSrc: ["'self'", createCspNonceDirective],
+        scriptSrc: ["'self'", createCspNonceDirective, 'https://*.googletagmanager.com'],
         scriptSrcAttr: ["'none'"],
         styleSrc: ["'self'", "'unsafe-inline'"],
         workerSrc: ["'self'", 'blob:'],

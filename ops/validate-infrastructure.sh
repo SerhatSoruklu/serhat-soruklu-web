@@ -7,6 +7,7 @@ scripts=(
   "$OPS_ROOT/deploy/ci-deploy.sh"
   "$OPS_ROOT/deploy/deploy.sh"
   "$OPS_ROOT/deploy/install-nginx.sh"
+  "$OPS_ROOT/deploy/publish-backend-environment.sh"
   "$OPS_ROOT/deploy/rollback.sh"
   "$OPS_ROOT/deploy/root-helper.sh"
   "$OPS_ROOT/backup/mongodb-backup.sh"
@@ -53,5 +54,9 @@ grep -Fq 'validate_backup_environment' "$OPS_ROOT/deploy/root-helper.sh"
 grep -Fq 'SSH_ORIGINAL_COMMAND' "$OPS_ROOT/deploy/ci-deploy.sh"
 grep -Fq 'origin/main' "$OPS_ROOT/deploy/ci-deploy.sh"
 grep -Fq 'serhatsoruklu-deploy-helper' "$OPS_ROOT/deploy/ci-deploy.sh"
+grep -Fq 'install-backend-environment' "$OPS_ROOT/deploy/ci-deploy.sh"
+grep -Fq 'install_backend_environment' "$OPS_ROOT/deploy/root-helper.sh"
+grep -Fq 'SERHATSORUKLU_BACKEND_ENV' "$OPS_ROOT/deploy/publish-backend-environment.sh"
+grep -Fq 'coupyn|chatpdm' "$OPS_ROOT/deploy/publish-backend-environment.sh"
 
 printf 'infrastructure validation passed\n'
