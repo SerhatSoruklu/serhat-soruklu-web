@@ -89,6 +89,16 @@ try {
   assert.equal(homeResponse.headers.get('content-encoding'), 'gzip');
   assert.equal(homeResponse.headers.get('cache-control'), 'no-store');
 
+  const workResponse = await secureFetch('/work');
+  const workHtml = await workResponse.text();
+  assert.equal(workResponse.status, 200, 'The work route must SSR with HTTP 200.');
+  assert.match(workHtml, /<title>Work \| Serhat Soruklu<\/title>/);
+  assert.match(
+    workHtml,
+    /<link rel="canonical" href="https:\/\/serhatsoruklu\.com\/work">/,
+  );
+  assert.match(workHtml, /Built End-to-End/, 'The work response must include route content.');
+
   const unknownResponse = await secureFetch('/release-smoke-does-not-exist');
   const unknownHtml = await unknownResponse.text();
   assert.equal(unknownResponse.status, 404, 'An unknown Angular route must return HTTP 404.');
@@ -222,6 +232,9 @@ async function secureFetch(path, init = {}) {
     ...init,
     headers: {
       'accept-encoding': 'gzip',
+      // Match the production Nginx request shape. Angular intentionally
+      // de-optimizes to CSR when an unexpected X-Forwarded-* header arrives.
+      'x-forwarded-for': '203.0.113.10',
       'x-forwarded-proto': 'https',
       ...init.headers,
     },

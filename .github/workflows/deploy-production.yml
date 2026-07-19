@@ -75,9 +75,30 @@ jobs:
       - name: Verify public production endpoints
         run: |
           set -euo pipefail
+          verification_dir=$(mktemp -d)
+          trap 'rm -rf -- "$verification_dir"' EXIT
+
           curl --fail --silent --show-error \
             --retry 12 --retry-delay 5 --retry-all-errors --max-time 15 \
             https://serhatsoruklu.com/healthz >/dev/null
           curl --fail --silent --show-error \
             --retry 12 --retry-delay 5 --retry-all-errors --max-time 15 \
             https://api.serhatsoruklu.com/api/health >/dev/null
+
+          curl --fail --silent --show-error \
+            --retry 12 --retry-delay 5 --retry-all-errors --max-time 15 \
+            "https://serhatsoruklu.com/work?release=${{ github.event.workflow_run.head_sha }}" \
+            --output "$verification_dir/work.html"
+          grep -Fq '<title>Work | Serhat Soruklu</title>' "$verification_dir/work.html"
+          grep -Fq '<link rel="canonical" href="https://serhatsoruklu.com/work">' \
+            "$verification_dir/work.html"
+          grep -Fq 'Built End-to-End' "$verification_dir/work.html"
+
+          unknown_status=$(curl --silent --show-error \
+            --retry 12 --retry-delay 5 --retry-all-errors --max-time 15 \
+            --output "$verification_dir/not-found.html" --write-out '%{http_code}' \
+            "https://serhatsoruklu.com/release-verification-${{ github.event.workflow_run.head_sha }}")
+          [[ "$unknown_status" == 404 ]]
+          grep -Fq '<title>Page Not Found | Serhat Soruklu</title>' \
+            "$verification_dir/not-found.html"
+          grep -Fq 'noindex, follow' "$verification_dir/not-found.html"
