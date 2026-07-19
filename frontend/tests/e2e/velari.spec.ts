@@ -65,18 +65,46 @@ test.describe('Velari identity page', () => {
     await expect(page.getByRole('heading', { level: 1, name: 'Velari' })).toBeVisible();
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.getByRole('heading', { name: 'What Is Velari?' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'What Velari Is Not' })).toBeVisible();
+    await expect(
+      page.getByText(
+        'Velari is a voluntary personal philosophy. It has no priesthood, compulsory membership, financial obligations or claim to supernatural authority.',
+      ),
+    ).toBeVisible();
+    await expect(page.locator('.velari-framework-boundaries__list li')).toHaveCount(5);
+    expect(
+      await page.evaluate(() => {
+        const introduction = document.querySelector('#velari-framework');
+        const boundaries = document.querySelector('.velari-section--boundaries');
+        const sections = Array.from(document.querySelectorAll('.velari-page > section'));
+
+        return (
+          sections.indexOf(introduction as HTMLElement) <
+          sections.indexOf(boundaries as HTMLElement)
+        );
+      }),
+    ).toBe(true);
     await expect(page.getByRole('heading', { name: 'Become. Refine. Awaken.' })).toBeVisible();
     await expect(
       page.getByRole('heading', { name: 'Principles That Must Be Practised' }),
     ).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Founded by Serhat Soruklu' })).toBeVisible();
     await expect(
-      page.getByText(/not as a prophet, deity, divine messenger or infallible authority/),
+      page.getByText(
+        /founder, writer and current steward, not as a prophet, deity, divine messenger or infallible authority/,
+      ),
     ).toBeVisible();
     await expect(
       page.getByText(/does not define or represent the beliefs of the wider Soruklu family/),
     ).toBeVisible();
     await expect(page.getByText(/victims deserve harm because of karma/)).toBeVisible();
+    await expect(page.getByText(/not used to blame victims or to excuse abuse/)).toBeVisible();
+    await expect(
+      page.getByText(
+        /optional reflective practices, not compulsory rituals or substitutes for independent medical, psychological or legal judgement/,
+      ),
+    ).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Designed to Evolve' })).toBeVisible();
     await expect(page.getByText('Public material is being prepared.')).toHaveCount(0);
 
     const bookSection = page.locator('.velari-section--texts');
@@ -88,6 +116,11 @@ test.describe('Velari identity page', () => {
     await expect(page.getByText('The Book of Shadow', { exact: true })).toBeVisible();
     await expect(page.getByText('The Book of the Path', { exact: true })).toBeVisible();
     await expect(page.getByText('Developing work', { exact: true })).toHaveCount(3);
+    await expect(page.getByText('Not yet published', { exact: true })).toHaveCount(3);
+    await expect(bookSection.locator('.velari-book-meta__facts')).toHaveCount(3);
+    await expect(
+      page.getByText('Fuller readable editions will be published when sufficiently developed.'),
+    ).toBeVisible();
     await expect(page.getByText('Awakening · Sun · Virtue · Clarity')).toBeVisible();
     await expect(page.getByText('Darkness · Fear · Ego · Illusion · Suffering')).toBeVisible();
     await expect(page.getByText('Guidance Through Darkness · Carried by Light')).toBeVisible();
@@ -119,7 +152,10 @@ test.describe('Velari identity page', () => {
 
     const emblem = page.locator(`img[src="${emblemPath}"]`);
     await expect(emblem).toHaveCount(1);
-    await expect(emblem).toHaveAttribute('alt', 'Velari faith emblem');
+    await expect(emblem).toHaveAttribute(
+      'alt',
+      'Velari emblem: a gold flame within an oval geometric seal',
+    );
     await expect(emblem).toHaveAttribute('width', '1080');
     await expect(emblem).toHaveAttribute('height', '1080');
     expect((await request.get(emblemPath)).ok()).toBe(true);
@@ -131,6 +167,23 @@ test.describe('Velari identity page', () => {
         images.map((image) => new URL((image as HTMLImageElement).src).origin),
       );
     expect(imageOrigins.every((origin) => origin === localOrigin)).toBe(true);
+
+    const headingLevels = await page
+      .locator('.velari-page h1, .velari-page h2, .velari-page h3, .velari-page h4')
+      .evaluateAll((headings) => headings.map((heading) => Number(heading.tagName.slice(1))));
+    expect(headingLevels[0]).toBe(1);
+    expect(
+      headingLevels.every((level, index) => index === 0 || level <= headingLevels[index - 1] + 1),
+    ).toBe(true);
+    expect(
+      await page
+        .locator('.velari-page a')
+        .evaluateAll((links) =>
+          links.every((link) =>
+            Boolean(link.textContent?.trim() || link.getAttribute('aria-label')),
+          ),
+        ),
+    ).toBe(true);
 
     const lowerText = (await page.locator('.velari-page').innerText()).toLowerCase();
     for (const phrase of [

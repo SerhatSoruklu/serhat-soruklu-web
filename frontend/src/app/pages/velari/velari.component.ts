@@ -60,6 +60,8 @@ interface VelariText {
   title: string;
   keywords: string;
   description: string;
+  status: string;
+  availability: string;
   instagramUrl: string;
   illustration: 'light' | 'shadow' | 'path';
 }
@@ -200,6 +202,14 @@ export class VelariComponent {
     },
   ];
 
+  readonly frameworkBoundaries = [
+    'It does not claim supernatural revelation.',
+    'It is not a replacement for medicine, law or independent judgement.',
+    'It is not compulsory for members of the Soruklu family.',
+    'It does not control personal finances, relationships or private decisions.',
+    'It does not require hostility toward religions, philosophies or non-belief.',
+  ] as const;
+
   readonly dailyPractices: readonly VelariPractice[] = [
     {
       phase: 'Morning',
@@ -240,6 +250,8 @@ export class VelariComponent {
       keywords: 'Awakening · Sun · Virtue · Clarity',
       description:
         'Principles of awareness, wisdom, discipline and the life-giving symbol of Light.',
+      status: 'Developing work',
+      availability: 'Not yet published',
       instagramUrl: 'https://www.instagram.com/p/DZ47ZQ6oE2V',
       illustration: 'light',
     },
@@ -249,6 +261,8 @@ export class VelariComponent {
       keywords: 'Darkness · Fear · Ego · Illusion · Suffering',
       description:
         'A reflection on confusion, fear, error and the parts of the self that must be understood rather than denied.',
+      status: 'Developing work',
+      availability: 'Not yet published',
       instagramUrl: 'https://www.instagram.com/p/DZ47fd0oBkf/',
       illustration: 'shadow',
     },
@@ -257,6 +271,8 @@ export class VelariComponent {
       title: 'The Book of the Path',
       keywords: 'Guidance Through Darkness · Carried by Light',
       description: 'Practical guidance for living, choosing, repairing and continuing.',
+      status: 'Developing work',
+      availability: 'Not yet published',
       instagramUrl: 'https://www.instagram.com/p/DZ47lu4o3AF/',
       illustration: 'path',
     },
