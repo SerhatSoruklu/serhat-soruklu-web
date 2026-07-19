@@ -1,0 +1,141 @@
+# Render __CERTIFICATE_NAME__ to the exact Certbot certificate name.
+server {
+    listen 80;
+    listen [::]:80;
+    server_name serhatsoruklu.com www.serhatsoruklu.com;
+    real_ip_header X-Serhat-Origin-Only;
+    include /etc/nginx/snippets/serhatsoruklu-cloudflare-origin-only.conf;
+    access_log /var/log/nginx/serhatsoruklu.com.access.log;
+    error_log /var/log/nginx/serhatsoruklu.com.error.log warn;
+    autoindex off;
+
+    location ^~ /.well-known/acme-challenge/ {
+        root /srv/serhatsoruklu/shared/acme;
+        default_type text/plain;
+        try_files $uri =404;
+    }
+
+    location / {
+        return 308 https://serhatsoruklu.com$request_uri;
+    }
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name api.serhatsoruklu.com;
+    real_ip_header X-Serhat-Origin-Only;
+    include /etc/nginx/snippets/serhatsoruklu-cloudflare-origin-only.conf;
+    autoindex off;
+
+    location ^~ /.well-known/acme-challenge/ {
+        root /srv/serhatsoruklu/shared/acme;
+        default_type text/plain;
+        try_files $uri =404;
+    }
+
+    location / {
+        return 308 https://api.serhatsoruklu.com$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name www.serhatsoruklu.com;
+    real_ip_header X-Serhat-Origin-Only;
+    include /etc/nginx/snippets/serhatsoruklu-cloudflare-origin-only.conf;
+    ssl_certificate /etc/letsencrypt/live/__CERTIFICATE_NAME__/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/__CERTIFICATE_NAME__/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+    access_log /var/log/nginx/serhatsoruklu.com.access.log;
+    error_log /var/log/nginx/serhatsoruklu.com.error.log warn;
+    autoindex off;
+    return 308 https://serhatsoruklu.com$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name serhatsoruklu.com;
+    real_ip_header X-Serhat-Origin-Only;
+    include /etc/nginx/snippets/serhatsoruklu-cloudflare-origin-only.conf;
+    ssl_certificate /etc/letsencrypt/live/__CERTIFICATE_NAME__/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/__CERTIFICATE_NAME__/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    access_log /var/log/nginx/serhatsoruklu.com.access.log;
+    error_log /var/log/nginx/serhatsoruklu.com.error.log warn;
+    autoindex off;
+    client_max_body_size 1m;
+    gzip on;
+    gzip_proxied any;
+    gzip_types text/plain text/css application/javascript application/json application/xml image/svg+xml;
+
+    location ~* \.map$ { return 404; }
+    location ~* (?:^|/)(?:\.env|\.git|\.svn|\.hg|backup|backups|config|secrets?)(?:/|$) { return 404; }
+    location ~* \.(?:bak|dump|log|sql|tgz|tar\.gz)$ { return 404; }
+
+    location / {
+        proxy_pass http://127.0.0.1:4102;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $http_cf_connecting_ip;
+        proxy_set_header X-Forwarded-For $http_cf_connecting_ip;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 30s;
+        proxy_read_timeout 30s;
+        proxy_buffering on;
+        proxy_hide_header Strict-Transport-Security;
+        proxy_hide_header X-Content-Type-Options;
+        proxy_hide_header Referrer-Policy;
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+        add_header X-Content-Type-Options nosniff always;
+        add_header Referrer-Policy strict-origin-when-cross-origin always;
+    }
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name api.serhatsoruklu.com;
+    real_ip_header X-Serhat-Origin-Only;
+    include /etc/nginx/snippets/serhatsoruklu-cloudflare-origin-only.conf;
+    ssl_certificate /etc/letsencrypt/live/__CERTIFICATE_NAME__/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/__CERTIFICATE_NAME__/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    access_log /var/log/nginx/api.serhatsoruklu.com.access.log;
+    error_log /var/log/nginx/api.serhatsoruklu.com.error.log warn;
+    autoindex off;
+    client_max_body_size 128k;
+    gzip on;
+    gzip_proxied any;
+    gzip_types text/plain application/json application/xml;
+
+    location ~* \.map$ { return 404; }
+    location ~* (?:^|/)(?:\.env|\.git|\.svn|\.hg|backup|backups|config|secrets?)(?:/|$) { return 404; }
+    location ~* \.(?:bak|dump|log|sql|tgz|tar\.gz)$ { return 404; }
+
+    location / {
+        proxy_pass http://127.0.0.1:4302;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $http_cf_connecting_ip;
+        proxy_set_header X-Forwarded-For $http_cf_connecting_ip;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_connect_timeout 5s;
+        proxy_send_timeout 15s;
+        proxy_read_timeout 15s;
+        proxy_buffering on;
+        add_header X-Content-Type-Options nosniff always;
+        add_header Referrer-Policy strict-origin-when-cross-origin always;
+        add_header Cache-Control no-store always;
+    }
+}

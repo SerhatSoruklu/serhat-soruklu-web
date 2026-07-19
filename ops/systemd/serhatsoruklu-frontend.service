@@ -1,0 +1,48 @@
+[Unit]
+Description=SerhatSoruklu.com Angular SSR frontend
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=120
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=serhatsoruklu
+Group=serhatsoruklu
+UMask=0027
+WorkingDirectory=/srv/serhatsoruklu/current/frontend
+EnvironmentFile=/etc/serhatsoruklu/frontend.env
+ExecStart=/usr/bin/node /srv/serhatsoruklu/current/frontend/scripts/start-production.mjs
+Restart=on-failure
+RestartSec=5s
+TimeoutStartSec=30s
+TimeoutStopSec=20s
+KillSignal=SIGTERM
+NoNewPrivileges=true
+PrivateDevices=true
+PrivateTmp=true
+ProtectClock=true
+ProtectControlGroups=true
+ProtectHome=true
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectSystem=strict
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+LockPersonality=true
+SystemCallArchitectures=native
+CapabilityBoundingSet=
+AmbientCapabilities=
+InaccessiblePaths=/srv/chatpdm /var/www/coupyn /var/www/coupyn-staging /home/deploy /home/chatpdmops
+LimitNOFILE=4096
+TasksMax=256
+MemoryMax=768M
+CPUQuota=150%
+SyslogIdentifier=serhatsoruklu-frontend
+
+[Install]
+WantedBy=multi-user.target
