@@ -39,6 +39,11 @@ app.use((_req, res, next) => {
 
 const angularApp = new AngularNodeAppEngine({
   allowedHosts: ['localhost', '127.0.0.1', 'serhatsoruklu.com', 'www.serhatsoruklu.com'],
+  // Nginx is the only network path to this loopback-bound process and replaces
+  // every forwarded header before proxying. Angular otherwise treats the
+  // expected X-Forwarded-For header as untrusted and deliberately falls back
+  // to the client-only shell instead of rendering the requested route.
+  trustProxyHeaders: ['x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-for'],
 });
 
 app.use(
