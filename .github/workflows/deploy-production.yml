@@ -1,0 +1,80 @@
+name: Deploy production
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: serhatsoruklu-production
+  cancel-in-progress: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  deploy:
+    name: Promote verified main release
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment:
+      name: production
+      url: https://serhatsoruklu.com
+
+    steps:
+      - name: Deploy exact verified SHA
+        env:
+          DEPLOY_HOST: ${{ vars.SERHATSORUKLU_DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ vars.SERHATSORUKLU_DEPLOY_PORT }}
+          DEPLOY_SHA: ${{ github.event.workflow_run.head_sha }}
+          DEPLOY_SSH_KEY: ${{ secrets.SERHATSORUKLU_DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.SERHATSORUKLU_DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          : "${DEPLOY_HOST:?missing production deploy host}"
+          : "${DEPLOY_PORT:?missing production deploy port}"
+          : "${DEPLOY_SSH_KEY:?missing production deploy SSH key}"
+          : "${DEPLOY_KNOWN_HOSTS:?missing production known-hosts data}"
+          [[ "$DEPLOY_PORT" =~ ^[0-9]{1,5}$ ]]
+          [[ "$DEPLOY_SHA" =~ ^[0-9a-f]{40}$ ]]
+
+          key_dir=$(mktemp -d)
+          trap 'rm -rf -- "$key_dir"' EXIT
+          printf '%s\n' "$DEPLOY_SSH_KEY" > "$key_dir/deploy_key"
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > "$key_dir/known_hosts"
+          chmod 0600 "$key_dir/deploy_key" "$key_dir/known_hosts"
+          ssh-keygen -y -f "$key_dir/deploy_key" >/dev/null
+
+          ssh_output="$key_dir/deploy-output"
+          ssh \
+            -F /dev/null \
+            -p "$DEPLOY_PORT" \
+            -i "$key_dir/deploy_key" \
+            -o BatchMode=yes \
+            -o ConnectTimeout=15 \
+            -o IdentitiesOnly=yes \
+            -o ServerAliveInterval=15 \
+            -o ServerAliveCountMax=4 \
+            -o StrictHostKeyChecking=yes \
+            -o UserKnownHostsFile="$key_dir/known_hosts" \
+            "serhatsoruklu-deploy@$DEPLOY_HOST" \
+            "deploy $DEPLOY_SHA" | tee "$ssh_output"
+
+          grep -Fxq "deployed_sha=$DEPLOY_SHA" "$ssh_output"
+
+      - name: Verify public production endpoints
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error \
+            --retry 12 --retry-delay 5 --retry-all-errors --max-time 15 \
+            https://serhatsoruklu.com/healthz >/dev/null
+          curl --fail --silent --show-error \
+            --retry 12 --retry-delay 5 --retry-all-errors --max-time 15 \
+            https://api.serhatsoruklu.com/api/health >/dev/null

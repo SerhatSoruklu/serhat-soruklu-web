@@ -4,6 +4,7 @@ set -euo pipefail
 readonly OPS_ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 scripts=(
+  "$OPS_ROOT/deploy/ci-deploy.sh"
   "$OPS_ROOT/deploy/deploy.sh"
   "$OPS_ROOT/deploy/install-nginx.sh"
   "$OPS_ROOT/deploy/rollback.sh"
@@ -49,5 +50,8 @@ grep -Fq 'MONGODB_BACKUP_URI' "$OPS_ROOT/backup/mongodb-backup.sh"
 grep -Fq 'BACKUP_S3_URI' "$OPS_ROOT/backup/mongodb-backup.sh"
 grep -Fq 'validate_runtime_environment' "$OPS_ROOT/deploy/root-helper.sh"
 grep -Fq 'validate_backup_environment' "$OPS_ROOT/deploy/root-helper.sh"
+grep -Fq 'SSH_ORIGINAL_COMMAND' "$OPS_ROOT/deploy/ci-deploy.sh"
+grep -Fq 'origin/main' "$OPS_ROOT/deploy/ci-deploy.sh"
+grep -Fq 'serhatsoruklu-deploy-helper' "$OPS_ROOT/deploy/ci-deploy.sh"
 
 printf 'infrastructure validation passed\n'

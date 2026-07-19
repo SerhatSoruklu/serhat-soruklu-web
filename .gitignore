@@ -78,7 +78,6 @@ web_modules/
 **/.env.*
 backend/.env
 backend/.env.production
-!**/.env.example
 
 # Angular cache
 .angular/

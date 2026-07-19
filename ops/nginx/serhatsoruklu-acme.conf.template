@@ -14,7 +14,7 @@ server {
     autoindex off;
 
     location ^~ /.well-known/acme-challenge/ {
-        root /srv/serhatsoruklu/shared/acme;
+        root /var/lib/serhatsoruklu/acme;
         default_type text/plain;
         try_files $uri =404;
     }
@@ -35,7 +35,7 @@ server {
     autoindex off;
 
     location ^~ /.well-known/acme-challenge/ {
-        root /srv/serhatsoruklu/shared/acme;
+        root /var/lib/serhatsoruklu/acme;
         default_type text/plain;
         try_files $uri =404;
     }
