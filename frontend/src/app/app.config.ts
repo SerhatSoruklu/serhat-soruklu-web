@@ -4,7 +4,7 @@ import { provideRouter, TitleStrategy, withInMemoryScrolling } from '@angular/ro
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'; // NOSONAR: Angular Material dialog animations are intentionally loaded lazily.
 
 import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { provideClientHydration } from '@angular/platform-browser';
 import { SeoTitleStrategy } from './core/seo/seo-title.strategy';
 
 export const appConfig: ApplicationConfig = {
@@ -12,7 +12,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withFetch()),
     provideRouter(routes, withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' })),
-    provideClientHydration(withEventReplay()),
+    provideClientHydration(),
     provideAnimationsAsync(), // NOSONAR: keeps animation code lazy while Angular deprecates provider-based animations.
     { provide: TitleStrategy, useClass: SeoTitleStrategy },
   ],

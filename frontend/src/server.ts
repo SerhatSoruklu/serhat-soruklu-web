@@ -389,9 +389,6 @@ function sendKnownRouteRedirect(
     case '/systems/deterministic-boundary-firewall':
       location = `${origin}/systems/deterministic-boundary-firewall`;
       break;
-    case '/theme-init.js':
-      location = `${origin}/theme-init.js`;
-      break;
     case '/velari':
       location = `${origin}/velari`;
       break;

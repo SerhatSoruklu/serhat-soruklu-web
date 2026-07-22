@@ -663,7 +663,6 @@ a.system-panel__button--quiet:hover {
   stroke-linejoin: round;
   stroke-width: 1.2;
   stroke-dasharray: 5 10;
-  animation: architectureTrace 20s linear infinite;
 }
 
 .architecture-rail {
@@ -703,7 +702,6 @@ a.system-panel__button--quiet:hover {
   opacity: 0.34;
   stroke: #a8b0bd;
   stroke-dasharray: 4 8;
-  animation: architectureTrace 16s linear infinite;
 }
 
 .architecture-rail--feedback {
@@ -852,16 +850,6 @@ a.system-panel__button--quiet:hover {
 .architecture-svg--coupyn .architecture-engine-label--commerce-soft {
   font-size: 8.8px;
   letter-spacing: 0.08em;
-}
-
-@keyframes architectureTrace {
-  from {
-    stroke-dashoffset: 0;
-  }
-
-  to {
-    stroke-dashoffset: -48;
-  }
 }
 
 .home-principles {
@@ -1874,6 +1862,12 @@ a.system-panel__button--quiet:hover {
   h1 {
     max-width: 1040px;
     font-size: 60px;
+  }
+}
+
+@media (max-width: 767px) {
+  h1 {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 }
 
