@@ -1,10 +1,9 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Component, HostListener, inject, PLATFORM_ID, signal } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { RouterLink } from '@angular/router';
 
 import { TopNavigationService } from '../../core/navigation/top-navigation.service';
-import { PortraitDialogComponent } from '../../shared/dialogs/portrait-dialog/portrait-dialog.component';
+import { PortraitDialogService } from '../../shared/dialogs/portrait-dialog/portrait-dialog.service';
 import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
 
 @Component({
@@ -15,7 +14,7 @@ import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
 })
 export class HomeComponent {
   private readonly document = inject(DOCUMENT);
-  private readonly dialog = inject(MatDialog);
+  private readonly portraitDialog = inject(PortraitDialogService);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
   private readonly browserWindow = this.isBrowser ? this.document.defaultView : null;
@@ -33,22 +32,7 @@ export class HomeComponent {
       return;
     }
 
-    this.dialog.open(PortraitDialogComponent, {
-      id: 'portrait-dialog',
-      ariaLabelledBy: 'portrait-dialog-title',
-      autoFocus: 'dialog',
-      backdropClass: 'serhat-portrait-dialog-backdrop',
-      closeOnNavigation: true,
-      delayFocusTrap: false,
-      disableClose: false,
-      enterAnimationDuration: 160,
-      exitAnimationDuration: 110,
-      maxHeight: 'calc(100dvh - 24px)',
-      maxWidth: 'calc(100vw - 24px)',
-      panelClass: 'serhat-portrait-dialog-panel',
-      restoreFocus: true,
-      width: 'min(960px, calc(100vw - 40px))'
-    });
+    void this.portraitDialog.open();
   }
 
   private getProjectTitleTooltipPlacement(): 'top' | 'right' {

@@ -84,7 +84,7 @@ try {
   const homeNonce = getCspNonce(homeCsp);
   assert.equal(homeHtml.includes('__CSP_NONCE__'), false, 'The CSP nonce sentinel must not leak.');
   assertInlineExecutableScriptsUseNonce(homeHtml, homeNonce);
-  assertGoogleTag(homeHtml, homeNonce);
+  assertGoogleTag(homeHtml);
   assert.match(homeResponse.headers.get('strict-transport-security') ?? '', /max-age=31536000/);
   assert.equal(homeResponse.headers.get('content-encoding'), 'gzip');
   assert.equal(homeResponse.headers.get('cache-control'), 'no-store');
@@ -190,13 +190,6 @@ try {
   assert.equal(robotsResponse.status, 200);
   assert.equal(robotsResponse.headers.get('cache-control'), 'public, max-age=300, must-revalidate');
 
-  const themeBootstrapResponse = await secureFetch('/theme-init.js');
-  assert.equal(themeBootstrapResponse.status, 200);
-  assert.equal(
-    themeBootstrapResponse.headers.get('cache-control'),
-    'public, max-age=3600, must-revalidate',
-  );
-
   const browserFiles = await readdir(browserDirectory);
   const hashedBundle = browserFiles.find((fileName) => /^main-[a-z0-9]{8}\.js$/i.test(fileName));
   assert.ok(hashedBundle, 'A hashed main bundle is required for the cache smoke test.');
@@ -271,18 +264,23 @@ function assertInlineExecutableScriptsUseNonce(html, nonce) {
   }
 }
 
-function assertGoogleTag(html, nonce) {
+function assertGoogleTag(html) {
   const measurementId = 'G-WQC8FJF6SL';
   const externalTags = [
     ...html.matchAll(
       /<script\b([^>]*)src=["']https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=G-WQC8FJF6SL["'][^>]*><\/script>/gi,
     ),
   ];
-  assert.equal(externalTags.length, 1, 'SSR must emit exactly one Google tag loader.');
-  assert.match(
-    externalTags[0][1],
-    new RegExp(`\\bnonce=["']${escapeRegExp(nonce)}["']`),
-    'The Google tag loader must use the response CSP nonce.',
+  assert.equal(
+    externalTags.length,
+    0,
+    'SSR must not put the Google tag runtime on the critical rendering path.',
+  );
+  assert.equal(
+    (html.match(new RegExp(`https://www\\.googletagmanager\\.com/gtag/js\\?id=${measurementId}`, 'g')) ?? [])
+      .length,
+    1,
+    'SSR must retain exactly one deferred Google tag loader.',
   );
   assert.equal(
     (html.match(new RegExp(`gtag\\('config', '${measurementId}'\\)`, 'g')) ?? []).length,

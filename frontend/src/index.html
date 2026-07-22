@@ -1,32 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      nonce="__CSP_NONCE__"
-      src="https://www.googletagmanager.com/gtag/js?id=G-WQC8FJF6SL"
-    ></script>
-    <script nonce="__CSP_NONCE__">
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('consent', 'default', {
-        ad_storage: 'denied',
-        ad_user_data: 'denied',
-        ad_personalization: 'denied',
-        analytics_storage: 'denied',
-      });
-      gtag('js', new Date());
-      if (
-        window.location.hostname === 'serhatsoruklu.com' ||
-        window.location.hostname === 'www.serhatsoruklu.com'
-      ) {
-        gtag('config', 'G-WQC8FJF6SL');
-      }
-    </script>
-
     <meta charset="utf-8" />
     <base href="/" />
     <title>Serhat Soruklu | Systems Architect</title>
@@ -47,7 +21,125 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#07090d" />
 
-    <script src="/theme-init.js"></script>
+    <!-- Apply the saved theme before first paint without a render-blocking request. -->
+    <script nonce="__CSP_NONCE__">
+      (function () {
+        'use strict';
+
+        var browserGlobal = globalThis;
+        var storageKey = 'serhatsoruklu-theme';
+        var themeClasses = [
+          'theme-dark',
+          'theme-light',
+          'theme-system',
+          'theme-resolved-dark',
+          'theme-resolved-light',
+        ];
+        var setting = 'dark';
+        var resolvedTheme = 'dark';
+
+        try {
+          var storedSetting = browserGlobal.localStorage.getItem(storageKey);
+
+          if (storedSetting === 'dark' || storedSetting === 'light' || storedSetting === 'system') {
+            setting = storedSetting;
+          }
+        } catch (error) {
+          if (browserGlobal.console && typeof browserGlobal.console.debug === 'function') {
+            browserGlobal.console.debug('Stored theme preference is unavailable.', error);
+          }
+          setting = 'dark';
+        }
+
+        if (
+          setting === 'light' ||
+          (setting === 'system' &&
+            browserGlobal.matchMedia &&
+            browserGlobal.matchMedia('(prefers-color-scheme: light)').matches)
+        ) {
+          resolvedTheme = 'light';
+        }
+
+        function applyTheme(target) {
+          if (!target) {
+            return;
+          }
+
+          target.classList.remove.apply(target.classList, themeClasses);
+          target.classList.add('theme-' + setting, 'theme-resolved-' + resolvedTheme);
+          target.style.colorScheme = resolvedTheme;
+        }
+
+        applyTheme(document.documentElement);
+
+        document.addEventListener(
+          'DOMContentLoaded',
+          function () {
+            applyTheme(document.body);
+          },
+          { once: true },
+        );
+
+        var themeColor = document.querySelector('meta[name="theme-color"]');
+
+        if (themeColor) {
+          themeColor.setAttribute('content', resolvedTheme === 'light' ? '#ffffff' : '#07090d');
+        }
+      })();
+    </script>
+
+    <!-- Queue analytics immediately, but keep the third-party runtime off the critical path. -->
+    <script nonce="__CSP_NONCE__">
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+      });
+      gtag('js', new Date());
+      if (
+        window.location.hostname === 'serhatsoruklu.com' ||
+        window.location.hostname === 'www.serhatsoruklu.com'
+      ) {
+        gtag('config', 'G-WQC8FJF6SL');
+
+        var analyticsLoaded = false;
+        var analyticsEvents = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+        var loadAnalytics = function () {
+          if (analyticsLoaded) {
+            return;
+          }
+
+          analyticsLoaded = true;
+          analyticsEvents.forEach(function (eventName) {
+            window.removeEventListener(eventName, loadAnalytics);
+          });
+
+          var analyticsScript = document.createElement('script');
+          analyticsScript.async = true;
+          analyticsScript.fetchPriority = 'low';
+          analyticsScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-WQC8FJF6SL';
+          document.head.appendChild(analyticsScript);
+        };
+        var scheduleAnalytics = function () {
+          window.setTimeout(loadAnalytics, 10000);
+        };
+
+        analyticsEvents.forEach(function (eventName) {
+          window.addEventListener(eventName, loadAnalytics, { passive: true, once: true });
+        });
+
+        if (document.readyState === 'complete') {
+          scheduleAnalytics();
+        } else {
+          window.addEventListener('load', scheduleAnalytics, { once: true });
+        }
+      }
+    </script>
 
     <link rel="canonical" href="https://serhatsoruklu.com/" />
     <link rel="manifest" href="/site.webmanifest" />
