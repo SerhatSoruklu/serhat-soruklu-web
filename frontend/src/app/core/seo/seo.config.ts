@@ -117,24 +117,24 @@ export const pageSeoMetadata = {
   },
   sorukluOrder: {
     label: 'Soruklu Order',
-    title: 'The Soruklu Order | Official Family Initiative',
+    title: 'The Soruklu Order | Family Stewardship Initiative',
     description:
-      'Official page of the Soruklu Order, a small voluntary family initiative founded by Serhat Soruklu around discipline, continuity and responsibility.',
+      'The Soruklu Order is a small, voluntary family stewardship initiative for authorised records, mutual support, responsible conduct, and continuity.',
     path: '/soruklu-order',
     ogImage: '/assets/social/serhat-soruklu-soruklu-order-og.png',
-    ogImageAlt: 'The Soruklu Order emblem and identity in black and gold.',
+    ogImageAlt: 'The Soruklu Order family stewardship initiative and interwoven family emblem.',
     ...rasterSocialImage,
     robots: 'index, follow',
     structuredData: 'soruklu-order',
   },
   velari: {
     label: 'Velari',
-    title: 'Velari | Light, Discipline and Responsibility',
+    title: 'Velari | Personal Belief Framework and Writing Project',
     description:
-      'Velari is a voluntary spiritual philosophy founded by Serhat Soruklu, centred on Light, discipline, compassion, truth, free will and responsibility.',
+      'Velari is Serhat Soruklu’s evolving personal belief framework and writing project exploring Helio-pantheism, Light, discipline and responsibility.',
     path: '/velari',
     ogImage: '/assets/social/serhat-soruklu-velari-og.png',
-    ogImageAlt: 'Velari emblem with the words A path of Light, wisdom and discipline.',
+    ogImageAlt: 'Velari symbol alongside the words A modern belief framework and Helio-pantheism.',
     ...rasterSocialImage,
     robots: 'index, follow',
     structuredData: 'velari',
@@ -152,7 +152,8 @@ export const pageSeoMetadata = {
   notFound: {
     label: 'Page not found',
     title: 'Page Not Found | Serhat Soruklu',
-    description: 'The requested page could not be found. Return home or continue to the systems overview.',
+    description:
+      'The requested page could not be found. Return home or continue to the systems overview.',
     path: '/404',
     ogImage: defaultOgImage,
     ogImageAlt: 'Serhat Soruklu systems architect identity in deep navy and gold.',

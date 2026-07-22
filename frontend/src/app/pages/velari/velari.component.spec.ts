@@ -11,200 +11,200 @@ describe('VelariComponent', () => {
     }).compileComponents();
   });
 
-  it('renders the complete approved framework and removes placeholder copy', () => {
+  it('presents Velari as an authored modern belief framework within the first section', () => {
     const fixture = TestBed.createComponent(VelariComponent);
     fixture.detectChanges();
 
     const nativeElement = fixture.nativeElement as HTMLElement;
-    const text = nativeElement.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+    const heroText = nativeElement
+      .querySelector('.velari-hero')
+      ?.textContent?.replace(/\s+/g, ' ')
+      .trim();
 
-    expect(nativeElement.querySelectorAll('h1').length).toBe(1);
+    expect(nativeElement.querySelectorAll('h1')).toHaveLength(1);
     expect(nativeElement.querySelector('h1')?.textContent?.trim()).toBe('Velari');
-    expect(text).toContain('A path of Light, wisdom and discipline.');
-    expect(text).toContain('What Is Velari?');
-    expect(text).toContain(
-      'Velari is a voluntary personal philosophy. It has no priesthood, compulsory membership, financial obligations or claim to supernatural authority.',
-    );
-    expect(text).toContain('What Velari Is Not');
-    expect(text).toContain('Become. Refine. Awaken.');
-    expect(text).toContain('Principles That Must Be Practised');
-    expect(text).toContain('Freedom Carries Responsibility');
-    expect(text).toContain('Many paths, one Light.');
-    expect(text).toContain('May the Light guide us.');
-    expect(text).not.toContain('Public material is being prepared.');
-
-    const introduction = nativeElement.querySelector('#velari-framework');
-    const boundaries = nativeElement.querySelector('.velari-section--boundaries');
-    const sections = Array.from(nativeElement.querySelectorAll('.velari-page > section'));
-    expect(sections.indexOf(introduction as HTMLElement)).toBeLessThan(
-      sections.indexOf(boundaries as HTMLElement),
+    expect(heroText).toContain('A modern belief framework');
+    expect(heroText).toContain('An evolving personal belief framework and writing project.');
+    expect(heroText).toContain('Helio-pantheism');
+    expect(heroText).toContain('Written by Serhat Soruklu');
+    expect(heroText).toContain('not currently an organised religion or membership body');
+    expect(heroText).toContain(
+      'no claim to supernatural revelation or authority over other people',
     );
   });
 
-  it('states the exact leadership and wider-family identity boundaries', () => {
-    const fixture = TestBed.createComponent(VelariComponent);
-    fixture.detectChanges();
-
-    const text = (fixture.nativeElement as HTMLElement).textContent?.replace(/\s+/g, ' ') ?? '';
-
-    expect(text).toContain(
-      'He serves as its founder, writer and current steward, not as a prophet, deity, divine messenger or infallible authority.',
-    );
-    expect(text).toContain(
-      'Velari is the spiritual and philosophical framework associated with the Soruklu Order. It does not define or represent the beliefs of the wider Soruklu family, and no person is assumed to follow Velari merely through family name or ancestry.',
-    );
-  });
-
-  it('uses the original dimensioned emblem and exact official Instagram semantics', () => {
+  it('renders a compact and factual project summary', () => {
     const fixture = TestBed.createComponent(VelariComponent);
     fixture.detectChanges();
 
     const nativeElement = fixture.nativeElement as HTMLElement;
-    const emblem = nativeElement.querySelector<HTMLImageElement>(
-      'img[src="/assets/brand/velari/velari-faith-emblem.jpg"]',
+    const labels = Array.from(nativeElement.querySelectorAll('.velari-facts dt')).map((element) =>
+      element.textContent?.trim(),
     );
-    const officialLinks = Array.from(
-      nativeElement.querySelectorAll<HTMLAnchorElement>(
-        'a[href="https://www.instagram.com/velarifaith/"]',
+    const values = Array.from(nativeElement.querySelectorAll('.velari-facts dd')).map((element) =>
+      element.textContent?.replace(/\s+/g, ' ').trim(),
+    );
+
+    expect(labels).toEqual(['Project', 'Author', 'Approach', 'Themes', 'Status', 'Instagram']);
+    expect(values).toEqual([
+      'Personal belief framework and writing',
+      'Serhat Soruklu',
+      'Helio-pantheism',
+      'Light, discipline, compassion and responsibility',
+      'Ongoing writing project',
+      '@velarifaith ↗',
+    ]);
+  });
+
+  it('preserves the original symbol sources and exact four-word compass', () => {
+    const fixture = TestBed.createComponent(VelariComponent);
+    fixture.detectChanges();
+
+    const nativeElement = fixture.nativeElement as HTMLElement;
+    const symbols = Array.from(
+      nativeElement.querySelectorAll<HTMLImageElement>(
+        'img[src="/assets/brand/velari/velari-faith-emblem.jpg"]',
       ),
     );
+    const words = Array.from(nativeElement.querySelectorAll('.velari-symbol__word'));
 
-    expect(emblem?.alt).toBe('Velari emblem: a gold flame within an oval geometric seal');
-    expect(emblem?.getAttribute('width')).toBe('1080');
-    expect(emblem?.getAttribute('height')).toBe('1080');
-    expect(emblem?.getAttribute('srcset')).toBe(
-      '/assets/brand/velari/velari-faith-emblem-540.webp 540w, /assets/brand/velari/velari-faith-emblem-1080.webp 1080w',
-    );
-    expect(emblem?.getAttribute('sizes')).toBe('(min-width: 583px) 543px, calc(100vw - 40px)');
-    expect(emblem?.getAttribute('loading')).toBe('eager');
-    expect(emblem?.getAttribute('decoding')).toBe('async');
-    expect(officialLinks.length).toBe(3);
-    expect(officialLinks.every((link) => link.target === '_blank')).toBe(true);
-    expect(officialLinks.every((link) => link.rel === 'me noopener noreferrer')).toBe(true);
+    expect(symbols).toHaveLength(2);
+    expect(symbols[0].alt).toBe('Velari symbol');
+    expect(symbols[1].alt).toBe('');
+    expect(symbols[1].closest('[aria-hidden="true"]')).not.toBeNull();
+    expect(symbols.every((symbol) => symbol.getAttribute('width') === '1080')).toBe(true);
+    expect(symbols.every((symbol) => symbol.getAttribute('height') === '1080')).toBe(true);
     expect(
-      officialLinks.every(
-        (link) =>
-          link.getAttribute('aria-label') === 'Open the official Velari Faith account on Instagram',
+      symbols.every(
+        (symbol) =>
+          symbol.getAttribute('srcset') ===
+          '/assets/brand/velari/velari-faith-emblem-540.webp 540w, /assets/brand/velari/velari-faith-emblem-1080.webp 1080w',
       ),
     ).toBe(true);
-  });
-
-  it('places four accessible philosophical principles around the hero emblem', () => {
-    const fixture = TestBed.createComponent(VelariComponent);
-    fixture.detectChanges();
-
-    const nativeElement = fixture.nativeElement as HTMLElement;
-    const compass = nativeElement.querySelector('.velari-emblem-principles');
-    const principles = Array.from(
-      compass?.querySelectorAll<HTMLElement>('.velari-emblem-principle') ?? [],
-    );
-
-    expect(compass?.getAttribute('aria-label')).toBe('Velari philosophical compass');
-    expect(principles).toHaveLength(4);
-    expect(principles.every((principle) => principle.tagName === 'BUTTON')).toBe(true);
-    expect(principles.map((principle) => principle.textContent?.trim())).toEqual([
+    expect(words.map((word) => word.textContent?.trim())).toEqual([
       'Discipline',
       'Indomitable',
       'Resilience',
       'Equanimity',
     ]);
-    expect(principles.every((principle) => principle.tabIndex === 0)).toBe(true);
-    expect(principles.map((principle) => principle.getAttribute('aria-label'))).toEqual([
-      'Discipline: The practice of choosing what is right, repeatedly, even when it is difficult.',
-      'Indomitable: A spirit that pressure may shape, but cannot conquer.',
-      'Resilience: The strength to repair, return and continue after hardship.',
-      'Equanimity: Calm judgement maintained through gain, loss and uncertainty.',
+    expect(words.map((word) => word.className.split('--').at(-1))).toEqual([
+      'north',
+      'east',
+      'south',
+      'west',
     ]);
-    expect(principles.every((principle) => !principle.hasAttribute('title'))).toBe(true);
+    expect(words.every((word) => word.tagName === 'BUTTON')).toBe(true);
   });
 
-  it('presents the developing texts as original book displays with exact source links', () => {
+  it('uses editorial movements, core principles, and optional reflection prompts', () => {
     const fixture = TestBed.createComponent(VelariComponent);
     fixture.detectChanges();
 
     const nativeElement = fixture.nativeElement as HTMLElement;
-    const section = nativeElement.querySelector<HTMLElement>('.velari-section--texts');
-    const bookEntries = section?.querySelectorAll('.velari-book-entry') ?? [];
-    const sourceLinks = Array.from(
-      section?.querySelectorAll<HTMLAnchorElement>('.velari-book-meta__link') ?? [],
+    const movementNames = Array.from(nativeElement.querySelectorAll('.velari-movements h3')).map(
+      (heading) => heading.textContent?.trim(),
     );
-    const text = nativeElement.textContent?.replace(/\s+/g, ' ') ?? '';
-    const expectedLinks = [
-      'https://www.instagram.com/p/DZ47ZQ6oE2V',
-      'https://www.instagram.com/p/DZ47fd0oBkf/',
-      'https://www.instagram.com/p/DZ47lu4o3AF/',
-    ];
+    const principleNames = Array.from(nativeElement.querySelectorAll('.velari-principles h3')).map(
+      (heading) => heading.textContent?.trim(),
+    );
+    const reflectionNames = Array.from(
+      nativeElement.querySelectorAll('.velari-reflections h3'),
+    ).map((heading) => heading.textContent?.trim());
 
-    expect(bookEntries.length).toBe(3);
-    expect(section?.querySelectorAll('.velari-book').length).toBe(3);
-    expect(section?.querySelectorAll('svg.velari-book-art').length).toBe(3);
-    expect(section?.querySelector('img')).toBeNull();
-    expect(text).toContain('The Book of Light');
-    expect(text).toContain('The Book of Shadow');
-    expect(text).toContain('The Book of the Path');
-    expect(text).toContain('Awakening · Sun · Virtue · Clarity');
-    expect(text).toContain('Darkness · Fear · Ego · Illusion · Suffering');
-    expect(text).toContain('Guidance Through Darkness · Carried by Light');
-    expect(text).toContain(
-      'A reflection on confusion, fear, error and the parts of the self that must be understood rather than denied.',
-    );
-    expect(section?.querySelectorAll('.velari-book-meta__facts').length).toBe(3);
-    expect(section?.querySelectorAll('.velari-book-meta__facts dt').length).toBe(6);
-    expect(text.match(/Developing work/g)).toHaveLength(3);
-    expect(text.match(/Not yet published/g)).toHaveLength(3);
-    expect(text).toContain('not completed or commercially available books');
-    expect(text).toContain(
-      'Fuller readable editions will be published when sufficiently developed.',
-    );
-    expect(sourceLinks.map((link) => link.getAttribute('href'))).toEqual(expectedLinks);
-    expect(sourceLinks.every((link) => link.target === '_blank')).toBe(true);
-    expect(sourceLinks.every((link) => link.rel === 'noopener noreferrer')).toBe(true);
-    expect(sourceLinks.map((link) => link.getAttribute('aria-label'))).toEqual([
-      'View The Book of Light on Instagram',
-      'View The Book of Shadow on Instagram',
-      'View The Book of the Path on Instagram',
+    expect(movementNames).toEqual(['Become', 'Refine', 'Understand']);
+    expect(principleNames).toEqual([
+      'Clarity',
+      'Wisdom',
+      'Humility',
+      'Truth',
+      'Discipline',
+      'Compassion',
+      'Responsibility',
+      'Courage',
+      'Resilience',
+      'Peace',
+      'Freedom',
+      'Coexistence',
     ]);
+    expect(reflectionNames).toEqual([
+      'Set a deliberate direction for the day.',
+      'Return attention to conduct while the day is underway.',
+      'Review experience without performance or self-deception.',
+    ]);
+    expect(nativeElement.textContent).toContain('They are not rituals, obligations');
   });
 
-  it('scrolls to the framework without using a root-resolving fragment link', () => {
+  it('presents the three works as unnumbered developing manuscripts', () => {
     const fixture = TestBed.createComponent(VelariComponent);
     fixture.detectChanges();
 
     const nativeElement = fixture.nativeElement as HTMLElement;
-    const target = nativeElement.querySelector<HTMLElement>('#velari-framework');
-    const action = nativeElement.querySelector<HTMLButtonElement>('button.velari-action--primary');
-    const scrollIntoView = vi.fn();
+    const section = nativeElement.querySelector<HTMLElement>('.velari-manuscripts');
+    const entries = Array.from(section?.querySelectorAll('article') ?? []);
 
-    expect(target).not.toBeNull();
-    expect(action?.textContent).toContain('Explore the Velarian Path');
-    expect(nativeElement.querySelector('a[href="#velari-framework"]')).toBeNull();
-
-    Object.defineProperty(target, 'scrollIntoView', { value: scrollIntoView });
-    action?.click();
-
-    expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
+    expect(entries).toHaveLength(3);
+    expect(entries.map((entry) => entry.querySelector('h3')?.textContent?.trim())).toEqual([
+      'The Book of Light',
+      'The Book of Shadow',
+      'The Book of the Path',
+    ]);
+    expect(entries.every((entry) => entry.textContent?.includes('Developing manuscript'))).toBe(
+      true,
+    );
+    expect(entries.every((entry) => entry.textContent?.includes('Not yet published'))).toBe(true);
+    expect(section?.querySelectorAll('.velari-book')).toHaveLength(0);
+    expect(section?.textContent).not.toMatch(/Book (I|II|III)(?:\s|$)/);
   });
 
-  it('excludes prohibited authority, dominance, and collective-belief claims', () => {
+  it('removes institutional language and every Soruklu Order association', () => {
     const fixture = TestBed.createComponent(VelariComponent);
     fixture.detectChanges();
 
-    const text = ((fixture.nativeElement as HTMLElement).textContent ?? '').toLowerCase();
-    const prohibited = [
-      'last religion',
-      'largest religion',
-      'replace all religions',
-      'final truth',
-      'millions of followers',
-      'everyone will follow',
-      'all soruklu family members follow',
-      'divinely guaranteed',
-      'present leader and custodian',
-      'future generations',
+    const text = (fixture.nativeElement as HTMLElement).textContent?.replace(/\s+/g, ' ') ?? '';
+    const removedPhrases = [
+      'Soruklu Order',
+      'The Spiritual Framework of the Order',
+      'Explore the Soruklu Order',
+      'Founder and current steward',
+      'prophet',
+      'deity',
+      'divine messenger',
+      'infallible authority',
+      'The Velarian Code',
+      'The Velarian Path',
+      'Official emblem',
+      'Official channel',
     ];
 
-    for (const phrase of prohibited) {
-      expect(text).not.toContain(phrase);
+    for (const phrase of removedPhrases) {
+      expect(text.toLowerCase()).not.toContain(phrase.toLowerCase());
     }
+
+    expect(text.match(/May the Light guide us\./g)).toHaveLength(1);
+  });
+
+  it('uses secure, accurately labelled Instagram links', () => {
+    const fixture = TestBed.createComponent(VelariComponent);
+    fixture.detectChanges();
+
+    const nativeElement = fixture.nativeElement as HTMLElement;
+    const profileLinks = Array.from(
+      nativeElement.querySelectorAll<HTMLAnchorElement>(
+        'a[href="https://www.instagram.com/velarifaith/"]',
+      ),
+    );
+    const manuscriptLinks = Array.from(
+      nativeElement.querySelectorAll<HTMLAnchorElement>('.velari-manuscripts a'),
+    );
+
+    expect(profileLinks).toHaveLength(4);
+    expect(profileLinks.every((link) => link.target === '_blank')).toBe(true);
+    expect(profileLinks.every((link) => link.rel === 'me noopener noreferrer')).toBe(true);
+    expect(
+      profileLinks.every((link) => link.getAttribute('aria-label') === 'Open Velari on Instagram'),
+    ).toBe(true);
+    expect(manuscriptLinks).toHaveLength(3);
+    expect(manuscriptLinks.every((link) => link.target === '_blank')).toBe(true);
+    expect(manuscriptLinks.every((link) => link.rel === 'noopener noreferrer')).toBe(true);
   });
 });

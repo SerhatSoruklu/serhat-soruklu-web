@@ -87,19 +87,27 @@ describe('SeoService', () => {
 
       expect(metadata.ogImage.endsWith('.png')).toBe(true);
       expect(
-        globalThis.document.querySelector('meta[property="og:image:type"]')?.getAttribute('content'),
+        globalThis.document
+          .querySelector('meta[property="og:image:type"]')
+          ?.getAttribute('content'),
       ).toBe('image/png');
       expect(
-        globalThis.document.querySelector('meta[property="og:image:width"]')?.getAttribute('content'),
+        globalThis.document
+          .querySelector('meta[property="og:image:width"]')
+          ?.getAttribute('content'),
       ).toBe('1200');
       expect(
-        globalThis.document.querySelector('meta[property="og:image:height"]')?.getAttribute('content'),
+        globalThis.document
+          .querySelector('meta[property="og:image:height"]')
+          ?.getAttribute('content'),
       ).toBe('630');
       expect(
         globalThis.document.querySelector('meta[property="og:image:alt"]')?.getAttribute('content'),
       ).toBe(metadata.ogImageAlt);
       expect(
-        globalThis.document.querySelector('meta[name="twitter:image:alt"]')?.getAttribute('content'),
+        globalThis.document
+          .querySelector('meta[name="twitter:image:alt"]')
+          ?.getAttribute('content'),
       ).toBe(metadata.ogImageAlt);
     }
   });
@@ -243,9 +251,7 @@ describe('SeoService', () => {
       const graph = JSON.parse(
         globalThis.document.getElementById('page-json-ld')?.textContent ?? '{}',
       ) as { '@graph': Array<Record<string, unknown>> };
-      const breadcrumb = graph['@graph'].find(
-        (entity) => entity['@type'] === 'BreadcrumbList',
-      );
+      const breadcrumb = graph['@graph'].find((entity) => entity['@type'] === 'BreadcrumbList');
       const breadcrumbItems = breadcrumb?.['itemListElement'] as Array<Record<string, unknown>>;
 
       expect(breadcrumbItems.map((item) => item['name'])).toEqual([
@@ -278,7 +284,7 @@ describe('SeoService', () => {
     ).toBe('summary_large_image');
   });
 
-  it('applies the Soruklu Order metadata and bounded entity graph', async () => {
+  it('applies restrained Soruklu Order metadata and an AboutPage graph', async () => {
     const router = TestBed.inject(Router);
     const title = TestBed.inject(Title);
 
@@ -290,11 +296,10 @@ describe('SeoService', () => {
     ) as {
       '@graph': Array<Record<string, unknown>>;
     };
-    const organization = graph['@graph'].find((entity) => entity['@type'] === 'Organization');
-    const webpage = graph['@graph'].find((entity) => entity['@type'] === 'WebPage');
+    const webpage = graph['@graph'].find((entity) => entity['@type'] === 'AboutPage');
     const serializedGraph = JSON.stringify(graph);
 
-    expect(title.getTitle()).toBe('The Soruklu Order | Official Family Initiative');
+    expect(title.getTitle()).toBe('The Soruklu Order | Family Stewardship Initiative');
     expect(
       globalThis.document.querySelector('meta[name="description"]')?.getAttribute('content'),
     ).toBe(pageSeoMetadata.sorukluOrder.description);
@@ -312,8 +317,7 @@ describe('SeoService', () => {
     ).toBe('https://serhatsoruklu.com/assets/social/serhat-soruklu-soruklu-order-og.png');
     expect(graph['@graph'].map((entity) => entity['@type'])).toEqual([
       'BreadcrumbList',
-      'WebPage',
-      'Organization',
+      'AboutPage',
       'WebSite',
       'Person',
     ]);
@@ -322,27 +326,20 @@ describe('SeoService', () => {
         '@id': `${canonicalUrl}#webpage`,
         url: canonicalUrl,
         inLanguage: 'en-GB',
-        mainEntity: { '@id': `${canonicalUrl}#order` },
-        about: { '@id': `${canonicalUrl}#order` },
+        about: {
+          '@type': 'Thing',
+          name: 'The Soruklu Order',
+          description: pageSeoMetadata.sorukluOrder.description,
+        },
         author: { '@id': 'https://serhatsoruklu.com/#person' },
       }),
     );
-    expect(organization).toEqual(
-      expect.objectContaining({
-        '@id': `${canonicalUrl}#order`,
-        name: 'The Soruklu Order',
-        alternateName: 'Soruklu Order',
-        foundingDate: '2024',
-        slogan: 'May the Light guide us.',
-        founder: { '@id': 'https://serhatsoruklu.com/#person' },
-        sameAs: ['https://x.com/sorukluorder'],
-        image: 'https://serhatsoruklu.com/assets/brand/soruklu-order/the-soruklu-order-emblem.png',
-      }),
-    );
+    expect(graph['@graph'].some((entity) => entity['@type'] === 'Organization')).toBe(false);
+    expect(serializedGraph).not.toContain('May the Light guide us.');
     expect(serializedGraph).not.toContain('sorukluorder.org');
   });
 
-  it('applies public Velari metadata and its bounded creative-work graph', async () => {
+  it('applies grounded Velari metadata and its authored creative-work graph', async () => {
     const router = TestBed.inject(Router);
     const title = TestBed.inject(Title);
 
@@ -381,6 +378,7 @@ describe('SeoService', () => {
     ).toBe(pageSeoMetadata.velari.ogImageAlt);
     expect(webpage).toEqual(
       expect.objectContaining({
+        '@type': 'AboutPage',
         '@id': `${canonicalUrl}#webpage`,
         mainEntity: { '@id': `${canonicalUrl}#velari` },
         creator: { '@id': 'https://serhatsoruklu.com/#person' },
@@ -391,13 +389,17 @@ describe('SeoService', () => {
       expect.objectContaining({
         '@type': 'CreativeWork',
         name: 'Velari',
-        alternateName: ['Velari Faith', 'The Velarian Path'],
         creator: { '@id': 'https://serhatsoruklu.com/#person' },
         sameAs: ['https://www.instagram.com/velarifaith/'],
-        slogan: 'May the Light guide us.',
+        genre: ['Personal belief framework', 'Philosophical writing'],
       }),
     );
     expect(graph['@graph'].filter((entity) => entity['@type'] === 'CreativeWork')).toHaveLength(4);
+    expect(JSON.stringify(graph)).toContain('Helio-pantheism');
+    expect(JSON.stringify(graph)).not.toContain('The Velarian Path');
+    expect(JSON.stringify(graph)).not.toContain('May the Light guide us.');
+    expect(JSON.stringify(graph)).not.toContain('Soruklu Order');
+    expect(graph['@graph'].some((entity) => entity['@type'] === 'Organization')).toBe(false);
     expect(JSON.stringify(graph)).not.toMatch(/Prophet|Deity|Religious figure|Supernatural/i);
   });
 

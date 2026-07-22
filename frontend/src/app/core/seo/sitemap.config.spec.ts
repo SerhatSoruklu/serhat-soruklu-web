@@ -66,7 +66,7 @@ describe('SITEMAP_ROUTES', () => {
       },
       {
         path: '/velari',
-        lastModified: '2026-07-18',
+        lastModified: '2026-07-22',
         changeFrequency: 'monthly',
         priority: 0.7,
       },
@@ -90,9 +90,7 @@ describe('SITEMAP_ROUTES', () => {
 
   it('matches every indexable SEO route and excludes the not-found route', () => {
     const indexablePaths = Object.values(pageSeoMetadata)
-      .filter(
-        (metadata) => !('robots' in metadata) || metadata.robots !== 'noindex, follow',
-      )
+      .filter((metadata) => !('robots' in metadata) || metadata.robots !== 'noindex, follow')
       .map((metadata) => metadata.path)
       .sort();
     const sitemapPaths = SITEMAP_ROUTES.map((route) => route.path).sort();
@@ -100,8 +98,10 @@ describe('SITEMAP_ROUTES', () => {
     expect(sitemapPaths).toEqual(indexablePaths);
     expect(sitemapPaths).not.toContain(pageSeoMetadata.notFound.path);
     expect(new Set(sitemapPaths).size).toBe(sitemapPaths.length);
-    expect(sitemapPaths.every((path) => new URL(path, 'https://serhatsoruklu.com').protocol === 'https:')).toBe(
-      true,
-    );
+    expect(
+      sitemapPaths.every(
+        (path) => new URL(path, 'https://serhatsoruklu.com').protocol === 'https:',
+      ),
+    ).toBe(true);
   });
 });

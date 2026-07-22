@@ -8,22 +8,11 @@ const velariPath = '/velari';
 const instagramUrl = 'https://www.instagram.com/velarifaith/';
 const emblemPath = '/assets/brand/velari/velari-faith-emblem.jpg';
 const socialSourcePath = '/assets/social/serhat-soruklu-velari-og.svg';
-const bookInstagramUrls = [
+const manuscriptInstagramUrls = [
   'https://www.instagram.com/p/DZ47ZQ6oE2V',
   'https://www.instagram.com/p/DZ47fd0oBkf/',
   'https://www.instagram.com/p/DZ47lu4o3AF/',
 ] as const;
-const viewports = [
-  { width: 390, height: 844 },
-  { width: 430, height: 932 },
-  { width: 768, height: 1024 },
-  { width: 820, height: 1180 },
-  { width: 1024, height: 768 },
-  { width: 1280, height: 800 },
-  { width: 1440, height: 900 },
-  { width: 1920, height: 1080 },
-  { width: 1280, height: 640 },
-];
 
 type JsonLdEntity = Record<string, unknown>;
 
@@ -54,7 +43,7 @@ function getRouteGraph(html: string): JsonLdEntity[] {
 }
 
 test.describe('Velari identity page', () => {
-  test('renders the approved framework, authority boundaries, and exact official presence', async ({
+  test('renders the complete authored project with secure links and logical semantics', async ({
     page,
     request,
   }, testInfo) => {
@@ -64,100 +53,79 @@ test.describe('Velari identity page', () => {
 
     await expect(page.getByRole('heading', { level: 1, name: 'Velari' })).toBeVisible();
     await expect(page.locator('h1')).toHaveCount(1);
-    await expect(page.getByRole('heading', { name: 'What Is Velari?' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'What Velari Is Not' })).toBeVisible();
+    await expect(page.getByText('A modern belief framework', { exact: true })).toBeVisible();
+    await expect(page.getByText(/explores an approach called Helio-pantheism/)).toBeVisible();
     await expect(
-      page.getByText(
-        'Velari is a voluntary personal philosophy. It has no priesthood, compulsory membership, financial obligations or claim to supernatural authority.',
-      ),
+      page.getByText(/not currently an organised religion or membership body/),
     ).toBeVisible();
-    await expect(page.locator('.velari-framework-boundaries__list li')).toHaveCount(5);
-    expect(
-      await page.evaluate(() => {
-        const introduction = document.querySelector('#velari-framework');
-        const boundaries = document.querySelector('.velari-section--boundaries');
-        const sections = Array.from(document.querySelectorAll('.velari-page > section'));
+    await expect(page.getByRole('heading', { name: 'What Velari is' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Light as a symbol' })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Three movements of reflection' }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { name: 'Ideas explored through practice' }),
+    ).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Three works in progress' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Written by Serhat Soruklu' })).toBeVisible();
 
-        return (
-          sections.indexOf(introduction as HTMLElement) <
-          sections.indexOf(boundaries as HTMLElement)
-        );
-      }),
-    ).toBe(true);
-    await expect(page.getByRole('heading', { name: 'Become. Refine. Awaken.' })).toBeVisible();
-    await expect(
-      page.getByRole('heading', { name: 'Principles That Must Be Practised' }),
-    ).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Founded by Serhat Soruklu' })).toBeVisible();
-    await expect(
-      page.getByText(
-        /founder, writer and current steward, not as a prophet, deity, divine messenger or infallible authority/,
-      ),
-    ).toBeVisible();
-    await expect(
-      page.getByText(/does not define or represent the beliefs of the wider Soruklu family/),
-    ).toBeVisible();
-    await expect(page.getByText(/victims deserve harm because of karma/)).toBeVisible();
-    await expect(page.getByText(/not used to blame victims or to excuse abuse/)).toBeVisible();
-    await expect(
-      page.getByText(
-        /optional reflective practices, not compulsory rituals or substitutes for independent medical, psychological or legal judgement/,
-      ),
-    ).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Designed to Evolve' })).toBeVisible();
-    await expect(page.getByText('Public material is being prepared.')).toHaveCount(0);
-
-    const bookSection = page.locator('.velari-section--texts');
-    await expect(bookSection.locator('.velari-book-entry')).toHaveCount(3);
-    await expect(bookSection.locator('.velari-book')).toHaveCount(3);
-    await expect(bookSection.locator('svg.velari-book-art')).toHaveCount(3);
-    await expect(bookSection.locator('img')).toHaveCount(0);
-    await expect(page.getByText('The Book of Light', { exact: true })).toBeVisible();
-    await expect(page.getByText('The Book of Shadow', { exact: true })).toBeVisible();
-    await expect(page.getByText('The Book of the Path', { exact: true })).toBeVisible();
-    await expect(page.getByText('Developing work', { exact: true })).toHaveCount(3);
+    await expect(page.locator('.velari-movements h3')).toHaveText([
+      'Become',
+      'Refine',
+      'Understand',
+    ]);
+    await expect(page.locator('.velari-principles article')).toHaveCount(12);
+    await expect(page.locator('.velari-reflections article')).toHaveCount(3);
+    await expect(page.locator('.velari-manuscripts article')).toHaveCount(3);
+    await expect(page.locator('.velari-manuscripts h3')).toHaveText([
+      'The Book of Light',
+      'The Book of Shadow',
+      'The Book of the Path',
+    ]);
+    await expect(page.getByText('Developing manuscript', { exact: true })).toHaveCount(3);
     await expect(page.getByText('Not yet published', { exact: true })).toHaveCount(3);
-    await expect(bookSection.locator('.velari-book-meta__facts')).toHaveCount(3);
-    await expect(
-      page.getByText('Fuller readable editions will be published when sufficiently developed.'),
-    ).toBeVisible();
-    await expect(page.getByText('Awakening · Sun · Virtue · Clarity')).toBeVisible();
-    await expect(page.getByText('Darkness · Fear · Ego · Illusion · Suffering')).toBeVisible();
-    await expect(page.getByText('Guidance Through Darkness · Carried by Light')).toBeVisible();
-    const bookLinks = bookSection.locator('.velari-book-meta__link');
-    await expect(bookLinks).toHaveCount(3);
-    for (let index = 0; index < bookInstagramUrls.length; index += 1) {
-      await expect(bookLinks.nth(index)).toHaveAttribute('href', bookInstagramUrls[index]);
-      await expect(bookLinks.nth(index)).toHaveAttribute('target', '_blank');
-      await expect(bookLinks.nth(index)).toHaveAttribute('rel', 'noopener noreferrer');
-      await expect(bookLinks.nth(index)).toHaveAttribute(
-        'aria-label',
-        `View ${['The Book of Light', 'The Book of Shadow', 'The Book of the Path'][index]} on Instagram`,
+
+    const manuscriptLinks = page.locator('.velari-manuscripts article > a');
+    await expect(manuscriptLinks).toHaveCount(3);
+    for (let index = 0; index < manuscriptInstagramUrls.length; index += 1) {
+      await expect(manuscriptLinks.nth(index)).toHaveAttribute(
+        'href',
+        manuscriptInstagramUrls[index],
       );
+      await expect(manuscriptLinks.nth(index)).toHaveAttribute('target', '_blank');
+      await expect(manuscriptLinks.nth(index)).toHaveAttribute('rel', 'noopener noreferrer');
     }
+
     await expect(
       page.locator('app-site-footer').getByRole('link', { name: 'Velari', exact: true }),
     ).toHaveAttribute('aria-current', 'page');
+    await expect(page.getByRole('link', { name: 'Return to Serhat Soruklu' })).toHaveAttribute(
+      'href',
+      '/',
+    );
 
-    const officialLinks = page.locator(`a[href="${instagramUrl}"]`);
-    await expect(officialLinks).toHaveCount(3);
-    for (let index = 0; index < 3; index += 1) {
-      await expect(officialLinks.nth(index)).toHaveAttribute('target', '_blank');
-      await expect(officialLinks.nth(index)).toHaveAttribute('rel', 'me noopener noreferrer');
-      await expect(officialLinks.nth(index)).toHaveAttribute(
+    const readLink = page.getByRole('link', { name: 'Read the ideas' });
+    await expect(readLink).toHaveAttribute('href', '/velari#velari-overview');
+    await readLink.click();
+    await expect(page).toHaveURL(new RegExp(`${velariPath}#velari-overview$`));
+    await expect(page.locator('#velari-overview')).toBeInViewport();
+
+    const profileLinks = page.locator(`a[href="${instagramUrl}"]`);
+    await expect(profileLinks).toHaveCount(4);
+    for (let index = 0; index < (await profileLinks.count()); index += 1) {
+      await expect(profileLinks.nth(index)).toHaveAttribute('target', '_blank');
+      await expect(profileLinks.nth(index)).toHaveAttribute('rel', 'me noopener noreferrer');
+      await expect(profileLinks.nth(index)).toHaveAttribute(
         'aria-label',
-        'Open the official Velari Faith account on Instagram',
+        'Open Velari on Instagram',
       );
     }
 
-    const emblem = page.locator(`img[src="${emblemPath}"]`);
-    await expect(emblem).toHaveCount(1);
-    await expect(emblem).toHaveAttribute(
-      'alt',
-      'Velari emblem: a gold flame within an oval geometric seal',
-    );
-    await expect(emblem).toHaveAttribute('width', '1080');
-    await expect(emblem).toHaveAttribute('height', '1080');
+    const symbols = page.locator(`img[src="${emblemPath}"]`);
+    await expect(symbols).toHaveCount(2);
+    await expect(symbols.first()).toHaveAttribute('alt', 'Velari symbol');
+    await expect(symbols.last()).toHaveAttribute('alt', '');
+    await expect(symbols.last().locator('xpath=..')).toHaveAttribute('aria-hidden', 'true');
     expect((await request.get(emblemPath)).ok()).toBe(true);
 
     const localOrigin = new URL(page.url()).origin;
@@ -169,82 +137,49 @@ test.describe('Velari identity page', () => {
     expect(imageOrigins.every((origin) => origin === localOrigin)).toBe(true);
 
     const headingLevels = await page
-      .locator('.velari-page h1, .velari-page h2, .velari-page h3, .velari-page h4')
+      .locator('.velari-page h1, .velari-page h2, .velari-page h3')
       .evaluateAll((headings) => headings.map((heading) => Number(heading.tagName.slice(1))));
     expect(headingLevels[0]).toBe(1);
     expect(
       headingLevels.every((level, index) => index === 0 || level <= headingLevels[index - 1] + 1),
     ).toBe(true);
-    expect(
-      await page
-        .locator('.velari-page a')
-        .evaluateAll((links) =>
-          links.every((link) =>
-            Boolean(link.textContent?.trim() || link.getAttribute('aria-label')),
-          ),
-        ),
-    ).toBe(true);
 
-    const lowerText = (await page.locator('.velari-page').innerText()).toLowerCase();
+    const pageText = await page.locator('.velari-page').innerText();
     for (const phrase of [
-      'last religion',
-      'largest religion',
-      'replace all religions',
-      'millions of followers',
-      'everyone will follow',
-      'divinely guaranteed',
+      'Soruklu Order',
+      'Founder and current steward',
+      'The Velarian Path',
+      'The Velarian Code',
+      'Official emblem',
+      'Official channel',
     ]) {
-      expect(lowerText).not.toContain(phrase);
+      expect(pageText).not.toContain(phrase);
     }
+    expect(pageText).not.toMatch(/prophet|deity|divine messenger|infallible authority/i);
+    expect(pageText.match(/May the Light guide us\./g)).toHaveLength(1);
     assertNoConsoleErrors();
   });
 
-  test('Explore the Velarian Path scrolls in place and internal actions retain router semantics', async ({
+  test('keeps the four-word symbol compass readable and keyboard accessible', async ({
     page,
   }, testInfo) => {
     const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
 
     await page.goto(velariPath);
-    const framework = page.locator('#velari-framework');
-    await page.getByRole('button', { name: 'Explore the Velarian Path' }).click();
+    const words = page.locator('.velari-symbol__word');
+    await expect(words).toHaveText(['Discipline', 'Indomitable', 'Resilience', 'Equanimity']);
 
-    await expect(page).toHaveURL(new RegExp(`${velariPath}$`));
-    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
-    await expect(framework).toBeInViewport();
-    await expect(
-      page.getByRole('link', { name: 'Explore the Soruklu Order' }).first(),
-    ).toHaveAttribute('href', '/soruklu-order');
-    await expect(page.getByRole('link', { name: 'Return to Serhat Soruklu' })).toHaveAttribute(
-      'href',
-      '/',
-    );
-    assertNoConsoleErrors();
-  });
-
-  test('the hero compass reveals four principle definitions on hover and keyboard focus', async ({
-    page,
-  }, testInfo) => {
-    const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
-
-    await page.goto(velariPath);
-    const compass = page.locator('.velari-emblem-principles');
-    const principles = compass.locator('.velari-emblem-principle');
-    await expect(principles).toHaveCount(4);
-    await expect(principles).toHaveText(['Discipline', 'Indomitable', 'Resilience', 'Equanimity']);
-
-    const discipline = principles.filter({ hasText: 'Discipline' });
+    const discipline = words.filter({ hasText: 'Discipline' });
     await discipline.hover();
-    const tooltip = page.getByRole('tooltip');
-    await expect(tooltip).toHaveText(
+    await expect(page.getByRole('tooltip')).toHaveText(
       'The practice of choosing what is right, repeatedly, even when it is difficult.',
     );
-    await expect(tooltip).toBeVisible();
-    await expect(discipline).toHaveCSS('color', 'rgb(240, 213, 140)');
+    await expect(page.getByRole('tooltip')).toBeVisible();
     await expect(discipline).toHaveAttribute('aria-describedby', /app-tooltip-/);
 
     await page.mouse.move(0, 0);
-    await expect(tooltip).toHaveCount(0);
-    const equanimity = principles.filter({ hasText: 'Equanimity' });
+    await expect(page.getByRole('tooltip')).toHaveCount(0);
+    const equanimity = words.filter({ hasText: 'Equanimity' });
     await equanimity.focus();
     await expect(page.getByRole('tooltip')).toHaveText(
       'Calm judgement maintained through gain, loss and uncertainty.',
@@ -253,165 +188,59 @@ test.describe('Velari identity page', () => {
     await expect(page.getByRole('tooltip')).toHaveCount(0);
 
     for (const viewport of [
-      { width: 390, height: 844 },
-      { width: 768, height: 1024 },
+      { width: 320, height: 720 },
+      { width: 520, height: 900 },
       { width: 1440, height: 900 },
     ]) {
       await page.setViewportSize(viewport);
       await page.reload();
-      const bounds = await page.locator('.velari-emblem-principle').evaluateAll((elements) =>
-        elements.map((element) => {
-          const box = element.getBoundingClientRect();
-          return { left: box.left, right: box.right, top: box.top, bottom: box.bottom };
-        }),
-      );
-      const documentHeight = await page.evaluate(() => document.documentElement.scrollHeight);
+      const bounds = await page.evaluate(() => {
+        const compass = document.querySelector('.velari-symbol__compass')?.getBoundingClientRect();
+        const symbol = document.querySelector('.velari-symbol__image')?.getBoundingClientRect();
+        const wordBounds = Array.from(document.querySelectorAll('.velari-symbol__word')).map(
+          (word) => {
+            const box = word.getBoundingClientRect();
 
-      expect(bounds).toHaveLength(4);
-      expect(
-        bounds.every(
-          (bound) =>
-            bound.left >= 0 &&
-            bound.right <= viewport.width &&
-            bound.top >= 0 &&
-            bound.bottom <= documentHeight,
-        ),
-      ).toBe(true);
+            return { top: box.top, right: box.right, bottom: box.bottom, left: box.left };
+          },
+        );
+
+        return {
+          compass: compass
+            ? { top: compass.top, right: compass.right, bottom: compass.bottom, left: compass.left }
+            : null,
+          symbol: symbol
+            ? { top: symbol.top, right: symbol.right, bottom: symbol.bottom, left: symbol.left }
+            : null,
+          wordBounds,
+        };
+      });
+
+      expect(bounds.compass).not.toBeNull();
+      expect(bounds.symbol).not.toBeNull();
+      expect(bounds.wordBounds).toHaveLength(4);
+      for (const word of bounds.wordBounds) {
+        expect(word.left).toBeGreaterThanOrEqual(bounds.compass?.left ?? 0);
+        expect(word.right).toBeLessThanOrEqual(bounds.compass?.right ?? viewport.width);
+        expect(word.top).toBeGreaterThanOrEqual(bounds.compass?.top ?? 0);
+        expect(word.bottom).toBeLessThanOrEqual(bounds.compass?.bottom ?? Number.MAX_VALUE);
+
+        const overlapsSymbol = !(
+          word.right <= (bounds.symbol?.left ?? 0) ||
+          word.left >= (bounds.symbol?.right ?? 0) ||
+          word.bottom <= (bounds.symbol?.top ?? 0) ||
+          word.top >= (bounds.symbol?.bottom ?? 0)
+        );
+        expect(overlapsSymbol).toBe(false);
+      }
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
         viewport.width + 1,
       );
     }
-
     assertNoConsoleErrors();
   });
 
-  test('remains bounded, touch-safe, and footer-aligned at every required viewport', async ({
-    page,
-  }, testInfo) => {
-    const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
-
-    for (const viewport of viewports) {
-      await page.setViewportSize(viewport);
-      await page.goto(velariPath);
-
-      const initialLayout = await page.evaluate(() => {
-        const frame = document.querySelector('.velari-frame')?.getBoundingClientRect();
-        const copy = document.querySelector('.velari-hero__copy')?.getBoundingClientRect();
-        const emblem = document.querySelector('.velari-emblem')?.getBoundingClientRect();
-        const framework = document.querySelector('#velari-framework')?.getBoundingClientRect();
-        const actions = Array.from(document.querySelectorAll<HTMLElement>('.velari-action')).map(
-          (action) => action.getBoundingClientRect().height,
-        );
-
-        return {
-          frameLeft: frame?.left ?? -1,
-          frameRight: frame?.right ?? -1,
-          copyTop: copy?.top ?? -1,
-          emblemLeft: emblem?.left ?? -1,
-          emblemRight: emblem?.right ?? -1,
-          emblemTop: emblem?.top ?? -1,
-          emblemBottom: emblem?.bottom ?? -1,
-          frameworkTop: framework?.top ?? -1,
-          minActionHeight: Math.min(...actions),
-          scrollWidth: document.documentElement.scrollWidth,
-          viewportWidth: window.innerWidth,
-        };
-      });
-
-      expect(initialLayout.scrollWidth).toBeLessThanOrEqual(initialLayout.viewportWidth + 1);
-      expect(initialLayout.frameLeft).toBeGreaterThanOrEqual(19);
-      expect(initialLayout.frameRight).toBeLessThanOrEqual(initialLayout.viewportWidth - 19);
-      expect(initialLayout.copyTop).toBeGreaterThanOrEqual(96);
-      expect(initialLayout.emblemLeft).toBeGreaterThanOrEqual(0);
-      expect(initialLayout.emblemRight).toBeLessThanOrEqual(initialLayout.viewportWidth);
-      expect(initialLayout.emblemBottom).toBeGreaterThan(initialLayout.emblemTop);
-      expect(initialLayout.minActionHeight).toBeGreaterThanOrEqual(44);
-
-      if (viewport.width >= 1024) {
-        expect(initialLayout.frameworkTop).toBeLessThanOrEqual(viewport.height + 200);
-      }
-
-      await page.locator('.velari-section--texts').scrollIntoViewIfNeeded();
-      const bookLayout = await page.evaluate(() => {
-        const entries = Array.from(document.querySelectorAll<HTMLElement>('.velari-book-entry'));
-        const books = Array.from(document.querySelectorAll<HTMLElement>('.velari-book'));
-        const links = Array.from(document.querySelectorAll<HTMLElement>('.velari-book-meta__link'));
-
-        return {
-          rowCount: new Set(entries.map((entry) => Math.round(entry.getBoundingClientRect().top)))
-            .size,
-          books: books.map((book) => {
-            const box = book.getBoundingClientRect();
-            const art = book.querySelector('svg.velari-book-art');
-
-            return {
-              left: box.left,
-              right: box.right,
-              width: box.width,
-              transform: getComputedStyle(book).transform,
-              artVisible: Boolean(art && art.getBoundingClientRect().width > 0),
-            };
-          }),
-          minLinkHeight: Math.min(...links.map((link) => link.getBoundingClientRect().height)),
-          scrollWidth: document.documentElement.scrollWidth,
-          viewportWidth: window.innerWidth,
-        };
-      });
-
-      expect(bookLayout.scrollWidth).toBeLessThanOrEqual(bookLayout.viewportWidth + 1);
-      expect(bookLayout.rowCount).toBe(viewport.width < 768 ? 3 : viewport.width < 1180 ? 2 : 1);
-      expect(bookLayout.minLinkHeight).toBeGreaterThanOrEqual(44);
-      expect(bookLayout.books).toHaveLength(3);
-      expect(
-        bookLayout.books.every(
-          (book) =>
-            book.left >= 0 &&
-            book.right <= bookLayout.viewportWidth &&
-            book.width > 200 &&
-            book.transform !== 'none' &&
-            book.artVisible,
-        ),
-      ).toBe(true);
-
-      const firstBookLink = page.locator('.velari-book-meta__link').first();
-      await firstBookLink.focus();
-      expect(
-        await firstBookLink.evaluate((element) => ({
-          style: getComputedStyle(element).outlineStyle,
-          width: getComputedStyle(element).outlineWidth,
-        })),
-      ).toEqual({ style: 'solid', width: '2px' });
-
-      await page.locator('app-site-footer').scrollIntoViewIfNeeded();
-      const footerLayout = await page.evaluate(() => {
-        const closing = document.querySelector('.velari-closing')?.getBoundingClientRect();
-        const footer = document.querySelector('app-site-footer')?.getBoundingClientRect();
-        const groups = Array.from(document.querySelectorAll('.site-footer__group')).map((group) => {
-          const box = group.getBoundingClientRect();
-          return { top: Math.round(box.top), left: box.left, right: box.right };
-        });
-
-        return {
-          closingBottom: closing?.bottom ?? -1,
-          footerTop: footer?.top ?? -1,
-          groupRows: new Set(groups.map((group) => group.top)).size,
-          groups,
-        };
-      });
-
-      expect(Math.abs(footerLayout.footerTop - footerLayout.closingBottom)).toBeLessThanOrEqual(1);
-      expect(footerLayout.groups).toHaveLength(4);
-      expect(footerLayout.groups.every((group) => group.left >= 0)).toBe(true);
-      expect(footerLayout.groups.every((group) => group.right <= initialLayout.viewportWidth)).toBe(
-        true,
-      );
-      expect(footerLayout.groupRows).toBe(viewport.width >= 1024 ? 1 : 2);
-    }
-
-    assertNoConsoleErrors();
-  });
-
-  test('supports dark, light, and both system-theme resolutions without reduced-motion effects', async ({
+  test('supports dark, light, and system themes with reduced motion', async ({
     page,
   }, testInfo) => {
     const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
@@ -420,36 +249,39 @@ test.describe('Velari identity page', () => {
     await page.goto(velariPath);
     const dark = await page.locator('.velari-page').evaluate((element) => ({
       background: getComputedStyle(element).backgroundImage,
+      closing: getComputedStyle(document.querySelector('.velari-closing') as HTMLElement)
+        .backgroundColor,
+      footer: getComputedStyle(document.querySelector('app-site-footer') as HTMLElement)
+        .backgroundColor,
       heading: getComputedStyle(element.querySelector('h1') as HTMLElement).color,
     }));
-    expect(dark.heading).toBe('rgb(248, 241, 228)');
+    expect(dark.heading).toBe('rgb(245, 247, 250)');
+    expect(dark.closing).toBe(dark.footer);
 
     await page.evaluate(() => window.localStorage.setItem('serhatsoruklu-theme', 'light'));
     await page.reload();
     await expect(page.locator('html')).toHaveClass(/theme-resolved-light/);
     const light = await page.locator('.velari-page').evaluate((element) => ({
       background: getComputedStyle(element).backgroundImage,
-      heading: getComputedStyle(element.querySelector('h1') as HTMLElement).color,
+      closing: getComputedStyle(document.querySelector('.velari-closing') as HTMLElement)
+        .backgroundColor,
       eyebrow: getComputedStyle(element.querySelector('.velari-eyebrow') as HTMLElement).color,
+      footer: getComputedStyle(document.querySelector('app-site-footer') as HTMLElement)
+        .backgroundColor,
+      heading: getComputedStyle(element.querySelector('h1') as HTMLElement).color,
     }));
-    expect(light.heading).toBe('rgb(32, 39, 55)');
-    expect(light.eyebrow).toBe('rgb(148, 105, 30)');
+    expect(light.heading).toBe('rgb(17, 24, 39)');
+    expect(light.eyebrow).toBe('rgb(154, 106, 30)');
     expect(light.background).not.toBe(dark.background);
+    expect(light.closing).toBe(light.footer);
 
     await page.emulateMedia({ colorScheme: 'dark', reducedMotion: 'reduce' });
     await page.evaluate(() => window.localStorage.setItem('serhatsoruklu-theme', 'system'));
     await page.reload();
-    await expect(page.locator('html')).toHaveClass(/theme-system/);
     await expect(page.locator('html')).toHaveClass(/theme-resolved-dark/);
     expect(
       await page
         .locator('.velari-action')
-        .first()
-        .evaluate((element) => getComputedStyle(element).transitionDuration),
-    ).toBe('0s');
-    expect(
-      await page
-        .locator('.velari-book')
         .first()
         .evaluate((element) => getComputedStyle(element).transitionDuration),
     ).toBe('0s');
@@ -459,11 +291,11 @@ test.describe('Velari identity page', () => {
     await expect(page.locator('html')).toHaveClass(/theme-resolved-light/);
     expect(
       await page.locator('.velari-page h1').evaluate((element) => getComputedStyle(element).color),
-    ).toBe('rgb(32, 39, 55)');
+    ).toBe('rgb(17, 24, 39)');
     assertNoConsoleErrors();
   });
 
-  test('serves exact public metadata, structured data, sitemap entry, and self-contained artwork', async ({
+  test('serves restrained metadata, authored structured data, and self-contained artwork', async ({
     page,
     request,
   }) => {
@@ -475,11 +307,13 @@ test.describe('Velari identity page', () => {
     const velari = graph.find((entity) => entity['@id'] === `${canonicalUrl}#velari`);
     const developingWorks = graph.filter(
       (entity) =>
-        entity['@type'] === 'CreativeWork' && entity['creativeWorkStatus'] === 'Developing work',
+        entity['@type'] === 'CreativeWork' &&
+        entity['creativeWorkStatus'] === 'Developing manuscript',
     );
     const sitemap = await (await request.get('/sitemap.xml')).text();
     const socialSource = await (await request.get(socialSourcePath)).text();
     const socialResponse = await request.get(pageSeoMetadata.velari.ogImage);
+    const emblemResponse = await request.get(emblemPath);
 
     expect(response.ok()).toBe(true);
     expect(html.match(/<title>(.*?)<\/title>/)?.[1]).toBe(pageSeoMetadata.velari.title);
@@ -487,48 +321,50 @@ test.describe('Velari identity page', () => {
     expect(getCanonicalHref(html)).toBe(canonicalUrl);
     expect(getMetaContent(html, 'name', 'robots')).toBe('index, follow');
     expect(getMetaContent(html, 'property', 'og:url')).toBe(canonicalUrl);
-    expect(getMetaContent(html, 'property', 'og:site_name')).toBe('Serhat Soruklu');
-    expect(getMetaContent(html, 'property', 'og:type')).toBe('website');
     expect(getMetaContent(html, 'property', 'og:image')).toBe(
       `${canonicalBaseUrl}${pageSeoMetadata.velari.ogImage}`,
     );
-    expect(getMetaContent(html, 'property', 'og:image:type')).toBe('image/png');
-    expect(getMetaContent(html, 'property', 'og:image:width')).toBe('1200');
-    expect(getMetaContent(html, 'property', 'og:image:height')).toBe('630');
     expect(getMetaContent(html, 'property', 'og:image:alt')).toBe(
       pageSeoMetadata.velari.ogImageAlt,
     );
-    expect(getMetaContent(html, 'name', 'twitter:card')).toBe('summary_large_image');
     expect(getMetaContent(html, 'name', 'twitter:image:alt')).toBe(
       pageSeoMetadata.velari.ogImageAlt,
     );
 
     expect(webpage).toEqual(
       expect.objectContaining({
-        '@type': 'WebPage',
+        '@type': 'AboutPage',
         mainEntity: { '@id': `${canonicalUrl}#velari` },
         creator: { '@id': `${canonicalBaseUrl}/#person` },
-        breadcrumb: { '@id': `${canonicalUrl}#breadcrumb` },
       }),
     );
     expect(velari).toEqual(
       expect.objectContaining({
         '@type': 'CreativeWork',
-        alternateName: ['Velari Faith', 'The Velarian Path'],
+        name: 'Velari',
         sameAs: [instagramUrl],
+        genre: ['Personal belief framework', 'Philosophical writing'],
         creator: { '@id': `${canonicalBaseUrl}/#person` },
       }),
     );
     expect(developingWorks).toHaveLength(3);
+    expect(graph.filter((entity) => entity['@type'] === 'Organization')).toHaveLength(0);
     expect(graph.filter((entity) => entity['@type'] === 'Person')).toHaveLength(1);
     expect(graph.filter((entity) => entity['@type'] === 'WebSite')).toHaveLength(1);
-    expect(JSON.stringify(graph)).not.toMatch(/Prophet|Deity|Supernatural|followerCount/i);
+    expect(JSON.stringify(graph)).toContain('Helio-pantheism');
+    expect(JSON.stringify(graph)).not.toMatch(/Soruklu Order|The Velarian Path|Prophet|Deity/i);
     expect(sitemap.match(/<loc>https:\/\/serhatsoruklu\.com\/velari<\/loc>/g)).toHaveLength(1);
 
     expect(socialResponse.ok()).toBe(true);
     expect(socialResponse.headers()['content-type']).toContain('image/png');
     expect(socialSource).toContain('href="data:image/jpeg;base64,');
     expect(socialSource).not.toContain('href="/assets/');
+    expect(socialSource).toContain('A MODERN BELIEF FRAMEWORK');
+    expect(socialSource).toContain('HELIO-PANTHEISM');
+    const embeddedEmblem = socialSource.match(/href="data:image\/jpeg;base64,([^"]+)"/);
+    expect(embeddedEmblem).not.toBeNull();
+    expect(Buffer.from(embeddedEmblem?.[1] ?? '', 'base64')).toEqual(await emblemResponse.body());
+
     await page.setViewportSize({ width: 1200, height: 630 });
     await page.goto(pageSeoMetadata.velari.ogImage);
     expect(

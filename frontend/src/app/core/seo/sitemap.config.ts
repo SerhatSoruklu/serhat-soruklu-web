@@ -72,7 +72,7 @@ export const SITEMAP_ROUTES = [
   },
   {
     path: '/velari',
-    lastModified: '2026-07-18',
+    lastModified: '2026-07-22',
     changeFrequency: 'monthly',
     priority: 0.7,
   },

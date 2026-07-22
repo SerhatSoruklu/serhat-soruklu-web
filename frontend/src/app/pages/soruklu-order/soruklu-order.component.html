@@ -2,67 +2,28 @@
   <section class="order-hero layout-section" aria-labelledby="order-title">
     <div class="order-frame order-hero__inner">
       <div class="order-hero__copy">
-        <p class="order-eyebrow">Established 2024</p>
+        <p class="order-eyebrow">Family stewardship · Established 2025</p>
         <h1 id="order-title">The Soruklu Order</h1>
-        <p class="order-hero__lead">
-          A small, voluntary family initiative founded by Serhat Soruklu, built around discipline,
-          continuity, responsibility and mutual support.
+        <p class="order-hero__lead">A small, voluntary family stewardship initiative.</p>
+        <p class="order-hero__summary">
+          Established in 2025, the Soruklu Order preserves authorised family records, supports
+          practical cooperation, and encourages responsible conduct across generations.
         </p>
-        <p class="order-hero__statement">Family is inherited. Membership is chosen.</p>
-
-        <dl class="order-facts" aria-label="Soruklu Order identity facts">
-          <div>
-            <dt>Founder and Steward</dt>
-            <dd>Serhat Soruklu</dd>
-          </div>
-          <div>
-            <dt>Membership</dt>
-            <dd>Small voluntary membership</dd>
-          </div>
-          <div>
-            <dt>Established</dt>
-            <dd>2024</dd>
-          </div>
-          <div>
-            <dt>Motto</dt>
-            <dd>May the Light guide us.</dd>
-          </div>
-        </dl>
-
-        <div class="order-hero__actions" aria-label="Soruklu Order page actions">
-          <button
-            class="order-action order-action--primary"
-            type="button"
-            (click)="scrollToOrder()"
-          >
-            <span>Explore the Order</span>
-            <span aria-hidden="true">↓</span>
-          </button>
-          <a
-            class="order-action order-action--secondary"
-            [href]="officialXUrl"
-            target="_blank"
-            rel="me noopener noreferrer"
-            aria-label="Open the official Soruklu Order account on X"
-          >
-            <svg class="order-x-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-              <path [attr.d]="xIconPath"></path>
-            </svg>
-            <span>Official X Account</span>
-            <span class="order-action__arrow" aria-hidden="true">↗</span>
-          </a>
-        </div>
+        <p class="order-hero__boundary">
+          Participation is voluntary and based on informed consent. The initiative does not
+          represent the entire Soruklu family and holds no authority over any person.
+        </p>
+        <p class="order-motto">
+          Discipline <span aria-hidden="true">·</span> Responsibility
+          <span aria-hidden="true">·</span> Continuity
+        </p>
       </div>
 
-      <figure class="order-emblem-frame">
-        <div class="order-emblem-frame__label">
-          <span>Official emblem</span>
-          <span>MMXXIV</span>
-        </div>
-        <div class="order-emblem-frame__image">
+      <figure class="order-hero-mark">
+        <div class="order-hero-mark__image">
           <img
             [src]="emblemPath"
-            alt="Soruklu Order emblem: an interwoven gold family sigil within a circular seal"
+            alt="Soruklu Order interwoven family emblem"
             width="400"
             height="400"
             loading="eager"
@@ -70,325 +31,275 @@
             fetchpriority="high"
           />
         </div>
-        <figcaption>Discipline · Continuity · Responsibility</figcaption>
+        <figcaption>
+          <span>Family mark</span>
+          <span>Used on authorised initiative materials</span>
+        </figcaption>
       </figure>
     </div>
   </section>
 
-  <section
-    class="order-section order-section--official-note layout-section"
-    aria-labelledby="order-official-note-title"
-  >
+  <section class="order-glance layout-section" aria-labelledby="order-glance-title">
     <div class="order-frame">
-      <article class="order-official-note">
-        <p class="order-section-index">Public identity</p>
-        <h2 id="order-official-note-title">Official Website Clarification</h2>
-        <p>
-          This is the official public page of the Soruklu Order. The domain
-          <span class="order-domain">sorukluorder.org</span> is unauthorised, unaffiliated, and is
-          not operated or endorsed by Serhat Soruklu, the Order, or the wider Soruklu family.
-        </p>
-      </article>
+      <header class="order-section-heading order-section-heading--compact">
+        <p class="order-kicker">At a glance</p>
+        <h2 id="order-glance-title">A limited and practical purpose.</h2>
+      </header>
+
+      <dl class="order-facts">
+        @for (fact of facts; track fact.label) {
+          <div>
+            <dt>{{ fact.label }}</dt>
+            <dd>{{ fact.value }}</dd>
+          </div>
+        }
+        <div>
+          <dt>Public channel</dt>
+          <dd>
+            <a
+              [href]="officialXUrl"
+              target="_blank"
+              rel="me noopener noreferrer"
+              aria-label="Open the official Soruklu Order account on X"
+            >
+              &#64;SorukluOrder on X
+              <span aria-hidden="true">↗</span>
+            </a>
+          </dd>
+        </div>
+      </dl>
     </div>
   </section>
 
-  <section
-    id="the-order"
-    class="order-section layout-section"
-    aria-labelledby="order-definition-title"
-  >
-    <div class="order-frame order-definition">
+  <section class="order-section layout-section" aria-labelledby="order-definition-title">
+    <div class="order-frame order-editorial-split">
       <header class="order-section-heading">
-        <div class="order-heading-lockup">
-          <app-path-icon
-            class="order-section-icon"
-            name="order-family"
-            [path]="iconPaths['order-family']"
-            aria-hidden="true"
-          ></app-path-icon>
-          <div>
-            <p class="order-section-index">I · The Order</p>
-            <h2 id="order-definition-title">A Small, Voluntary Family Initiative</h2>
-          </div>
-        </div>
+        <p class="order-kicker">What it is</p>
+        <h2 id="order-definition-title">A small family initiative, clearly bounded.</h2>
       </header>
 
-      <div class="order-definition__body">
-        <p class="order-definition__lead">
-          The Soruklu Order is a small, voluntary family initiative established in 2024 by Serhat
-          Soruklu. It brings together a limited number of consenting members around shared
-          principles, voluntary responsibilities and long-term family continuity.
+      <div class="order-prose order-prose--lead">
+        <p>
+          The Soruklu Order is the name of a small family project established by Serhat Soruklu in
+          2025. It provides a voluntary framework for preserving authorised family context,
+          documenting agreed principles, coordinating practical support, and carrying useful
+          knowledge forward.
         </p>
-        <div class="order-definition__details">
-          <p>
-            Membership is selective and voluntary. No person is included merely because of their
-            surname or ancestry. The initiative supports continuity, responsibility, cooperation and
-            careful preservation of authorised records.
-          </p>
-          <p>
-            Internal responsibilities apply only within the initiative. Its titles do not grant
-            public office, legal authority or control over any person outside it.
-          </p>
-          <p>
-            The Order is not a government, police force, court, legal authority, military
-            organisation or public institution. It has no authority over people merely sharing the
-            Soruklu surname.
-          </p>
-        </div>
+        <p>
+          It is not a lodge, religion, fraternity, political movement, public institution, or source
+          of authority. It has no degrees, ceremonial ranks, professional powers, or jurisdiction
+          over the wider Soruklu family.
+        </p>
+        <p>
+          Participation creates no authority over non-participants and no obligation beyond what
+          each person freely agrees.
+        </p>
       </div>
     </div>
   </section>
 
   <section
-    class="order-section order-section--boundary layout-section"
-    aria-labelledby="order-family-boundary-title"
+    class="order-section order-section--surface layout-section"
+    aria-labelledby="order-work-title"
   >
     <div class="order-frame">
-      <article class="order-boundary">
-        <div class="order-boundary__marker" aria-hidden="true">II</div>
+      <header class="order-section-heading order-section-heading--wide">
         <div>
-          <p class="order-section-index">Identity boundary</p>
-          <h2 id="order-family-boundary-title">The Order Is Not the Entire Family</h2>
-          <p>
-            The wider Soruklu family consists of many independent households and individuals. The
-            Soruklu Order is a separate voluntary initiative and does not represent every person
-            with the Soruklu surname. Sharing the surname does not imply membership, endorsement,
-            consent or involvement. Participation is based on informed and voluntary consent.
-          </p>
-          <p class="order-boundary__note">
-            The wider family is not centrally controlled and is not collectively represented by this
-            initiative.
-          </p>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="order-section layout-section" aria-labelledby="order-purpose-title">
-    <div class="order-frame">
-      <header class="order-section-heading order-section-heading--split">
-        <div class="order-heading-lockup">
-          <app-path-icon
-            class="order-section-icon"
-            name="order-purpose"
-            [path]="iconPaths['order-purpose']"
-            aria-hidden="true"
-          ></app-path-icon>
-          <div>
-            <p class="order-section-index">III · Purpose</p>
-            <h2 id="order-purpose-title">Why the Order Exists</h2>
-          </div>
+          <p class="order-kicker">What we actually do</p>
+          <h2 id="order-work-title">Practical stewardship, not ceremony.</h2>
         </div>
         <p>
-          Its purpose is practical and bounded: preserve context, define responsibility, and support
-          continuity.
+          The work is limited to useful family records, voluntary cooperation, and clear conduct.
         </p>
       </header>
 
-      <ol class="order-purpose-grid">
-        @for (purpose of purposes; track purpose.index) {
+      <ul class="order-activity-list">
+        @for (activity of activities; track activity) {
           <li>
-            <article>
-              <span class="order-purpose__index" aria-hidden="true">{{ purpose.index }}</span>
-              <h3>{{ purpose.title }}</h3>
-              <p>{{ purpose.description }}</p>
-            </article>
+            <span class="order-check" aria-hidden="true">✓</span>
+            <span>{{ activity }}</span>
           </li>
         }
-      </ol>
+      </ul>
+    </div>
+  </section>
+
+  <section class="order-section layout-section" aria-labelledby="order-principles-title">
+    <div class="order-frame">
+      <header class="order-section-heading order-section-heading--wide">
+        <div>
+          <p class="order-kicker">Principles</p>
+          <h2 id="order-principles-title">Standards for everyday conduct.</h2>
+        </div>
+        <p>These principles matter only when participants apply them in ordinary decisions.</p>
+      </header>
+
+      <ul class="order-principles">
+        @for (principle of principles; track principle.title) {
+          <li>
+            <h3>{{ principle.title }}</h3>
+            <p>{{ principle.description }}</p>
+          </li>
+        }
+      </ul>
     </div>
   </section>
 
   <section
-    class="order-section order-section--charter layout-section"
-    aria-labelledby="order-principles-title"
+    class="order-section order-section--surface layout-section"
+    aria-labelledby="order-participation-title"
   >
-    <div class="order-frame">
-      <header class="order-section-heading order-section-heading--split">
-        <div>
-          <p class="order-section-index">IV · Charter</p>
-          <h2 id="order-principles-title">Principles Before Status</h2>
-        </div>
-        <p>
-          Standards matter only when they shape conduct. These articles apply before title,
-          appearance, or seniority.
-        </p>
+    <div class="order-frame order-editorial-split">
+      <header class="order-section-heading">
+        <p class="order-kicker">Participation and boundaries</p>
+        <h2 id="order-participation-title">Consent comes before participation.</h2>
       </header>
 
-      <ol class="order-principles">
-        @for (principle of principles; track principle.title; let index = $index) {
-          <li>
-            <article>
-              <span aria-hidden="true">{{ (index + 1).toString().padStart(2, '0') }}</span>
-              <h3>{{ principle.title }}</h3>
-              <p>{{ principle.description }}</p>
-            </article>
-          </li>
-        }
-      </ol>
+      <div class="order-prose">
+        <p>
+          Participation is by invitation and informed consent. Sharing the Soruklu surname does not
+          create membership, endorsement, involvement, or obligation.
+        </p>
+        <p>
+          The wider Soruklu family consists of independent people and households. The Soruklu Order
+          does not speak for, control, or collectively represent everyone who shares the surname.
+        </p>
+        <p>
+          Participants may leave the initiative. Responsibilities may be changed or discontinued by
+          agreement.
+        </p>
+      </div>
     </div>
   </section>
 
-  <section class="order-section layout-section" aria-labelledby="order-roles-title">
-    <div class="order-frame order-roles">
-      <header class="order-section-heading">
-        <p class="order-section-index">V · Internal structure</p>
-        <h2 id="order-roles-title">Roles, Not Ranks</h2>
-        <p>
-          These are practical internal responsibilities held by consenting members. They are not
-          hereditary offices, professional licences or positions of authority over other people.
-        </p>
+  <section class="order-section layout-section" aria-labelledby="order-responsibilities-title">
+    <div class="order-frame">
+      <header class="order-section-heading order-section-heading--wide">
+        <div>
+          <p class="order-kicker">Practical responsibilities</p>
+          <h2 id="order-responsibilities-title">A small set of administrative tasks.</h2>
+        </div>
+        <p>Responsibilities exist to keep records, consent, and public boundaries clear.</p>
       </header>
 
-      <div class="order-role-grid">
-        @for (role of roles; track role.title) {
+      <div class="order-responsibilities">
+        @for (responsibility of responsibilities; track responsibility.title) {
           <article>
-            <h3>{{ role.title }}</h3>
-            <p>{{ role.description }}</p>
-            @if (role.clarification) {
-              <p class="order-role__note">{{ role.clarification }}</p>
-            }
+            <h3>{{ responsibility.title }}</h3>
+            <p>{{ responsibility.description }}</p>
           </article>
         }
       </div>
 
-      <p class="order-roles__clarification">
-        These titles apply only within the voluntary initiative. They do not confer public
-        authority, legal control, professional status or power over the wider Soruklu family.
+      <p class="order-clarification">
+        These are informal administrative responsibilities, not ranks, honours, professional
+        licences, or positions of authority. They apply only within the voluntary initiative.
       </p>
     </div>
   </section>
 
   <section
-    class="order-section order-section--safeguarding layout-section"
+    class="order-section order-section--surface layout-section"
     aria-labelledby="order-safeguarding-title"
   >
-    <div class="order-frame order-safeguarding">
-      <div class="order-heading-lockup">
-        <app-path-icon
-          class="order-section-icon"
-          name="order-safeguarding"
-          [path]="iconPaths['order-safeguarding']"
-          aria-hidden="true"
-        ></app-path-icon>
-        <div>
-          <p class="order-section-index">VI · Lawful conduct</p>
-          <h2 id="order-safeguarding-title">Safeguarding, Evidence and Due Process</h2>
-        </div>
-      </div>
-      <div class="order-safeguarding__copy">
+    <div class="order-frame order-editorial-split">
+      <header class="order-section-heading">
+        <p class="order-kicker">Safeguarding and lawful boundaries</p>
+        <h2 id="order-safeguarding-title">Independent services remain independent.</h2>
+      </header>
+
+      <div class="order-prose">
         <p>
-          The Soruklu Order supports the lawful reporting of sexual abuse, violence, exploitation
-          and other serious wrongdoing, and proper investigation by independent authorities. It
-          supports safeguarding vulnerable people, preserving credible evidence, due process, the
-          presumption of innocence and meaningful support for victims and survivors.
+          Participants are expected to act lawfully, respect individual autonomy, and use
+          appropriate safeguarding procedures.
         </p>
         <p>
-          These principles apply universally and support individual accountability. They must not be
-          misused to silence victims, excuse harmful conduct or make unsupported collective
-          allegations against an entire family, surname or group of unrelated households.
+          Criminal allegations, medical concerns, legal disputes, and safeguarding matters belong
+          with the relevant independent authorities and qualified professionals.
         </p>
         <p>
-          Reports and investigations belong with independent police, courts, social services,
-          safeguarding authorities, medical services and qualified legal professionals as
-          appropriate. The Order does not replace them or investigate offences itself.
+          The initiative does not investigate offences, determine guilt, adjudicate disputes,
+          provide legal or medical services, or replace police, courts, social services,
+          safeguarding bodies, or healthcare providers.
         </p>
       </div>
     </div>
   </section>
 
-  <section class="order-section layout-section" aria-labelledby="order-communications-title">
-    <div class="order-frame order-communications">
-      <div class="order-communications__identity">
-        <svg
-          class="order-communications__icon"
-          viewBox="0 0 24 24"
-          focusable="false"
-          aria-hidden="true"
-        >
-          <path [attr.d]="xIconPath"></path>
-        </svg>
-        <div>
-          <p class="order-section-index">VII · Official communications</p>
-          <h2 id="order-communications-title">One Official Channel</h2>
-        </div>
+  <section class="order-section layout-section" aria-labelledby="order-mark-title">
+    <div class="order-frame order-mark-section">
+      <div class="order-mark-section__image" aria-hidden="true">
+        <img [src]="emblemPath" alt="" width="400" height="400" loading="lazy" decoding="async" />
       </div>
-      <p>
-        Official public communications from the Soruklu Order are published through
-        <strong>&#64;SorukluOrder</strong> on X. No other social-media account is currently
-        authorised to represent the Order.
-      </p>
-      <a
-        class="order-action order-action--primary"
-        [href]="officialXUrl"
-        target="_blank"
-        rel="me noopener noreferrer"
-        aria-label="Open the official Soruklu Order account on X"
-      >
-        <span>Open &#64;SorukluOrder on X</span>
-        <span class="order-action__arrow" aria-hidden="true">↗</span>
-      </a>
+      <div class="order-mark-section__copy">
+        <p class="order-kicker">Family mark</p>
+        <h2 id="order-mark-title">The family mark.</h2>
+        <p>
+          The emblem is the identifying mark used for authorised Soruklu Order materials. It does
+          not represent public office, legal authority, hereditary status, or authority over the
+          wider family.
+        </p>
+      </div>
     </div>
   </section>
 
   <section
-    class="order-section order-section--clarification layout-section"
-    aria-labelledby="order-clarification-title"
+    class="order-section order-section--public layout-section"
+    aria-label="Public information"
   >
-    <div class="order-frame">
-      <article class="order-clarification">
-        <div class="order-heading-lockup">
-          <app-path-icon
-            class="order-section-icon"
-            name="order-identity"
-            [path]="iconPaths['order-identity']"
-            aria-hidden="true"
-          ></app-path-icon>
-          <div>
-            <p class="order-section-index">VIII · Public identity boundary</p>
-            <h2 id="order-clarification-title">Official Identity Clarification</h2>
-          </div>
-        </div>
+    <div class="order-frame order-public-grid">
+      <article aria-labelledby="order-updates-title">
+        <p class="order-kicker">Official updates</p>
+        <h2 id="order-updates-title">One public channel.</h2>
         <p>
-          This page at <span class="order-site-url">serhatsoruklu.com/soruklu-order</span> is the
-          official public website of the Soruklu Order described here.
+          Official public updates from the initiative are published through
+          <strong>&#64;SorukluOrder</strong> on X.
         </p>
+        <a
+          class="order-action order-action--primary"
+          [href]="officialXUrl"
+          target="_blank"
+          rel="me noopener noreferrer"
+          aria-label="Open the official Soruklu Order account on X"
+        >
+          <svg class="order-x-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+            <path [attr.d]="xIconPath"></path>
+          </svg>
+          <span>Open &#64;SorukluOrder on X</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </article>
+
+      <article class="order-identity-notice" aria-labelledby="order-identity-title">
+        <p class="order-kicker">Identity notice</p>
+        <h2 id="order-identity-title">Authorised public identity.</h2>
+        <p>This page and &#64;SorukluOrder are the initiative’s authorised public channels.</p>
         <p>
-          The domain <span class="order-domain">sorukluorder.org</span> is not an official website
-          of this initiative. It was not created, commissioned, authorised, operated or endorsed by
-          Serhat Soruklu or by the Soruklu Order. Its content and claims are published by an
-          unaffiliated third party and do not represent this initiative, its selected members or the
-          wider Soruklu family.
+          The domain <span class="order-domain">sorukluorder.org</span> is unaffiliated. It was not
+          created, commissioned, authorised, operated, or endorsed by Serhat Soruklu, the Soruklu
+          Order, its participants, or the wider Soruklu family.
         </p>
-        <p class="order-clarification__official">
-          The only official Soruklu Order social-media account currently recognised by this page is
-          &#64;SorukluOrder on X.
-        </p>
+        <p>Its content does not represent this initiative.</p>
       </article>
     </div>
   </section>
 
   <section class="order-closing layout-section" aria-labelledby="order-closing-title">
     <div class="order-frame order-closing__inner">
-      <img
-        class="order-closing__emblem"
-        [src]="emblemPath"
-        alt=""
-        aria-hidden="true"
-        width="400"
-        height="400"
-        loading="lazy"
-        decoding="async"
-      />
       <div class="order-closing__copy">
-        <p class="order-section-index">The continuing charge</p>
-        <h2 id="order-closing-title">May the Light guide us.</h2>
+        <p class="order-kicker">Continuity through conduct</p>
+        <h2 id="order-closing-title">A voluntary project, carried forward practically.</h2>
         <p>
-          The initiative continues through discipline, responsibility and the voluntary choices of
-          those entrusted with its work.
+          The Soruklu Order continues through the voluntary choices, responsible conduct, and
+          practical contributions of its participants.
+        </p>
+        <p class="order-motto">
+          Discipline <span aria-hidden="true">·</span> Responsibility
+          <span aria-hidden="true">·</span> Continuity
         </p>
       </div>
-      <div class="order-closing__actions">
+
+      <div class="order-closing__actions" aria-label="Soruklu Order closing links">
         <a class="order-action order-action--secondary" routerLink="/">
           <span>Return to Serhat Soruklu</span>
           <span aria-hidden="true">→</span>
@@ -403,8 +314,8 @@
           <svg class="order-x-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
             <path [attr.d]="xIconPath"></path>
           </svg>
-          <span>Official X Account</span>
-          <span class="order-action__arrow" aria-hidden="true">↗</span>
+          <span>Official updates</span>
+          <span aria-hidden="true">↗</span>
         </a>
       </div>
     </div>
