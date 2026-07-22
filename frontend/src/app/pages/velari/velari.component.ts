@@ -1,23 +1,6 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { Component, inject, PLATFORM_ID } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import {
-  mdiAccountGroupOutline,
-  mdiArrowRight,
-  mdiArrowTopRight,
-  mdiBookOpenPageVariantOutline,
-  mdiCompassOutline,
-  mdiEyeOutline,
-  mdiInfinity,
-  mdiInstagram,
-  mdiLightbulbOnOutline,
-  mdiScaleBalance,
-  mdiShieldCheckOutline,
-  mdiTuneVariant,
-  mdiWeatherSunsetDown,
-  mdiWeatherSunsetUp,
-  mdiWhiteBalanceSunny,
-} from '@mdi/js';
+import { mdiArrowRight, mdiArrowTopRight, mdiInstagram } from '@mdi/js';
 
 import { TopNavigationService } from '../../core/navigation/top-navigation.service';
 import { PathIconComponent } from '../../shared/icons/path-icon.component';
@@ -30,12 +13,16 @@ interface VelariEmblemPrinciple {
   tooltipPlacement: 'top' | 'right' | 'bottom';
 }
 
+interface VelariFact {
+  label: string;
+  value: string;
+}
+
 interface VelariMovement {
-  index: string;
+  number: string;
   title: string;
   statement: string;
   themes: readonly string[];
-  icon: string;
 }
 
 interface VelariPrinciple {
@@ -43,27 +30,17 @@ interface VelariPrinciple {
   description: string;
 }
 
-interface VelariPrincipleGroup {
-  label: string;
-  principles: readonly VelariPrinciple[];
-}
-
-interface VelariPractice {
+interface VelariReflection {
   phase: string;
-  statement: string;
-  practices: readonly string[];
-  icon: string;
+  introduction: string;
+  prompts: readonly string[];
 }
 
-interface VelariText {
-  label: string;
+interface VelariManuscript {
   title: string;
-  keywords: string;
+  themes: string;
   description: string;
-  status: string;
-  availability: string;
   instagramUrl: string;
-  illustration: 'light' | 'shadow' | 'path';
 }
 
 @Component({
@@ -73,9 +50,6 @@ interface VelariText {
   styleUrl: './velari.component.css',
 })
 export class VelariComponent {
-  private readonly document = inject(DOCUMENT);
-  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-
   readonly topNavigation = inject(TopNavigationService);
   readonly emblemPath = '/assets/brand/velari/velari-faith-emblem.jpg';
   readonly emblemSrcset =
@@ -83,20 +57,8 @@ export class VelariComponent {
   readonly instagramUrl = 'https://www.instagram.com/velarifaith/';
   readonly iconPaths: Readonly<Record<string, string>> = {
     'velari-arrow': mdiArrowRight,
-    'velari-awaken': mdiEyeOutline,
-    'velari-become': mdiCompassOutline,
-    'velari-choice': mdiScaleBalance,
-    'velari-day': mdiWhiteBalanceSunny,
     'velari-external': mdiArrowTopRight,
-    'velari-future': mdiInfinity,
     'velari-instagram': mdiInstagram,
-    'velari-light': mdiLightbulbOnOutline,
-    'velari-morning': mdiWeatherSunsetUp,
-    'velari-night': mdiWeatherSunsetDown,
-    'velari-order': mdiAccountGroupOutline,
-    'velari-refine': mdiTuneVariant,
-    'velari-stewardship': mdiShieldCheckOutline,
-    'velari-text': mdiBookOpenPageVariantOutline,
   };
 
   readonly emblemPrinciples: readonly VelariEmblemPrinciple[] = [
@@ -126,185 +88,132 @@ export class VelariComponent {
     },
   ];
 
+  readonly facts: readonly VelariFact[] = [
+    { label: 'Project', value: 'Personal belief framework and writing' },
+    { label: 'Author', value: 'Serhat Soruklu' },
+    { label: 'Approach', value: 'Helio-pantheism' },
+    { label: 'Themes', value: 'Light, discipline, compassion and responsibility' },
+    { label: 'Status', value: 'Ongoing writing project' },
+  ];
+
   readonly movements: readonly VelariMovement[] = [
     {
-      index: 'I',
+      number: '1',
       title: 'Become',
-      statement: 'Choose a direction and begin to live deliberately.',
-      themes: ['Awareness', 'Intention', 'Responsibility', 'Beginning the path'],
-      icon: 'velari-become',
+      statement: 'Choose a direction and begin acting deliberately.',
+      themes: ['Awareness', 'Intention', 'Responsibility', 'Beginning'],
     },
     {
-      index: 'II',
+      number: '2',
       title: 'Refine',
-      statement: 'Strengthen character through discipline, honesty and correction.',
-      themes: ['Self-mastery', 'Learning', 'Repair', 'Repeated practice'],
-      icon: 'velari-refine',
+      statement: 'Improve conduct through discipline, honesty, learning and correction.',
+      themes: ['Self-restraint', 'Learning', 'Repair', 'Repeated practice'],
     },
     {
-      index: 'III',
-      title: 'Awaken',
-      statement: 'See more clearly and act with greater wisdom and compassion.',
+      number: '3',
+      title: 'Understand',
+      statement:
+        'See situations more clearly and act with greater wisdom, humility and compassion.',
       themes: ['Clarity', 'Perspective', 'Humility', 'Service beyond ego'],
-      icon: 'velari-awaken',
     },
   ];
 
-  readonly principleGroups: readonly VelariPrincipleGroup[] = [
+  readonly principles: readonly VelariPrinciple[] = [
+    { title: 'Clarity', description: 'Seek understanding rather than comfortable confusion.' },
     {
-      label: 'Inner clarity',
-      principles: [
-        { title: 'Light', description: 'Seek clarity rather than comfortable confusion.' },
-        {
-          title: 'Wisdom',
-          description: 'Learn before judging and remain willing to correct yourself.',
-        },
-        {
-          title: 'Humility',
-          description: 'Recognise the limits of your knowledge and power.',
-        },
-        { title: 'Truth', description: 'Speak honestly and repair falsehood when discovered.' },
-      ],
+      title: 'Wisdom',
+      description: 'Learn before judging and remain willing to correct yourself.',
     },
     {
-      label: 'Disciplined conduct',
-      principles: [
-        {
-          title: 'Discipline',
-          description: 'Build character through repeated conscious action.',
-        },
-        { title: 'Compassion', description: 'Strength without care becomes cruelty.' },
-        {
-          title: 'Free will',
-          description: 'Choices matter, and responsibility follows choice.',
-        },
-        { title: 'Courage', description: 'Act rightly even when fear remains.' },
-      ],
+      title: 'Humility',
+      description: 'Recognise the limits of personal knowledge, certainty and power.',
+    },
+    { title: 'Truth', description: 'Speak honestly and correct falsehood when discovered.' },
+    {
+      title: 'Discipline',
+      description: 'Develop character through repeated deliberate action.',
+    },
+    { title: 'Compassion', description: 'Strength without care can become cruelty.' },
+    {
+      title: 'Responsibility',
+      description: 'Choices carry consequences for the chooser and for other people.',
+    },
+    { title: 'Courage', description: 'Act responsibly even when fear remains.' },
+    {
+      title: 'Resilience',
+      description:
+        'Continue through difficulty without treating suffering as proof of superiority.',
     },
     {
-      label: 'Life with others',
-      principles: [
-        {
-          title: 'Karma',
-          description:
-            'Actions create consequences within ourselves, our relationships and the world.',
-        },
-        {
-          title: 'Resilience',
-          description: 'Pressure may shape character without being allowed to destroy it.',
-        },
-        { title: 'Peace', description: 'Prefer repair, dialogue and restraint over revenge.' },
-        {
-          title: 'Unity',
-          description: 'Different paths can coexist without erasing their differences.',
-        },
-      ],
+      title: 'Peace',
+      description: 'Prefer repair, dialogue, boundaries and restraint over revenge.',
+    },
+    {
+      title: 'Freedom',
+      description: 'Independent choice matters, and responsibility follows choice.',
+    },
+    {
+      title: 'Coexistence',
+      description:
+        'Different beliefs and philosophies can coexist without being treated as identical.',
     },
   ];
 
-  readonly frameworkBoundaries = [
-    'It does not claim supernatural revelation.',
-    'It is not a replacement for medicine, law or independent judgement.',
-    'It is not compulsory for members of the Soruklu family.',
-    'It does not control personal finances, relationships or private decisions.',
-    'It does not require hostility toward religions, philosophies or non-belief.',
-  ] as const;
-
-  readonly dailyPractices: readonly VelariPractice[] = [
+  readonly reflections: readonly VelariReflection[] = [
     {
       phase: 'Morning',
-      statement: 'Choose the Light.',
-      practices: ['Set an intention', 'Remember the principles', 'Choose one disciplined action'],
-      icon: 'velari-morning',
+      introduction: 'Set a deliberate direction for the day.',
+      prompts: [
+        'Choose one clear intention',
+        'Identify one responsible action',
+        'Remember what matters today',
+      ],
     },
     {
       phase: 'Day',
-      statement: 'Act with wisdom.',
-      practices: [
-        'Tell the truth',
-        'Act with compassion',
+      introduction: 'Return attention to conduct while the day is underway.',
+      prompts: [
+        'Speak truthfully',
         'Work honestly',
-        'Stay disciplined',
-        'Choose peace where possible',
+        'Act with compassion',
+        'Maintain proportion',
+        'Choose restraint where possible',
       ],
-      icon: 'velari-day',
     },
     {
       phase: 'Night',
-      statement: 'Reflect and return.',
-      practices: [
+      introduction: 'Review experience without performance or self-deception.',
+      prompts: [
         'Review the day',
         'Recognise mistakes',
         'Repair what can be repaired',
-        'Learn without self-deception',
+        'Record what was learned',
         'Begin again tomorrow',
       ],
-      icon: 'velari-night',
     },
   ];
 
-  readonly developingTexts: readonly VelariText[] = [
+  readonly manuscripts: readonly VelariManuscript[] = [
     {
-      label: 'Book I',
       title: 'The Book of Light',
-      keywords: 'Awakening · Sun · Virtue · Clarity',
+      themes: 'Clarity · Sun · Virtue · Awareness',
       description:
-        'Principles of awareness, wisdom, discipline and the life-giving symbol of Light.',
-      status: 'Developing work',
-      availability: 'Not yet published',
+        'Developing writing on awareness, wisdom, discipline and the life-giving symbolism of Light.',
       instagramUrl: 'https://www.instagram.com/p/DZ47ZQ6oE2V',
-      illustration: 'light',
     },
     {
-      label: 'Book II',
       title: 'The Book of Shadow',
-      keywords: 'Darkness · Fear · Ego · Illusion · Suffering',
+      themes: 'Fear · Ego · Error · Self-deception',
       description:
-        'A reflection on confusion, fear, error and the parts of the self that must be understood rather than denied.',
-      status: 'Developing work',
-      availability: 'Not yet published',
+        'A developing reflection on confusion, fear and the parts of the self that need to be understood rather than denied.',
       instagramUrl: 'https://www.instagram.com/p/DZ47fd0oBkf/',
-      illustration: 'shadow',
     },
     {
-      label: 'Book III',
       title: 'The Book of the Path',
-      keywords: 'Guidance Through Darkness · Carried by Light',
-      description: 'Practical guidance for living, choosing, repairing and continuing.',
-      status: 'Developing work',
-      availability: 'Not yet published',
+      themes: 'Choice · Repair · Practice · Continuation',
+      description:
+        'Developing practical writing about choosing, repairing, learning and continuing with greater clarity.',
       instagramUrl: 'https://www.instagram.com/p/DZ47lu4o3AF/',
-      illustration: 'path',
     },
   ];
-
-  readonly coexistenceCommitments = [
-    'Respect religious freedom and the freedom not to believe.',
-    'Never force conversion or harass a person for leaving.',
-    'Study other traditions without declaring them worthless.',
-    'Keep legal rights and personal autonomy above doctrinal pressure.',
-  ] as const;
-
-  readonly authorityBoundaries = [
-    'Leadership concerns structure, preservation and interpretation.',
-    'Principles remain open to reasoned discussion and correction.',
-    'No individual stands above civil law or lawful accountability.',
-    'Disagreement is not betrayal, and leaving is not punishable.',
-    'No person should surrender finances, medical decisions or legal rights to leadership.',
-  ] as const;
-
-  scrollToFramework(): void {
-    if (!this.isBrowser) {
-      return;
-    }
-
-    const target = this.document.getElementById('velari-framework');
-    const prefersReducedMotion =
-      this.document.defaultView?.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
-
-    target?.scrollIntoView({
-      behavior: prefersReducedMotion ? 'auto' : 'smooth',
-      block: 'start',
-    });
-  }
 }

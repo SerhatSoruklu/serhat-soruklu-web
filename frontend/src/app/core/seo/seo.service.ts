@@ -326,12 +326,8 @@ export class SeoService {
     const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
     const personId = `${homeUrl}#person`;
     const websiteId = `${homeUrl}#website`;
-    const orderId = `${routeUrl}#order`;
     const webpageId = `${routeUrl}#webpage`;
     const socialImageUrl = this.toAbsoluteUrl(routeSeo.ogImage ?? seoConfig.defaultOgImage);
-    const emblemUrl = this.toAbsoluteUrl(
-      '/assets/brand/soruklu-order/the-soruklu-order-emblem.png',
-    );
 
     return {
       '@context': 'https://schema.org',
@@ -355,7 +351,7 @@ export class SeoService {
           ],
         },
         {
-          '@type': 'WebPage',
+          '@type': 'AboutPage',
           '@id': webpageId,
           name: routeSeo.title,
           description: routeSeo.description,
@@ -363,11 +359,10 @@ export class SeoService {
           isPartOf: {
             '@id': websiteId,
           },
-          mainEntity: {
-            '@id': orderId,
-          },
           about: {
-            '@id': orderId,
+            '@type': 'Thing',
+            name: 'The Soruklu Order',
+            description: routeSeo.description,
           },
           author: {
             '@id': personId,
@@ -382,27 +377,6 @@ export class SeoService {
             height: 630,
           },
           inLanguage: 'en-GB',
-        },
-        {
-          '@type': 'Organization',
-          '@id': orderId,
-          name: 'The Soruklu Order',
-          alternateName: 'Soruklu Order',
-          url: routeUrl,
-          description: routeSeo.description,
-          foundingDate: '2024',
-          slogan: 'May the Light guide us.',
-          founder: {
-            '@id': personId,
-          },
-          sameAs: ['https://x.com/sorukluorder'],
-          logo: {
-            '@type': 'ImageObject',
-            url: emblemUrl,
-            width: 400,
-            height: 400,
-          },
-          image: emblemUrl,
         },
         this.createWebsiteStructuredData(),
         this.createPersonStructuredData(),
@@ -420,14 +394,14 @@ export class SeoService {
     const breadcrumbId = `${routeUrl}#breadcrumb`;
     const socialImageUrl = this.toAbsoluteUrl(routeSeo.ogImage ?? seoConfig.defaultOgImage);
     const emblemUrl = this.toAbsoluteUrl('/assets/brand/velari/velari-faith-emblem.jpg');
-    const textNodes = [
+    const manuscriptNodes = [
       {
         '@type': 'CreativeWork',
         '@id': `${routeUrl}#book-of-light`,
         name: 'The Book of Light',
         description:
-          'Developing work on awareness, wisdom, discipline and the life-giving symbol of Light.',
-        creativeWorkStatus: 'Developing work',
+          'Developing manuscript on awareness, wisdom, discipline and the symbolism of Light.',
+        creativeWorkStatus: 'Developing manuscript',
         isPartOf: {
           '@id': velariId,
         },
@@ -438,8 +412,8 @@ export class SeoService {
         '@id': `${routeUrl}#book-of-shadow`,
         name: 'The Book of Shadow',
         description:
-          'Developing work on confusion, fear, error and the parts of the self that must be understood rather than denied.',
-        creativeWorkStatus: 'Developing work',
+          'Developing manuscript on confusion, fear, error and the parts of the self that need to be understood rather than denied.',
+        creativeWorkStatus: 'Developing manuscript',
         isPartOf: {
           '@id': velariId,
         },
@@ -450,8 +424,8 @@ export class SeoService {
         '@id': `${routeUrl}#book-of-the-path`,
         name: 'The Book of the Path',
         description:
-          'Developing practical guidance for living, choosing, repairing and continuing.',
-        creativeWorkStatus: 'Developing work',
+          'Developing manuscript about choosing, repairing, learning and continuing with greater clarity.',
+        creativeWorkStatus: 'Developing manuscript',
         isPartOf: {
           '@id': velariId,
         },
@@ -481,7 +455,7 @@ export class SeoService {
           ],
         },
         {
-          '@type': 'WebPage',
+          '@type': 'AboutPage',
           '@id': webpageId,
           name: routeSeo.title,
           description: routeSeo.description,
@@ -514,7 +488,6 @@ export class SeoService {
           '@type': 'CreativeWork',
           '@id': velariId,
           name: 'Velari',
-          alternateName: ['Velari Faith', 'The Velarian Path'],
           description: routeSeo.description,
           url: routeUrl,
           creator: {
@@ -522,14 +495,22 @@ export class SeoService {
           },
           image: emblemUrl,
           sameAs: ['https://www.instagram.com/velarifaith/'],
-          slogan: 'May the Light guide us.',
+          genre: ['Personal belief framework', 'Philosophical writing'],
+          keywords: [
+            'Helio-pantheism',
+            'Light',
+            'discipline',
+            'compassion',
+            'resilience',
+            'responsibility',
+          ],
           inLanguage: 'en-GB',
           mainEntityOfPage: {
             '@id': webpageId,
           },
-          hasPart: textNodes.map((node) => ({ '@id': node['@id'] })),
+          hasPart: manuscriptNodes.map((node) => ({ '@id': node['@id'] })),
         },
-        ...textNodes,
+        ...manuscriptNodes,
         this.createWebsiteStructuredData(),
         this.createPersonStructuredData(),
       ],

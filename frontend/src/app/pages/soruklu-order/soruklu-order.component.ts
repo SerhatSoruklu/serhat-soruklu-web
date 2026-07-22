@@ -1,20 +1,10 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { Component, inject, PLATFORM_ID } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import {
-  mdiAccountGroupOutline,
-  mdiBookOpenPageVariantOutline,
-  mdiFingerprint,
-  mdiScaleBalance,
-} from '@mdi/js';
 import { siX } from 'simple-icons';
 
-import { PathIconComponent } from '../../shared/icons/path-icon.component';
-
-interface OrderPurpose {
-  index: string;
-  title: string;
-  description: string;
+interface OrderFact {
+  label: string;
+  value: string;
 }
 
 interface OrderPrinciple {
@@ -22,147 +12,93 @@ interface OrderPrinciple {
   description: string;
 }
 
-interface OrderRole {
+interface OrderResponsibility {
   title: string;
   description: string;
-  clarification?: string;
 }
 
 @Component({
   selector: 'app-soruklu-order',
-  imports: [PathIconComponent, RouterLink],
+  imports: [RouterLink],
   templateUrl: './soruklu-order.component.html',
   styleUrl: './soruklu-order.component.css',
 })
 export class SorukluOrderComponent {
-  private readonly document = inject(DOCUMENT);
-  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-
   readonly emblemPath = '/assets/brand/soruklu-order/the-soruklu-order-emblem.png';
   readonly officialXUrl = 'https://x.com/sorukluorder';
   readonly xIconPath = siX.path;
-  readonly iconPaths: Readonly<Record<string, string>> = {
-    'order-family': mdiAccountGroupOutline,
-    'order-purpose': mdiBookOpenPageVariantOutline,
-    'order-safeguarding': mdiScaleBalance,
-    'order-identity': mdiFingerprint,
-  };
 
-  scrollToOrder(): void {
-    if (!this.isBrowser) {
-      return;
-    }
+  readonly facts: readonly OrderFact[] = [
+    { label: 'Established', value: '2025' },
+    { label: 'Purpose', value: 'Family stewardship and continuity' },
+    { label: 'Participation', value: 'Small, voluntary, and consent-based' },
+    { label: 'Coordinated by', value: 'Serhat Soruklu' },
+  ];
 
-    const target = this.document.getElementById('the-order');
-    const prefersReducedMotion =
-      this.document.defaultView?.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
-
-    target?.scrollIntoView({
-      behavior: prefersReducedMotion ? 'auto' : 'smooth',
-      block: 'start',
-    });
-  }
-
-  readonly purposes: readonly OrderPurpose[] = [
-    {
-      index: '01',
-      title: 'Family continuity',
-      description:
-        'Preserve authorised family context, historical records and shared principles with enough context to remain useful.',
-    },
-    {
-      index: '02',
-      title: 'Responsibility',
-      description:
-        'Define voluntary responsibilities and clear standards among the selected members of the initiative.',
-    },
-    {
-      index: '03',
-      title: 'Mutual support',
-      description:
-        'Encourage constructive support during personal, family, and practical difficulties.',
-    },
-    {
-      index: '04',
-      title: 'Digital preservation',
-      description:
-        'Maintain a durable digital record of the initiative’s authorised materials, boundaries and principles.',
-    },
-    {
-      index: '05',
-      title: 'Future generations',
-      description:
-        'Preserve authorised context and values so future family members may understand them rather than repeatedly reconstructing them.',
-    },
+  readonly activities: readonly string[] = [
+    'Preserve authorised family photographs, documents, history, and contextual records',
+    'Maintain useful continuity information with the consent of the people involved',
+    'Encourage practical support during personal and family difficulties',
+    'Document voluntary responsibilities and important shared decisions',
+    'Preserve agreed principles and context for future generations',
+    'Encourage lawful, responsible, and evidence-based conduct',
   ];
 
   readonly principles: readonly OrderPrinciple[] = [
     {
       title: 'Discipline',
-      description: 'Choose deliberate action over impulse and keep commitments visible.',
+      description: 'Choose deliberate action over impulse and honour reasonable commitments.',
     },
     {
       title: 'Compassion',
-      description: 'Meet difficulty with humanity while preserving clear personal boundaries.',
+      description: 'Respond to difficulty with humanity while maintaining healthy boundaries.',
     },
     {
       title: 'Responsibility',
-      description: 'Accept ownership for decisions, obligations and their consequences.',
-    },
-    {
-      title: 'Loyalty',
-      description: 'Support one another honestly without excusing harmful or unlawful conduct.',
+      description: 'Accept ownership for decisions, obligations, and consequences.',
     },
     {
       title: 'Truth',
-      description: 'Prefer evidence, accuracy and correction over convenience or appearance.',
+      description: 'Prefer evidence, accuracy, correction, and intellectual honesty.',
     },
     {
-      title: 'Self-mastery',
-      description: 'Develop judgement, restraint and the ability to govern one’s own conduct.',
+      title: 'Self-restraint',
+      description: 'Develop judgement, patience, and control over one’s own conduct.',
     },
     {
       title: 'Lawful conduct',
       description:
-        'Act within the law and respect due process, individual rights and public institutions.',
+        'Respect the law, due process, individual rights, and legitimate public institutions.',
     },
     {
       title: 'Continuity',
-      description: 'Carry useful knowledge forward without turning inheritance into entitlement.',
+      description: 'Preserve useful knowledge without treating ancestry as entitlement.',
+    },
+    {
+      title: 'Mutual support',
+      description:
+        'Offer practical help without excusing harmful, reckless, or unlawful behaviour.',
     },
   ];
 
-  readonly roles: readonly OrderRole[] = [
+  readonly responsibilities: readonly OrderResponsibility[] = [
     {
-      title: 'Founder and Steward',
+      title: 'Project coordinator',
       description:
-        'Maintains the initiative’s purpose, boundaries, authorised records and long-term direction.',
+        'Maintains the purpose of the initiative, its authorised materials, and its public boundaries.',
     },
     {
-      title: 'Senior Family Adviser',
-      description: 'Provides family perspective, historical context and measured counsel.',
+      title: 'Family adviser',
+      description: 'Offers family context and non-binding advice when participants request it.',
     },
     {
-      title: 'Safeguarding and Preparedness',
+      title: 'Safeguarding contact',
       description:
-        'Supports wellbeing, lawful safeguarding, responsible preparedness and practical emergency planning.',
+        'Encourages appropriate safeguarding action and referral to qualified independent services.',
     },
     {
-      title: 'Family Adviser',
-      description:
-        'Offers considered advice and helps members examine difficult decisions without holding binding authority.',
-    },
-    {
-      title: 'Legal Liaison',
-      description:
-        'Encourages lawful process and identifies when qualified independent legal advice may be needed.',
-      clarification:
-        'This role does not automatically create a solicitor-client relationship, represent the wider family, replace independent qualified legal advice, or confer judicial or enforcement authority.',
-    },
-    {
-      title: 'Records and Continuity',
-      description:
-        'Preserves authorised records and context for members who may carry the initiative’s work forward.',
+      title: 'Records custodian',
+      description: 'Preserves authorised records and their context with appropriate consent.',
     },
   ];
 }
