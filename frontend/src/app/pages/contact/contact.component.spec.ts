@@ -37,6 +37,7 @@ describe('ContactComponent', () => {
     expect(compiled.querySelector('select')).toBeFalsy();
     expect(compiled.querySelector<HTMLButtonElement>('#contact-topic')).toBeTruthy();
     expect(compiled.querySelector('textarea[formControlName="message"]')).toBeTruthy();
+    expect(compiled.querySelector('form')?.textContent).not.toContain('\\n');
     expect(submitButton?.disabled).toBe(true);
   });
 
