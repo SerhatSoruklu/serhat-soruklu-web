@@ -277,6 +277,58 @@
     </div>
   </section>
 
+  <section
+    class="surname-section surname-section--surface layout-section"
+    aria-labelledby="surname-population-title"
+  >
+    <div class="surname-frame">
+      <header class="surname-section-heading surname-section-heading--wide">
+        <div>
+          <p class="surname-kicker">{{ content().population.kicker }}</p>
+          <h2 id="surname-population-title">{{ content().population.heading }}</h2>
+        </div>
+        <p>{{ content().population.introduction }}</p>
+      </header>
+
+      <div class="surname-geography-table-wrap">
+        <table class="surname-geography-table">
+          <thead>
+            <tr>
+              <th scope="col">{{ content().population.measureHeading }}</th>
+              <th scope="col">{{ content().population.accountHeading }}</th>
+              <th scope="col">{{ content().population.boundaryHeading }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of content().population.rows; track row.measure) {
+              <tr>
+                <th scope="row" [attr.data-label]="content().population.measureHeading">
+                  {{ row.measure }}
+                </th>
+                <td [attr.data-label]="content().population.accountHeading">
+                  {{ row.account }}
+                </td>
+                <td [attr.data-label]="content().population.boundaryHeading">
+                  {{ row.boundary }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <aside class="surname-geography-note">
+        <span>{{ content().population.evidenceLabel }}</span>
+        <p>{{ content().population.attribution }}</p>
+      </aside>
+
+      <aside class="surname-geography-note">
+        <span>{{ content().population.workingEstimateLabel }}</span>
+        <p>{{ content().population.workingEstimate }}</p>
+      </aside>
+    </div>
+  </section>
+
   <section class="surname-section layout-section" aria-labelledby="surname-unknown-title">
     <div class="surname-frame surname-editorial-split">
       <header class="surname-section-heading">

@@ -27,7 +27,7 @@ describe('SaridibekDialogComponent', () => {
 
     expect(dialog?.getAttribute('lang')).toBe('en-GB');
     expect(nativeElement.querySelector('h2')?.textContent?.trim()).toBe(
-      'Vezirkopru Saridibek Koyu',
+      'Vezirkopru Saridibek Village',
     );
     expect(nativeElement.textContent).toContain('File date');
     expect(nativeElement.textContent).toContain('13 November 2019');

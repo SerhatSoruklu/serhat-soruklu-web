@@ -32,7 +32,7 @@ export const saridibekPhotoContent: Record<
 > = {
   en: {
     action: 'View photograph',
-    actionAriaLabel: 'Open the Vezirkopru Saridibek Koyu photograph in a dialog',
+    actionAriaLabel: 'Open the Vezirkopru Saridibek Village photograph in a dialog',
     alt: 'Green fields and forested mountains around Sarıdibek village near Vezirköprü, Türkiye.',
     chips: [
       { icon: 'place-flag', label: 'Türkiye' },
@@ -54,7 +54,7 @@ export const saridibekPhotoContent: Record<
     locationLabel: 'Location',
     summary:
       'This photograph adds a contemporary visual record to the documentary trail. It illustrates the place discussed on this page; it does not establish a family or migration link by itself.',
-    title: 'Vezirkopru Saridibek Koyu',
+    title: 'Vezirkopru Saridibek Village',
   },
   tr: {
     action: 'Fotoğrafı görüntüle',

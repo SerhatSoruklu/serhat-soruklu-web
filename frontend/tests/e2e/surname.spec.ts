@@ -7,11 +7,12 @@ const surnamePath = '/soruklu-surname';
 const orderPath = '/soruklu-order';
 const canonicalUrl = `https://serhatsoruklu.com${surnamePath}`;
 const viewports = [
+  { width: 320, height: 568 },
   { width: 360, height: 800 },
   { width: 390, height: 844 },
   { width: 412, height: 915 },
   { width: 768, height: 1024 },
-  { width: 1024, height: 1366 },
+  { width: 1024, height: 768 },
   { width: 1440, height: 900 },
   { width: 1920, height: 1080 },
 ];
@@ -79,6 +80,12 @@ test.describe('Soruklu surname', () => {
       page.getByText('What can—and cannot—be concluded.', { exact: true }),
     ).toBeVisible();
     await expect(page.getByText('What remains unproven', { exact: true })).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 2, name: 'The living footprint of a rare surname' }),
+    ).toBeVisible();
+    await expect(
+      page.getByText('Working estimate · low confidence', { exact: true }),
+    ).toBeVisible();
     await expect(page.getByTestId('surname-language-switch')).toContainText('Türkçe oku');
     await expect(page.locator('html')).toHaveAttribute('lang', 'en-GB');
     await expect(page.locator('.surname-place-feature__media img')).toHaveCount(1);
@@ -117,11 +124,16 @@ test.describe('Soruklu surname', () => {
       page.getByText('Neye varılabilir, neye varılamaz?', { exact: true }),
     ).toBeVisible();
     await expect(page.getByText('Kanıtlanmamış noktalar', { exact: true })).toBeVisible();
+    await expect(page.getByText('Nadir bir soyadının yaşayan izi', { exact: true })).toBeVisible();
+    await expect(page.getByText('Çalışma tahmini · düşük güven', { exact: true })).toBeVisible();
     await expect(page.getByText('Kaynak notları', { exact: true })).toBeVisible();
     await expect(languageSwitch).toContainText('Read in English');
     await expect(page.locator('html')).toHaveAttribute('lang', 'tr-TR');
     await expect(page).toHaveTitle('Soruklu Soyadı: Anlamı ve Kökeni | Serhat Soruklu');
     await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute('content', 'tr_TR');
+    await expect(page).toHaveURL(new RegExp(`${surnamePath}$`));
+    await expect(page.locator('.site-nav')).toContainText('Work');
+    await expect(page.locator('.site-footer')).toContainText('Navigate');
 
     await page.reload();
     await expect(page.getByRole('heading', { name: 'Soruklu ne anlama geliyor?' })).toBeVisible();
@@ -166,16 +178,20 @@ test.describe('Soruklu surname', () => {
 
     const sourceTitles = page.locator('.surname-sources__title-link');
     const sourceActions = page.locator('.surname-sources__action');
-    await expect(sourceTitles).toHaveCount(13);
-    await expect(sourceActions).toHaveCount(13);
+    await expect(sourceTitles).toHaveCount(14);
+    await expect(sourceActions).toHaveCount(14);
     for (const sources of [sourceTitles, sourceActions]) {
-      for (let index = 0; index < 13; index += 1) {
+      for (let index = 0; index < 14; index += 1) {
         await expect(sources.nth(index)).toHaveAttribute('target', '_blank');
         await expect(sources.nth(index)).toHaveAttribute('rel', 'noopener noreferrer');
         await expect(sources.nth(index)).toHaveAttribute('aria-label', /new tab/);
       }
     }
     await expect(sourceActions.first()).toContainText('Open source');
+    await expect(sourceTitles.last()).toHaveAttribute(
+      'href',
+      'https://www.osmancik.gov.tr/arastirmaci-yazar-salim-savci-ve-tekmen-koyu-muhtari-servet-koroglu-sayin-kaymakamimizi-ziyaret-etti',
+    );
     expect(
       await sourceActions
         .first()
@@ -225,12 +241,46 @@ test.describe('Soruklu surname', () => {
       expect(Math.abs((layout.footerTop ?? 0) - (layout.closingBottom ?? 0))).toBeLessThanOrEqual(
         2,
       );
-      if (viewport.width < 768) {
+      if (viewport.width >= 360 && viewport.width < 768) {
         expect(layout.heroHeight).toBeLessThanOrEqual(viewport.height * 0.93);
       }
       await expect(page.locator('app-site-footer')).toBeVisible();
       await expect(page.locator('.surname-sources h3').last()).toBeVisible();
     }
+    assertNoConsoleErrors();
+  });
+
+  test('the Sarıdibek dialog uses article-language wording and keeps the image accessible', async ({
+    page,
+  }, testInfo) => {
+    const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
+    await page.goto(surnamePath);
+
+    const trigger = page.getByTestId('saridibek-photo-trigger');
+    await expect(trigger).toHaveAttribute(
+      'aria-label',
+      'Open the Vezirkopru Saridibek Village photograph in a dialog',
+    );
+    await trigger.click();
+    const dialog = page.getByTestId('saridibek-dialog');
+    await expect(dialog.getByRole('heading', { level: 2 })).toHaveText(
+      'Vezirkopru Saridibek Village',
+    );
+    await expect(dialog.locator('img')).toHaveAttribute(
+      'alt',
+      'Green fields and forested mountains around Sarıdibek village near Vezirköprü, Türkiye.',
+    );
+    await page.keyboard.press('Escape');
+    await expect(dialog).toBeHidden();
+
+    await page.getByTestId('surname-language-switch').click();
+    await expect(trigger).toHaveAttribute(
+      'aria-label',
+      'Vezirköprü Sarıdibek Köyü fotoğrafını fotoğraf penceresinde aç',
+    );
+    await trigger.click();
+    await expect(dialog.getByRole('heading', { level: 2 })).toHaveText('Vezirköprü Sarıdibek Köyü');
+    await expect(dialog).toHaveAttribute('lang', 'tr-TR');
     assertNoConsoleErrors();
   });
 
