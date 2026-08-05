@@ -1732,7 +1732,17 @@ h1 {
 
 @media (min-width: 1280px) {
   .work-hero__inner {
+    width: calc(100% - 40px);
+    max-width: 1320px;
     grid-template-columns: minmax(0, 1.06fr) minmax(430px, 0.76fr);
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .work-section-frame {
+    max-width: 1320px;
   }
 
   .work-scope__grid {
@@ -1746,12 +1756,21 @@ h1 {
 
 @media (min-width: 1440px) {
   .work-hero__inner {
+    max-width: 1400px;
     min-height: 740px;
     padding-top: 158px;
   }
 
   .work-section-frame {
+    max-width: 1400px;
     padding: 22px;
+  }
+}
+
+@media (min-width: 1728px) {
+  .work-hero__inner,
+  .work-section-frame {
+    max-width: 1560px;
   }
 }
 

@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 
 import { pageSeoMetadata } from '../../core/seo/seo.config';
+import { SaridibekDialogService } from './saridibek-dialog/saridibek-dialog.service';
 import { SorukluSurnameComponent } from './soruklu-surname.component';
 
 describe('SorukluSurnameComponent', () => {
@@ -29,8 +30,14 @@ describe('SorukluSurnameComponent', () => {
     );
     expect(text).toContain('c. 1520');
     expect(text).toContain('1576');
+    expect(text).toContain('1648');
+    expect(text).toContain('1786–87');
+    expect(text).toContain('1959');
     expect(text).toContain('1974');
-    expect(text).toContain('A named tradition, not proven ancestry.');
+    expect(text).toContain('A historical explanation survives—but its date does not.');
+    expect(text).toContain('Two Soruk locations; one regional research corridor.');
+    expect(text).toContain('Vezirkopru-Saridibek-Koyu-13-November-2019');
+    expect(text).toContain('Research lead · not verified');
     expect(text).toContain('The evidence has a clear boundary.');
     expect(text).not.toMatch(/has a coat of arms|is a noble|is a dynasty|are direct descendants/i);
     expect(nativeElement.querySelector('[src*="soruklu-order"]')).toBeNull();
@@ -52,7 +59,11 @@ describe('SorukluSurnameComponent', () => {
     expect(nativeElement.querySelector('h1')?.textContent?.trim()).toBe(
       'Soruklu ne anlama geliyor?',
     );
-    expect(nativeElement.textContent).toContain('Kayıtların gösterdiği');
+    expect(nativeElement.textContent).toContain('Kanıt denetimi');
+    expect(nativeElement.textContent).toContain(
+      'İki Soruk yeri; tek bir bölgesel araştırma hattı.',
+    );
+    expect(nativeElement.textContent).toContain('Vezirköprü Sarıdibek Köyü');
     expect(nativeElement.textContent).toContain('Kanıtlanmamış noktalar');
     expect(button?.textContent).toContain('Read in English');
     expect(title.getTitle()).toBe('Soruklu Soyadı: Anlamı ve Kökeni | Serhat Soruklu');
@@ -74,11 +85,36 @@ describe('SorukluSurnameComponent', () => {
       'a[href="/soruklu-order"]',
     );
 
-    expect(sources).toHaveLength(5);
+    expect(sources).toHaveLength(13);
     expect(sources.every((link) => link.target === '_blank')).toBe(true);
     expect(sources.every((link) => link.rel === 'noopener noreferrer')).toBe(true);
     expect(orderLinks).toHaveLength(2);
     expect(nativeElement.querySelector('a[href="/"]')).not.toBeNull();
+  });
+
+  it('renders an optimized lazy photograph and opens its accessible dialog', () => {
+    const dialog = TestBed.inject(SaridibekDialogService);
+    const openSpy = vi.spyOn(dialog, 'open').mockResolvedValue();
+    const fixture = TestBed.createComponent(SorukluSurnameComponent);
+    fixture.detectChanges();
+
+    const nativeElement = fixture.nativeElement as HTMLElement;
+    const trigger = nativeElement.querySelector<HTMLButtonElement>(
+      '[data-testid="saridibek-photo-trigger"]',
+    );
+    const image = nativeElement.querySelector<HTMLImageElement>('.surname-place-feature img');
+    const avif = nativeElement.querySelector<HTMLSourceElement>(
+      '.surname-place-feature source[type="image/avif"]',
+    );
+
+    expect(trigger?.getAttribute('aria-haspopup')).toBe('dialog');
+    expect(image?.getAttribute('loading')).toBe('lazy');
+    expect(image?.width).toBe(1448);
+    expect(image?.height).toBe(1086);
+    expect(avif?.srcset).toContain('vezirkopru-saridibek-koyu-720.avif');
+
+    trigger?.click();
+    expect(openSpy).toHaveBeenCalledOnce();
   });
 
   it('uses the canonical English route metadata on first render', () => {

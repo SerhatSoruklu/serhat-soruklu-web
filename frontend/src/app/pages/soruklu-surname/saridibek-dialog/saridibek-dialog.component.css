@@ -1,0 +1,384 @@
+.serhat-saridibek-dialog-backdrop {
+  background: rgba(2, 3, 6, 0.72);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.theme-resolved-light .serhat-saridibek-dialog-backdrop {
+  background: rgba(17, 24, 39, 0.28);
+}
+
+.cdk-overlay-pane.serhat-saridibek-dialog-panel {
+  width: min(980px, calc(100vw - 40px));
+  max-width: calc(100vw - 40px) !important;
+  max-height: calc(100dvh - 40px);
+}
+
+.serhat-saridibek-dialog-panel .mat-mdc-dialog-container,
+.serhat-saridibek-dialog-panel .mat-mdc-dialog-surface {
+  border-radius: 14px;
+}
+
+.serhat-saridibek-dialog-panel .mat-mdc-dialog-surface {
+  overflow: hidden;
+  background: transparent;
+  box-shadow: none;
+}
+
+.saridibek-dialog {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(440px, 1.08fr) minmax(350px, 0.92fr);
+  max-height: calc(100dvh - 40px);
+  overflow: hidden;
+  border: 1px solid rgba(214, 168, 79, 0.2);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(214, 168, 79, 0.12), transparent 30%),
+    linear-gradient(135deg, rgba(16, 20, 28, 0.98), rgba(7, 9, 13, 0.98));
+  color: #f5f7fa;
+  font-family: 'Sora', Inter, ui-sans-serif, system-ui, sans-serif;
+  box-shadow:
+    0 26px 72px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(245, 247, 250, 0.04) inset;
+  animation: saridibekDialogIn 180ms ease-out;
+}
+
+.saridibek-dialog__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid rgba(168, 176, 189, 0.2);
+  border-radius: 8px;
+  background: rgba(7, 9, 13, 0.72);
+  color: #f0d58c;
+  cursor: pointer;
+  transition: border-color 160ms ease, box-shadow 160ms ease, color 160ms ease, background 160ms ease;
+}
+
+.saridibek-dialog__close mat-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+  line-height: 1;
+}
+
+.saridibek-dialog__close:hover,
+.saridibek-dialog__close:focus-visible {
+  border-color: #d6a84f;
+  background: rgba(16, 20, 28, 0.94);
+  color: #f5f7fa;
+  box-shadow: 0 0 0 3px rgba(214, 168, 79, 0.14);
+  outline: none;
+}
+
+.saridibek-dialog__media {
+  position: relative;
+  display: flex;
+  min-height: 570px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 20%, rgba(214, 168, 79, 0.1), transparent 46%),
+    #020306;
+}
+
+.saridibek-dialog__media::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 78%, rgba(7, 9, 13, 0.42));
+  content: '';
+  pointer-events: none;
+}
+
+.saridibek-dialog__media picture,
+.saridibek-dialog__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.saridibek-dialog__media picture {
+  position: absolute;
+  inset: 0;
+}
+
+.saridibek-dialog__media img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.saridibek-dialog__content {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  overflow: auto;
+  padding: 58px 42px 42px;
+}
+
+.saridibek-dialog__eyebrow,
+.saridibek-dialog__date,
+.saridibek-dialog__details dt {
+  font-family: 'Space Mono', 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.saridibek-dialog__eyebrow,
+.saridibek-dialog__date,
+.saridibek-dialog__details dt,
+.saridibek-dialog__chips li {
+  display: flex;
+  align-items: center;
+}
+
+.saridibek-dialog__eyebrow {
+  gap: 9px;
+  margin: 0 0 12px;
+  color: #d6a84f;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+}
+
+.saridibek-dialog__eyebrow mat-icon,
+.saridibek-dialog__date mat-icon,
+.saridibek-dialog__details mat-icon {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  color: currentColor;
+}
+
+.saridibek-dialog__title {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: #f5f7fa;
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+}
+
+.saridibek-dialog__date {
+  gap: 9px;
+  margin: 15px 0 0;
+  color: #f0d58c;
+  font-size: 11px;
+  letter-spacing: 0.11em;
+}
+
+.saridibek-dialog__summary {
+  margin: 26px 0 0;
+  color: #d5dae3;
+  font-size: 16px;
+  line-height: 1.58;
+}
+
+.saridibek-dialog__details {
+  display: grid;
+  gap: 10px;
+  margin: 26px 0 0;
+}
+
+.saridibek-dialog__details > div {
+  padding: 14px;
+  border: 1px solid rgba(168, 176, 189, 0.16);
+  border-radius: 9px;
+  background: rgba(7, 9, 13, 0.32);
+}
+
+.saridibek-dialog__details dt {
+  gap: 8px;
+  color: #d6a84f;
+  font-size: 9px;
+  letter-spacing: 0.13em;
+}
+
+.saridibek-dialog__details dd {
+  margin: 8px 0 0;
+  color: #f5f7fa;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.saridibek-dialog__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.saridibek-dialog__chips li {
+  min-height: 32px;
+  gap: 7px;
+  padding: 7px 10px;
+  border: 1px solid rgba(214, 168, 79, 0.25);
+  border-radius: 999px;
+  background: rgba(7, 9, 13, 0.4);
+  color: #d5dae3;
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.saridibek-dialog__chips mat-icon {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  color: #d6a84f;
+}
+
+.theme-resolved-light .saridibek-dialog {
+  border-color: #ded9ce;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(184, 135, 47, 0.09), transparent 30%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.99), rgba(248, 247, 243, 0.99));
+  color: #111827;
+  box-shadow:
+    0 26px 72px rgba(17, 24, 39, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.78) inset;
+}
+
+.theme-resolved-light .saridibek-dialog__media {
+  background: #f2f1ed;
+}
+
+.theme-resolved-light .saridibek-dialog__media::after {
+  background: linear-gradient(90deg, transparent 78%, rgba(248, 247, 243, 0.46));
+}
+
+.theme-resolved-light .saridibek-dialog__close {
+  border-color: #d9dde5;
+  background: rgba(255, 255, 255, 0.84);
+  color: #7a5a1d;
+}
+
+.theme-resolved-light .saridibek-dialog__close:hover,
+.theme-resolved-light .saridibek-dialog__close:focus-visible {
+  border-color: #b8872f;
+  background: #ffffff;
+  color: #10141c;
+  box-shadow: 0 0 0 3px rgba(184, 135, 47, 0.14);
+}
+
+.theme-resolved-light .saridibek-dialog__title,
+.theme-resolved-light .saridibek-dialog__details dd {
+  color: #111827;
+}
+
+.theme-resolved-light .saridibek-dialog__eyebrow,
+.theme-resolved-light .saridibek-dialog__date,
+.theme-resolved-light .saridibek-dialog__details dt {
+  color: #9a6a1e;
+}
+
+.theme-resolved-light .saridibek-dialog__summary,
+.theme-resolved-light .saridibek-dialog__chips li {
+  color: #5f6673;
+}
+
+.theme-resolved-light .saridibek-dialog__details > div,
+.theme-resolved-light .saridibek-dialog__chips li {
+  border-color: #dde1e8;
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.theme-resolved-light .saridibek-dialog__chips mat-icon {
+  color: #b8872f;
+}
+
+@media (max-width: 1023px) {
+  .cdk-overlay-pane.serhat-saridibek-dialog-panel {
+    width: min(760px, calc(100vw - 40px));
+  }
+
+  .saridibek-dialog {
+    display: block;
+  }
+
+  .saridibek-dialog__media {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+    max-height: 48dvh;
+  }
+
+  .saridibek-dialog__media::after {
+    background: linear-gradient(180deg, transparent 76%, rgba(7, 9, 13, 0.42));
+  }
+
+  .theme-resolved-light .saridibek-dialog__media::after {
+    background: linear-gradient(180deg, transparent 76%, rgba(248, 247, 243, 0.46));
+  }
+
+  .saridibek-dialog__content {
+    padding: 34px 34px 36px;
+  }
+}
+
+@media (max-width: 767px) {
+  .cdk-overlay-pane.serhat-saridibek-dialog-panel {
+    width: calc(100vw - 40px);
+    max-width: calc(100vw - 40px) !important;
+    max-height: calc(100dvh - 40px);
+  }
+
+  .saridibek-dialog {
+    max-height: calc(100dvh - 40px);
+    overflow: auto;
+    border-radius: 12px;
+  }
+
+  .serhat-saridibek-dialog-panel .mat-mdc-dialog-container,
+  .serhat-saridibek-dialog-panel .mat-mdc-dialog-surface {
+    border-radius: 12px;
+  }
+
+  .saridibek-dialog__media {
+    max-height: none;
+  }
+
+  .saridibek-dialog__content {
+    overflow: visible;
+    padding: 30px 22px 28px;
+  }
+
+  .saridibek-dialog__title {
+    font-size: 27px;
+  }
+}
+
+@media (max-width: 389px) {
+  .saridibek-dialog__content {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .saridibek-dialog,
+  .saridibek-dialog__close {
+    animation: none;
+    transition: none;
+  }
+}
+
+@keyframes saridibekDialogIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

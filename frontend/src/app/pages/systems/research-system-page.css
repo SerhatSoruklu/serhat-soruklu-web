@@ -851,6 +851,19 @@ h1 {
 }
 
 @media (min-width: 1280px) {
+  .research-hero__inner {
+    width: calc(100% - 40px);
+    max-width: 1320px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .research-section-frame {
+    max-width: 1320px;
+  }
+
   .research-card-grid--three {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -858,12 +871,21 @@ h1 {
 
 @media (min-width: 1440px) {
   .research-hero__inner {
+    max-width: 1400px;
     min-height: 740px;
     padding-top: 158px;
   }
 
   .research-section-frame {
+    max-width: 1400px;
     padding: 22px;
+  }
+}
+
+@media (min-width: 1728px) {
+  .research-hero__inner,
+  .research-section-frame {
+    max-width: 1560px;
   }
 }
 

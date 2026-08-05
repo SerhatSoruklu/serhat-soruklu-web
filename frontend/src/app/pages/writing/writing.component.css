@@ -1236,7 +1236,17 @@ h1 {
 
 @media (min-width: 1280px) {
   .writing-hero__inner {
+    width: calc(100% - 40px);
+    max-width: 1320px;
     min-height: 590px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .writing-section-frame {
+    max-width: 1320px;
   }
 
   .writing-featured,
@@ -1270,12 +1280,24 @@ h1 {
 
 @media (min-width: 1440px) {
   .writing-hero__inner {
+    max-width: 1400px;
     min-height: 610px;
+  }
+
+  .writing-section-frame {
+    max-width: 1400px;
   }
 
   .featured-article__main {
     min-height: 530px;
     padding: 48px;
+  }
+}
+
+@media (min-width: 1728px) {
+  .writing-hero__inner,
+  .writing-section-frame {
+    max-width: 1560px;
   }
 }
 

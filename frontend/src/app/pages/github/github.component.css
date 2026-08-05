@@ -1105,6 +1105,11 @@ h3 {
 }
 
 @media (min-width: 1280px) {
+  .github-hero__inner,
+  .github-section-frame {
+    max-width: 1320px;
+  }
+
   .github-hero__inner {
     grid-template-columns: minmax(0, 1.18fr) minmax(430px, 0.68fr);
   }
@@ -1122,6 +1127,11 @@ h3 {
 }
 
 @media (min-width: 1440px) {
+  .github-hero__inner,
+  .github-section-frame {
+    max-width: 1400px;
+  }
+
   .github-hero__inner {
     grid-template-columns: minmax(0, 1.22fr) minmax(455px, 0.64fr);
   }
@@ -1132,6 +1142,13 @@ h3 {
 
   .github-identity-panel__mark {
     min-height: 340px;
+  }
+}
+
+@media (min-width: 1728px) {
+  .github-hero__inner,
+  .github-section-frame {
+    max-width: 1560px;
   }
 }
 

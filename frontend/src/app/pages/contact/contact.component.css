@@ -1022,8 +1022,14 @@ h1 {
   }
 
   .contact-hero__inner {
+    width: calc(100% - 40px);
+    max-width: 1320px;
     grid-template-columns: minmax(0, 0.9fr) minmax(280px, 340px);
     gap: 40px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 0;
+    padding-left: 0;
   }
 
   h1 {
@@ -1090,6 +1096,20 @@ h1 {
     height: 118px;
     min-height: 118px;
     max-height: 230px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .contact-hero__inner,
+  .contact-shell__inner {
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 1728px) {
+  .contact-hero__inner,
+  .contact-shell__inner {
+    max-width: 1560px;
   }
 }
 

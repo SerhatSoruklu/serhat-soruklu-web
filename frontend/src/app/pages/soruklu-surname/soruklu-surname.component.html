@@ -32,6 +32,11 @@
             }
           </span>
           <span>{{ content().switchLabel }}</span>
+          <app-path-icon
+            class="surname-language-switch__click-icon"
+            name="language-cursor-click"
+            [path]="cursorClickIcon"
+          />
         </button>
       </div>
 
@@ -91,7 +96,15 @@
       <ol class="surname-timeline">
         @for (entry of content().timeline.entries; track entry.date) {
           <li>
-            <div class="surname-timeline__date">{{ entry.date }}</div>
+            <div class="surname-timeline__date">
+              <span class="surname-timeline__icon" aria-hidden="true">
+                <app-path-icon
+                  name="timeline-record"
+                  [path]="timelineIcons[$index]"
+                />
+              </span>
+              <span>{{ entry.date }}</span>
+            </div>
             <article>
               <p class="surname-timeline__label">{{ entry.label }}</p>
               <h3>{{ entry.title }}</h3>
@@ -148,6 +161,108 @@
           <p>{{ content().account.wordNote }}</p>
         </aside>
       </div>
+    </div>
+  </section>
+
+  <section class="surname-section layout-section" aria-labelledby="surname-geography-title">
+    <div class="surname-frame">
+      <header class="surname-section-heading surname-section-heading--wide">
+        <div>
+          <p class="surname-kicker">{{ content().geography.kicker }}</p>
+          <h2 id="surname-geography-title">{{ content().geography.heading }}</h2>
+        </div>
+        <p>{{ content().geography.introduction }}</p>
+      </header>
+
+      <figure class="surname-place-feature">
+        <button
+          class="surname-place-feature__media"
+          type="button"
+          aria-haspopup="dialog"
+          [attr.aria-label]="content().photo.actionAriaLabel"
+          data-testid="saridibek-photo-trigger"
+          (click)="openSaridibekDialog()"
+        >
+          <picture>
+            <source
+              type="image/avif"
+              [attr.srcset]="photoAssets.avif720 + ' 720w, ' + photoAssets.avif1200 + ' 1200w'"
+              sizes="(min-width: 1024px) 720px, calc(100vw - 40px)"
+            >
+            <source
+              type="image/webp"
+              [attr.srcset]="photoAssets.webp720 + ' 720w, ' + photoAssets.webp1200 + ' 1200w'"
+              sizes="(min-width: 1024px) 720px, calc(100vw - 40px)"
+            >
+            <img
+              [src]="photoAssets.original"
+              [alt]="content().photo.alt"
+              width="1448"
+              height="1086"
+              loading="lazy"
+              decoding="async"
+            >
+          </picture>
+          <span class="surname-place-feature__media-action" aria-hidden="true">
+            <app-path-icon name="view-place-photograph" [path]="imageSearchIcon" />
+            <span>{{ content().photo.action }}</span>
+          </span>
+        </button>
+
+        <figcaption>
+          <p class="surname-kicker">{{ content().photo.kicker }}</p>
+          <h3>
+            <app-path-icon name="place-location" [path]="mapMarkerIcon" />
+            <span>{{ content().photo.title }}</span>
+          </h3>
+          <p>{{ content().photo.description }}</p>
+          <p class="surname-place-feature__date">
+            <span>{{ content().photo.dateLabel }}</span>
+            <strong>{{ content().photo.date }}</strong>
+          </p>
+          <button
+            class="surname-place-feature__action"
+            type="button"
+            [attr.aria-label]="content().photo.actionAriaLabel"
+            (click)="openSaridibekDialog()"
+          >
+            <app-path-icon name="open-place-photograph" [path]="imageSearchIcon" />
+            <span>{{ content().photo.action }}</span>
+          </button>
+        </figcaption>
+      </figure>
+
+      <div class="surname-geography-table-wrap">
+        <table class="surname-geography-table">
+          <thead>
+            <tr>
+              <th scope="col">{{ content().geography.placeHeading }}</th>
+              <th scope="col">{{ content().geography.evidenceHeading }}</th>
+              <th scope="col">{{ content().geography.readingHeading }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of content().geography.rows; track row.place) {
+              <tr>
+                <th scope="row" [attr.data-label]="content().geography.placeHeading">
+                  {{ row.place }}
+                </th>
+                <td [attr.data-label]="content().geography.evidenceHeading">
+                  {{ row.evidence }}
+                </td>
+                <td [attr.data-label]="content().geography.readingHeading">
+                  {{ row.reading }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <aside class="surname-geography-note">
+        <span>{{ content().geography.noteLabel }}</span>
+        <p>{{ content().geography.note }}</p>
+      </aside>
     </div>
   </section>
 
