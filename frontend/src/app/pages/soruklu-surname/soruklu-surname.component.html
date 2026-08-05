@@ -63,7 +63,7 @@
       </header>
 
       <div class="surname-prose surname-prose--lead">
-        @for (paragraph of content().meaning.paragraphs; track paragraph) {
+        @for (paragraph of content().meaning.paragraphs; track $index) {
           <p>{{ paragraph }}</p>
         }
 
@@ -139,7 +139,7 @@
       </header>
 
       <div class="surname-prose">
-        @for (paragraph of content().account.paragraphs; track paragraph) {
+        @for (paragraph of content().account.paragraphs; track $index) {
           <p>{{ paragraph }}</p>
         }
 
@@ -161,7 +161,7 @@
 
       <div class="surname-uncertainty">
         <ul>
-          @for (item of content().unknown.items; track item) {
+          @for (item of content().unknown.items; track $index) {
             <li>
               <span aria-hidden="true">—</span>
               <span>{{ item }}</span>

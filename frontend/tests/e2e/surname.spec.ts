@@ -87,6 +87,12 @@ test.describe('Soruklu surname', () => {
     page,
   }, testInfo) => {
     const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
+    const trackingWarnings: string[] = [];
+    page.on('console', (message) => {
+      if (message.text().includes('NG0956')) {
+        trackingWarnings.push(message.text());
+      }
+    });
     await page.goto(surnamePath);
     const languageSwitch = page.getByTestId('surname-language-switch');
 
@@ -123,6 +129,7 @@ test.describe('Soruklu surname', () => {
     await expect(page.getByRole('heading', { name: 'What does Soruklu mean?' })).toBeVisible();
     await expect(page.locator('html')).toHaveAttribute('lang', 'en-GB');
     await expect(page).toHaveTitle(pageSeoMetadata.sorukluSurname.title);
+    expect(trackingWarnings).toEqual([]);
     assertNoConsoleErrors();
   });
 
