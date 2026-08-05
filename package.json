@@ -40,6 +40,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^10.0.3"
+    "concurrently": "^10.0.4"
   }
 }

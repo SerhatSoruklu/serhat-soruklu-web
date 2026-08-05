@@ -72,6 +72,8 @@
     "vitest": "^4.0.8"
   },
   "overrides": {
+    "@hono/node-server": "2.1.0",
+    "@modelcontextprotocol/sdk": "1.30.0",
     "undici": "7.29.0"
   }
 }
