@@ -5,6 +5,7 @@ import { GitHubComponent } from './pages/github/github.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { SorukluOrderComponent } from './pages/soruklu-order/soruklu-order.component';
+import { SorukluSurnameComponent } from './pages/soruklu-surname/soruklu-surname.component';
 import { ChatpdmSystemComponent } from './pages/systems/chatpdm/chatpdm-system.component';
 import { ContinuityIdentityModelSystemComponent } from './pages/systems/continuity-identity-model/continuity-identity-model-system.component';
 import { CoupynSystemComponent } from './pages/systems/coupyn/coupyn-system.component';
@@ -28,9 +29,7 @@ describe('routes', () => {
   });
 
   it('keeps public route paths and SEO metadata aligned', () => {
-    const publicRoutes = routes.filter(
-      (route) => route.path !== '404' && route.path !== '**',
-    );
+    const publicRoutes = routes.filter((route) => route.path !== '404' && route.path !== '**');
 
     expect(publicRoutes.map((route) => route.path)).toEqual([
       '',
@@ -42,6 +41,7 @@ describe('routes', () => {
       'systems',
       'writing',
       'github',
+      'soruklu-surname',
       'soruklu-order',
       'velari',
       'contact',
@@ -56,6 +56,7 @@ describe('routes', () => {
       pageSeoMetadata.systems,
       pageSeoMetadata.writing,
       pageSeoMetadata.github,
+      pageSeoMetadata.sorukluSurname,
       pageSeoMetadata.sorukluOrder,
       pageSeoMetadata.velari,
       pageSeoMetadata.contact,
@@ -86,6 +87,7 @@ describe('routes', () => {
     expect(componentByPath.get('systems')).toBe(SystemsComponent);
     expect(componentByPath.get('writing')).toBe(WritingComponent);
     expect(componentByPath.get('github')).toBe(GitHubComponent);
+    expect(componentByPath.get('soruklu-surname')).toBe(SorukluSurnameComponent);
     expect(componentByPath.get('soruklu-order')).toBe(SorukluOrderComponent);
     expect(componentByPath.get('velari')).toBe(VelariComponent);
     expect(componentByPath.get('contact')).toBe(ContactComponent);

@@ -24,6 +24,7 @@ const sitelinkRoutes = [
   pageSeoMetadata.systems,
   pageSeoMetadata.writing,
   pageSeoMetadata.github,
+  pageSeoMetadata.sorukluSurname,
   pageSeoMetadata.sorukluOrder,
   pageSeoMetadata.velari,
   pageSeoMetadata.contact,
@@ -211,9 +212,9 @@ test.describe('seo metadata', () => {
         new URL(metadata.ogImage, canonicalBaseUrl).toString(),
       );
       expect(getMetaContent(html, 'name', 'twitter:image:alt')).toBe(metadata.ogImageAlt);
-      expect(
-        (html.match(/<script\b[^>]*type="application\/ld\+json"[^>]*>/g) ?? []).length,
-      ).toBe(1);
+      expect((html.match(/<script\b[^>]*type="application\/ld\+json"[^>]*>/g) ?? []).length).toBe(
+        1,
+      );
       expect(website?.['name']).toBe(siteName);
       expect(website?.['alternateName']).toEqual(
         expect.arrayContaining(['SerhatSoruklu.com', 'Serhat Soruklu Systems Architect']),

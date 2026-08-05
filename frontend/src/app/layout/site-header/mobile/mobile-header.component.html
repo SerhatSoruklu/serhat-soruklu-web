@@ -9,12 +9,7 @@
   [style.--scroll-progress]="scrollProgress()"
 >
   <div class="mobile-header__bar">
-    <a
-      class="mobile-brand"
-      routerLink="/"
-      aria-label="Serhat Soruklu home"
-      (click)="topNavigation.handleBrandClick(); closeMenu()"
-    >
+    <a class="mobile-brand" routerLink="/" (click)="topNavigation.handleBrandClick(); closeMenu()">
       <span class="mobile-brand__mark">
         <img
           class="mobile-brand__logo mobile-brand__logo--dark"
@@ -47,7 +42,7 @@
       <button
         class="mobile-header__icon-button"
         type="button"
-        aria-label="Language availability: 40 plus languages coming soon"
+        aria-label="Global access — 40+ languages coming soon; language availability"
         aria-haspopup="dialog"
         appTooltip="40+ languages coming soon"
         appTooltipPlacement="bottom"

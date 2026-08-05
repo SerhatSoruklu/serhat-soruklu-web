@@ -100,5 +100,5 @@ jobs:
             -Dsonar.test.inclusions=frontend/src/**/*.spec.ts,backend/**/*.test.js
             -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/.angular/**,**/coverage/**,frontend/src/**/*.spec.ts,backend/**/*.test.js
             -Dsonar.coverage.exclusions=frontend/src/**/*.html,frontend/src/**/*.css,frontend/src/app/app.config.ts,frontend/src/app/layout/site-header/**/*.ts,frontend/src/app/pages/**/*.ts
-            -Dsonar.cpd.exclusions=frontend/src/**/*.html,frontend/src/**/*.css,frontend/src/app/layout/site-header/**/*.ts
+            -Dsonar.cpd.exclusions=frontend/src/**/*.html,frontend/src/**/*.css,frontend/src/app/layout/site-header/**/*.ts,frontend/src/app/pages/soruklu-surname/soruklu-surname.component.ts
             -Dsonar.javascript.lcov.reportPaths=frontend/coverage/frontend/lcov.info,backend/coverage/lcov.info

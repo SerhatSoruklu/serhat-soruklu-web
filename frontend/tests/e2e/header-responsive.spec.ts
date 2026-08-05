@@ -6,13 +6,15 @@ const mobileViewports = [
   { name: '360 Galaxy S24', width: 360, height: 780 },
   { name: '390 phone', width: 390, height: 844 },
   { name: '430 phone', width: 430, height: 932 },
-  { name: '768 tablet', width: 768, height: 1024 }
+  { name: '768 tablet', width: 768, height: 1024 },
 ];
 const darkLogoPath = '/assets/brand/logo/serhat_soruklu_s_dark_header.png';
 const lightLogoPath = '/assets/brand/logo/serhat_soruklu_s_light_header.png';
 
 async function expectNoHorizontalOverflow(page: Page): Promise<void> {
-  const hasOverflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
+  const hasOverflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+  );
   expect(hasOverflow).toBe(false);
 }
 
@@ -39,7 +41,11 @@ async function expectLogoLoaded(page: Page, testId: string, expectedPath: string
   expect(naturalWidth).toBeLessThanOrEqual(96);
 }
 
-async function expectResolvedLogo(page: Page, scope: 'desktop' | 'mobile', resolvedTheme: 'dark' | 'light'): Promise<void> {
+async function expectResolvedLogo(
+  page: Page,
+  scope: 'desktop' | 'mobile',
+  resolvedTheme: 'dark' | 'light',
+): Promise<void> {
   const visibleTestId = `${scope}-brand-logo-${resolvedTheme}`;
   const hiddenTestId = `${scope}-brand-logo-${resolvedTheme === 'dark' ? 'light' : 'dark'}`;
   const expectedPath = resolvedTheme === 'dark' ? darkLogoPath : lightLogoPath;
@@ -51,8 +57,12 @@ async function expectResolvedLogo(page: Page, scope: 'desktop' | 'mobile', resol
 async function expectPanelBelowHeader(page: Page, panelTestId: string): Promise<void> {
   await page.waitForTimeout(180);
 
-  const headerBottom = await page.getByTestId('mobile-header').evaluate((element) => element.getBoundingClientRect().bottom);
-  const panelTop = await page.getByTestId(panelTestId).evaluate((element) => element.getBoundingClientRect().top);
+  const headerBottom = await page
+    .getByTestId('mobile-header')
+    .evaluate((element) => element.getBoundingClientRect().bottom);
+  const panelTop = await page
+    .getByTestId(panelTestId)
+    .evaluate((element) => element.getBoundingClientRect().top);
 
   expect(panelTop - headerBottom).toBeGreaterThanOrEqual(-2);
   expect(panelTop - headerBottom).toBeLessThanOrEqual(1);
@@ -91,7 +101,7 @@ async function expectThemeMenuAnchoredToButton(page: Page): Promise<void> {
       menuLeft: menuBox.left,
       menuRight: menuBox.right,
       menuWidth: menuBox.width,
-      viewportWidth: document.documentElement.clientWidth
+      viewportWidth: document.documentElement.clientWidth,
     };
   });
 
@@ -125,7 +135,7 @@ async function expectMobileMenuCloseToHeader(page: Page): Promise<void> {
       navRight: navBox.right,
       navHeight: navBox.height,
       viewportWidth: document.documentElement.clientWidth,
-      viewportHeight: document.documentElement.clientHeight
+      viewportHeight: document.documentElement.clientHeight,
     };
   });
 
@@ -137,7 +147,11 @@ async function expectMobileMenuCloseToHeader(page: Page): Promise<void> {
   expect(geometry!.navHeight).toBeLessThan(geometry!.viewportHeight - 80);
 }
 
-async function expectMobileDropdownStyling(page: Page, testId: string, resolvedTheme: 'dark' | 'light'): Promise<void> {
+async function expectMobileDropdownStyling(
+  page: Page,
+  testId: string,
+  resolvedTheme: 'dark' | 'light',
+): Promise<void> {
   const styles = await page.getByTestId(testId).evaluate((element) => {
     const computedStyle = getComputedStyle(element);
 
@@ -147,7 +161,7 @@ async function expectMobileDropdownStyling(page: Page, testId: string, resolvedT
       borderBottomRadius: computedStyle.borderBottomLeftRadius,
       borderTopRadius: computedStyle.borderTopLeftRadius,
       boxShadow: computedStyle.boxShadow,
-      zIndex: computedStyle.zIndex
+      zIndex: computedStyle.zIndex,
     };
   });
 
@@ -170,19 +184,35 @@ async function expectMobileDropdownStyling(page: Page, testId: string, resolvedT
   expect(styles.borderColor).toBe('rgb(37, 43, 54)');
 }
 
-async function getMobileNavState(page: Page): Promise<Array<{ label: string; active: boolean; ariaCurrent: string | null; backgroundColor: string }>> {
-  return page.getByTestId('mobile-nav-panel').locator('a.mobile-nav__home, a.mobile-nav__link').evaluateAll((links) => links.map((link) => ({
-    label: link.getAttribute('aria-label') || link.textContent?.trim() || '',
-    active: link.classList.contains('mobile-nav__link--active') || link.classList.contains('mobile-nav__home--active'),
-    ariaCurrent: link.getAttribute('aria-current'),
-    backgroundColor: getComputedStyle(link).backgroundColor
-  })));
+async function getMobileNavState(
+  page: Page,
+): Promise<
+  Array<{ label: string; active: boolean; ariaCurrent: string | null; backgroundColor: string }>
+> {
+  return page
+    .getByTestId('mobile-nav-panel')
+    .locator('a.mobile-nav__home, a.mobile-nav__link')
+    .evaluateAll((links) =>
+      links.map((link) => ({
+        label: link.getAttribute('aria-label') || link.textContent?.trim() || '',
+        active:
+          link.classList.contains('mobile-nav__link--active') ||
+          link.classList.contains('mobile-nav__home--active'),
+        ariaCurrent: link.getAttribute('aria-current'),
+        backgroundColor: getComputedStyle(link).backgroundColor,
+      })),
+    );
 }
 
-async function expectOnlyMobileNavItemActive(page: Page, expectedLabel: string | null): Promise<void> {
+async function expectOnlyMobileNavItemActive(
+  page: Page,
+  expectedLabel: string | null,
+): Promise<void> {
   const state = await getMobileNavState(page);
   const activeItems = state.filter((item) => item.active);
-  const highlightedItems = state.filter((item) => item.active && item.backgroundColor !== 'rgba(0, 0, 0, 0)');
+  const highlightedItems = state.filter(
+    (item) => item.active && item.backgroundColor !== 'rgba(0, 0, 0, 0)',
+  );
 
   expect(activeItems.map((item) => item.label)).toEqual(expectedLabel ? [expectedLabel] : []);
   expect(highlightedItems.map((item) => item.label)).toEqual(expectedLabel ? [expectedLabel] : []);
@@ -195,7 +225,9 @@ async function expectOnlyMobileNavItemActive(page: Page, expectedLabel: string |
 async function expectFirstVisualSectionBehindFixedHeader(page: Page): Promise<void> {
   const geometry = await page.evaluate(() => {
     const header = document.querySelector('[data-testid="mobile-header"]');
-    const firstVisualSection = document.querySelector('.page-stripe, .page-placeholder, .work-hero');
+    const firstVisualSection = document.querySelector(
+      '.page-stripe, .page-placeholder, .work-hero',
+    );
 
     if (!header || !firstVisualSection) {
       return null;
@@ -207,7 +239,7 @@ async function expectFirstVisualSectionBehindFixedHeader(page: Page): Promise<vo
     return {
       headerBottom: headerBox.bottom,
       firstVisualSectionTop: firstVisualSectionBox.top,
-      firstVisualSectionBottom: firstVisualSectionBox.bottom
+      firstVisualSectionBottom: firstVisualSectionBox.bottom,
     };
   });
 
@@ -235,7 +267,10 @@ async function sampleComputedColor(page: Page, selector: string): Promise<string
   }, selector);
 }
 
-async function sampleUnderlineStyles(page: Page, selector: string): Promise<Array<{ backgroundColor: string; transform: string }>> {
+async function sampleUnderlineStyles(
+  page: Page,
+  selector: string,
+): Promise<Array<{ backgroundColor: string; transform: string }>> {
   return page.evaluate(async (targetSelector) => {
     const target = document.querySelector(targetSelector);
 
@@ -249,7 +284,7 @@ async function sampleUnderlineStyles(page: Page, selector: string): Promise<Arra
       const underlineStyle = getComputedStyle(target, '::after');
       styles.push({
         backgroundColor: underlineStyle.backgroundColor,
-        transform: underlineStyle.transform
+        transform: underlineStyle.transform,
       });
       await new Promise((resolve) => requestAnimationFrame(resolve));
     }
@@ -274,10 +309,10 @@ async function expectTooltipArrowAligned(page: Page, triggerTestId: string): Pro
 
     return {
       arrowCenter: tooltipBox.left + arrowX,
-      triggerCenter: triggerBox.left + (triggerBox.width / 2),
+      triggerCenter: triggerBox.left + triggerBox.width / 2,
       tooltipLeft: tooltipBox.left,
       tooltipRight: tooltipBox.right,
-      viewportWidth: document.documentElement.clientWidth
+      viewportWidth: document.documentElement.clientWidth,
     };
   }, triggerTestId);
 
@@ -294,7 +329,7 @@ async function expectTooltipArrowTheme(page: Page, resolvedTheme: 'dark' | 'ligh
 
     return {
       border: before.borderBottomColor,
-      fill: after.borderBottomColor
+      fill: after.borderBottomColor,
     };
   });
 
@@ -321,12 +356,20 @@ test.describe('responsive shell header', () => {
     await page.waitForTimeout(700);
 
     const desktopHeader = page.getByTestId('desktop-header');
-    await expect(desktopHeader.getByRole('link', { name: 'Serhat Soruklu home' })).toBeVisible();
+    await expect(
+      desktopHeader.getByRole('link', { name: /Serhat Soruklu.*Systems Architect/i }),
+    ).toBeVisible();
     await expect(desktopHeader.getByText('SYSTEMS ARCHITECT')).toBeVisible();
-    await expect(desktopHeader.getByRole('navigation', { name: 'Primary navigation' })).toBeVisible();
+    await expect(
+      desktopHeader.getByRole('navigation', { name: 'Primary navigation' }),
+    ).toBeVisible();
     await expect(desktopHeader.getByRole('link', { name: 'Work' })).toBeVisible();
-    await expect(desktopHeader.getByRole('link', { name: 'Work' }).locator('.site-nav__icon')).toBeVisible();
-    await expect(desktopHeader.getByRole('link', { name: 'GitHub' }).locator('svg.site-nav__github-icon')).toBeVisible();
+    await expect(
+      desktopHeader.getByRole('link', { name: 'Work' }).locator('.site-nav__icon'),
+    ).toBeVisible();
+    await expect(
+      desktopHeader.getByRole('link', { name: 'GitHub' }).locator('svg.site-nav__github-icon'),
+    ).toBeVisible();
     await expect(desktopHeader.getByTestId('desktop-theme-menu-button')).toBeVisible();
     await expectResolvedLogo(page, 'desktop', 'dark');
     await expect(page.getByTestId('mobile-header')).toBeHidden();
@@ -335,7 +378,11 @@ test.describe('responsive shell header', () => {
     await desktopHeader.getByRole('link', { name: 'Work' }).click();
     await expect(page).toHaveURL('/work');
     await expect(
-      page.getByRole('heading', { name: 'Built End-to-End, Owned Completely', exact: true, level: 1 }),
+      page.getByRole('heading', {
+        name: 'Built End-to-End, Owned Completely',
+        exact: true,
+        level: 1,
+      }),
     ).toBeVisible();
     await expectNoHorizontalOverflow(page);
     expect(consoleMessages.some((message) => message.includes('NG0913'))).toBe(false);
@@ -356,7 +403,9 @@ test.describe('responsive shell header', () => {
     assertNoConsoleErrors();
   });
 
-  test('desktop theme tooltip reflects selected appearance and does not block dropdown', async ({ page }, testInfo) => {
+  test('desktop theme tooltip reflects selected appearance and does not block dropdown', async ({
+    page,
+  }, testInfo) => {
     const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
 
     await page.setViewportSize({ width: 1440, height: 900 });
@@ -417,7 +466,11 @@ test.describe('responsive shell header', () => {
 
     await page.goto('/work');
     await expect(
-      page.getByRole('heading', { name: 'Built End-to-End, Owned Completely', exact: true, level: 1 }),
+      page.getByRole('heading', {
+        name: 'Built End-to-End, Owned Completely',
+        exact: true,
+        level: 1,
+      }),
     ).toBeVisible();
     const workLeft = await getPrimaryHeadingLeft(page);
 
@@ -427,7 +480,9 @@ test.describe('responsive shell header', () => {
     assertNoConsoleErrors();
   });
 
-  test('brand typography uses Sora display and Space Mono technical labels', async ({ page }, testInfo) => {
+  test('brand typography uses Sora display and Space Mono technical labels', async ({
+    page,
+  }, testInfo) => {
     const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
 
     await page.setViewportSize({ width: 1440, height: 900 });
@@ -436,7 +491,9 @@ test.describe('responsive shell header', () => {
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.getByTestId('desktop-header').getByText('SYSTEMS ARCHITECT')).toBeVisible();
 
-    const headingFont = await page.locator('h1').evaluate((element) => getComputedStyle(element).fontFamily);
+    const headingFont = await page
+      .locator('h1')
+      .evaluate((element) => getComputedStyle(element).fontFamily);
     const subtitleFont = await page
       .getByTestId('desktop-header')
       .getByText('SYSTEMS ARCHITECT')
@@ -470,14 +527,18 @@ test.describe('responsive shell header', () => {
 
     const desktopHeader = page.getByTestId('desktop-header');
     await expect(desktopHeader).toBeVisible();
-    await expect(desktopHeader.getByRole('navigation', { name: 'Primary navigation' })).toBeVisible();
+    await expect(
+      desktopHeader.getByRole('navigation', { name: 'Primary navigation' }),
+    ).toBeVisible();
     await expect(page.getByTestId('mobile-header')).toBeHidden();
     await expect(page.getByTestId('mobile-menu-button')).toBeHidden();
     await expectNoHorizontalOverflow(page);
     assertNoConsoleErrors();
   });
 
-  test('desktop nav hover uses stable text color and gold underline', async ({ page }, testInfo) => {
+  test('desktop nav hover uses stable text color and gold underline', async ({
+    page,
+  }, testInfo) => {
     const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
 
     await page.setViewportSize({ width: 1440, height: 900 });
@@ -493,13 +554,17 @@ test.describe('responsive shell header', () => {
     expect(new Set(colors)).toEqual(new Set(['rgb(245, 247, 250)']));
 
     const underlineStyles = await sampleUnderlineStyles(page, '.site-nav__link[href="/work"]');
-    expect(new Set(underlineStyles.map((style) => style.backgroundColor))).toEqual(new Set(['rgb(214, 168, 79)']));
+    expect(new Set(underlineStyles.map((style) => style.backgroundColor))).toEqual(
+      new Set(['rgb(214, 168, 79)']),
+    );
     expect(new Set(underlineStyles.map((style) => style.transform))).toEqual(new Set(['none']));
     assertNoConsoleErrors();
   });
 
   for (const viewport of mobileViewports) {
-    test(`mobile/tablet nav active state is exact at ${viewport.name}`, async ({ page }, testInfo) => {
+    test(`mobile/tablet nav active state is exact at ${viewport.name}`, async ({
+      page,
+    }, testInfo) => {
       const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
       const routeCases = [
         { path: '/', activeLabel: 'Home' },
@@ -507,7 +572,7 @@ test.describe('responsive shell header', () => {
         { path: '/systems', activeLabel: 'Systems' },
         { path: '/writing', activeLabel: 'Writing' },
         { path: '/github', activeLabel: 'GitHub' },
-        { path: '/contact', activeLabel: 'Contact' }
+        { path: '/contact', activeLabel: 'Contact' },
       ];
 
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
@@ -524,7 +589,9 @@ test.describe('responsive shell header', () => {
       await page.getByTestId('mobile-menu-button').click();
       await expectOnlyMobileNavItemActive(page, 'GitHub');
 
-      const contactLink = page.getByTestId('mobile-nav-panel').getByRole('link', { name: 'Contact' });
+      const contactLink = page
+        .getByTestId('mobile-nav-panel')
+        .getByRole('link', { name: 'Contact' });
       await contactLink.hover();
       await expectOnlyMobileNavItemActive(page, 'GitHub');
       await contactLink.focus();
@@ -540,7 +607,9 @@ test.describe('responsive shell header', () => {
       await page.goto('/');
 
       const mobileHeader = page.getByTestId('mobile-header');
-      await expect(mobileHeader.getByRole('link', { name: 'Serhat Soruklu home' })).toBeVisible();
+      await expect(
+        mobileHeader.getByRole('link', { name: /Serhat Soruklu.*Systems Architect/i }),
+      ).toBeVisible();
       await expect(mobileHeader.locator('.mobile-brand__name')).toHaveText('Serhat Soruklu');
       await expect(mobileHeader.getByText('SYSTEMS ARCHITECT')).toBeVisible();
       await expect(mobileHeader.getByTestId('mobile-theme-menu-button')).toBeVisible();
@@ -559,11 +628,15 @@ test.describe('responsive shell header', () => {
       await expectMobileMenuCloseToHeader(page);
       await expectMobileDropdownStyling(page, 'mobile-nav-panel', 'dark');
       await expect(mobileNav.getByRole('link', { name: 'Work' })).toBeVisible();
-      await expect(mobileNav.getByRole('link', { name: 'Work' }).locator('.mobile-nav__icon')).toBeVisible();
+      await expect(
+        mobileNav.getByRole('link', { name: 'Work' }).locator('.mobile-nav__icon'),
+      ).toBeVisible();
       await expect(mobileNav.getByRole('link', { name: 'Systems' })).toBeVisible();
       await expect(mobileNav.getByRole('link', { name: 'Writing' })).toBeVisible();
       await expect(mobileNav.getByRole('link', { name: 'GitHub' })).toBeVisible();
-      await expect(mobileNav.getByRole('link', { name: 'GitHub' }).locator('svg.mobile-nav__github-icon')).toBeVisible();
+      await expect(
+        mobileNav.getByRole('link', { name: 'GitHub' }).locator('svg.mobile-nav__github-icon'),
+      ).toBeVisible();
       await expect(mobileNav.getByRole('link', { name: 'Contact' })).toBeVisible();
 
       await mobileHeader.getByTestId('mobile-theme-menu-button').click();
@@ -591,7 +664,9 @@ test.describe('responsive shell header', () => {
         }),
       ).toBeVisible();
       await expect(mobileNav).toBeHidden();
-      const focusInsideMobileNav = await mobileNav.evaluate((element) => element.contains(document.activeElement));
+      const focusInsideMobileNav = await mobileNav.evaluate((element) =>
+        element.contains(document.activeElement),
+      );
       expect(focusInsideMobileNav).toBe(false);
 
       await mobileHeader.getByTestId('mobile-theme-menu-button').click();

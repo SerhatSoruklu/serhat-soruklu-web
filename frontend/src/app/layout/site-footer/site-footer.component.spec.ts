@@ -66,6 +66,7 @@ describe('SiteFooterComponent', () => {
       'ChatPDM',
       'DBF',
       'CIM',
+      'Soruklu surname',
       'Soruklu Order',
       'Velari',
       'Contact',
@@ -90,7 +91,11 @@ describe('SiteFooterComponent', () => {
       '/systems/deterministic-boundary-firewall',
       '/systems/continuity-identity-model',
     ]);
-    expect(component.identityLinks.map((link) => link.path)).toEqual(['/soruklu-order', '/velari']);
+    expect(component.identityLinks.map((link) => link.path)).toEqual([
+      '/soruklu-surname',
+      '/soruklu-order',
+      '/velari',
+    ]);
     expect(component.reachLinks.map((link) => link.path)).toEqual(['/contact']);
   });
 

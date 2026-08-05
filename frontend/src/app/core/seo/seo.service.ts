@@ -28,6 +28,7 @@ interface SeoMetadata {
   ogImageHeight?: number;
   ogImageType?: string;
   ogImageWidth?: number;
+  locale?: string;
   robots?: RobotsDirective;
 }
 
@@ -91,7 +92,10 @@ export class SeoService {
   setOpenGraphTags(metadata: SeoMetadata): void {
     this.meta.updateTag({ property: 'og:site_name', content: seoConfig.siteName });
     this.meta.updateTag({ property: 'og:type', content: 'website' });
-    this.meta.updateTag({ property: 'og:locale', content: seoConfig.defaultLocale });
+    this.meta.updateTag({
+      property: 'og:locale',
+      content: metadata.locale ?? seoConfig.defaultLocale,
+    });
 
     if (metadata.canonicalUrl) {
       this.meta.updateTag({
@@ -174,6 +178,11 @@ export class SeoService {
 
     if (routeSeo.structuredData === 'soruklu-order') {
       this.setJsonLd(this.createSorukluOrderStructuredData(routeSeo));
+      return;
+    }
+
+    if (routeSeo.structuredData === 'soruklu-surname') {
+      this.setJsonLd(this.createSorukluSurnameStructuredData(routeSeo));
       return;
     }
 
@@ -377,6 +386,82 @@ export class SeoService {
             height: 630,
           },
           inLanguage: 'en-GB',
+        },
+        this.createWebsiteStructuredData(),
+        this.createPersonStructuredData(),
+      ],
+    };
+  }
+
+  private createSorukluSurnameStructuredData(routeSeo: RouteSeoMetadata): object {
+    const routeUrl = this.toAbsoluteUrl(routeSeo.path);
+    const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
+    const personId = `${homeUrl}#person`;
+    const websiteId = `${homeUrl}#website`;
+    const webpageId = `${routeUrl}#webpage`;
+    const termId = `${routeUrl}#soruklu`;
+    const breadcrumbId = `${routeUrl}#breadcrumb`;
+    const socialImageUrl = this.toAbsoluteUrl(routeSeo.ogImage ?? seoConfig.defaultOgImage);
+
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'BreadcrumbList',
+          '@id': breadcrumbId,
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: pageSeoMetadata.home.label,
+              item: homeUrl,
+            },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: routeSeo.label,
+              item: routeUrl,
+            },
+          ],
+        },
+        {
+          '@type': 'AboutPage',
+          '@id': webpageId,
+          name: routeSeo.title,
+          description: routeSeo.description,
+          url: routeUrl,
+          isPartOf: { '@id': websiteId },
+          about: { '@id': termId },
+          mainEntity: { '@id': termId },
+          author: { '@id': personId },
+          primaryImageOfPage: {
+            '@type': 'ImageObject',
+            url: socialImageUrl,
+            width: 1200,
+            height: 630,
+            caption: routeSeo.ogImageAlt,
+          },
+          breadcrumb: { '@id': breadcrumbId },
+          inLanguage: 'en-GB',
+          citation: [
+            'https://tdk.gov.tr/wp-content/uploads/2011/12/Terim-Sorunlari-ve-Terim-Yapma-Yollari-_2025_-WEB.pdf',
+            'https://www.belleten.gov.tr/eng/full-text-pdf/2265/tur',
+            'https://www.vezirkopruvatandas.com.tr/saridibek-koyunde-3000-donum-arazi-col-haline-geldi.html',
+            'https://amasya.bel.tr/uploads/e-kitap/kitap/1-4/files/basic-html/page200.html',
+            'https://tdkbelleten.gov.tr/eng/full-text/1065/tur',
+          ],
+        },
+        {
+          '@type': 'DefinedTerm',
+          '@id': termId,
+          name: 'Soruklu',
+          description:
+            'A Turkish surname most strongly read as Soruk plus -lu, expressing association with, belonging to, or origin from a place called Soruk.',
+          url: routeUrl,
+          inDefinedTermSet: {
+            '@type': 'DefinedTermSet',
+            name: 'Turkish surnames',
+          },
         },
         this.createWebsiteStructuredData(),
         this.createPersonStructuredData(),

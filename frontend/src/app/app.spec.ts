@@ -53,17 +53,27 @@ describe('App', () => {
     expect(app.usesSystemsAtmosphere()).toBe(false);
     expect(app.usesContactAtmosphere()).toBe(true);
     expect(app.usesOrderAtmosphere()).toBe(false);
+    expect(app.usesSurnameAtmosphere()).toBe(false);
+    expect(app.usesVelariAtmosphere()).toBe(false);
+
+    await router.navigateByUrl('/soruklu-surname?from=test#meaning');
+    fixture.detectChanges();
+    expect(app.usesContactAtmosphere()).toBe(false);
+    expect(app.usesOrderAtmosphere()).toBe(false);
+    expect(app.usesSurnameAtmosphere()).toBe(true);
     expect(app.usesVelariAtmosphere()).toBe(false);
 
     await router.navigateByUrl('/soruklu-order?from=test#the-order');
     fixture.detectChanges();
     expect(app.usesContactAtmosphere()).toBe(false);
     expect(app.usesOrderAtmosphere()).toBe(true);
+    expect(app.usesSurnameAtmosphere()).toBe(false);
     expect(app.usesVelariAtmosphere()).toBe(false);
 
     await router.navigateByUrl('/velari?from=test#velari-framework');
     fixture.detectChanges();
     expect(app.usesOrderAtmosphere()).toBe(false);
+    expect(app.usesSurnameAtmosphere()).toBe(false);
     expect(app.usesVelariAtmosphere()).toBe(true);
   });
 });

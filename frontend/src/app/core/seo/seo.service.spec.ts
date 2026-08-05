@@ -339,6 +339,50 @@ describe('SeoService', () => {
     expect(serializedGraph).not.toContain('sorukluorder.org');
   });
 
+  it('publishes evidence-led Soruklu surname metadata and a DefinedTerm graph', async () => {
+    const router = TestBed.inject(Router);
+    const title = TestBed.inject(Title);
+
+    await router.navigateByUrl('/soruklu-surname');
+
+    const canonicalUrl = 'https://serhatsoruklu.com/soruklu-surname';
+    const graph = JSON.parse(
+      globalThis.document.getElementById('page-json-ld')?.textContent ?? '{}',
+    ) as { '@graph': Array<Record<string, unknown>> };
+    const webpage = graph['@graph'].find((entity) => entity['@type'] === 'AboutPage');
+    const term = graph['@graph'].find((entity) => entity['@type'] === 'DefinedTerm');
+
+    expect(title.getTitle()).toBe(pageSeoMetadata.sorukluSurname.title);
+    expect(globalThis.document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(
+      canonicalUrl,
+    );
+    expect(graph['@graph'].map((entity) => entity['@type'])).toEqual([
+      'BreadcrumbList',
+      'AboutPage',
+      'DefinedTerm',
+      'WebSite',
+      'Person',
+    ]);
+    expect(webpage).toEqual(
+      expect.objectContaining({
+        '@id': `${canonicalUrl}#webpage`,
+        mainEntity: { '@id': `${canonicalUrl}#soruklu` },
+        inLanguage: 'en-GB',
+        citation: expect.arrayContaining([
+          'https://www.belleten.gov.tr/eng/full-text-pdf/2265/tur',
+        ]),
+      }),
+    );
+    expect(term).toEqual(
+      expect.objectContaining({
+        '@id': `${canonicalUrl}#soruklu`,
+        name: 'Soruklu',
+      }),
+    );
+    expect(graph['@graph'].some((entity) => entity['@type'] === 'Organization')).toBe(false);
+    expect(JSON.stringify(graph)).not.toMatch(/nobility|coat of arms|direct descendant/i);
+  });
+
   it('applies grounded Velari metadata and its authored creative-work graph', async () => {
     const router = TestBed.inject(Router);
     const title = TestBed.inject(Title);

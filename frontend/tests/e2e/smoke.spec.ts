@@ -18,6 +18,7 @@ const routes = [
   { path: '/systems/continuity-identity-model', heading: 'Continuity Identity Model' },
   { path: '/writing', heading: 'Notes from building systems that have to stay standing.' },
   { path: '/github', heading: 'GitHub' },
+  { path: '/soruklu-surname', heading: 'What does Soruklu mean?' },
   { path: '/soruklu-order', heading: 'The Soruklu Order' },
   { path: '/velari', heading: /^Velari$/ },
   { path: '/contact', heading: 'Start With a Clear Message' },
