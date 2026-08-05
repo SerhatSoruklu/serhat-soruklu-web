@@ -307,6 +307,32 @@ h3 {
   line-height: 1.7;
 }
 
+.order-prose .order-surname-link {
+  padding-top: 2px;
+  font-size: 14px;
+}
+
+.order-surname-link a {
+  display: inline-flex;
+  gap: 8px;
+  align-items: baseline;
+  color: #f0d58c;
+  font-weight: 650;
+  text-decoration-color: rgba(240, 213, 140, 0.42);
+  text-underline-offset: 4px;
+}
+
+.order-surname-link a:hover {
+  color: #f5f7fa;
+  text-decoration-color: #d6a84f;
+}
+
+.order-surname-link a:focus-visible {
+  border-radius: 3px;
+  outline: 2px solid #f0d58c;
+  outline-offset: 4px;
+}
+
 .order-section-heading--wide {
   display: grid;
   gap: 20px;
@@ -801,6 +827,10 @@ h3 {
 :host-context(.theme-resolved-light) .order-action--secondary {
   background: rgba(255, 255, 255, 0.84);
   color: #303846;
+}
+
+:host-context(.theme-resolved-light) .order-surname-link a {
+  color: #8a641f;
 }
 
 :host-context(.theme-resolved-light) .order-closing {

@@ -1,12 +1,7 @@
 <footer class="site-footer" aria-labelledby="site-footer-title">
   <div class="site-footer__inner">
     <div class="site-footer__top">
-      <a
-        class="site-footer__brand"
-        routerLink="/"
-        aria-label="Serhat Soruklu home"
-        (click)="topNavigation.handleBrandClick()"
-      >
+      <a class="site-footer__brand" routerLink="/" (click)="topNavigation.handleBrandClick()">
         <span class="site-footer__mark">
           <img
             class="site-footer__logo site-footer__logo--dark"
@@ -40,7 +35,6 @@
       <button
         class="site-footer__language"
         type="button"
-        aria-label="Language availability: 40 plus languages coming soon"
         aria-haspopup="dialog"
         data-testid="footer-language-button"
         (click)="openLanguageDialog()"

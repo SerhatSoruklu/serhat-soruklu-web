@@ -374,6 +374,9 @@ function sendKnownRouteRedirect(
     case '/soruklu-order':
       location = `${origin}/soruklu-order`;
       break;
+    case '/soruklu-surname':
+      location = `${origin}/soruklu-surname`;
+      break;
     case '/systems':
       location = `${origin}/systems`;
       break;

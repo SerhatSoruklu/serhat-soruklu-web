@@ -5,12 +5,7 @@
   [style.--scroll-progress]="scrollProgress()"
 >
   <div class="site-header__inner">
-    <a
-      class="site-brand"
-      routerLink="/"
-      aria-label="Serhat Soruklu home"
-      (click)="topNavigation.handleBrandClick()"
-    >
+    <a class="site-brand" routerLink="/" (click)="topNavigation.handleBrandClick()">
       <span class="site-brand__mark">
         <img
           class="site-brand__logo site-brand__logo--dark"
@@ -67,7 +62,7 @@
       <button
         class="language-trigger"
         type="button"
-        aria-label="Language availability: 40 plus languages coming soon"
+        aria-label="Global access — 40+ languages coming soon; language availability"
         aria-haspopup="dialog"
         appTooltip="40+ languages coming soon"
         appTooltipPlacement="bottom"

@@ -88,6 +88,16 @@ export const routes: Routes = [
     },
   },
   {
+    path: 'soruklu-surname',
+    loadComponent: () =>
+      import('./pages/soruklu-surname/soruklu-surname.component').then(
+        (component) => component.SorukluSurnameComponent,
+      ),
+    data: {
+      seo: pageSeoMetadata.sorukluSurname,
+    },
+  },
+  {
     path: 'soruklu-order',
     loadComponent: () =>
       import('./pages/soruklu-order/soruklu-order.component').then(

@@ -50,6 +50,7 @@ export class SiteFooterComponent {
   ];
 
   readonly identityLinks: FooterLink[] = [
+    { label: 'Soruklu surname', path: '/soruklu-surname' },
     { label: 'Soruklu Order', path: '/soruklu-order' },
     { label: 'Velari', path: '/velari' },
   ];

@@ -1,0 +1,261 @@
+<div class="surname-page" [attr.lang]="content().htmlLang">
+  <section class="surname-hero layout-section" aria-labelledby="surname-title">
+    <div class="surname-frame surname-hero__inner">
+      <div class="surname-hero__topline">
+        <p class="surname-eyebrow">{{ content().eyebrow }}</p>
+        <button
+          class="surname-language-switch"
+          type="button"
+          [attr.aria-label]="content().switchAriaLabel"
+          data-testid="surname-language-switch"
+          (click)="toggleLanguage()"
+        >
+          <span class="surname-language-switch__flag" aria-hidden="true">
+            @if (language() === 'en') {
+              <svg viewBox="0 0 30 20" focusable="false">
+                <rect width="30" height="20" rx="2" fill="#d81e34"></rect>
+                <circle cx="12" cy="10" r="5.2" fill="#ffffff"></circle>
+                <circle cx="13.7" cy="10" r="4.2" fill="#d81e34"></circle>
+                <path
+                  d="m19.3 7.2.7 1.9 2-.1-1.6 1.2.7 1.9-1.7-1.1-1.6 1.2.5-2-1.7-1.1 2 .1Z"
+                  fill="#ffffff"
+                ></path>
+              </svg>
+            } @else {
+              <svg viewBox="0 0 30 20" focusable="false">
+                <rect width="30" height="20" rx="2" fill="#173b74"></rect>
+                <path d="M0 0 30 20M30 0 0 20" stroke="#ffffff" stroke-width="4"></path>
+                <path d="M0 0 30 20M30 0 0 20" stroke="#c8102e" stroke-width="1.8"></path>
+                <path d="M15 0v20M0 10h30" stroke="#ffffff" stroke-width="6"></path>
+                <path d="M15 0v20M0 10h30" stroke="#c8102e" stroke-width="3.2"></path>
+              </svg>
+            }
+          </span>
+          <span>{{ content().switchLabel }}</span>
+        </button>
+      </div>
+
+      <div class="surname-hero__copy">
+        <h1 id="surname-title">{{ content().title }}</h1>
+        <p class="surname-hero__lead">{{ content().lead }}</p>
+        <p class="surname-hero__summary">{{ content().introduction }}</p>
+      </div>
+
+      <div class="surname-formation" [attr.aria-label]="content().formationAriaLabel">
+        <p>{{ content().formationLabel }}</p>
+        <div class="surname-formation__equation" aria-hidden="true">
+          <span>Soruk</span>
+          <span class="surname-formation__operator">+</span>
+          <span>-lu</span>
+          <span class="surname-formation__arrow">→</span>
+          <strong>Soruklu</strong>
+        </div>
+        <p class="surname-formation__meaning">{{ content().formationMeaning }}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="surname-section layout-section" aria-labelledby="surname-meaning-title">
+    <div class="surname-frame surname-editorial-split">
+      <header class="surname-section-heading">
+        <p class="surname-kicker">{{ content().meaning.kicker }}</p>
+        <h2 id="surname-meaning-title">{{ content().meaning.heading }}</h2>
+      </header>
+
+      <div class="surname-prose surname-prose--lead">
+        @for (paragraph of content().meaning.paragraphs; track paragraph) {
+          <p>{{ paragraph }}</p>
+        }
+
+        <aside class="surname-meaning-note">
+          <span>{{ content().meaning.noteLabel }}</span>
+          <p>{{ content().meaning.note }}</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="surname-section surname-section--surface layout-section"
+    aria-labelledby="surname-timeline-title"
+  >
+    <div class="surname-frame">
+      <header class="surname-section-heading surname-section-heading--wide">
+        <div>
+          <p class="surname-kicker">{{ content().timeline.kicker }}</p>
+          <h2 id="surname-timeline-title">{{ content().timeline.heading }}</h2>
+        </div>
+        <p>{{ content().timeline.introduction }}</p>
+      </header>
+
+      <ol class="surname-timeline">
+        @for (entry of content().timeline.entries; track entry.date) {
+          <li>
+            <div class="surname-timeline__date">{{ entry.date }}</div>
+            <article>
+              <p class="surname-timeline__label">{{ entry.label }}</p>
+              <h3>{{ entry.title }}</h3>
+              <p>{{ entry.description }}</p>
+            </article>
+          </li>
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="surname-section layout-section" aria-labelledby="surname-records-title">
+    <div class="surname-frame">
+      <header class="surname-section-heading surname-section-heading--wide">
+        <div>
+          <p class="surname-kicker">{{ content().records.kicker }}</p>
+          <h2 id="surname-records-title">{{ content().records.heading }}</h2>
+        </div>
+        <p>{{ content().records.introduction }}</p>
+      </header>
+
+      <ol class="surname-records">
+        @for (item of content().records.items; track item.index) {
+          <li>
+            <span class="surname-records__index" aria-hidden="true">{{ item.index }}</span>
+            <div>
+              <p class="surname-records__label">{{ item.label }}</p>
+              <h3>{{ item.title }}</h3>
+              <p>{{ item.description }}</p>
+            </div>
+          </li>
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section
+    class="surname-section surname-section--surface layout-section"
+    aria-labelledby="surname-account-title"
+  >
+    <div class="surname-frame surname-editorial-split">
+      <header class="surname-section-heading">
+        <p class="surname-kicker">{{ content().account.kicker }}</p>
+        <h2 id="surname-account-title">{{ content().account.heading }}</h2>
+      </header>
+
+      <div class="surname-prose">
+        @for (paragraph of content().account.paragraphs; track paragraph) {
+          <p>{{ paragraph }}</p>
+        }
+
+        <aside class="surname-word-note">
+          <span>{{ content().account.wordLabel }}</span>
+          <p>{{ content().account.wordNote }}</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="surname-section layout-section" aria-labelledby="surname-unknown-title">
+    <div class="surname-frame surname-editorial-split">
+      <header class="surname-section-heading">
+        <p class="surname-kicker">{{ content().unknown.kicker }}</p>
+        <h2 id="surname-unknown-title">{{ content().unknown.heading }}</h2>
+        <p class="surname-section-heading__support">{{ content().unknown.introduction }}</p>
+      </header>
+
+      <div class="surname-uncertainty">
+        <ul>
+          @for (item of content().unknown.items; track item) {
+            <li>
+              <span aria-hidden="true">—</span>
+              <span>{{ item }}</span>
+            </li>
+          }
+        </ul>
+        <p class="surname-uncertainty__boundary">{{ content().unknown.boundary }}</p>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="surname-section surname-section--sources surname-section--surface layout-section"
+    aria-labelledby="surname-sources-title"
+  >
+    <div class="surname-frame">
+      <header class="surname-section-heading surname-section-heading--wide">
+        <div>
+          <p class="surname-kicker">{{ content().sources.kicker }}</p>
+          <h2 id="surname-sources-title">{{ content().sources.heading }}</h2>
+        </div>
+        <p>{{ content().sources.introduction }}</p>
+      </header>
+
+      <ol class="surname-sources">
+        @for (source of content().sources.items; track source.number) {
+          <li>
+            <span class="surname-sources__number" aria-hidden="true">{{ source.number }}</span>
+            <div class="surname-sources__copy">
+              <h3>{{ source.title }}</h3>
+              <p class="surname-sources__authority">{{ source.authority }}</p>
+              <p>{{ source.description }}</p>
+            </div>
+            <a
+              [href]="source.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="
+                content().sources.actionLabel +
+                ': ' +
+                source.title +
+                '; ' +
+                content().sources.actionAriaSuffix
+              "
+            >
+              <span>{{ content().sources.actionLabel }}</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </li>
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="surname-relationship layout-section" aria-labelledby="surname-order-title">
+    <div class="surname-frame surname-relationship__inner">
+      <div>
+        <p class="surname-kicker">{{ content().relationship.kicker }}</p>
+        <h2 id="surname-order-title">{{ content().relationship.heading }}</h2>
+        <p>{{ content().relationship.description }}</p>
+      </div>
+      <a
+        class="surname-action surname-action--secondary"
+        routerLink="/soruklu-order"
+        [attr.aria-label]="content().relationship.actionAriaLabel"
+      >
+        <span>{{ content().relationship.action }}</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="surname-closing layout-section" aria-labelledby="surname-closing-title">
+    <div class="surname-frame surname-closing__inner">
+      <div class="surname-closing__copy">
+        <p class="surname-kicker">{{ content().closing.kicker }}</p>
+        <h2 id="surname-closing-title">{{ content().closing.heading }}</h2>
+        <p>{{ content().closing.description }}</p>
+      </div>
+
+      <div class="surname-closing__actions">
+        <a class="surname-action surname-action--secondary" routerLink="/">
+          <span>{{ content().closing.homeAction }}</span>
+          <span aria-hidden="true">→</span>
+        </a>
+        <a
+          class="surname-action surname-action--primary"
+          routerLink="/soruklu-order"
+          [attr.aria-label]="content().closing.orderAriaLabel"
+        >
+          <span>{{ content().closing.orderAction }}</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

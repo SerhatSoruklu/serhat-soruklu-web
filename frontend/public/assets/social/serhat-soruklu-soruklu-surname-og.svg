@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Soruklu surname: meaning and origin</title>
+  <desc id="description">The formation Soruk plus the Turkish suffix -lu forms Soruklu.</desc>
+  <defs>
+    <radialGradient id="surname-glow" cx="0" cy="0" r="1" gradientTransform="translate(950 98) rotate(138) scale(520 390)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d6a84f" stop-opacity="0.17"/>
+      <stop offset="1" stop-color="#d6a84f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="surname-rule" x1="82" y1="0" x2="1118" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#d6a84f"/>
+      <stop offset="1" stop-color="#d6a84f" stop-opacity="0.08"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#07090d"/>
+  <rect width="1200" height="630" fill="url(#surname-glow)"/>
+  <rect x="38" y="38" width="1124" height="554" rx="12" fill="none" stroke="#252b36"/>
+  <path d="M82 118H1118" stroke="url(#surname-rule)"/>
+  <text x="82" y="92" fill="#d6a84f" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" letter-spacing="4">SURNAME · MEANING &amp; ORIGIN</text>
+  <text x="82" y="272" fill="#f5f7fa" font-family="Arial, sans-serif" font-size="106" font-weight="700">Soruklu</text>
+  <g transform="translate(86 342)">
+    <text x="0" y="48" fill="#f5f7fa" font-family="Arial, sans-serif" font-size="46" font-weight="700">Soruk</text>
+    <text x="148" y="47" fill="#a8b0bd" font-family="Arial, sans-serif" font-size="34">+</text>
+    <text x="194" y="48" fill="#f0d58c" font-family="Arial, sans-serif" font-size="46" font-weight="700">-lu</text>
+    <text x="282" y="47" fill="#d6a84f" font-family="Arial, sans-serif" font-size="34">→</text>
+    <text x="344" y="48" fill="#f5f7fa" font-family="Arial, sans-serif" font-size="46" font-weight="700">Soruklu</text>
+  </g>
+  <text x="82" y="480" fill="#a8b0bd" font-family="Arial, sans-serif" font-size="26">A Turkish name rooted in place — explained with evidence and its limits.</text>
+  <text x="82" y="548" fill="#f0d58c" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="600" letter-spacing="1.5">SERHATSORUKLU.COM/SORUKLU-SURNAME</text>
+</svg>

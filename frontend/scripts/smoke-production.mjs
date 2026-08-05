@@ -93,11 +93,24 @@ try {
   const workHtml = await workResponse.text();
   assert.equal(workResponse.status, 200, 'The work route must SSR with HTTP 200.');
   assert.match(workHtml, /<title>Work \| Serhat Soruklu<\/title>/);
-  assert.match(
-    workHtml,
-    /<link rel="canonical" href="https:\/\/serhatsoruklu\.com\/work">/,
-  );
+  assert.match(workHtml, /<link rel="canonical" href="https:\/\/serhatsoruklu\.com\/work">/);
   assert.match(workHtml, /Built End-to-End/, 'The work response must include route content.');
+
+  const surnameResponse = await secureFetch('/soruklu-surname');
+  const surnameHtml = await surnameResponse.text();
+  assert.equal(surnameResponse.status, 200, 'The surname route must SSR with HTTP 200.');
+  assert.match(surnameHtml, /What does Soruklu mean\?/);
+  assert.match(
+    surnameHtml,
+    /<link rel="canonical" href="https:\/\/serhatsoruklu\.com\/soruklu-surname">/,
+  );
+  assert.match(surnameHtml, /"@type":"DefinedTerm"/);
+
+  const surnameTrailingSlashResponse = await secureFetch('/soruklu-surname/', {
+    redirect: 'manual',
+  });
+  assert.equal(surnameTrailingSlashResponse.status, 308);
+  assert.equal(surnameTrailingSlashResponse.headers.get('location'), '/soruklu-surname');
 
   const unknownResponse = await secureFetch('/release-smoke-does-not-exist');
   const unknownHtml = await unknownResponse.text();
@@ -277,8 +290,11 @@ function assertGoogleTag(html) {
     'SSR must not put the Google tag runtime on the critical rendering path.',
   );
   assert.equal(
-    (html.match(new RegExp(`https://www\\.googletagmanager\\.com/gtag/js\\?id=${measurementId}`, 'g')) ?? [])
-      .length,
+    (
+      html.match(
+        new RegExp(`https://www\\.googletagmanager\\.com/gtag/js\\?id=${measurementId}`, 'g'),
+      ) ?? []
+    ).length,
     1,
     'SSR must retain exactly one deferred Google tag loader.',
   );

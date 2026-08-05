@@ -52,10 +52,17 @@ const previews = [
   {
     source: 'serhat-soruklu-systems-chatpdm-og.svg',
     target: 'serhat-soruklu-systems-chatpdm-og.png',
+    validateWordmark: true,
   },
   {
     source: 'serhat-soruklu-systems-coupyn-og.svg',
     target: 'serhat-soruklu-systems-coupyn-og.png',
+    validateWordmark: true,
+  },
+  {
+    source: 'serhat-soruklu-soruklu-surname-og.svg',
+    target: 'serhat-soruklu-soruklu-surname-og.png',
+    validateWordmark: false,
   },
 ];
 
@@ -101,31 +108,33 @@ try {
       throw new Error('Required system-preview fonts did not load');
     }
 
-    const wordmarkGap = await page.locator('[id$="-og-logo"]').evaluate((logo) => {
-      const words = Array.from(logo.querySelectorAll(':scope > text'));
-      const firstWordBounds = words[0]?.getBBox();
+    if (preview.validateWordmark) {
+      const wordmarkGap = await page.locator('[id$="-og-logo"]').evaluate((logo) => {
+        const words = Array.from(logo.querySelectorAll(':scope > text'));
+        const firstWordBounds = words[0]?.getBBox();
 
-      if (!firstWordBounds) {
-        throw new Error('Missing system-preview wordmark');
+        if (!firstWordBounds) {
+          throw new Error('Missing system-preview wordmark');
+        }
+
+        const firstWordEnd = firstWordBounds.x + firstWordBounds.width;
+
+        if (words.length > 1) {
+          return words[1].getBBox().x - firstWordEnd;
+        }
+
+        const separator = logo.querySelector(':scope > circle');
+
+        if (!separator) {
+          throw new Error('Missing system-preview wordmark separator');
+        }
+
+        return separator.cx.baseVal.value - separator.r.baseVal.value - firstWordEnd;
+      });
+
+      if (wordmarkGap < -maximumIntentionalWordmarkKerning) {
+        throw new Error(`${preview.source} wordmark overlaps by ${Math.abs(wordmarkGap)}px`);
       }
-
-      const firstWordEnd = firstWordBounds.x + firstWordBounds.width;
-
-      if (words.length > 1) {
-        return words[1].getBBox().x - firstWordEnd;
-      }
-
-      const separator = logo.querySelector(':scope > circle');
-
-      if (!separator) {
-        throw new Error('Missing system-preview wordmark separator');
-      }
-
-      return separator.cx.baseVal.value - separator.r.baseVal.value - firstWordEnd;
-    });
-
-    if (wordmarkGap < -maximumIntentionalWordmarkKerning) {
-      throw new Error(`${preview.source} wordmark overlaps by ${Math.abs(wordmarkGap)}px`);
     }
 
     const artwork = page.locator('svg');

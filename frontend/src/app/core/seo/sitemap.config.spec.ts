@@ -59,6 +59,12 @@ describe('SITEMAP_ROUTES', () => {
         priority: 0.7,
       },
       {
+        path: '/soruklu-surname',
+        lastModified: '2026-08-05',
+        changeFrequency: 'monthly',
+        priority: 0.7,
+      },
+      {
         path: '/soruklu-order',
         lastModified: '2026-07-18',
         changeFrequency: 'monthly',

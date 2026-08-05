@@ -182,11 +182,13 @@ app-site-footer {
   background: transparent;
 }
 
-.site-main--order-atmosphere {
+.site-main--order-atmosphere,
+.site-main--surname-atmosphere {
   background: #07090d;
 }
 
-.site-main--order-atmosphere app-site-footer {
+.site-main--order-atmosphere app-site-footer,
+.site-main--surname-atmosphere app-site-footer {
   margin-top: -1px;
   background: #07090d;
 }
@@ -311,7 +313,9 @@ app-site-footer {
 }
 
 :host-context(.theme-resolved-light) .site-main--order-atmosphere,
-:host-context(.theme-resolved-light) .site-main--order-atmosphere app-site-footer {
+:host-context(.theme-resolved-light) .site-main--order-atmosphere app-site-footer,
+:host-context(.theme-resolved-light) .site-main--surname-atmosphere,
+:host-context(.theme-resolved-light) .site-main--surname-atmosphere app-site-footer {
   background: #ffffff;
 }
 

@@ -7,6 +7,7 @@ import { GitHubComponent } from './github/github.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SorukluOrderComponent } from './soruklu-order/soruklu-order.component';
+import { SorukluSurnameComponent } from './soruklu-surname/soruklu-surname.component';
 import { ChatpdmSystemComponent } from './systems/chatpdm/chatpdm-system.component';
 import { ContinuityIdentityModelSystemComponent } from './systems/continuity-identity-model/continuity-identity-model-system.component';
 import { CoupynSystemComponent } from './systems/coupyn/coupyn-system.component';
@@ -29,6 +30,7 @@ const pages: readonly { component: Type<unknown>; heading: string }[] = [
   { component: ContinuityIdentityModelSystemComponent, heading: 'Continuity Identity Model' },
   { component: WritingComponent, heading: 'Writing' },
   { component: GitHubComponent, heading: 'GitHub' },
+  { component: SorukluSurnameComponent, heading: 'What does Soruklu mean?' },
   { component: SorukluOrderComponent, heading: 'The Soruklu Order' },
   { component: VelariComponent, heading: 'Velari' },
   { component: ContactComponent, heading: 'Start With a Clear Message' },

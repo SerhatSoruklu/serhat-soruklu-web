@@ -59,6 +59,14 @@ export class App {
     ),
     { initialValue: this.isOrderAtmosphereUrl(this.currentLocationPath()) },
   );
+  readonly usesSurnameAtmosphere = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event) => this.isSurnameAtmosphereUrl(event.urlAfterRedirects)),
+      startWith(this.isSurnameAtmosphereUrl(this.currentLocationPath())),
+    ),
+    { initialValue: this.isSurnameAtmosphereUrl(this.currentLocationPath()) },
+  );
   readonly usesVelariAtmosphere = toSignal(
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd),
@@ -104,6 +112,10 @@ export class App {
 
   private isOrderAtmosphereUrl(url: string): boolean {
     return url.split(/[?#]/)[0] === '/soruklu-order';
+  }
+
+  private isSurnameAtmosphereUrl(url: string): boolean {
+    return url.split(/[?#]/)[0] === '/soruklu-surname';
   }
 
   private isVelariAtmosphereUrl(url: string): boolean {

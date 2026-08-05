@@ -22,7 +22,8 @@
   transform: translateX(-50%);
 }
 
-:host-context(.site-main--order-atmosphere) .site-footer::before {
+:host-context(.site-main--order-atmosphere) .site-footer::before,
+:host-context(.site-main--surname-atmosphere) .site-footer::before {
   background: linear-gradient(
     90deg,
     transparent,
@@ -45,6 +46,7 @@
 }
 
 :host-context(.site-main--order-atmosphere) .site-footer::after,
+:host-context(.site-main--surname-atmosphere) .site-footer::after,
 :host-context(.site-main--velari-atmosphere) .site-footer::after {
   position: absolute;
   inset: 0;
@@ -53,7 +55,8 @@
   pointer-events: none;
 }
 
-:host-context(.site-main--order-atmosphere) .site-footer::after {
+:host-context(.site-main--order-atmosphere) .site-footer::after,
+:host-context(.site-main--surname-atmosphere) .site-footer::after {
   background: radial-gradient(
     ellipse 560px 280px at 14% 0%,
     rgba(214, 168, 79, 0.075),

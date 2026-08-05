@@ -13,7 +13,12 @@ export interface SeoMetadata {
 }
 
 export type RobotsDirective = 'index, follow' | 'noindex, nofollow' | 'noindex, follow';
-export type StructuredDataProfile = 'breadcrumb' | 'soruklu-order' | 'velari' | 'none';
+export type StructuredDataProfile =
+  | 'breadcrumb'
+  | 'soruklu-surname'
+  | 'soruklu-order'
+  | 'velari'
+  | 'none';
 
 const canonicalBaseUrl = 'https://serhatsoruklu.com';
 const defaultOgImage = '/assets/social/serhat-soruklu-og.png';
@@ -114,6 +119,18 @@ export const pageSeoMetadata = {
     ogImage: '/assets/social/serhat-soruklu-github-og.png',
     ogImageAlt: 'Serhat Soruklu public GitHub engineering record.',
     ...rasterSocialImage,
+  },
+  sorukluSurname: {
+    label: 'Soruklu surname',
+    title: 'Soruklu Surname: Meaning and Origin | Serhat Soruklu',
+    description:
+      'Explore Soruklu as Soruk + -lu: a Turkish surname linked to place, with Ottoman records, local history, and clear limits on ancestry claims.',
+    path: '/soruklu-surname',
+    ogImage: '/assets/social/serhat-soruklu-soruklu-surname-og.png',
+    ogImageAlt: 'Soruklu surname formation shown as Soruk plus the Turkish suffix -lu.',
+    ...rasterSocialImage,
+    robots: 'index, follow',
+    structuredData: 'soruklu-surname',
   },
   sorukluOrder: {
     label: 'Soruklu Order',
