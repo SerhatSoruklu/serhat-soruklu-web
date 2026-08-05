@@ -308,6 +308,13 @@ const surnameContent = {
           boundary:
             'This does not establish that every migrant adopted either surname or that all families share one lineage.',
         },
+        {
+          measure: 'Yenidanişment and the Soruk neighbourhood',
+          account:
+            'According to Servet Köroğlu’s local account, Yenidanişment village was founded by families who came from Soruk, and the Soruk name continues today in a neighbourhood attached to the village.',
+          boundary:
+            'The current official record confirms the name Yenidanişment/Soruk, but the claimed founding and migration connection has not yet been independently verified through archival records.',
+        },
       ],
       evidenceLabel: 'Local testimony · approximate and not independently counted',
       attribution:
@@ -722,6 +729,13 @@ const surnameContent = {
             'Servet Köroğlu’nun yerel anlatımına göre başka yerlere göç eden aileler arasında Soruk veya Soruklu soyadlarının kullanımı yaygındır.',
           boundary:
             'Her göç edenin bu soyadlarından birini aldığı veya bütün ailelerin tek bir soydan geldiği anlamına gelmez.',
+        },
+        {
+          measure: 'Yenidanişment ve Soruk Mahallesi',
+          account:
+            'Servet Köroğlu’nun yerel anlatımına göre Yenidanişment köyü Soruk’tan gelen aileler tarafından kurulmuş, Soruk adı da günümüzde bu köye bağlı bir mahallede yaşamaya devam etmiştir.',
+          boundary:
+            'Yenidanişment/Soruk adı güncel resmî kayıtta yer almaktadır; ancak köyün Soruk’tan gelen aileler tarafından kurulduğu yönündeki göç ve kuruluş anlatısı henüz bağımsız arşiv kayıtlarıyla doğrulanmamıştır.',
         },
       ],
       evidenceLabel: 'Yerel anlatı · yaklaşık ve bağımsız olarak sayılmamış',
