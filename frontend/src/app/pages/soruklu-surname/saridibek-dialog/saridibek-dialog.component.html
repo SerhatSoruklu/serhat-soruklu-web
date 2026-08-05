@@ -13,12 +13,12 @@
       <source
         type="image/avif"
         [attr.srcset]="assets.avif720 + ' 720w, ' + assets.avif1200 + ' 1200w'"
-        sizes="(min-width: 1024px) 540px, calc(100vw - 40px)"
+        sizes="(min-width: 1440px) 860px, (min-width: 1024px) 60vw, calc(100vw - 40px)"
       >
       <source
         type="image/webp"
         [attr.srcset]="assets.webp720 + ' 720w, ' + assets.webp1200 + ' 1200w'"
-        sizes="(min-width: 1024px) 540px, calc(100vw - 40px)"
+        sizes="(min-width: 1440px) 860px, (min-width: 1024px) 60vw, calc(100vw - 40px)"
       >
       <img
         [src]="assets.original"

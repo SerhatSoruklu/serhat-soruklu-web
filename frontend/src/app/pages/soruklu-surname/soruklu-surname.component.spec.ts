@@ -34,9 +34,17 @@ describe('SorukluSurnameComponent', () => {
     expect(text).toContain('1786–87');
     expect(text).toContain('1959');
     expect(text).toContain('1974');
+    expect(text).toContain('What we know in 30 seconds');
+    expect(text).toContain('Direct modern descent remains unproven.');
+    expect(text).toContain(
+      'The Soruk place name and the Soruklu identifier appear in records across centuries.',
+    );
     expect(text).toContain('A historical explanation survives—but its date does not.');
     expect(text).toContain('Two Soruk locations; one regional research corridor.');
-    expect(text).toContain('Vezirkopru-Saridibek-Koyu-13-November-2019');
+    expect(text).toContain('The surname and the Soruklu Order are separate subjects.');
+    expect(text).toContain('Vezirkopru Saridibek Koyu');
+    expect(text).toContain('File date');
+    expect(text).toContain('Year');
     expect(text).toContain('Research lead · not verified');
     expect(text).toContain('The evidence has a clear boundary.');
     expect(text).not.toMatch(/has a coat of arms|is a noble|is a dynasty|are direct descendants/i);
@@ -59,11 +67,17 @@ describe('SorukluSurnameComponent', () => {
     expect(nativeElement.querySelector('h1')?.textContent?.trim()).toBe(
       'Soruklu ne anlama geliyor?',
     );
-    expect(nativeElement.textContent).toContain('Kanıt denetimi');
+    expect(nativeElement.textContent).toContain('Kanıt değerlendirmesi');
+    expect(nativeElement.textContent).toContain('30 saniyede bildiklerimiz');
+    expect(nativeElement.textContent).toContain(
+      'Soruk yer adı ve Soruklu kişi tanımı, yüzyıllara yayılan kayıtlarda görülür.',
+    );
     expect(nativeElement.textContent).toContain(
       'İki Soruk yeri; tek bir bölgesel araştırma hattı.',
     );
+    expect(nativeElement.textContent).toContain('Soyadı ile Soruklu Order ayrı konulardır.');
     expect(nativeElement.textContent).toContain('Vezirköprü Sarıdibek Köyü');
+    expect(nativeElement.textContent).toContain('Dosyada belirtilen tarih');
     expect(nativeElement.textContent).toContain('Kanıtlanmamış noktalar');
     expect(button?.textContent).toContain('Read in English');
     expect(title.getTitle()).toBe('Soruklu Soyadı: Anlamı ve Kökeni | Serhat Soruklu');
@@ -72,22 +86,43 @@ describe('SorukluSurnameComponent', () => {
     expect(document.querySelector('meta[property="og:locale"]')?.getAttribute('content')).toBe(
       'tr_TR',
     );
+
+    button?.click();
+    fixture.detectChanges();
+
+    expect(nativeElement.querySelector('h1')?.textContent?.trim()).toBe('What does Soruklu mean?');
+    expect(nativeElement.textContent).toContain('What we know in 30 seconds');
+    expect(nativeElement.textContent).not.toContain('30 saniyede bildiklerimiz');
+    expect(button?.textContent).toContain('Türkçe oku');
+    expect(title.getTitle()).toBe(pageSeoMetadata.sorukluSurname.title);
+    expect(document.documentElement.lang).toBe('en-GB');
+    expect(globalThis.sessionStorage.getItem('serhatsoruklu-surname-language')).toBe('en');
   });
 
   it('uses safe external citations and clear internal cross-links', () => {
     const fixture = TestBed.createComponent(SorukluSurnameComponent);
     fixture.detectChanges();
     const nativeElement = fixture.nativeElement as HTMLElement;
-    const sources = Array.from(
-      nativeElement.querySelectorAll<HTMLAnchorElement>('.surname-sources a'),
+    const sourceTitles = Array.from(
+      nativeElement.querySelectorAll<HTMLAnchorElement>('.surname-sources__title-link'),
     );
+    const sourceActions = Array.from(
+      nativeElement.querySelectorAll<HTMLAnchorElement>('.surname-sources__action'),
+    );
+    const sources = [...sourceTitles, ...sourceActions];
     const orderLinks = nativeElement.querySelectorAll<HTMLAnchorElement>(
       'a[href="/soruklu-order"]',
     );
 
-    expect(sources).toHaveLength(13);
+    expect(sourceTitles).toHaveLength(13);
+    expect(sourceActions).toHaveLength(13);
+    expect(sources).toHaveLength(26);
     expect(sources.every((link) => link.target === '_blank')).toBe(true);
     expect(sources.every((link) => link.rel === 'noopener noreferrer')).toBe(true);
+    expect(sourceTitles.map((link) => link.href)).toEqual(sourceActions.map((link) => link.href));
+    expect(sourceTitles[9]?.href).toBe(
+      'https://www.corumozelidare.gov.tr/kurumlar/corumozelidare.gov.tr/GENEL-HABERLER/2025/CORUM-IL-OZEL-IDARESI-2024-YILI-FAALIYET-RAPORU.pdf',
+    );
     expect(orderLinks).toHaveLength(2);
     expect(nativeElement.querySelector('a[href="/"]')).not.toBeNull();
   });

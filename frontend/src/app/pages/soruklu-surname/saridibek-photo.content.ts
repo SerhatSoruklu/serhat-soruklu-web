@@ -8,29 +8,31 @@ export const saridibekPhotoAssets = {
   original: '/assets/soruklu-surname/vezirkopru-saridibek-koyu-13-november-2019.png',
 } as const;
 
-export const saridibekPhotoContent: Record<SurnameLanguage, {
-  readonly action: string;
-  readonly actionAriaLabel: string;
-  readonly alt: string;
-  readonly chips: readonly { readonly icon: string; readonly label: string }[];
-  readonly closeAriaLabel: string;
-  readonly context: string;
-  readonly contextLabel: string;
-  readonly date: string;
-  readonly dateLabel: string;
-  readonly description: string;
-  readonly dialogEyebrow: string;
-  readonly htmlLang: string;
-  readonly kicker: string;
-  readonly location: string;
-  readonly locationLabel: string;
-  readonly summary: string;
-  readonly title: string;
-}> = {
+export const saridibekPhotoContent: Record<
+  SurnameLanguage,
+  {
+    readonly action: string;
+    readonly actionAriaLabel: string;
+    readonly alt: string;
+    readonly chips: readonly { readonly icon: string; readonly label: string }[];
+    readonly closeAriaLabel: string;
+    readonly context: string;
+    readonly contextLabel: string;
+    readonly date: string;
+    readonly dateLabel: string;
+    readonly description: string;
+    readonly dialogEyebrow: string;
+    readonly htmlLang: string;
+    readonly kicker: string;
+    readonly location: string;
+    readonly locationLabel: string;
+    readonly summary: string;
+    readonly title: string;
+  }
+> = {
   en: {
     action: 'View photograph',
-    actionAriaLabel:
-      'Open the Vezirkopru Saridibek Koyu 13 November 2019 photograph in a dialog',
+    actionAriaLabel: 'Open the Vezirkopru Saridibek Koyu photograph in a dialog',
     alt: 'Green fields and forested mountains around Sarıdibek village near Vezirköprü, Türkiye.',
     chips: [
       { icon: 'place-flag', label: 'Türkiye' },
@@ -42,7 +44,7 @@ export const saridibekPhotoContent: Record<SurnameLanguage, {
     context: 'The settlement identified in the research as the village formerly called Soruk.',
     contextLabel: 'Historical context',
     date: '13 November 2019',
-    dateLabel: 'Record date',
+    dateLabel: 'File date',
     description:
       'A landscape record from Sarıdibek, the Vezirköprü settlement identified in the research as the village formerly called Soruk.',
     dialogEyebrow: 'Place record',
@@ -52,7 +54,7 @@ export const saridibekPhotoContent: Record<SurnameLanguage, {
     locationLabel: 'Location',
     summary:
       'This photograph adds a contemporary visual record to the documentary trail. It illustrates the place discussed on this page; it does not establish a family or migration link by itself.',
-    title: 'Vezirkopru-Saridibek-Koyu-13-November-2019',
+    title: 'Vezirkopru Saridibek Koyu',
   },
   tr: {
     action: 'Fotoğrafı görüntüle',
@@ -68,7 +70,7 @@ export const saridibekPhotoContent: Record<SurnameLanguage, {
     context: 'Araştırmada eski adı Soruk olarak belirtilen yerleşim.',
     contextLabel: 'Tarihî bağlam',
     date: '13 Kasım 2019',
-    dateLabel: 'Kayıt tarihi',
+    dateLabel: 'Dosyada belirtilen tarih',
     description:
       'Araştırmada eski adı Soruk olarak belirtilen Vezirköprü yerleşimi Sarıdibek’ten bir manzara kaydı.',
     dialogEyebrow: 'Yer kaydı',
