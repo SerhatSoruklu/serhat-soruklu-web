@@ -76,6 +76,15 @@
           <span>{{ content().meaning.noteLabel }}</span>
           <p>{{ content().meaning.note }}</p>
         </aside>
+
+        <aside class="surname-meaning-note" aria-labelledby="surname-quick-summary-title">
+          <span id="surname-quick-summary-title">{{ content().quickSummary.heading }}</span>
+          <ul>
+            @for (item of content().quickSummary.items; track $index) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </aside>
       </div>
     </div>
   </section>
@@ -98,13 +107,12 @@
           <li>
             <div class="surname-timeline__date">
               @if ($first) {
-                <span class="surname-timeline__date-heading">{{ content().timeline.yearLabel }}</span>
+                <span class="surname-timeline__date-heading">{{
+                  content().timeline.yearLabel
+                }}</span>
               }
               <span class="surname-timeline__icon" aria-hidden="true">
-                <app-path-icon
-                  name="timeline-record"
-                  [path]="timelineIcons[$index]"
-                />
+                <app-path-icon name="timeline-record" [path]="timelineIcons[$index]" />
               </span>
               <span>{{ entry.date }}</span>
             </div>
@@ -191,12 +199,12 @@
               type="image/avif"
               [attr.srcset]="photoAssets.avif720 + ' 720w, ' + photoAssets.avif1200 + ' 1200w'"
               sizes="(min-width: 1024px) 720px, calc(100vw - 40px)"
-            >
+            />
             <source
               type="image/webp"
               [attr.srcset]="photoAssets.webp720 + ' 720w, ' + photoAssets.webp1200 + ' 1200w'"
               sizes="(min-width: 1024px) 720px, calc(100vw - 40px)"
-            >
+            />
             <img
               [src]="photoAssets.original"
               [alt]="content().photo.alt"
@@ -204,7 +212,7 @@
               height="1086"
               loading="lazy"
               decoding="async"
-            >
+            />
           </picture>
           <span class="surname-place-feature__media-action" aria-hidden="true">
             <app-path-icon name="view-place-photograph" [path]="imageSearchIcon" />

@@ -75,7 +75,9 @@ test.describe('Soruklu surname', () => {
     ).toBeVisible();
     await expect(page.locator('.surname-page h1')).toHaveCount(1);
     await expect(page.locator('.surname-formation__equation')).toContainText('Soruk+-lu→Soruklu');
-    await expect(page.getByText('What can—and cannot—be concluded.', { exact: true })).toBeVisible();
+    await expect(
+      page.getByText('What can—and cannot—be concluded.', { exact: true }),
+    ).toBeVisible();
     await expect(page.getByText('What remains unproven', { exact: true })).toBeVisible();
     await expect(page.getByTestId('surname-language-switch')).toContainText('Türkçe oku');
     await expect(page.locator('html')).toHaveAttribute('lang', 'en-GB');
@@ -111,7 +113,9 @@ test.describe('Soruklu surname', () => {
       page.getByRole('heading', { level: 1, name: 'Soruklu ne anlama geliyor?' }),
     ).toBeVisible();
     await expect(page.getByText('Belgesel zaman çizgisi', { exact: true })).toBeVisible();
-    await expect(page.getByText('Neye varılabilir, neye varılamaz?', { exact: true })).toBeVisible();
+    await expect(
+      page.getByText('Neye varılabilir, neye varılamaz?', { exact: true }),
+    ).toBeVisible();
     await expect(page.getByText('Kanıtlanmamış noktalar', { exact: true })).toBeVisible();
     await expect(page.getByText('Kaynak notları', { exact: true })).toBeVisible();
     await expect(languageSwitch).toContainText('Read in English');
@@ -160,16 +164,22 @@ test.describe('Soruklu surname', () => {
     await expect(page.locator('.site-nav a[href="/soruklu-surname"]')).toHaveCount(0);
     await expect(page.locator('.surname-page a[href="/soruklu-order"]')).toHaveCount(2);
 
-    const sources = page.locator('.surname-sources a');
-    await expect(sources).toHaveCount(13);
-    for (let index = 0; index < 13; index += 1) {
-      await expect(sources.nth(index)).toHaveAttribute('target', '_blank');
-      await expect(sources.nth(index)).toHaveAttribute('rel', 'noopener noreferrer');
-      await expect(sources.nth(index)).toHaveAttribute('aria-label', /new tab/);
+    const sourceTitles = page.locator('.surname-sources__title-link');
+    const sourceActions = page.locator('.surname-sources__action');
+    await expect(sourceTitles).toHaveCount(13);
+    await expect(sourceActions).toHaveCount(13);
+    for (const sources of [sourceTitles, sourceActions]) {
+      for (let index = 0; index < 13; index += 1) {
+        await expect(sources.nth(index)).toHaveAttribute('target', '_blank');
+        await expect(sources.nth(index)).toHaveAttribute('rel', 'noopener noreferrer');
+        await expect(sources.nth(index)).toHaveAttribute('aria-label', /new tab/);
+      }
     }
-    await expect(sources.first()).toContainText('Open source');
+    await expect(sourceActions.first()).toContainText('Open source');
     expect(
-      await sources.first().evaluate((link) => Number.parseFloat(getComputedStyle(link).minHeight)),
+      await sourceActions
+        .first()
+        .evaluate((link) => Number.parseFloat(getComputedStyle(link).minHeight)),
     ).toBeGreaterThanOrEqual(44);
 
     await page.goto(orderPath);
