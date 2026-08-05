@@ -1,0 +1,67 @@
+<section class="saridibek-dialog" [attr.lang]="content().htmlLang" data-testid="saridibek-dialog">
+  <button
+    class="saridibek-dialog__close"
+    type="button"
+    [attr.aria-label]="content().closeAriaLabel"
+    (click)="close()"
+  >
+    <mat-icon svgIcon="place-close" aria-hidden="true"></mat-icon>
+  </button>
+
+  <div class="saridibek-dialog__media" [attr.aria-label]="content().alt">
+    <picture>
+      <source
+        type="image/avif"
+        [attr.srcset]="assets.avif720 + ' 720w, ' + assets.avif1200 + ' 1200w'"
+        sizes="(min-width: 1024px) 540px, calc(100vw - 40px)"
+      >
+      <source
+        type="image/webp"
+        [attr.srcset]="assets.webp720 + ' 720w, ' + assets.webp1200 + ' 1200w'"
+        sizes="(min-width: 1024px) 540px, calc(100vw - 40px)"
+      >
+      <img
+        [src]="assets.original"
+        [alt]="content().alt"
+        width="1448"
+        height="1086"
+        decoding="async"
+      >
+    </picture>
+  </div>
+
+  <div class="saridibek-dialog__content">
+    <p class="saridibek-dialog__eyebrow">
+      <mat-icon svgIcon="place-image" aria-hidden="true"></mat-icon>
+      <span>{{ content().dialogEyebrow }}</span>
+    </p>
+    <h2 id="saridibek-dialog-title" class="saridibek-dialog__title">{{ content().title }}</h2>
+    <p class="saridibek-dialog__date">
+      <mat-icon svgIcon="place-calendar" aria-hidden="true"></mat-icon>
+      <span>{{ content().dateLabel }} · {{ content().date }}</span>
+    </p>
+    <p class="saridibek-dialog__summary">{{ content().summary }}</p>
+
+    <dl class="saridibek-dialog__details">
+      <dt>
+        <mat-icon svgIcon="place-pin" aria-hidden="true"></mat-icon>
+        <span>{{ content().locationLabel }}</span>
+      </dt>
+      <dd>{{ content().location }}</dd>
+      <dt>
+        <mat-icon svgIcon="place-history" aria-hidden="true"></mat-icon>
+        <span>{{ content().contextLabel }}</span>
+      </dt>
+      <dd>{{ content().context }}</dd>
+    </dl>
+
+    <ul class="saridibek-dialog__chips" [attr.aria-label]="content().locationLabel">
+      @for (chip of content().chips; track chip.label) {
+        <li>
+          <mat-icon [svgIcon]="chip.icon" aria-hidden="true"></mat-icon>
+          <span>{{ chip.label }}</span>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

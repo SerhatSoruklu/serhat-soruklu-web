@@ -124,7 +124,7 @@ export const pageSeoMetadata = {
     label: 'Soruklu surname',
     title: 'Soruklu Surname: Meaning and Origin | Serhat Soruklu',
     description:
-      'Explore Soruklu as Soruk + -lu: a Turkish surname linked to place, with Ottoman records, local history, and clear limits on ancestry claims.',
+      'Explore Soruklu as Soruk + -lu through Ottoman place records, pre-1934 personal use, regional evidence, and clear limits on ancestry claims.',
     path: '/soruklu-surname',
     ogImage: '/assets/social/serhat-soruklu-soruklu-surname-og.png',
     ogImageAlt: 'Soruklu surname formation shown as Soruk plus the Turkish suffix -lu.',

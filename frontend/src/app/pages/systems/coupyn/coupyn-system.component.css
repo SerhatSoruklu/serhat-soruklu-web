@@ -690,6 +690,15 @@ h3 {
 }
 
 @media (min-width: 1280px) {
+  .coupyn-hero__inner {
+    width: calc(100% - 40px);
+    max-width: 1320px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
   .coupyn-snapshot-grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
@@ -715,7 +724,14 @@ h3 {
   }
 
   .coupyn-hero__inner {
+    max-width: 1400px;
     min-height: 860px;
+  }
+}
+
+@media (min-width: 1728px) {
+  .coupyn-hero__inner {
+    max-width: 1560px;
   }
 }
 

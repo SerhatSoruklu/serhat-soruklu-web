@@ -1236,12 +1236,39 @@ h1 {
 }
 
 @media (min-width: 1280px) {
+  .systems-hero__inner {
+    width: calc(100% - 40px);
+    max-width: 1320px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .systems-section-frame {
+    max-width: 1320px;
+  }
+
   .systems-cards__grid {
     gap: 18px;
   }
 
   .system-card {
     padding: 30px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .systems-hero__inner,
+  .systems-section-frame {
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 1728px) {
+  .systems-hero__inner,
+  .systems-section-frame {
+    max-width: 1560px;
   }
 }
 

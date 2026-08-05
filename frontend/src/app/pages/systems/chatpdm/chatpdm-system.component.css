@@ -700,6 +700,15 @@ h3 {
 }
 
 @media (min-width: 1280px) {
+  .chatpdm-hero__inner {
+    width: calc(100% - 40px);
+    max-width: 1320px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
   .chatpdm-section-frame,
   .chatpdm-founder__inner,
   .chatpdm-cta__inner {
@@ -715,6 +724,16 @@ h3 {
   .chatpdm-hero,
   .chatpdm-hero__inner {
     min-height: 860px;
+  }
+
+  .chatpdm-hero__inner {
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 1728px) {
+  .chatpdm-hero__inner {
+    max-width: 1560px;
   }
 }
 

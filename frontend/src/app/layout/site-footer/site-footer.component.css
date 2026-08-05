@@ -601,6 +601,7 @@
   }
 
   .site-footer__nav {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
     column-gap: 12px;
     row-gap: 22px;
   }
@@ -609,6 +610,14 @@
 @media (max-width: 767px) {
   .site-footer__link {
     min-height: 44px;
+  }
+
+  .site-footer__link::after {
+    bottom: 4px;
+  }
+
+  .site-footer__group--identity .site-footer__link {
+    white-space: nowrap;
   }
 
   .site-footer__list {

@@ -1785,13 +1785,19 @@ a.system-panel__button--quiet:hover {
   }
 
   .home-section-frame {
-    width: calc(100% - 48px);
-    max-width: 1560px;
+    width: calc(100% - 40px);
+    max-width: 1320px;
     padding: 36px;
   }
 
   .home-hero__inner {
+    width: calc(100% - 40px);
+    max-width: 1320px;
     min-height: 760px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 0;
+    padding-left: 0;
     padding-top: clamp(132px, 13vh, 164px);
     padding-bottom: clamp(104px, 10vh, 136px);
   }
@@ -1846,9 +1852,21 @@ a.system-panel__button--quiet:hover {
   }
 }
 
+@media (min-width: 1440px) {
+  .home-hero__inner,
+  .home-section-frame {
+    max-width: 1400px;
+  }
+}
+
 @media (min-width: 1728px) {
   .home-hero__inner {
     min-height: 800px;
+  }
+
+  .home-hero__inner,
+  .home-section-frame {
+    max-width: 1560px;
   }
 
   .home-hero__layout {

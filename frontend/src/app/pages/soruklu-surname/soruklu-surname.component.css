@@ -42,6 +42,11 @@ h3 {
 .surname-timeline__label,
 .surname-records__index,
 .surname-records__label,
+.surname-geography-table thead,
+.surname-geography-table [data-label]::before,
+.surname-geography-note span,
+.surname-place-feature__date,
+.surname-place-feature__action,
 .surname-sources__number,
 .surname-sources__authority,
 .surname-action {
@@ -117,6 +122,7 @@ h3 {
   font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 1.2;
+  animation: surname-language-switch-attention 4.8s ease-in-out infinite;
   transition:
     border-color 160ms ease,
     background 160ms ease,
@@ -139,6 +145,49 @@ h3 {
 .surname-language-switch__flag svg {
   width: 30px;
   height: 20px;
+}
+
+.surname-language-switch__click-icon {
+  width: 19px;
+  height: 19px;
+  color: #f0d58c;
+  transform-origin: 20% 20%;
+  animation: surname-language-switch-click 4.8s ease-in-out infinite;
+}
+
+@keyframes surname-language-switch-attention {
+  0%,
+  58%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(214, 168, 79, 0);
+  }
+
+  72% {
+    box-shadow:
+      0 0 0 3px rgba(214, 168, 79, 0.14),
+      0 0 22px rgba(214, 168, 79, 0.2);
+  }
+
+  86% {
+    box-shadow: 0 0 0 1px rgba(214, 168, 79, 0.08);
+  }
+}
+
+@keyframes surname-language-switch-click {
+  0%,
+  64%,
+  84%,
+  100% {
+    transform: scale(1);
+  }
+
+  72% {
+    transform: scale(0.84);
+  }
+
+  78% {
+    transform: scale(1.08);
+  }
 }
 
 .surname-language-switch:hover {
@@ -261,6 +310,8 @@ h3 {
 .surname-prose p,
 .surname-timeline article > p:last-child,
 .surname-records li > div > p:last-child,
+.surname-geography-table td,
+.surname-geography-note p,
 .surname-sources__copy > p:last-child,
 .surname-relationship__inner > div > p:last-child,
 .surname-closing__copy > p:last-child {
@@ -286,15 +337,18 @@ h3 {
 }
 
 .surname-meaning-note,
-.surname-word-note {
+.surname-word-note,
+.surname-geography-note {
   margin-top: 8px;
   padding: 20px 20px 20px 22px;
   border-left: 2px solid rgba(214, 168, 79, 0.7);
   background: rgba(16, 20, 28, 0.66);
+  transition: background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
 .surname-meaning-note span,
-.surname-word-note span {
+.surname-word-note span,
+.surname-geography-note span {
   display: block;
   margin-bottom: 8px;
   color: #d6a84f;
@@ -307,7 +361,8 @@ h3 {
 }
 
 .surname-meaning-note p,
-.surname-word-note p {
+.surname-word-note p,
+.surname-geography-note p {
   margin-bottom: 0;
   color: #dce1e9;
   font-size: 15px;
@@ -362,20 +417,46 @@ h3 {
 }
 
 .surname-timeline__date {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   color: #f0d58c;
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 1.5;
+  letter-spacing: 0.045em;
+  line-height: 1.3;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.surname-timeline__icon {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(214, 168, 79, 0.28);
+  border-radius: 8px;
+  background: rgba(214, 168, 79, 0.06);
+  color: #d6a84f;
+  transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.surname-timeline__icon app-path-icon {
+  width: 19px;
+  height: 19px;
 }
 
 .surname-timeline article {
-  padding-bottom: 30px;
+  margin: -12px -14px 0;
+  padding: 12px 14px 28px;
   border-bottom: 1px solid rgba(168, 176, 189, 0.14);
+  border-radius: 10px;
+  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
 .surname-timeline li:last-child article {
-  padding-bottom: 0;
+  padding-bottom: 12px;
   border-bottom: 0;
 }
 
@@ -409,6 +490,7 @@ h3 {
   gap: 16px;
   padding: 26px 0;
   border-bottom: 1px solid rgba(168, 176, 189, 0.13);
+  transition: background 180ms ease, transform 180ms ease;
 }
 
 .surname-records li:last-child {
@@ -420,6 +502,246 @@ h3 {
   font-size: 12px;
   font-weight: 700;
   line-height: 1.5;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.surname-place-feature {
+  display: grid;
+  margin: 0 0 28px;
+  overflow: hidden;
+  border: 1px solid rgba(168, 176, 189, 0.17);
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 92% 8%, rgba(214, 168, 79, 0.09), transparent 32%),
+    rgba(16, 20, 28, 0.54);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.14);
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+}
+
+.surname-place-feature__media {
+  position: relative;
+  display: block;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  background: #020306;
+  color: #f5f7fa;
+  cursor: pointer;
+  aspect-ratio: 4 / 3;
+}
+
+.surname-place-feature__media picture,
+.surname-place-feature__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.surname-place-feature__media picture {
+  position: absolute;
+  inset: 0;
+}
+
+.surname-place-feature__media img {
+  object-fit: cover;
+  object-position: center;
+  transition: filter 500ms ease, transform 650ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.surname-place-feature__media::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 58%, rgba(2, 3, 6, 0.72));
+  content: '';
+  pointer-events: none;
+}
+
+.surname-place-feature__media-action {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 1;
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  border: 1px solid rgba(240, 213, 140, 0.38);
+  border-radius: 8px;
+  background: rgba(7, 9, 13, 0.76);
+  color: #f5f7fa;
+  font:
+    700 10px/1.25 'Space Mono',
+    'IBM Plex Mono',
+    monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.surname-place-feature__media-action app-path-icon,
+.surname-place-feature__action app-path-icon {
+  width: 17px;
+  height: 17px;
+  color: #f0d58c;
+}
+
+.surname-place-feature figcaption {
+  min-width: 0;
+  padding: 24px 20px 22px;
+}
+
+.surname-place-feature figcaption h3 {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
+  overflow-wrap: anywhere;
+  font-size: clamp(1.3rem, 4.8vw, 2rem);
+  line-height: 1.17;
+}
+
+.surname-place-feature figcaption h3 app-path-icon {
+  width: 23px;
+  height: 23px;
+  flex: 0 0 23px;
+  margin-top: 0.08em;
+  color: #d6a84f;
+}
+
+.surname-place-feature figcaption > p:not(.surname-kicker, .surname-place-feature__date) {
+  margin-bottom: 0;
+  color: #a8b0bd;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.surname-place-feature__date {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 12px;
+  align-items: baseline;
+  margin: 20px 0 0;
+  color: #a8b0bd;
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.surname-place-feature__date strong {
+  color: #f0d58c;
+  font-size: 12px;
+}
+
+.surname-place-feature__action {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 9px;
+  margin-top: 20px;
+  padding: 9px 12px;
+  border: 1px solid rgba(214, 168, 79, 0.3);
+  border-radius: 7px;
+  background: rgba(7, 9, 13, 0.3);
+  color: #f5f7fa;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.surname-place-feature__media:focus-visible,
+.surname-place-feature__action:focus-visible {
+  outline: 2px solid rgba(240, 213, 140, 0.82);
+  outline-offset: -4px;
+}
+
+.surname-geography-table-wrap {
+  overflow: hidden;
+  border: 1px solid rgba(168, 176, 189, 0.16);
+  border-radius: 10px;
+  background: rgba(16, 20, 28, 0.42);
+}
+
+.surname-geography-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.surname-geography-table thead {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.surname-geography-table tbody,
+.surname-geography-table tr,
+.surname-geography-table th,
+.surname-geography-table td {
+  display: block;
+}
+
+.surname-geography-table tr {
+  padding: 22px 20px;
+  border-bottom: 1px solid rgba(168, 176, 189, 0.13);
+}
+
+.surname-geography-table th,
+.surname-geography-table td {
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.surname-geography-table tr:last-child {
+  border-bottom: 0;
+}
+
+.surname-geography-table th,
+.surname-geography-table td {
+  padding: 0;
+  border: 0;
+  text-align: left;
+  vertical-align: top;
+}
+
+.surname-geography-table tbody th {
+  color: #f5f7fa;
+  font-family: 'Sora', Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.surname-geography-table td {
+  margin-top: 18px;
+  color: #a8b0bd;
+  font-size: 14px;
+  line-height: 1.68;
+}
+
+.surname-geography-table [data-label]::before {
+  display: block;
+  margin-bottom: 6px;
+  color: #d6a84f;
+  content: attr(data-label);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.surname-geography-note {
+  margin-top: 24px;
 }
 
 .surname-uncertainty {
@@ -427,6 +749,7 @@ h3 {
   border: 1px solid rgba(214, 168, 79, 0.25);
   border-radius: 10px;
   background: rgba(16, 20, 28, 0.54);
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
 }
 
 .surname-uncertainty ul {
@@ -473,6 +796,7 @@ h3 {
   gap: 16px;
   padding: 26px 0;
   border-bottom: 1px solid rgba(168, 176, 189, 0.13);
+  transition: background 180ms ease, transform 180ms ease;
 }
 
 .surname-sources li:last-child {
@@ -512,18 +836,43 @@ h3 {
   gap: 8px;
   min-height: 44px;
   margin-top: 2px;
+  padding: 10px 13px;
+  border: 1px solid rgba(214, 168, 79, 0.34);
+  border-radius: 8px;
+  background: rgba(214, 168, 79, 0.065);
   color: #f0d58c;
   font:
     700 11px/1.3 'Space Mono',
     'IBM Plex Mono',
     monospace;
   letter-spacing: 0.05em;
+  box-shadow: inset 0 0 0 1px rgba(240, 213, 140, 0.025);
   text-decoration: none;
   text-transform: uppercase;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
 }
 
 .surname-sources a:hover {
-  color: #d6a84f;
+  border-color: #f0d58c;
+  background: rgba(214, 168, 79, 0.14);
+  color: #f5f7fa;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px) scale(1.045);
+}
+
+.surname-sources a > span:last-child {
+  font-size: 15px;
+  line-height: 1;
+  transition: transform 180ms ease;
+}
+
+.surname-sources a:hover > span:last-child {
+  transform: translate(2px, -2px);
 }
 
 .surname-relationship {
@@ -633,7 +982,101 @@ h3 {
   color: #f0d58c;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .surname-timeline li:hover article {
+    border-color: rgba(214, 168, 79, 0.24);
+    background: rgba(214, 168, 79, 0.045);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .surname-timeline li:hover .surname-timeline__date {
+    color: #ffffff;
+    transform: translateX(3px);
+  }
+
+  .surname-timeline li:hover .surname-timeline__icon {
+    border-color: rgba(240, 213, 140, 0.62);
+    background: rgba(214, 168, 79, 0.14);
+    color: #f0d58c;
+    transform: rotate(-3deg) scale(1.05);
+  }
+
+  .surname-records li:hover,
+  .surname-sources li:hover {
+    background: rgba(214, 168, 79, 0.04);
+    transform: translateX(4px);
+  }
+
+  .surname-records li:hover .surname-records__index {
+    color: #f0d58c;
+    transform: translateY(-2px);
+  }
+
+  .surname-place-feature:hover {
+    border-color: rgba(214, 168, 79, 0.4);
+    box-shadow: 0 22px 54px rgba(0, 0, 0, 0.22);
+    transform: translateY(-3px);
+  }
+
+  .surname-place-feature:hover .surname-place-feature__media img,
+  .surname-place-feature__media:hover img,
+  .surname-place-feature__media:focus-visible img {
+    filter: saturate(1.06) contrast(1.02);
+    transform: scale(1.025);
+  }
+
+  .surname-place-feature__action:hover {
+    border-color: #f0d58c;
+    background: rgba(214, 168, 79, 0.1);
+    color: #f0d58c;
+    transform: translateY(-1px);
+  }
+
+  .surname-geography-table tbody tr:hover th,
+  .surname-geography-table tbody tr:hover td {
+    background: rgba(214, 168, 79, 0.045);
+  }
+
+  .surname-meaning-note:hover,
+  .surname-word-note:hover,
+  .surname-geography-note:hover {
+    background: rgba(20, 25, 34, 0.82);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .surname-uncertainty:hover {
+    border-color: rgba(214, 168, 79, 0.42);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+}
+
 @media (min-width: 768px) {
+  .surname-language-switch {
+    min-height: 52px;
+    gap: 11px;
+    padding: 9px 16px 9px 10px;
+    font-size: 13px;
+  }
+
+  .surname-language-switch__flag {
+    width: 34px;
+    height: 25px;
+    flex-basis: 34px;
+  }
+
+  .surname-language-switch__flag svg {
+    width: 32px;
+    height: 22px;
+  }
+
+  .surname-language-switch__click-icon {
+    width: 20px;
+    height: 20px;
+  }
+
   .surname-hero__inner {
     gap: 40px;
     padding-top: 148px;
@@ -662,10 +1105,91 @@ h3 {
     padding-left: 42px;
   }
 
+  .surname-timeline__date {
+    font-size: 18px;
+  }
+
+  .surname-place-feature figcaption {
+    padding: 30px 28px 28px;
+  }
+
   .surname-records li {
     grid-template-columns: 58px minmax(0, 1fr);
     gap: 22px;
     padding: 30px 0;
+  }
+
+  .surname-geography-table thead {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    clip-path: none;
+    white-space: normal;
+  }
+
+  .surname-geography-table thead {
+    display: table-header-group;
+  }
+
+  .surname-geography-table tbody {
+    display: table-row-group;
+  }
+
+  .surname-geography-table tr {
+    display: table-row;
+    padding: 0;
+    border-bottom: 0;
+  }
+
+  .surname-geography-table th,
+  .surname-geography-table td {
+    display: table-cell;
+    padding: 20px 18px;
+    border-bottom: 1px solid rgba(168, 176, 189, 0.13);
+  }
+
+  .surname-geography-table thead th {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background: rgba(214, 168, 79, 0.055);
+    color: #d6a84f;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  .surname-geography-table thead th:first-child,
+  .surname-geography-table tbody th {
+    width: 26%;
+  }
+
+  .surname-geography-table thead th:nth-child(2),
+  .surname-geography-table thead th:nth-child(3),
+  .surname-geography-table td {
+    width: 37%;
+  }
+
+  .surname-geography-table tbody th {
+    font-size: 15px;
+  }
+
+  .surname-geography-table td {
+    margin-top: 0;
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .surname-geography-table tbody tr:last-child th,
+  .surname-geography-table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .surname-geography-table [data-label]::before {
+    display: none;
   }
 
   .surname-sources li {
@@ -678,7 +1202,6 @@ h3 {
     grid-column: auto;
     justify-self: end;
     margin-top: 0;
-    padding-left: 16px;
   }
 
   .surname-relationship {
@@ -732,6 +1255,22 @@ h3 {
     grid-template-columns: 70px minmax(0, 1fr);
   }
 
+  .surname-place-feature {
+    grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
+  }
+
+  .surname-place-feature__media {
+    min-height: 430px;
+    aspect-ratio: auto;
+  }
+
+  .surname-place-feature figcaption {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 38px;
+  }
+
   .surname-closing__inner {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
@@ -744,18 +1283,30 @@ h3 {
 }
 
 @media (min-width: 1280px) {
+  .surname-language-switch {
+    min-height: 54px;
+    gap: 12px;
+    padding: 10px 18px 10px 11px;
+  }
+
+  .surname-language-switch__flag {
+    width: 36px;
+    height: 27px;
+    flex-basis: 36px;
+  }
+
+  .surname-language-switch__flag svg {
+    width: 34px;
+    height: 23px;
+  }
+
+  .surname-language-switch__click-icon {
+    width: 21px;
+    height: 21px;
+  }
+
   .surname-frame {
     max-width: 1320px;
-  }
-
-  .surname-hero__copy,
-  .surname-formation {
-    margin-left: 20px;
-  }
-
-  .surname-hero__topline {
-    margin-right: 20px;
-    margin-left: 20px;
   }
 
   .surname-records li {
@@ -765,13 +1316,13 @@ h3 {
 
 @media (min-width: 1440px) {
   .surname-frame {
-    max-width: 1360px;
+    max-width: 1400px;
   }
 }
 
 @media (min-width: 1728px) {
   .surname-frame {
-    max-width: 1480px;
+    max-width: 1560px;
   }
 
   .surname-hero__inner {
@@ -791,6 +1342,12 @@ h3 {
     linear-gradient(180deg, #ffffff 0%, #f8f7f3 30%, #ffffff 65%, #f8f7f3 100%);
 }
 
+:host-context(.theme-resolved-light) .surname-hero,
+:host-context(.theme-resolved-light) .surname-section,
+:host-context(.theme-resolved-light) .surname-relationship {
+  border-color: #e1e4e9;
+}
+
 :host-context(.theme-resolved-light) h1,
 :host-context(.theme-resolved-light) h2,
 :host-context(.theme-resolved-light) h3,
@@ -807,6 +1364,9 @@ h3 {
 :host-context(.theme-resolved-light) .surname-prose p,
 :host-context(.theme-resolved-light) .surname-timeline article > p:last-child,
 :host-context(.theme-resolved-light) .surname-records li > div > p:last-child,
+:host-context(.theme-resolved-light) .surname-geography-table td,
+:host-context(.theme-resolved-light) .surname-geography-note p,
+:host-context(.theme-resolved-light) .surname-place-feature figcaption > p:not(.surname-kicker, .surname-place-feature__date),
 :host-context(.theme-resolved-light) .surname-sources__copy > p:last-child,
 :host-context(.theme-resolved-light) .surname-relationship__inner > div > p:last-child,
 :host-context(.theme-resolved-light) .surname-closing__copy > p:last-child,
@@ -819,6 +1379,9 @@ h3 {
 :host-context(.theme-resolved-light) .surname-formation .surname-formation__meaning,
 :host-context(.theme-resolved-light) .surname-timeline__label,
 :host-context(.theme-resolved-light) .surname-records__label,
+:host-context(.theme-resolved-light) .surname-geography-table thead th,
+:host-context(.theme-resolved-light) .surname-geography-table [data-label]::before,
+:host-context(.theme-resolved-light) .surname-geography-note span,
 :host-context(.theme-resolved-light) .surname-sources__authority {
   color: #9a6a1e;
 }
@@ -830,6 +1393,12 @@ h3 {
   color: #8c621d;
 }
 
+:host-context(.theme-resolved-light) .surname-timeline__icon {
+  border-color: #d9dde5;
+  background: rgba(184, 135, 47, 0.07);
+  color: #9a6a1e;
+}
+
 :host-context(.theme-resolved-light) .surname-section--surface,
 :host-context(.theme-resolved-light) .surname-relationship {
   background: rgba(248, 247, 243, 0.82);
@@ -838,9 +1407,54 @@ h3 {
 :host-context(.theme-resolved-light) .surname-language-switch,
 :host-context(.theme-resolved-light) .surname-meaning-note,
 :host-context(.theme-resolved-light) .surname-word-note,
+:host-context(.theme-resolved-light) .surname-geography-table-wrap,
+:host-context(.theme-resolved-light) .surname-geography-note,
 :host-context(.theme-resolved-light) .surname-uncertainty {
   border-color: rgba(184, 135, 47, 0.32);
   background: rgba(255, 255, 255, 0.82);
+}
+
+:host-context(.theme-resolved-light) .surname-place-feature {
+  border-color: #d9dde5;
+  background:
+    radial-gradient(circle at 92% 8%, rgba(184, 135, 47, 0.07), transparent 32%),
+    rgba(255, 255, 255, 0.84);
+  box-shadow: 0 16px 42px rgba(17, 24, 39, 0.08);
+}
+
+:host-context(.theme-resolved-light) .surname-place-feature__date {
+  color: #5f6673;
+}
+
+:host-context(.theme-resolved-light) .surname-place-feature__date strong {
+  color: #8c621d;
+}
+
+:host-context(.theme-resolved-light) .surname-place-feature__action {
+  border-color: #d9dde5;
+  background: rgba(255, 255, 255, 0.76);
+  color: #111827;
+}
+
+:host-context(.theme-resolved-light) .surname-place-feature__action app-path-icon {
+  color: #9a6a1e;
+}
+
+:host-context(.theme-resolved-light) .surname-geography-table-wrap,
+:host-context(.theme-resolved-light) .surname-uncertainty {
+  border-color: #d9dde5;
+}
+
+:host-context(.theme-resolved-light) .surname-formation,
+:host-context(.theme-resolved-light) .surname-timeline article,
+:host-context(.theme-resolved-light) .surname-records,
+:host-context(.theme-resolved-light) .surname-records li,
+:host-context(.theme-resolved-light) .surname-geography-table th,
+:host-context(.theme-resolved-light) .surname-geography-table td,
+:host-context(.theme-resolved-light) .surname-uncertainty li,
+:host-context(.theme-resolved-light) .surname-sources,
+:host-context(.theme-resolved-light) .surname-sources li {
+  border-color: #e1e4e9;
 }
 
 :host-context(.theme-resolved-light) .surname-language-switch:hover {
@@ -849,9 +1463,57 @@ h3 {
   color: #8c621d;
 }
 
+:host-context(.theme-resolved-light) .surname-sources a {
+  border-color: rgba(184, 135, 47, 0.36);
+  background: rgba(184, 135, 47, 0.07);
+  box-shadow: inset 0 0 0 1px rgba(184, 135, 47, 0.025);
+}
+
+:host-context(.theme-resolved-light) .surname-sources a:hover {
+  border-color: #b8872f;
+  background: rgba(184, 135, 47, 0.14);
+  color: #6f4b14;
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.12);
+}
+
 :host-context(.theme-resolved-light) .surname-meaning-note p,
-:host-context(.theme-resolved-light) .surname-word-note p {
+:host-context(.theme-resolved-light) .surname-word-note p,
+:host-context(.theme-resolved-light) .surname-geography-note p {
   color: #2c3441;
+}
+
+:host-context(.theme-resolved-light) .surname-geography-table tbody th {
+  color: #111827;
+}
+
+:host-context(.theme-resolved-light) .surname-geography-table thead th {
+  background: rgba(184, 135, 47, 0.07);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :host-context(.theme-resolved-light) .surname-timeline li:hover article,
+  :host-context(.theme-resolved-light) .surname-records li:hover,
+  :host-context(.theme-resolved-light) .surname-sources li:hover,
+  :host-context(.theme-resolved-light) .surname-geography-table tbody tr:hover th,
+  :host-context(.theme-resolved-light) .surname-geography-table tbody tr:hover td {
+    background: rgba(184, 135, 47, 0.055);
+  }
+
+  :host-context(.theme-resolved-light) .surname-timeline li:hover .surname-timeline__date {
+    color: #6f4b14;
+  }
+
+  :host-context(.theme-resolved-light) .surname-place-feature:hover {
+    border-color: rgba(184, 135, 47, 0.42);
+    box-shadow: 0 22px 52px rgba(17, 24, 39, 0.12);
+  }
+
+  :host-context(.theme-resolved-light) .surname-meaning-note:hover,
+  :host-context(.theme-resolved-light) .surname-word-note:hover,
+  :host-context(.theme-resolved-light) .surname-geography-note:hover {
+    background: #ffffff;
+    box-shadow: 0 12px 28px rgba(17, 24, 39, 0.08);
+  }
 }
 
 :host-context(.theme-resolved-light) .surname-timeline li::before {
@@ -895,12 +1557,47 @@ h3 {
 
 @media (prefers-reduced-motion: reduce) {
   .surname-language-switch,
-  .surname-action {
+  .surname-language-switch__click-icon,
+  .surname-action,
+  .surname-timeline article,
+  .surname-timeline__date,
+  .surname-timeline__icon,
+  .surname-records li,
+  .surname-records__index,
+  .surname-place-feature,
+  .surname-place-feature__media img,
+  .surname-place-feature__action,
+  .surname-geography-table th,
+  .surname-geography-table td,
+  .surname-meaning-note,
+  .surname-word-note,
+  .surname-geography-note,
+  .surname-uncertainty,
+  .surname-sources li,
+  .surname-sources a,
+  .surname-sources a > span:last-child {
+    animation: none;
     transition: none;
   }
 
   .surname-language-switch:hover,
-  .surname-action:hover {
+  .surname-action:hover,
+  .surname-timeline li:hover article,
+  .surname-timeline li:hover .surname-timeline__date,
+  .surname-timeline li:hover .surname-timeline__icon,
+  .surname-records li:hover,
+  .surname-sources li:hover,
+  .surname-sources a:hover,
+  .surname-sources a:hover > span:last-child,
+  .surname-place-feature:hover,
+  .surname-place-feature:hover .surname-place-feature__media img,
+  .surname-place-feature__media:hover img,
+  .surname-place-feature__media:focus-visible img,
+  .surname-place-feature__action:hover,
+  .surname-meaning-note:hover,
+  .surname-word-note:hover,
+  .surname-geography-note:hover,
+  .surname-uncertainty:hover {
     transform: none;
   }
 }
