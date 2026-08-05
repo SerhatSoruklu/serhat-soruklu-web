@@ -8,8 +8,13 @@
   overflow: hidden;
   overflow-wrap: break-word;
   background:
-    radial-gradient(ellipse at 78% 3%, rgba(214, 168, 79, 0.075), transparent 29%),
-    linear-gradient(180deg, #080b10 0%, #07090d 30%, #090c11 65%, #07090d 100%);
+    radial-gradient(
+      ellipse 120% 48% at 100% 0%,
+      rgba(214, 168, 79, 0.075) 0%,
+      rgba(214, 168, 79, 0.036) 38%,
+      transparent 72%
+    ),
+    linear-gradient(145deg, #080b10 0%, #080a0f 42%, #0b0c10 72%, #07090d 100%);
 }
 
 .surname-frame {
@@ -418,6 +423,7 @@ h3 {
 
 .surname-timeline__date {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 10px;
   color: #f0d58c;
@@ -426,6 +432,16 @@ h3 {
   letter-spacing: 0.045em;
   line-height: 1.3;
   transition: color 180ms ease, transform 180ms ease;
+}
+
+.surname-timeline__date-heading {
+  flex: 0 0 100%;
+  margin-bottom: 2px;
+  color: #a8b0bd;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  line-height: 1.4;
+  text-transform: uppercase;
 }
 
 .surname-timeline__icon {
@@ -488,8 +504,9 @@ h3 {
   display: grid;
   grid-template-columns: 42px minmax(0, 1fr);
   gap: 16px;
-  padding: 26px 0;
+  padding: 26px 20px;
   border-bottom: 1px solid rgba(168, 176, 189, 0.13);
+  border-radius: 8px;
   transition: background 180ms ease, transform 180ms ease;
 }
 
@@ -499,9 +516,10 @@ h3 {
 
 .surname-records__index {
   color: #677080;
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 700;
-  line-height: 1.5;
+  letter-spacing: -0.035em;
+  line-height: 1.25;
   transition: color 180ms ease, transform 180ms ease;
 }
 
@@ -794,8 +812,10 @@ h3 {
   display: grid;
   grid-template-columns: 34px minmax(0, 1fr);
   gap: 16px;
-  padding: 26px 0;
+  padding: 26px 20px;
   border-bottom: 1px solid rgba(168, 176, 189, 0.13);
+  border-radius: 8px;
+  cursor: default;
   transition: background 180ms ease, transform 180ms ease;
 }
 
@@ -805,9 +825,11 @@ h3 {
 
 .surname-sources__number {
   color: #677080;
-  font-size: 11px;
+  font-size: 18px;
   font-weight: 700;
-  line-height: 1.5;
+  letter-spacing: -0.035em;
+  line-height: 1.25;
+  transition: color 180ms ease, transform 180ms ease;
 }
 
 .surname-sources__copy {
@@ -816,6 +838,25 @@ h3 {
 
 .surname-sources h3 {
   overflow-wrap: anywhere;
+}
+
+.surname-sources__title-link {
+  color: #ffffff;
+  opacity: 1;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    text-decoration-color 180ms ease;
+}
+
+.surname-sources__title-link:hover,
+.surname-sources__title-link:focus-visible {
+  color: #f0d58c;
+  text-decoration-color: rgba(240, 213, 140, 0.62);
 }
 
 .surname-sources__authority {
@@ -828,7 +869,7 @@ h3 {
   text-transform: uppercase;
 }
 
-.surname-sources a {
+.surname-sources__action {
   display: inline-flex;
   grid-column: 2;
   align-items: center;
@@ -849,6 +890,7 @@ h3 {
   box-shadow: inset 0 0 0 1px rgba(240, 213, 140, 0.025);
   text-decoration: none;
   text-transform: uppercase;
+  cursor: pointer;
   transition:
     border-color 180ms ease,
     background 180ms ease,
@@ -857,7 +899,7 @@ h3 {
     transform 180ms ease;
 }
 
-.surname-sources a:hover {
+.surname-sources__action:hover {
   border-color: #f0d58c;
   background: rgba(214, 168, 79, 0.14);
   color: #f5f7fa;
@@ -865,13 +907,13 @@ h3 {
   transform: translateY(-2px) scale(1.045);
 }
 
-.surname-sources a > span:last-child {
+.surname-sources__action > span:last-child {
   font-size: 15px;
   line-height: 1;
   transition: transform 180ms ease;
 }
 
-.surname-sources a:hover > span:last-child {
+.surname-sources__action:hover > span:last-child {
   transform: translate(2px, -2px);
 }
 
@@ -1013,6 +1055,11 @@ h3 {
     transform: translateY(-2px);
   }
 
+  .surname-sources li:hover .surname-sources__number {
+    color: #f0d58c;
+    transform: translateY(-2px);
+  }
+
   .surname-place-feature:hover {
     border-color: rgba(214, 168, 79, 0.4);
     box-shadow: 0 22px 54px rgba(0, 0, 0, 0.22);
@@ -1116,7 +1163,7 @@ h3 {
   .surname-records li {
     grid-template-columns: 58px minmax(0, 1fr);
     gap: 22px;
-    padding: 30px 0;
+    padding: 30px 24px;
   }
 
   .surname-geography-table thead {
@@ -1198,10 +1245,11 @@ h3 {
     align-items: center;
   }
 
-  .surname-sources a {
+  .surname-sources__action {
     grid-column: auto;
     justify-self: end;
     margin-top: 0;
+    margin-right: 12px;
   }
 
   .surname-relationship {
@@ -1338,8 +1386,13 @@ h3 {
 
 :host-context(.theme-resolved-light) .surname-page {
   background:
-    radial-gradient(ellipse at 78% 3%, rgba(184, 135, 47, 0.07), transparent 29%),
-    linear-gradient(180deg, #ffffff 0%, #f8f7f3 30%, #ffffff 65%, #f8f7f3 100%);
+    radial-gradient(
+      ellipse 120% 48% at 100% 0%,
+      rgba(184, 135, 47, 0.07) 0%,
+      rgba(184, 135, 47, 0.03) 38%,
+      transparent 72%
+    ),
+    linear-gradient(145deg, #ffffff 0%, #fbfaf7 42%, #f8f7f3 72%, #ffffff 100%);
 }
 
 :host-context(.theme-resolved-light) .surname-hero,
@@ -1389,8 +1442,18 @@ h3 {
 :host-context(.theme-resolved-light) .surname-formation__equation strong,
 :host-context(.theme-resolved-light) .surname-timeline__date,
 :host-context(.theme-resolved-light) .surname-uncertainty__boundary,
-:host-context(.theme-resolved-light) .surname-sources a {
+:host-context(.theme-resolved-light) .surname-sources__action {
   color: #8c621d;
+}
+
+:host-context(.theme-resolved-light) .surname-sources__title-link {
+  color: #111827;
+}
+
+:host-context(.theme-resolved-light) .surname-sources__title-link:hover,
+:host-context(.theme-resolved-light) .surname-sources__title-link:focus-visible {
+  color: #8c621d;
+  text-decoration-color: rgba(140, 98, 29, 0.5);
 }
 
 :host-context(.theme-resolved-light) .surname-timeline__icon {
@@ -1463,13 +1526,13 @@ h3 {
   color: #8c621d;
 }
 
-:host-context(.theme-resolved-light) .surname-sources a {
+:host-context(.theme-resolved-light) .surname-sources__action {
   border-color: rgba(184, 135, 47, 0.36);
   background: rgba(184, 135, 47, 0.07);
   box-shadow: inset 0 0 0 1px rgba(184, 135, 47, 0.025);
 }
 
-:host-context(.theme-resolved-light) .surname-sources a:hover {
+:host-context(.theme-resolved-light) .surname-sources__action:hover {
   border-color: #b8872f;
   background: rgba(184, 135, 47, 0.14);
   color: #6f4b14;
@@ -1574,8 +1637,10 @@ h3 {
   .surname-geography-note,
   .surname-uncertainty,
   .surname-sources li,
-  .surname-sources a,
-  .surname-sources a > span:last-child {
+  .surname-sources__number,
+  .surname-sources__title-link,
+  .surname-sources__action,
+  .surname-sources__action > span:last-child {
     animation: none;
     transition: none;
   }
@@ -1587,8 +1652,8 @@ h3 {
   .surname-timeline li:hover .surname-timeline__icon,
   .surname-records li:hover,
   .surname-sources li:hover,
-  .surname-sources a:hover,
-  .surname-sources a:hover > span:last-child,
+  .surname-sources__action:hover,
+  .surname-sources__action:hover > span:last-child,
   .surname-place-feature:hover,
   .surname-place-feature:hover .surname-place-feature__media img,
   .surname-place-feature__media:hover img,

@@ -18,6 +18,7 @@ import {
 import { pageSeoMetadata } from '../../core/seo/seo.config';
 import { SeoService } from '../../core/seo/seo.service';
 import { PathIconComponent } from '../../shared/icons/path-icon.component';
+import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
 import { SaridibekDialogService } from './saridibek-dialog/saridibek-dialog.service';
 import { saridibekPhotoAssets, saridibekPhotoContent } from './saridibek-photo.content';
 import { SorukluSurnameLanguageService } from './soruklu-surname-language.service';
@@ -35,7 +36,8 @@ const sourceUrls = {
     'https://arastirma.tarimorman.gov.tr/tepge/Belgeler/Yay%C4%B1n%20Ar%C5%9Fivi/2012-2016%20Yay%C4%B1n%20Ar%C5%9Fivi/Yay%C4%B1nNo270.pdf',
   boundaryArchive:
     'https://www.corum.bel.tr/public/uploads/2023/05/orum-belgeleri-cumhuriyet-arsivleri.pdf',
-  currentOsmancik: 'https://www.sp.gov.tr/upload/xSPRapor/files/r3S9g%2BCIOI24fr.pdf',
+  currentOsmancik:
+    'https://www.corumozelidare.gov.tr/kurumlar/corumozelidare.gov.tr/GENEL-HABERLER/2025/CORUM-IL-OZEL-IDARESI-2024-YILI-FAALIYET-RAPORU.pdf',
   earlyRepublic:
     'https://cdn.tbmm.gov.tr/TbmmWeb/Yayinlar/Dosya/f8a3911b-cad6-4515-b920-a283a2654f9e.pdf',
   localReport:
@@ -76,6 +78,7 @@ const surnameContent = {
       heading: 'The name appears in records across centuries.',
       introduction:
         'The surviving evidence follows a place name. It does not, on its own, establish a continuous modern genealogy.',
+      yearLabel: 'Year',
       entries: [
         {
           date: 'c. 1520',
@@ -276,6 +279,7 @@ const surnameContent = {
         'The links below lead to the strongest accessible sources used for this page. External documents open in a new tab.',
       actionLabel: 'Open source',
       actionAriaSuffix: 'opens in a new tab',
+      titleTooltip: 'Opens external source in a new tab',
       items: [
         {
           number: '01',
@@ -436,6 +440,7 @@ const surnameContent = {
       heading: 'Ad, yüzyıllara yayılan kayıtlarda görülüyor.',
       introduction:
         'Günümüze ulaşan kanıt bir yer adını takip eder. Bu kanıt, tek başına kesintisiz bir modern soy bağı kurmaz.',
+      yearLabel: 'Sene',
       entries: [
         {
           date: 'Yaklaşık 1520',
@@ -636,6 +641,7 @@ const surnameContent = {
         'Aşağıdaki bağlantılar bu sayfada kullanılan, erişilebilen en güçlü kaynaklara gider. Dış belgeler yeni sekmede açılır.',
       actionLabel: 'Kaynağı aç',
       actionAriaSuffix: 'yeni sekmede açılır',
+      titleTooltip: 'Harici kaynağı yeni sekmede açar',
       items: [
         {
           number: '01',
@@ -766,7 +772,7 @@ const surnameContent = {
 
 @Component({
   selector: 'app-soruklu-surname',
-  imports: [PathIconComponent, RouterLink],
+  imports: [PathIconComponent, RouterLink, TooltipDirective],
   templateUrl: './soruklu-surname.component.html',
   styleUrl: './soruklu-surname.component.css',
 })

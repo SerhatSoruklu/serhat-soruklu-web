@@ -97,6 +97,9 @@
         @for (entry of content().timeline.entries; track entry.date) {
           <li>
             <div class="surname-timeline__date">
+              @if ($first) {
+                <span class="surname-timeline__date-heading">{{ content().timeline.yearLabel }}</span>
+              }
               <span class="surname-timeline__icon" aria-hidden="true">
                 <app-path-icon
                   name="timeline-record"
@@ -306,11 +309,24 @@
           <li>
             <span class="surname-sources__number" aria-hidden="true">{{ source.number }}</span>
             <div class="surname-sources__copy">
-              <h3>{{ source.title }}</h3>
+              <h3>
+                <a
+                  class="surname-sources__title-link"
+                  [href]="source.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  [attr.aria-label]="source.title + '; ' + content().sources.actionAriaSuffix"
+                  [appTooltip]="content().sources.titleTooltip"
+                  appTooltipPlacement="top"
+                >
+                  {{ source.title }}
+                </a>
+              </h3>
               <p class="surname-sources__authority">{{ source.authority }}</p>
               <p>{{ source.description }}</p>
             </div>
             <a
+              class="surname-sources__action"
               [href]="source.url"
               target="_blank"
               rel="noopener noreferrer"

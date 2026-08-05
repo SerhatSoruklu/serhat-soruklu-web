@@ -26,8 +26,8 @@ describe('SaridibekDialogComponent', () => {
     const avif = nativeElement.querySelector<HTMLSourceElement>('source[type="image/avif"]');
 
     expect(dialog?.getAttribute('lang')).toBe('en-GB');
-    expect(nativeElement.querySelector('h2')?.textContent).toContain(
-      'Vezirkopru-Saridibek-Koyu-13-November-2019',
+    expect(nativeElement.querySelector('h2')?.textContent?.trim()).toBe(
+      'Vezirkopru Saridibek Koyu',
     );
     expect(nativeElement.textContent).toContain('13 November 2019');
     expect(nativeElement.textContent).toContain('Türkiye');

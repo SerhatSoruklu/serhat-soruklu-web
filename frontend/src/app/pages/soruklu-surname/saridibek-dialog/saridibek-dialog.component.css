@@ -9,9 +9,9 @@
 }
 
 .cdk-overlay-pane.serhat-saridibek-dialog-panel {
-  width: min(980px, calc(100vw - 40px));
-  max-width: calc(100vw - 40px) !important;
-  max-height: calc(100dvh - 40px);
+  width: min(1680px, calc(100vw - 80px), calc(213.333dvh - 137px)) !important;
+  max-width: min(calc(100vw - 80px), calc(213.333dvh - 137px)) !important;
+  max-height: calc(100dvh - 64px);
 }
 
 .serhat-saridibek-dialog-panel .mat-mdc-dialog-container,
@@ -28,8 +28,10 @@
 .saridibek-dialog {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(440px, 1.08fr) minmax(350px, 0.92fr);
-  max-height: calc(100dvh - 40px);
+  grid-template-columns: minmax(520px, 1.25fr) minmax(380px, 0.75fr);
+  width: 100%;
+  height: min(788.6px, calc(46.875vw - 36.44px), calc(100dvh - 64px));
+  max-height: calc(100dvh - 64px);
   overflow: hidden;
   border: 1px solid rgba(214, 168, 79, 0.2);
   border-radius: 14px;
@@ -82,7 +84,8 @@
 .saridibek-dialog__media {
   position: relative;
   display: flex;
-  min-height: 570px;
+  min-height: 0;
+  aspect-ratio: 4 / 3;
   align-items: center;
   justify-content: center;
   overflow: hidden;
@@ -112,7 +115,7 @@
 }
 
 .saridibek-dialog__media img {
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
 }
 
@@ -307,11 +310,15 @@
 
 @media (max-width: 1023px) {
   .cdk-overlay-pane.serhat-saridibek-dialog-panel {
-    width: min(760px, calc(100vw - 40px));
+    width: min(760px, calc(100vw - 40px)) !important;
+    max-width: calc(100vw - 40px) !important;
+    max-height: calc(100dvh - 40px);
   }
 
   .saridibek-dialog {
     display: block;
+    height: auto;
+    max-height: calc(100dvh - 40px);
   }
 
   .saridibek-dialog__media {
@@ -330,6 +337,38 @@
 
   .saridibek-dialog__content {
     padding: 34px 34px 36px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .cdk-overlay-pane.serhat-saridibek-dialog-panel {
+    width: min(920px, calc(100vw - 40px)) !important;
+    max-width: calc(100vw - 40px) !important;
+  }
+
+  .saridibek-dialog {
+    display: block;
+    height: auto;
+    max-height: calc(100dvh - 64px);
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .saridibek-dialog__media {
+    width: 100%;
+    max-height: none;
+  }
+
+  .saridibek-dialog__media::after {
+    background: linear-gradient(180deg, transparent 76%, rgba(7, 9, 13, 0.42));
+  }
+
+  .theme-resolved-light .saridibek-dialog__media::after {
+    background: linear-gradient(180deg, transparent 76%, rgba(248, 247, 243, 0.46));
+  }
+
+  .saridibek-dialog__content {
+    overflow: visible;
   }
 }
 

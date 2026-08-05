@@ -36,7 +36,8 @@ describe('SorukluSurnameComponent', () => {
     expect(text).toContain('1974');
     expect(text).toContain('A historical explanation survives—but its date does not.');
     expect(text).toContain('Two Soruk locations; one regional research corridor.');
-    expect(text).toContain('Vezirkopru-Saridibek-Koyu-13-November-2019');
+    expect(text).toContain('Vezirkopru Saridibek Koyu');
+    expect(text).toContain('Year');
     expect(text).toContain('Research lead · not verified');
     expect(text).toContain('The evidence has a clear boundary.');
     expect(text).not.toMatch(/has a coat of arms|is a noble|is a dynasty|are direct descendants/i);
@@ -78,16 +79,26 @@ describe('SorukluSurnameComponent', () => {
     const fixture = TestBed.createComponent(SorukluSurnameComponent);
     fixture.detectChanges();
     const nativeElement = fixture.nativeElement as HTMLElement;
-    const sources = Array.from(
-      nativeElement.querySelectorAll<HTMLAnchorElement>('.surname-sources a'),
+    const sourceTitles = Array.from(
+      nativeElement.querySelectorAll<HTMLAnchorElement>('.surname-sources__title-link'),
     );
+    const sourceActions = Array.from(
+      nativeElement.querySelectorAll<HTMLAnchorElement>('.surname-sources__action'),
+    );
+    const sources = [...sourceTitles, ...sourceActions];
     const orderLinks = nativeElement.querySelectorAll<HTMLAnchorElement>(
       'a[href="/soruklu-order"]',
     );
 
-    expect(sources).toHaveLength(13);
+    expect(sourceTitles).toHaveLength(13);
+    expect(sourceActions).toHaveLength(13);
+    expect(sources).toHaveLength(26);
     expect(sources.every((link) => link.target === '_blank')).toBe(true);
     expect(sources.every((link) => link.rel === 'noopener noreferrer')).toBe(true);
+    expect(sourceTitles.map((link) => link.href)).toEqual(sourceActions.map((link) => link.href));
+    expect(sourceTitles[9]?.href).toBe(
+      'https://www.corumozelidare.gov.tr/kurumlar/corumozelidare.gov.tr/GENEL-HABERLER/2025/CORUM-IL-OZEL-IDARESI-2024-YILI-FAALIYET-RAPORU.pdf',
+    );
     expect(orderLinks).toHaveLength(2);
     expect(nativeElement.querySelector('a[href="/"]')).not.toBeNull();
   });

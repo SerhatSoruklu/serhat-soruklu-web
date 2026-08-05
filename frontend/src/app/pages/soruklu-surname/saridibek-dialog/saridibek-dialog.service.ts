@@ -10,10 +10,10 @@ export class SaridibekDialogService {
     id: 'saridibek-dialog',
     loadComponent: async () =>
       (await import('./saridibek-dialog.component')).SaridibekDialogComponent,
-    maxHeight: 'calc(100dvh - 24px)',
-    maxWidth: 'calc(100vw - 24px)',
+    maxHeight: 'calc(100dvh - 64px)',
+    maxWidth: 'calc(100vw - 80px)',
     panelClass: 'serhat-saridibek-dialog-panel',
-    width: 'min(980px, calc(100vw - 40px))',
+    width: 'min(1680px, calc(100vw - 80px))',
   });
 
   open(): Promise<void> {
