@@ -41,13 +41,19 @@ describe('SorukluSurnameComponent', () => {
     );
     expect(text).toContain('A historical explanation survives—but its date does not.');
     expect(text).toContain('Two Soruk locations; one regional research corridor.');
+    expect(text).toContain('The living footprint of a rare surname');
+    expect(text).toContain('approximately 500 living people may carry the Soruklu surname today');
+    expect(text).toContain('served as muhtar of Tekmen village in Osmancık');
+    expect(text).toContain('Working estimate · low confidence');
+    expect(text).toContain('may be in the low thousands');
     expect(text).toContain('The surname and the Soruklu Order are separate subjects.');
-    expect(text).toContain('Vezirkopru Saridibek Koyu');
+    expect(text).toContain('Vezirkopru Saridibek Village');
     expect(text).toContain('File date');
     expect(text).toContain('Year');
     expect(text).toContain('Research lead · not verified');
     expect(text).toContain('The evidence has a clear boundary.');
     expect(text).not.toMatch(/has a coat of arms|is a noble|is a dynasty|are direct descendants/i);
+    expect(text).not.toMatch(/current muhtar|mayor/i);
     expect(nativeElement.querySelector('[src*="soruklu-order"]')).toBeNull();
   });
 
@@ -75,10 +81,17 @@ describe('SorukluSurnameComponent', () => {
     expect(nativeElement.textContent).toContain(
       'İki Soruk yeri; tek bir bölgesel araştırma hattı.',
     );
+    expect(nativeElement.textContent).toContain('Nadir bir soyadının yaşayan izi');
+    expect(nativeElement.textContent).toContain(
+      'Osmancık’ın Tekmen köyünde muhtarlık yapmış olan Servet Köroğlu',
+    );
+    expect(nativeElement.textContent).toContain('Çalışma tahmini · düşük güven');
+    expect(nativeElement.textContent).toContain('birkaç bin düzeyinde olabileceğini');
     expect(nativeElement.textContent).toContain('Soyadı ile Soruklu Order ayrı konulardır.');
     expect(nativeElement.textContent).toContain('Vezirköprü Sarıdibek Köyü');
     expect(nativeElement.textContent).toContain('Dosyada belirtilen tarih');
     expect(nativeElement.textContent).toContain('Kanıtlanmamış noktalar');
+    expect(nativeElement.textContent).not.toMatch(/güncel muhtar|belediye başkanı/i);
     expect(button?.textContent).toContain('Read in English');
     expect(title.getTitle()).toBe('Soruklu Soyadı: Anlamı ve Kökeni | Serhat Soruklu');
     expect(document.documentElement.lang).toBe('tr-TR');
@@ -114,14 +127,17 @@ describe('SorukluSurnameComponent', () => {
       'a[href="/soruklu-order"]',
     );
 
-    expect(sourceTitles).toHaveLength(13);
-    expect(sourceActions).toHaveLength(13);
-    expect(sources).toHaveLength(26);
+    expect(sourceTitles).toHaveLength(14);
+    expect(sourceActions).toHaveLength(14);
+    expect(sources).toHaveLength(28);
     expect(sources.every((link) => link.target === '_blank')).toBe(true);
     expect(sources.every((link) => link.rel === 'noopener noreferrer')).toBe(true);
     expect(sourceTitles.map((link) => link.href)).toEqual(sourceActions.map((link) => link.href));
     expect(sourceTitles[9]?.href).toBe(
       'https://www.corumozelidare.gov.tr/kurumlar/corumozelidare.gov.tr/GENEL-HABERLER/2025/CORUM-IL-OZEL-IDARESI-2024-YILI-FAALIYET-RAPORU.pdf',
+    );
+    expect(sourceTitles[13]?.href).toBe(
+      'https://www.osmancik.gov.tr/arastirmaci-yazar-salim-savci-ve-tekmen-koyu-muhtari-servet-koroglu-sayin-kaymakamimizi-ziyaret-etti',
     );
     expect(orderLinks).toHaveLength(2);
     expect(nativeElement.querySelector('a[href="/"]')).not.toBeNull();

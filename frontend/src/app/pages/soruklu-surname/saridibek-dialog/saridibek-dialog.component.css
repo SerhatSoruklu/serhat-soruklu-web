@@ -62,7 +62,11 @@
   background: rgba(7, 9, 13, 0.72);
   color: #f0d58c;
   cursor: pointer;
-  transition: border-color 160ms ease, box-shadow 160ms ease, color 160ms ease, background 160ms ease;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease,
+    background 160ms ease;
 }
 
 .saridibek-dialog__close mat-icon {
@@ -90,8 +94,7 @@
   justify-content: center;
   overflow: hidden;
   background:
-    radial-gradient(ellipse at 50% 20%, rgba(214, 168, 79, 0.1), transparent 46%),
-    #020306;
+    radial-gradient(ellipse at 50% 20%, rgba(214, 168, 79, 0.1), transparent 46%), #020306;
 }
 
 .saridibek-dialog__media::after {
@@ -306,6 +309,12 @@
 
 .theme-resolved-light .saridibek-dialog__chips mat-icon {
   color: #b8872f;
+}
+
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .saridibek-dialog__close {
+    right: 32px;
+  }
 }
 
 @media (max-width: 1023px) {

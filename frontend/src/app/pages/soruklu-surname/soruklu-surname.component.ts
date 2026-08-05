@@ -46,6 +46,8 @@ const sourceUrls = {
   tekmenPublic: 'https://www.corumhaber.net/sukru-soruklu-hayatini-kaybetti',
   bafraPublic:
     'https://www.bafra.bel.tr/Uploads/Resimler/Sayfalar/2025/5/-2024-Yili-Faaliyet-Roporu-/Orj-30756829c6cbfdcac12668ad5291.pdf',
+  servetKoroglu:
+    'https://www.osmancik.gov.tr/arastirmaci-yazar-salim-savci-ve-tekmen-koyu-muhtari-servet-koroglu-sayin-kaymakamimizi-ziyaret-etti',
 } as const;
 
 const surnameContent = {
@@ -265,6 +267,55 @@ const surnameContent = {
       noteLabel: 'First-hand family context',
       note: 'Tekmen, Karataş and Saltık/Saltuk are known paternal context. Research should start with the earliest named paternal ancestor and registered locality, then work backwards through civil and Ottoman population records.',
     },
+    population: {
+      kicker: 'Local family knowledge',
+      heading: 'The living footprint of a rare surname',
+      introduction:
+        'The available figures are local estimates rather than an official surname census. They describe both the changing size of Tekmen village and the wider Soruk and Soruklu surname network shaped by migration.',
+      measureHeading: 'Measure',
+      accountHeading: 'Local account',
+      boundaryHeading: 'Evidence boundary',
+      rows: [
+        {
+          measure: 'Present-day surname estimate',
+          account:
+            'Local family knowledge suggests that approximately 500 living people may carry the Soruklu surname today.',
+          boundary: 'An approximate local estimate, not an official national count.',
+        },
+        {
+          measure: 'Present-day village households',
+          account:
+            'Tekmen is estimated to contain approximately 150 households today, although not every household carries the Soruk or Soruklu surname.',
+          boundary: 'A village household estimate, not a count of Soruklu families.',
+        },
+        {
+          measure: 'Village size in the 1950s',
+          account:
+            'Tekmen was remembered as having approximately 500 households during the 1950s, but the surname distribution within those households is unknown.',
+          boundary:
+            'A remembered household count; it does not identify the surnames used in each home.',
+        },
+        {
+          measure: 'Known Osmancık families outside Tekmen',
+          account:
+            'Servet Köroğlu stated that he personally knows at least 10 families in Osmancık carrying the Soruk or Soruklu surname, excluding those living in Tekmen.',
+          boundary: 'His local knowledge, not an independently verified family count.',
+        },
+        {
+          measure: 'Migration pattern',
+          account:
+            'According to Servet Köroğlu’s local account, Soruk and Soruklu were commonly adopted or retained among families who migrated to other places.',
+          boundary:
+            'This does not establish that every migrant adopted either surname or that all families share one lineage.',
+        },
+      ],
+      evidenceLabel: 'Local testimony · approximate and not independently counted',
+      attribution:
+        'These local estimates were provided by Servet Köroğlu, who served as muhtar of Tekmen village in Osmancık. An official Osmancık District Governorate record dated 31 March 2017 identifies him as Tekmen Village muhtar. The population and surname figures remain local estimates and have not yet been verified against a complete official surname or population register.',
+      workingEstimateLabel: 'Working estimate · low confidence',
+      workingEstimate:
+        'A very rough demographic extrapolation suggests that the total number of people who have carried the Soruklu surname since 1934 may be in the low thousands. No complete official count has yet been identified.',
+    },
     unknown: {
       kicker: 'What remains unproven',
       heading: 'The evidence has a clear boundary.',
@@ -383,6 +434,15 @@ const surnameContent = {
           authority: 'Bafra Municipality · official public report',
           description: 'Documents one official public occurrence of the Soruklu surname in Bafra.',
           url: sourceUrls.bafraPublic,
+        },
+        {
+          number: '14',
+          title:
+            'Researcher and writer Salim Savcı and Tekmen Village muhtar Servet Köroğlu visited the District Governor',
+          authority: 'Osmancık District Governorate · 31 March 2017',
+          description:
+            'Officially identifies Servet Köroğlu as the muhtar of Tekmen village in Osmancık in March 2017, supporting the attribution of the local testimony.',
+          url: sourceUrls.servetKoroglu,
         },
       ],
     },
@@ -622,6 +682,55 @@ const surnameContent = {
       noteLabel: 'Aileden bilinen doğrudan bağlam',
       note: 'Tekmen, Karataş ve Saltık/Saltuk bilinen baba tarafı bağlamıdır. Araştırma, kayıt yeri bilinen en eski atadan medeni ve Osmanlı nüfus kayıtlarında geriye gitmelidir.',
     },
+    population: {
+      kicker: 'Yerel aile bilgisi',
+      heading: 'Nadir bir soyadının yaşayan izi',
+      introduction:
+        'Mevcut rakamlar resmî bir soyadı sayımına değil, yerel aile bilgisine dayanan yaklaşık tahminlerdir. Bu bilgiler hem Tekmen köyünün zaman içinde değişen hane sayısını hem de göçlerle genişleyen Soruk ve Soruklu soyadı çevresini anlatır.',
+      measureHeading: 'Ölçü',
+      accountHeading: 'Yerel anlatı',
+      boundaryHeading: 'Kanıt sınırı',
+      rows: [
+        {
+          measure: 'Günümüzdeki soyadı tahmini',
+          account:
+            'Yerel aile bilgisine göre bugün yaklaşık 500 kişinin Soruklu soyadını taşıdığı tahmin edilmektedir.',
+          boundary: 'Yaklaşık bir yerel tahmindir; resmî bir ulusal sayı değildir.',
+        },
+        {
+          measure: 'Günümüzdeki köy hane sayısı',
+          account:
+            'Tekmen’de bugün yaklaşık 150 hane bulunduğu, ancak bu hanelerin tamamının Soruk veya Soruklu soyadını taşımadığı belirtilmektedir.',
+          boundary: 'Köy hane tahminidir; Soruklu ailelerinin sayısı değildir.',
+        },
+        {
+          measure: '1950’lerdeki köy büyüklüğü',
+          account:
+            'Tekmen’de 1950’li yıllarda yaklaşık 500 hane bulunduğu hatırlanmaktadır; ancak bu hanelerin soyadı dağılımı bilinmemektedir.',
+          boundary: 'Hatırlanan hane sayısıdır; her hanede kullanılan soyadını göstermez.',
+        },
+        {
+          measure: 'Tekmen dışındaki Osmancık aileleri',
+          account:
+            'Servet Köroğlu, Tekmen’de yaşayanlar hariç olmak üzere Osmancık’ta Soruk veya Soruklu soyadını taşıyan en az 10 aileyi şahsen tanıdığını belirtmektedir.',
+          boundary:
+            'Kendisinin yerel bilgisidir; bağımsız olarak doğrulanmış bir aile sayısı değildir.',
+        },
+        {
+          measure: 'Göç ve soyadı kullanımı',
+          account:
+            'Servet Köroğlu’nun yerel anlatımına göre başka yerlere göç eden aileler arasında Soruk veya Soruklu soyadlarının kullanımı yaygındır.',
+          boundary:
+            'Her göç edenin bu soyadlarından birini aldığı veya bütün ailelerin tek bir soydan geldiği anlamına gelmez.',
+        },
+      ],
+      evidenceLabel: 'Yerel anlatı · yaklaşık ve bağımsız olarak sayılmamış',
+      attribution:
+        'Bu yerel tahminler, Osmancık’ın Tekmen köyünde muhtarlık yapmış olan Servet Köroğlu tarafından aktarılmıştır. Osmancık Kaymakamlığının 31 Mart 2017 tarihli resmî kaydı, kendisini Tekmen Köyü muhtarı olarak tanımlamaktadır. Nüfus ve soyadı rakamları yerel tahmin niteliğindedir ve henüz eksiksiz bir resmî soyadı veya nüfus kaydıyla doğrulanmamıştır.',
+      workingEstimateLabel: 'Çalışma tahmini · düşük güven',
+      workingEstimate:
+        'Çok kaba bir demografik değerlendirme, 1934’ten bugüne Soruklu soyadını taşımış toplam kişi sayısının birkaç bin düzeyinde olabileceğini düşündürmektedir. Eksiksiz bir resmî sayı henüz bulunmamıştır.',
+    },
     unknown: {
       kicker: 'Kanıtlanmamış noktalar',
       heading: 'Kanıtın açık bir sınırı var.',
@@ -740,6 +849,15 @@ const surnameContent = {
           authority: 'Bafra Belediyesi · resmî kamu raporu',
           description: 'Bafra’da Soruklu soyadının geçtiği resmî bir kamu kaydıdır.',
           url: sourceUrls.bafraPublic,
+        },
+        {
+          number: '14',
+          title:
+            'Araştırmacı Yazar Salim Savcı ve Tekmen Köyü Muhtarı Servet Köroğlu Sayın Kaymakamımızı Ziyaret Etti',
+          authority: 'Osmancık Kaymakamlığı · 31 Mart 2017',
+          description:
+            'Servet Köroğlu’nu Mart 2017’de Osmancık’a bağlı Tekmen Köyü muhtarı olarak resmen tanımlar ve yerel anlatının kişiye atfını destekler.',
+          url: sourceUrls.servetKoroglu,
         },
       ],
     },
