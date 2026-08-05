@@ -43,20 +43,16 @@
     <p class="saridibek-dialog__summary">{{ content().summary }}</p>
 
     <dl class="saridibek-dialog__details">
-      <div>
-        <dt>
-          <mat-icon svgIcon="place-pin" aria-hidden="true"></mat-icon>
-          <span>{{ content().locationLabel }}</span>
-        </dt>
-        <dd>{{ content().location }}</dd>
-      </div>
-      <div>
-        <dt>
-          <mat-icon svgIcon="place-history" aria-hidden="true"></mat-icon>
-          <span>{{ content().contextLabel }}</span>
-        </dt>
-        <dd>{{ content().context }}</dd>
-      </div>
+      <dt>
+        <mat-icon svgIcon="place-pin" aria-hidden="true"></mat-icon>
+        <span>{{ content().locationLabel }}</span>
+      </dt>
+      <dd>{{ content().location }}</dd>
+      <dt>
+        <mat-icon svgIcon="place-history" aria-hidden="true"></mat-icon>
+        <span>{{ content().contextLabel }}</span>
+      </dt>
+      <dd>{{ content().context }}</dd>
     </dl>
 
     <ul class="saridibek-dialog__chips" [attr.aria-label]="content().locationLabel">

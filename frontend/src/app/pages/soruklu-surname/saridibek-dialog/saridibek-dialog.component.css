@@ -184,26 +184,34 @@
 
 .saridibek-dialog__details {
   display: grid;
-  gap: 10px;
   margin: 26px 0 0;
 }
 
-.saridibek-dialog__details > div {
-  padding: 14px;
+.saridibek-dialog__details dt,
+.saridibek-dialog__details dd {
   border: 1px solid rgba(168, 176, 189, 0.16);
-  border-radius: 9px;
   background: rgba(7, 9, 13, 0.32);
 }
 
 .saridibek-dialog__details dt {
   gap: 8px;
+  padding: 14px 14px 0;
+  border-bottom: 0;
+  border-radius: 9px 9px 0 0;
   color: #d6a84f;
   font-size: 9px;
   letter-spacing: 0.13em;
 }
 
+.saridibek-dialog__details dt:not(:first-child) {
+  margin-top: 10px;
+}
+
 .saridibek-dialog__details dd {
-  margin: 8px 0 0;
+  margin: 0;
+  padding: 8px 14px 14px;
+  border-top: 0;
+  border-radius: 0 0 9px 9px;
   color: #f5f7fa;
   font-size: 13px;
   line-height: 1.5;
@@ -286,7 +294,8 @@
   color: #5f6673;
 }
 
-.theme-resolved-light .saridibek-dialog__details > div,
+.theme-resolved-light .saridibek-dialog__details dt,
+.theme-resolved-light .saridibek-dialog__details dd,
 .theme-resolved-light .saridibek-dialog__chips li {
   border-color: #dde1e8;
   background: rgba(255, 255, 255, 0.74);
