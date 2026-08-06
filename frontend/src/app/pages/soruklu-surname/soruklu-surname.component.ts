@@ -1,4 +1,4 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { Component, computed, inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
@@ -19,6 +19,16 @@ import { pageSeoMetadata } from '../../core/seo/seo.config';
 import { SeoService } from '../../core/seo/seo.service';
 import { PathIconComponent } from '../../shared/icons/path-icon.component';
 import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
+import {
+  evliyaDocumentAssets,
+  evliyaDocumentContent,
+  evliyaDocumentDialogData,
+} from './evliya-document.content';
+import {
+  kamusDictionaryAssets,
+  kamusDictionaryContent,
+  kamusDictionaryDialogData,
+} from './kamus-dictionary.content';
 import { SaridibekDialogService } from './saridibek-dialog/saridibek-dialog.service';
 import { saridibekPhotoAssets, saridibekPhotoContent } from './saridibek-photo.content';
 import { SorukluSurnameLanguageService } from './soruklu-surname-language.service';
@@ -48,6 +58,12 @@ const sourceUrls = {
     'https://www.bafra.bel.tr/Uploads/Resimler/Sayfalar/2025/5/-2024-Yili-Faaliyet-Roporu-/Orj-30756829c6cbfdcac12668ad5291.pdf',
   servetKoroglu:
     'https://www.osmancik.gov.tr/arastirmaci-yazar-salim-savci-ve-tekmen-koyu-muhtari-servet-koroglu-sayin-kaymakamimizi-ziyaret-etti',
+  suciSertkaya: 'https://tdkbelleten.gov.tr/eng/full-text-pdf/637/tur',
+  oldTurkicDoublets: 'https://dergipark.org.tr/tr/download/article-file/741630',
+  archaicSoruk: 'https://tdkbelleten.gov.tr/eng/full-text/1065/tur',
+  kamusSoruk: 'https://www.osmanlicasozlukler.com/kamusiturki/tafsil-262580-cv2.html',
+  evliyaEdition: 'https://archive.org/details/evliyaelebisey02evliuoft/page/n90/mode/1up',
+  evliyaBiography: 'https://islamansiklopedisi.org.tr/evliya-celebi',
 } as const;
 
 const surnameContent = {
@@ -64,6 +80,8 @@ const surnameContent = {
     formationLabel: 'The formation',
     formationAriaLabel: 'Soruk plus lu forms Soruklu',
     formationMeaning: 'Association, belonging, or origin',
+    dictionary: kamusDictionaryContent.en,
+    document: evliyaDocumentContent.en,
     photo: saridibekPhotoContent.en,
     meaning: {
       kicker: 'Direct meaning',
@@ -79,7 +97,8 @@ const surnameContent = {
       heading: 'What we know in 30 seconds',
       items: [
         'Soruklu most naturally means connected with Soruk.',
-        'Soruk is documented as a regional place name from the sixteenth century.',
+        'Sorukderesi is documented around 1520 and in 1576; standalone Soruk appears in the 1648 Seyahatname tradition.',
+        'The original lexical meaning of Soruk remains unresolved.',
         'Soruklu appears as an Ottoman-period personal identifier.',
         'Soruk Bey is a plausible historical explanation for the place name.',
         'Direct modern descent remains unproven.',
@@ -98,21 +117,21 @@ const surnameContent = {
           label: 'Ottoman register study',
           title: 'Sorukderesi appears as a mezraa.',
           description:
-            'A study of register TT 387 lists Sorukderesi in the Göl district with six nefer, a unit for taxable males rather than total population. Its blank 1485 column means only that the study found no entry under that name in that register.',
+            'A study of register TT 387 lists Sorukderesi in the Göl district with six registered adult males, primarily taxpayers. This was not the settlement’s total population. Its blank 1485 column means only that the study found no entry under that name in that register.',
         },
         {
           date: '1576',
           label: 'Ottoman register study',
           title: 'Sorukderesi is recorded as a village.',
           description:
-            'The same study lists Sorukderesi as a karye, or village, with 55 nefer, firmly documenting the place name in the sixteenth century.',
+            'The same study lists Sorukderesi as a karye, or village, with 55 registered adult males, primarily taxpayers. This firmly documents the place name in 1576, not Soruk Bey’s lifetime.',
         },
         {
           date: '1648',
           label: 'Ottoman travel text',
           title: 'Soruk appears in the Seyahatname tradition.',
           description:
-            'A study of Evliya Çelebi’s Vezirköprü account reproduces Súrúk in the Zeytun district, while warning that the western route was probably not travelled first-hand.',
+            'A study of Evliya Çelebi’s Vezirköprü account reproduces the standalone form Súrúk in the Zeytun district, while warning that the western route was probably not travelled first-hand.',
         },
         {
           date: '1786–87',
@@ -150,6 +169,18 @@ const surnameContent = {
             'Sarıdibek and Tahtaköprü remain associated with the Soruk Valley around Vezirköprü, while a current official report separately lists Yenidanişment/Soruk in Osmancık.',
         },
       ],
+    },
+    rootMeaning: {
+      kicker: 'An unresolved root',
+      heading: 'What may Soruk itself mean?',
+      paragraphs: [
+        'The original meaning of Soruk in Soruk Bey’s name and in the historical place-name remains unresolved. The securely supported explanation concerns Soruklu: Soruk plus -lu means connected with Soruk.',
+        'In the Old Turkic Süci inscription, Osman Fikri Sertkaya transcribes the clause as “Küm surug(ı)m kün togsuk[k]a b(a)tsık[k]a t(e)gdi” and translates it as “My fame and renown reached from sunrise to sunset.” A separate study classifies kü sorug as a synonymous pairing in the semantic field of fame and renown. This establishes an intriguing contextual comparison, not an independent definition of sorug or the origin of Soruk.',
+        'The scholarship is not uniform. A 2022 TDK study glosses the Süci form sorug as “questions” and records historical senses connected with asking, inquiry and search. Kâmûs-ı Türkî likewise records soruk as “question” or “inquiry.” No source found connects any of these senses with Soruk Bey or the settlement.',
+        'No reviewed source demonstrates the required sound development from sorug or surug to Soruk, the use of that word as a personal name, or a link to Soruk Bey, Sorukderesi or this region.',
+      ],
+      noteLabel: 'Research status · low confidence',
+      note: '“Fame or renown” is a legitimate historical comparison, but the literal origin of Soruk is still unknown.',
     },
     records: {
       kicker: 'Evidence audit',
@@ -201,13 +232,20 @@ const surnameContent = {
         },
         {
           index: '07',
-          label: 'Withdrawn · why not',
-          title: '“Question” or “inquiry” is not presented as the surname’s origin.',
+          label: 'Research hypothesis · low confidence',
+          title: '“Fame or renown” is a comparison, not a proven definition.',
           description:
-            'Older forms resembling soruk do not explain the names of Soruk Bey, the settlement or the surname; the place-based reading has stronger evidence.',
+            'Some scholarship interprets Old Turkic kü sorug as a synonymous pairing meaning “fame” or “renown.” No reviewed source demonstrates the required sound development, personal-name usage or connection with Soruk Bey or the settlement.',
         },
         {
           index: '08',
+          label: 'Dictionary meaning · unconnected',
+          title: '“Question” or “inquiry” is not presented as the surname’s origin.',
+          description:
+            'Historical sources genuinely record sorug or soruk in senses connected with questions, inquiry or search, but none connects that dictionary word with Soruk Bey, the place name or the surname.',
+        },
+        {
+          index: '09',
           label: 'Unproven · records required',
           title: 'Direct descent and the 1934 surname decision remain open.',
           description:
@@ -219,13 +257,14 @@ const surnameContent = {
       kicker: 'Soruk Bey and the name',
       heading: 'A historical explanation survives—but its date does not.',
       paragraphs: [
-        'Amasya Tarihi places Esenli and Karalı groups of Kanık in Zeytun, names Soruk Bey among Karalı and says Soruk villages preserved his name.',
+        'Amasya Tarihi, a later historical account rather than a contemporary record of Soruk Bey, places Esenli and Karalı groups of Kanık in Zeytun, names Soruk Bey among Karalı and says Soruk villages preserved his name.',
         'A modern ministry report gives a more specific local tradition: Soruk was named after Soruk Bey, said to have settled there in the 1200s and to have been a Kınık Yörük bey within Karalı. Both details are marked rivayet, not contemporary evidence.',
-        'The sources do not resolve Kanık/Kınık or give Soruk Bey secure life dates, family, grave or office.',
+        'The dated register entries establish Sorukderesi as a place name around 1520 and in 1576. They do not establish that Soruk Bey lived in the sixteenth century; if the later naming account is correct, he could have lived earlier.',
+        'The reviewed sources do not resolve Kanık/Kınık or provide Soruk Bey with a secure date, ancestry, office, grave or contemporary record.',
       ],
       wordLabel: 'What this can support',
       wordNote:
-        'This later historical explanation supports a plausible origin for the place name, not a contemporary attestation.',
+        'This later account supports a plausible personal-name explanation for the place name, not a dated biography or contemporary attestation of Soruk Bey.',
     },
     geography: {
       kicker: 'Places and family context',
@@ -330,7 +369,7 @@ const surnameContent = {
         'These questions require family-specific civil and archival records, not inference.',
       items: [
         'Direct descent from Soruk Bey for any modern Soruklu family.',
-        'A precise medieval date for Soruk Bey or the settlement.',
+        'Any secure date for Soruk Bey, whose lifetime remains undated.',
         'Whether Kanık and Kınık in the two accounts are simply variant transmissions in this case.',
         'Whether the unlocated Sorukluzâde research lead is accurate.',
         'When and how a particular family adopted Soruklu as a formal surname.',
@@ -451,6 +490,58 @@ const surnameContent = {
             'Officially identifies Servet Köroğlu as the muhtar of Tekmen village in Osmancık in March 2017, supporting the attribution of the local testimony.',
           url: sourceUrls.servetKoroglu,
         },
+        {
+          number: '15',
+          title: 'Suuci < Sugeci / (Bel) Yazıtı Ne Zaman Yazıldı?',
+          authority:
+            'Turkish Language Association · Osman Fikri Sertkaya · 2000 · pages 307–312; relevant page 311',
+          description:
+            'Transcribes “Küm surug(ı)m” in the Süci inscription and translates the clause with “fame” and “renown”.',
+          url: sourceUrls.suciSertkaya,
+        },
+        {
+          number: '16',
+          title: 'Eski Türk Yazıt ve El Yazmalarında İkilemeler',
+          authority:
+            'Journal of Old Turkic Studies · Erhan Aydın and Ahmet Karaman · 2019 · page 267',
+          description:
+            'Classifies kü sorug among synonymous pairings and glosses the pair as “fame, renown”.',
+          url: sourceUrls.oldTurkicDoublets,
+        },
+        {
+          number: '17',
+          title: 'Kazakça Ağızlar Sözlüğü’nde Kayıtlı Bazı Eskicil Sözcükler Üzerine',
+          authority:
+            'Turkish Language Association · Sherubay Kurmanbaiuly, Marlen Adilov and Zhumagali İbragimov · 2022 · page 181',
+          description:
+            'Provides the competing “questions” gloss for Süci sorug and records related inquiry and search senses.',
+          url: sourceUrls.archaicSoruk,
+        },
+        {
+          number: '18',
+          title: 'Kâmûs-ı Türkî: soruk',
+          authority: 'Şemseddin Sami · digitised dictionary entry · page 838',
+          description:
+            'Supplies the page-838 facsimile entry and records the Ottoman Turkish word soruk with the equivalents sual and pürsiş.',
+          url: sourceUrls.kamusSoruk,
+        },
+        {
+          number: '19',
+          title: 'Evliya Çelebi Seyahatnamesi, volume 2, printed page 402',
+          authority:
+            'İkdam Matbaası · 1896 · University of Toronto scan hosted by Internet Archive · public domain',
+          description:
+            'The Ottoman-script printed page visibly preserves صوروق in the route from Göl towards Zeytun.',
+          url: sourceUrls.evliyaEdition,
+        },
+        {
+          number: '20',
+          title: 'Evliya Çelebi',
+          authority: 'TDV İslâm Ansiklopedisi · Mücteba İlgürel',
+          description:
+            'Provides the biographical basis for the short profile of the Ottoman traveller and his ten-volume Seyahatname.',
+          url: sourceUrls.evliyaBiography,
+        },
       ],
     },
     relationship: {
@@ -490,6 +581,8 @@ const surnameContent = {
     formationLabel: 'Adın yapısı',
     formationAriaLabel: 'Soruk ve lu eki Soruklu adını oluşturur',
     formationMeaning: 'Bağlantı, mensubiyet veya köken',
+    dictionary: kamusDictionaryContent.tr,
+    document: evliyaDocumentContent.tr,
     photo: saridibekPhotoContent.tr,
     meaning: {
       kicker: 'Doğrudan anlam',
@@ -505,7 +598,8 @@ const surnameContent = {
       heading: '30 saniyede bildiklerimiz',
       items: [
         'Soruklu en doğal biçimde Soruk’la bağlantılı anlamına gelir.',
-        'Soruk, 16. yüzyıldan itibaren belgelenmiş bölgesel bir yer adıdır.',
+        'Sorukderesi yaklaşık 1520’de ve 1576’da; müstakil Soruk biçimi 1648 Seyahatname geleneğinde belgelenmiştir.',
+        'Soruk kelimesinin asıl sözlük anlamı henüz çözülememiştir.',
         'Soruklu, Osmanlı döneminde kişi tanımı olarak kullanılmıştır.',
         'Soruk Bey, yer adının kökenine ilişkin makul bir tarihî açıklamadır.',
         'Günümüzdeki ailelerle doğrudan soy bağı henüz kanıtlanmamıştır.',
@@ -523,21 +617,21 @@ const surnameContent = {
           label: 'Osmanlı tahrir araştırması',
           title: 'Sorukderesi bir mezraa olarak geçiyor.',
           description:
-            'TT 387 üzerine bir çalışma, Göl nahiyesindeki Sorukderesi’ni altı neferle kaydeder; nefer toplam nüfus değil, vergiye tabi erkekler için kullanılan kayıt birimidir. Boş 1485 sütunu yalnızca o defterde bu adla kayıt bulunmadığını gösterir.',
+            'TT 387 üzerine bir çalışma, Göl nahiyesindeki Sorukderesi’ni çoğunlukla vergi mükellefi olan kayıtlı altı yetişkin erkekle gösterir. Bu sayı yerleşimin toplam nüfusu değildir. Boş 1485 sütunu yalnızca o defterde bu adla kayıt bulunmadığını gösterir.',
         },
         {
           date: '1576',
           label: 'Osmanlı tahrir araştırması',
           title: 'Sorukderesi bir köy olarak kaydediliyor.',
           description:
-            'Aynı çalışma Sorukderesi’ni 55 neferli bir karye, yani köy olarak göstererek yer adını 16. yüzyılda belgeler.',
+            'Aynı çalışma Sorukderesi’ni çoğunlukla vergi mükellefi olan kayıtlı 55 yetişkin erkeğin bulunduğu bir karye, yani köy olarak gösterir. Bu kayıt 1576’daki yer adını belgeler; Soruk Bey’in yaşadığı tarihi göstermez.',
         },
         {
           date: '1648',
           label: 'Osmanlı seyahat metni',
           title: 'Soruk, Seyahatname geleneğinde geçiyor.',
           description:
-            'Evliya Çelebi’nin Vezirköprü anlatısını inceleyen bir çalışma, Zeytun kazasında Súrúk adını aktarır ve batı güzergâhının muhtemelen bizzat gezilmediğini belirtir.',
+            'Evliya Çelebi’nin Vezirköprü anlatısını inceleyen bir çalışma, Zeytun kazasında müstakil Súrúk biçimini aktarır ve batı güzergâhının muhtemelen bizzat gezilmediğini belirtir.',
         },
         {
           date: '1786–87',
@@ -575,6 +669,18 @@ const surnameContent = {
             'Sarıdibek ve Tahtaköprü, Vezirköprü çevresindeki Soruk Vadisi ile anılmayı sürdürürken güncel resmî bir rapor Osmancık’ta ayrıca Yenidanişment/Soruk kaydını verir.',
         },
       ],
+    },
+    rootMeaning: {
+      kicker: 'Anlamı çözülememiş kök',
+      heading: 'Soruk kelimesinin kendisi ne anlama geliyor olabilir?',
+      paragraphs: [
+        'Soruk Bey’in adındaki ve tarihî yer adındaki Soruk kelimesinin asıl anlamı henüz kesin olarak belirlenmiş değildir. Güvenle açıklanabilen yapı Soruklu’dur: Soruk + -lu, Soruk’la bağlantılı demektir.',
+        'Eski Türkçe Süci Yazıtı’nın ilgili cümlesini Osman Fikri Sertkaya “Küm surug(ı)m kün togsuk[k]a b(a)tsık[k]a t(e)gdi” biçiminde okur ve “Şanım, şöhretim gün doğusuna ve gün batısına kadar ulaştı” diye çevirir. Başka bir çalışma kü sorug sözlerini şan ve şöhret anlam alanında eş anlamlı bir ikileme olarak sınıflandırır. Bu, dikkat çekici bir bağlamsal karşılaştırmadır; sorug kelimesinin tek başına anlamını veya Soruk adının kökenini kanıtlamaz.',
+        'Üstelik bilimsel yorumlar tek yönde değildir. TDK’nin 2022 tarihli başka bir çalışması Süci’deki sorug biçimine “sorular” karşılığını verir; tarihî kaynaklarda soru, sorgu ve arama ile ilişkili kullanımlar da bulunur. Kâmûs-ı Türkî’deki soruk maddesi de “sual” ve “pürsiş” karşılığındadır. Bu anlamların hiçbiri Soruk Bey veya yer adıyla ilişkilendirilmiş değildir.',
+        'İncelenen kaynaklar sorug veya surug biçiminden Soruk adına gereken ses gelişimini, bu sözün kişi adı olarak kullanıldığını ya da Soruk Bey, Sorukderesi ve bölgeyle bağlantısını göstermemektedir.',
+      ],
+      noteLabel: 'Araştırma durumu · düşük güven',
+      note: '“Şan veya şöhret” geçerli bir tarihsel karşılaştırmadır; Soruk’un gerçek sözlük kökeni ise hâlâ bilinmiyor.',
     },
     records: {
       kicker: 'Kanıt değerlendirmesi',
@@ -625,13 +731,20 @@ const surnameContent = {
         },
         {
           index: '07',
-          label: 'Geri çekildi · neden değil',
-          title: '“Soru” veya “sorgu” soyadının kökeni olarak sunulmuyor.',
+          label: 'Araştırma varsayımı · düşük güven',
+          title: '“Şan veya şöhret” bir karşılaştırmadır; kanıtlanmış tanım değildir.',
           description:
-            'Soruk’a benzeyen eski biçimler Soruk Bey’in, yerleşimin veya soyadının adını açıklamaz; yer bağlantılı okuma daha güçlü kanıta sahiptir.',
+            'Bazı çalışmalar Eski Türkçe kü sorug ifadesini “şan” ve “şöhret” anlamında eş anlamlı bir ikileme olarak yorumlar. Ancak ses gelişimini, kişi adı kullanımını veya Soruk Bey ve yer adıyla bağlantıyı kanıtlayan bir kaynak bulunmamıştır.',
         },
         {
           index: '08',
+          label: 'Sözlük anlamı · bağlantısız',
+          title: '“Soru” veya “sorgu” soyadının kökeni olarak sunulmuyor.',
+          description:
+            'Tarihî kaynaklarda sorug veya soruk gerçekten soru, sorgu ve aramayla ilişkili anlamlarda geçer; ancak bu sözlük kelimesini Soruk Bey’e, yer adına veya soyadına bağlayan bir kanıt yoktur.',
+        },
+        {
+          index: '09',
           label: 'Kanıtlanmadı · kayıt gerekli',
           title: 'Doğrudan soy ve 1934’teki soyadı kararı açıkta duruyor.',
           description:
@@ -643,13 +756,14 @@ const surnameContent = {
       kicker: 'Soruk Bey ve adın kökeni',
       heading: 'Tarihî bir açıklama var; fakat kesin tarihi yok.',
       paragraphs: [
-        'Amasya Tarihi, Zeytun’da Kanık’a bağlı Esenli ve Karalı oymaklarını, Karalı içinde Soruk Bey’i ve adını koruyan Soruk köylerini kaydeder.',
+        'Soruk Bey’le çağdaş bir belge olmayan Amasya Tarihi, Zeytun’da Kanık’a bağlı Esenli ve Karalı oymaklarını, Karalı içinde Soruk Bey’i ve adını koruyan Soruk köylerini kaydeder.',
         'Bir bakanlık raporu yerel rivayeti ayrıntılandırır: Soruk’un, 1200’lerde yerleştiği ve Karalı içindeki Kınık Yörük beyi olduğu söylenen Soruk Bey’den ad aldığı belirtilir. İki ayrıntı da çağdaş kanıt değildir.',
-        'Kaynaklar Kanık/Kınık farkını çözmez; Soruk Bey’in güvenli tarihlerini, ailesini, mezarını veya görevini vermez.',
+        'Tarihli tahrir kayıtları Sorukderesi yer adını yaklaşık 1520’de ve 1576’da belgeler. Soruk Bey’in 16. yüzyılda yaşadığını göstermez; sonraki adlandırma anlatısı doğruysa daha önce yaşamış olabilir.',
+        'İncelenen kaynaklar Kanık/Kınık farkını çözmez; Soruk Bey’in güvenilir bir tarihini, soyunu, görevini, mezarını veya çağdaş kaydını vermez.',
       ],
       wordLabel: 'Bu anlatının destekleyebildiği',
       wordNote:
-        'Bu sonraki dönem anlatısı, yer adının kökeni için makul bir açıklamayı destekler; çağdaş bir tanıklık değildir.',
+        'Bu sonraki dönem anlatısı, yer adı için makul bir kişi adı açıklamasını destekler; Soruk Bey’in tarihli hayat hikâyesi veya çağdaş tanıklığı değildir.',
     },
     geography: {
       kicker: 'Yerler ve aile bağlamı',
@@ -752,7 +866,7 @@ const surnameContent = {
         'Bu sorular aileye özgü medeni ve arşiv kayıtları gerektirir; çıkarımla cevaplanamaz.',
       items: [
         'Modern Soruklu ailelerinin Soruk Bey’den doğrudan geldiği.',
-        'Soruk Bey’in veya yerleşimin kesin Orta Çağ tarihi.',
+        'Yaşadığı dönem belirlenemeyen Soruk Bey için güvenilir herhangi bir tarih.',
         'Kanık ve Kınık’ın burada aktarım çeşidi olup olmadığı.',
         'Sorukluzâde araştırma ipucunun doğruluğu.',
         'Bir ailenin Soruklu soyadını ne zaman ve nasıl aldığı.',
@@ -873,6 +987,58 @@ const surnameContent = {
             'Servet Köroğlu’nu Mart 2017’de Osmancık’a bağlı Tekmen Köyü muhtarı olarak resmen tanımlar ve yerel anlatının kişiye atfını destekler.',
           url: sourceUrls.servetKoroglu,
         },
+        {
+          number: '15',
+          title: 'Suuci < Sugeci / (Bel) Yazıtı Ne Zaman Yazıldı?',
+          authority:
+            'Türk Dil Kurumu · Osman Fikri Sertkaya · 2000 · sayfa 307–312; ilgili sayfa 311',
+          description:
+            'Süci Yazıtı’ndaki “Küm surug(ı)m” biçimini aktarır ve cümleyi “şan” ile “şöhret” sözleriyle çevirir.',
+          url: sourceUrls.suciSertkaya,
+        },
+        {
+          number: '16',
+          title: 'Eski Türk Yazıt ve El Yazmalarında İkilemeler',
+          authority:
+            'Journal of Old Turkic Studies · Erhan Aydın ve Ahmet Karaman · 2019 · sayfa 267',
+          description:
+            'Kü sorug ifadesini eş anlamlı ikilemeler arasında sınıflandırır ve “şan, şöhret” karşılığını verir.',
+          url: sourceUrls.oldTurkicDoublets,
+        },
+        {
+          number: '17',
+          title: 'Kazakça Ağızlar Sözlüğü’nde Kayıtlı Bazı Eskicil Sözcükler Üzerine',
+          authority:
+            'Türk Dil Kurumu · Sherubay Kurmanbaiuly, Marlen Adilov ve Zhumagali İbragimov · 2022 · sayfa 181',
+          description:
+            'Süci’deki sorug için farklı olarak “sorular” karşılığını verir; soru, sorgu ve arama ile ilgili kullanımları kaydeder.',
+          url: sourceUrls.archaicSoruk,
+        },
+        {
+          number: '18',
+          title: 'Kâmûs-ı Türkî: soruk',
+          authority: 'Şemseddin Sami · dijital sözlük maddesi · sayfa 838',
+          description:
+            '838. sayfadaki tıpkıbasım maddeyi sunar ve Osmanlı Türkçesindeki soruk sözünü sual ve pürsiş karşılıklarıyla kaydeder.',
+          url: sourceUrls.kamusSoruk,
+        },
+        {
+          number: '19',
+          title: 'Evliya Çelebi Seyahatnamesi, 2. cilt, basılı sayfa 402',
+          authority:
+            'İkdam Matbaası · 1896 · University of Toronto taraması, Internet Archive · kamu malı',
+          description:
+            'Osmanlı harfli basılı sayfada Göl’den Zeytun yönüne uzanan güzergâhta صوروق biçimi açıkça görülür.',
+          url: sourceUrls.evliyaEdition,
+        },
+        {
+          number: '20',
+          title: 'Evliya Çelebi',
+          authority: 'TDV İslâm Ansiklopedisi · Mücteba İlgürel',
+          description:
+            'Osmanlı seyyahı ve on ciltlik Seyahatname hakkındaki kısa tanıtımın biyografik temelini sağlar.',
+          url: sourceUrls.evliyaBiography,
+        },
       ],
     },
     relationship: {
@@ -898,7 +1064,7 @@ const surnameContent = {
 
 @Component({
   selector: 'app-soruklu-surname',
-  imports: [PathIconComponent, RouterLink, TooltipDirective],
+  imports: [NgOptimizedImage, PathIconComponent, RouterLink, TooltipDirective],
   templateUrl: './soruklu-surname.component.html',
   styleUrl: './soruklu-surname.component.css',
 })
@@ -914,6 +1080,9 @@ export class SorukluSurnameComponent implements OnInit, OnDestroy {
   readonly cursorClickIcon = mdiCursorDefaultClickOutline;
   readonly imageSearchIcon = mdiImageSearchOutline;
   readonly mapMarkerIcon = mdiMapMarkerOutline;
+  readonly documentIcon = mdiBookOpenPageVariantOutline;
+  readonly documentAssets = evliyaDocumentAssets;
+  readonly dictionaryAssets = kamusDictionaryAssets;
   readonly photoAssets = saridibekPhotoAssets;
   readonly timelineIcons = [
     mdiFileDocumentOutline,
@@ -948,6 +1117,14 @@ export class SorukluSurnameComponent implements OnInit, OnDestroy {
 
   openSaridibekDialog(): void {
     void this.saridibekDialog.open();
+  }
+
+  openEvliyaDocumentDialog(): void {
+    void this.saridibekDialog.open(evliyaDocumentDialogData);
+  }
+
+  openKamusDictionaryDialog(): void {
+    void this.saridibekDialog.open(kamusDictionaryDialogData);
   }
 
   private applyLanguageMetadata(): void {

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 
 import { LazyDialogLauncher } from '../../../shared/dialogs/lazy-dialog-launcher';
+import type { SurnameImageDialogData } from '../surname-image-dialog.types';
 
 @Injectable({ providedIn: 'root' })
 export class SaridibekDialogService {
   private readonly launcher = new LazyDialogLauncher({
-    ariaLabelledBy: 'saridibek-dialog-title',
+    ariaLabelledBy: 'surname-image-dialog-title',
     backdropClass: 'serhat-saridibek-dialog-backdrop',
     id: 'saridibek-dialog',
     loadComponent: async () =>
@@ -16,7 +17,7 @@ export class SaridibekDialogService {
     width: 'min(1680px, calc(100vw - 80px))',
   });
 
-  open(): Promise<void> {
-    return this.launcher.open();
+  open(data?: SurnameImageDialogData): Promise<void> {
+    return this.launcher.open(data);
   }
 }

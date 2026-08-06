@@ -124,10 +124,139 @@
           </li>
         }
       </ol>
+
+      <figure class="surname-place-feature surname-place-feature--document">
+        <button
+          class="surname-place-feature__media"
+          type="button"
+          aria-haspopup="dialog"
+          [attr.aria-label]="content().document.actionAriaLabel"
+          data-testid="evliya-document-trigger"
+          (click)="openEvliyaDocumentDialog()"
+        >
+          <picture>
+            <source
+              type="image/avif"
+              [attr.srcset]="
+                documentAssets.avif720 + ' 720w, ' + documentAssets.avif1200 + ' 1200w'
+              "
+              sizes="(min-width: 1024px) 720px, calc(100vw - 40px)"
+            />
+            <source
+              type="image/webp"
+              [attr.srcset]="
+                documentAssets.webp720 + ' 720w, ' + documentAssets.webp1200 + ' 1200w'
+              "
+              sizes="(min-width: 1024px) 720px, calc(100vw - 40px)"
+            />
+            <img
+              [src]="documentAssets.original"
+              [alt]="content().document.alt"
+              [attr.width]="documentAssets.width"
+              [attr.height]="documentAssets.height"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+          <span class="surname-place-feature__media-action" aria-hidden="true">
+            <app-path-icon name="view-historical-document" [path]="imageSearchIcon" />
+            <span>{{ content().document.action }}</span>
+          </span>
+        </button>
+
+        <figcaption>
+          <p class="surname-kicker">{{ content().document.kicker }}</p>
+          <h3>
+            <app-path-icon name="historical-document" [path]="documentIcon" />
+            <span>{{ content().document.title }}</span>
+          </h3>
+          <p>{{ content().document.description }}</p>
+          <p class="surname-place-feature__date">
+            <span>{{ content().document.dateLabel }}</span>
+            <strong>{{ content().document.date }}</strong>
+          </p>
+          <button
+            class="surname-place-feature__action"
+            type="button"
+            [attr.aria-label]="content().document.actionAriaLabel"
+            (click)="openEvliyaDocumentDialog()"
+          >
+            <app-path-icon name="open-historical-document" [path]="imageSearchIcon" />
+            <span>{{ content().document.action }}</span>
+          </button>
+        </figcaption>
+      </figure>
     </div>
   </section>
 
-  <section class="surname-section layout-section" aria-labelledby="surname-records-title">
+  <section class="surname-section layout-section" aria-labelledby="surname-root-meaning-title">
+    <div class="surname-frame surname-editorial-split">
+      <header class="surname-section-heading">
+        <p class="surname-kicker">{{ content().rootMeaning.kicker }}</p>
+        <h2 id="surname-root-meaning-title">{{ content().rootMeaning.heading }}</h2>
+      </header>
+
+      <div class="surname-prose">
+        @for (paragraph of content().rootMeaning.paragraphs; track $index) {
+          <p>{{ paragraph }}</p>
+
+          @if ($index === 2) {
+            <figure class="surname-place-feature surname-place-feature--dictionary">
+              <button
+                class="surname-place-feature__media"
+                type="button"
+                aria-haspopup="dialog"
+                [attr.aria-label]="content().dictionary.actionAriaLabel"
+                data-testid="kamus-dictionary-trigger"
+                (click)="openKamusDictionaryDialog()"
+              >
+                <img
+                  [ngSrc]="dictionaryAssets.original"
+                  [alt]="content().dictionary.alt"
+                  [width]="dictionaryAssets.width"
+                  [height]="dictionaryAssets.height"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </button>
+
+              <figcaption>
+                <p class="surname-kicker">{{ content().dictionary.kicker }}</p>
+                <h3>
+                  <app-path-icon name="historical-dictionary" [path]="documentIcon" />
+                  <span>{{ content().dictionary.title }}</span>
+                </h3>
+                <p>{{ content().dictionary.description }}</p>
+                <p class="surname-place-feature__date">
+                  <span>{{ content().dictionary.dateLabel }}</span>
+                  <strong>{{ content().dictionary.date }}</strong>
+                </p>
+                <button
+                  class="surname-place-feature__action"
+                  type="button"
+                  [attr.aria-label]="content().dictionary.actionAriaLabel"
+                  (click)="openKamusDictionaryDialog()"
+                >
+                  <app-path-icon name="open-dictionary-entry" [path]="imageSearchIcon" />
+                  <span>{{ content().dictionary.action }}</span>
+                </button>
+              </figcaption>
+            </figure>
+          }
+        }
+
+        <aside class="surname-word-note">
+          <span>{{ content().rootMeaning.noteLabel }}</span>
+          <p>{{ content().rootMeaning.note }}</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="surname-section surname-section--surface layout-section"
+    aria-labelledby="surname-records-title"
+  >
     <div class="surname-frame">
       <header class="surname-section-heading surname-section-heading--wide">
         <div>
@@ -152,10 +281,7 @@
     </div>
   </section>
 
-  <section
-    class="surname-section surname-section--surface layout-section"
-    aria-labelledby="surname-account-title"
-  >
+  <section class="surname-section layout-section" aria-labelledby="surname-account-title">
     <div class="surname-frame surname-editorial-split">
       <header class="surname-section-heading">
         <p class="surname-kicker">{{ content().account.kicker }}</p>

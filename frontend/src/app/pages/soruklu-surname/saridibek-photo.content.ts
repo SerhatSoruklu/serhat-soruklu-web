@@ -1,4 +1,5 @@
 import type { SurnameLanguage } from './soruklu-surname-language.service';
+import type { SurnameImageContent } from './surname-image-dialog.types';
 
 export const saridibekPhotoAssets = {
   avif720: '/assets/soruklu-surname/vezirkopru-saridibek-koyu-720.avif',
@@ -6,30 +7,12 @@ export const saridibekPhotoAssets = {
   webp720: '/assets/soruklu-surname/vezirkopru-saridibek-koyu-720.webp',
   webp1200: '/assets/soruklu-surname/vezirkopru-saridibek-koyu-1200.webp',
   original: '/assets/soruklu-surname/vezirkopru-saridibek-koyu-13-november-2019.png',
+  height: 1086,
+  presentation: 'photograph',
+  width: 1448,
 } as const;
 
-export const saridibekPhotoContent: Record<
-  SurnameLanguage,
-  {
-    readonly action: string;
-    readonly actionAriaLabel: string;
-    readonly alt: string;
-    readonly chips: readonly { readonly icon: string; readonly label: string }[];
-    readonly closeAriaLabel: string;
-    readonly context: string;
-    readonly contextLabel: string;
-    readonly date: string;
-    readonly dateLabel: string;
-    readonly description: string;
-    readonly dialogEyebrow: string;
-    readonly htmlLang: string;
-    readonly kicker: string;
-    readonly location: string;
-    readonly locationLabel: string;
-    readonly summary: string;
-    readonly title: string;
-  }
-> = {
+export const saridibekPhotoContent: Record<SurnameLanguage, SurnameImageContent> = {
   en: {
     action: 'View photograph',
     actionAriaLabel: 'Open the Vezirkopru Saridibek Village photograph in a dialog',
