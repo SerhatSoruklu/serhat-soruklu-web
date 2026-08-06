@@ -6,6 +6,7 @@ import { installConsoleErrorGuard } from './support/console-errors';
 const surnamePath = '/soruklu-surname';
 const orderPath = '/soruklu-order';
 const canonicalUrl = `https://serhatsoruklu.com${surnamePath}`;
+const numberedSourceCount = 20;
 const viewports = [
   { width: 320, height: 568 },
   { width: 360, height: 800 },
@@ -13,6 +14,8 @@ const viewports = [
   { width: 412, height: 915 },
   { width: 768, height: 1024 },
   { width: 1024, height: 768 },
+  { width: 1280, height: 900 },
+  { width: 1366, height: 900 },
   { width: 1440, height: 900 },
   { width: 1920, height: 1080 },
 ];
@@ -88,11 +91,11 @@ test.describe('Soruklu surname', () => {
     ).toBeVisible();
     await expect(page.getByTestId('surname-language-switch')).toContainText('Türkçe oku');
     await expect(page.locator('html')).toHaveAttribute('lang', 'en-GB');
-    await expect(page.locator('.surname-place-feature__media img')).toHaveCount(1);
-    await expect(page.locator('.surname-place-feature__media img')).toHaveAttribute(
-      'loading',
-      'lazy',
-    );
+    const evidenceImages = page.locator('.surname-place-feature__media img');
+    await expect(evidenceImages).toHaveCount(3);
+    expect(
+      await evidenceImages.evaluateAll((images) => images.map((image) => image.loading)),
+    ).toEqual(['lazy', 'lazy', 'lazy']);
     assertNoConsoleErrors();
   });
 
@@ -178,10 +181,10 @@ test.describe('Soruklu surname', () => {
 
     const sourceTitles = page.locator('.surname-sources__title-link');
     const sourceActions = page.locator('.surname-sources__action');
-    await expect(sourceTitles).toHaveCount(14);
-    await expect(sourceActions).toHaveCount(14);
+    await expect(sourceTitles).toHaveCount(numberedSourceCount);
+    await expect(sourceActions).toHaveCount(numberedSourceCount);
     for (const sources of [sourceTitles, sourceActions]) {
-      for (let index = 0; index < 14; index += 1) {
+      for (let index = 0; index < numberedSourceCount; index += 1) {
         await expect(sources.nth(index)).toHaveAttribute('target', '_blank');
         await expect(sources.nth(index)).toHaveAttribute('rel', 'noopener noreferrer');
         await expect(sources.nth(index)).toHaveAttribute('aria-label', /new tab/);
@@ -190,7 +193,7 @@ test.describe('Soruklu surname', () => {
     await expect(sourceActions.first()).toContainText('Open source');
     await expect(sourceTitles.last()).toHaveAttribute(
       'href',
-      'https://www.osmancik.gov.tr/arastirmaci-yazar-salim-savci-ve-tekmen-koyu-muhtari-servet-koroglu-sayin-kaymakamimizi-ziyaret-etti',
+      'https://islamansiklopedisi.org.tr/evliya-celebi',
     );
     expect(
       await sourceActions
@@ -281,6 +284,85 @@ test.describe('Soruklu surname', () => {
     await trigger.click();
     await expect(dialog.getByRole('heading', { level: 2 })).toHaveText('Vezirköprü Sarıdibek Köyü');
     await expect(dialog).toHaveAttribute('lang', 'tr-TR');
+    assertNoConsoleErrors();
+  });
+
+  test('the historical evidence dialogs preserve their images and restore trigger focus', async ({
+    page,
+  }, testInfo) => {
+    const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(surnamePath);
+
+    const dictionaryTrigger = page.getByTestId('kamus-dictionary-trigger');
+    const dictionaryCardLayout = await page
+      .locator('.surname-place-feature--dictionary')
+      .evaluate((element) => {
+        const media = element
+          .querySelector('.surname-place-feature__media')
+          ?.getBoundingClientRect();
+        const caption = element.querySelector('figcaption')?.getBoundingClientRect();
+        const image = element.querySelector('img')?.getBoundingClientRect();
+        const imageElement = element.querySelector('img');
+
+        return {
+          bottomGap: Math.abs((caption?.bottom ?? 0) - (media?.bottom ?? 0)),
+          imageHeight: image?.height,
+          mediaHeight: media?.height,
+          mediaRatio: media ? media.width / media.height : null,
+          objectFit: imageElement ? getComputedStyle(imageElement).objectFit : null,
+        };
+      });
+
+    expect(dictionaryCardLayout.bottomGap).toBeLessThanOrEqual(1);
+    expect(dictionaryCardLayout.mediaRatio).toBeCloseTo(1.5, 2);
+    expect(dictionaryCardLayout.objectFit).toBe('contain');
+    expect(
+      Math.abs((dictionaryCardLayout.mediaHeight ?? 0) - (dictionaryCardLayout.imageHeight ?? 0)),
+    ).toBeLessThanOrEqual(1);
+
+    await dictionaryTrigger.click();
+    const dialog = page.getByTestId('saridibek-dialog');
+    await expect(dialog).toHaveClass(/saridibek-dialog--dictionary/);
+    await expect(
+      dialog.getByRole('heading', {
+        level: 2,
+        name: 'Kâmûs-ı Türkî: the historical word soruk',
+      }),
+    ).toBeVisible();
+
+    const dictionaryLayout = await dialog.evaluate((element) => {
+      const media = element.querySelector('.saridibek-dialog__media')?.getBoundingClientRect();
+      const image = element.querySelector('img')?.getBoundingClientRect();
+      const imageElement = element.querySelector('img');
+
+      return {
+        imageComplete: imageElement?.complete,
+        imageHeight: image?.height,
+        mediaHeight: media?.height,
+        objectFit: imageElement ? getComputedStyle(imageElement).objectFit : null,
+        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      };
+    });
+
+    expect(dictionaryLayout.imageComplete).toBe(true);
+    expect(dictionaryLayout.objectFit).toBe('contain');
+    expect(
+      Math.abs((dictionaryLayout.mediaHeight ?? 0) - (dictionaryLayout.imageHeight ?? 0)),
+    ).toBeLessThanOrEqual(1);
+    expect(dictionaryLayout.overflow).toBe(0);
+    await dialog.getByRole('button', { name: /Close the Kâmûs-ı Türkî/ }).click();
+    await expect(dictionaryTrigger).toBeFocused();
+
+    const documentTrigger = page.getByTestId('evliya-document-trigger');
+    await documentTrigger.click();
+    await expect(dialog).toHaveClass(/saridibek-dialog--document/);
+    await expect(
+      dialog.getByRole('heading', { level: 2, name: 'Soruk in the Ottoman-script Seyahatname' }),
+    ).toBeVisible();
+    await expect(dialog.locator('img')).toHaveAttribute('alt', /page 402/i);
+    await page.keyboard.press('Escape');
+    await expect(documentTrigger).toBeFocused();
     assertNoConsoleErrors();
   });
 

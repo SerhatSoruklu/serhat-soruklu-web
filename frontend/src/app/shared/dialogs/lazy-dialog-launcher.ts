@@ -20,19 +20,19 @@ export class LazyDialogLauncher {
 
   constructor(private readonly options: LazyDialogOptions) {}
 
-  open(): Promise<void> {
+  open(data?: unknown): Promise<void> {
     if (!this.isBrowser || !this.document.defaultView) {
       return Promise.resolve();
     }
 
-    this.opening ??= this.openDialog().finally(() => {
+    this.opening ??= this.openDialog(data).finally(() => {
       this.opening = null;
     });
 
     return this.opening;
   }
 
-  private async openDialog(): Promise<void> {
+  private async openDialog(data?: unknown): Promise<void> {
     const [{ MatDialog }, component] = await Promise.all([
       import('@angular/material/dialog'),
       this.options.loadComponent(),
@@ -49,6 +49,7 @@ export class LazyDialogLauncher {
       backdropClass: this.options.backdropClass,
       closeOnNavigation: true,
       delayFocusTrap: false,
+      data,
       disableClose: false,
       enterAnimationDuration: 160,
       exitAnimationDuration: 110,
