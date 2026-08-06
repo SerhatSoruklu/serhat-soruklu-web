@@ -14,6 +14,8 @@ const viewports = [
   { width: 412, height: 915 },
   { width: 768, height: 1024 },
   { width: 1024, height: 768 },
+  { width: 1280, height: 900 },
+  { width: 1366, height: 900 },
   { width: 1440, height: 900 },
   { width: 1920, height: 1080 },
 ];
@@ -293,6 +295,32 @@ test.describe('Soruklu surname', () => {
     await page.goto(surnamePath);
 
     const dictionaryTrigger = page.getByTestId('kamus-dictionary-trigger');
+    const dictionaryCardLayout = await page
+      .locator('.surname-place-feature--dictionary')
+      .evaluate((element) => {
+        const media = element
+          .querySelector('.surname-place-feature__media')
+          ?.getBoundingClientRect();
+        const caption = element.querySelector('figcaption')?.getBoundingClientRect();
+        const image = element.querySelector('img')?.getBoundingClientRect();
+        const imageElement = element.querySelector('img');
+
+        return {
+          bottomGap: Math.abs((caption?.bottom ?? 0) - (media?.bottom ?? 0)),
+          imageHeight: image?.height,
+          mediaHeight: media?.height,
+          mediaRatio: media ? media.width / media.height : null,
+          objectFit: imageElement ? getComputedStyle(imageElement).objectFit : null,
+        };
+      });
+
+    expect(dictionaryCardLayout.bottomGap).toBeLessThanOrEqual(1);
+    expect(dictionaryCardLayout.mediaRatio).toBeCloseTo(1.5, 2);
+    expect(dictionaryCardLayout.objectFit).toBe('contain');
+    expect(
+      Math.abs((dictionaryCardLayout.mediaHeight ?? 0) - (dictionaryCardLayout.imageHeight ?? 0)),
+    ).toBeLessThanOrEqual(1);
+
     await dictionaryTrigger.click();
     const dialog = page.getByTestId('saridibek-dialog');
     await expect(dialog).toHaveClass(/saridibek-dialog--dictionary/);

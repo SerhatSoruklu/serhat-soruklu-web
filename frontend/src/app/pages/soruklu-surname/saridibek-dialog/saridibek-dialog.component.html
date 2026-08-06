@@ -11,7 +11,7 @@
     [attr.aria-label]="content().closeAriaLabel"
     (click)="close()"
   >
-    <mat-icon svgIcon="place-close" aria-hidden="true"></mat-icon>
+    <app-path-icon name="place-close" [path]="iconPaths['place-close']" />
   </button>
 
   <div class="saridibek-dialog__media" [attr.aria-label]="content().alt">
@@ -42,24 +42,24 @@
 
   <div class="saridibek-dialog__content">
     <p class="saridibek-dialog__eyebrow">
-      <mat-icon svgIcon="place-image" aria-hidden="true"></mat-icon>
+      <app-path-icon name="place-image" [path]="iconPaths['place-image']" />
       <span>{{ content().dialogEyebrow }}</span>
     </p>
     <h2 id="surname-image-dialog-title" class="saridibek-dialog__title">{{ content().title }}</h2>
     <p class="saridibek-dialog__date">
-      <mat-icon svgIcon="place-calendar" aria-hidden="true"></mat-icon>
+      <app-path-icon name="place-calendar" [path]="iconPaths['place-calendar']" />
       <span>{{ content().dateLabel }} · {{ content().date }}</span>
     </p>
     <p class="saridibek-dialog__summary">{{ content().summary }}</p>
 
     <dl class="saridibek-dialog__details">
       <dt>
-        <mat-icon svgIcon="place-pin" aria-hidden="true"></mat-icon>
+        <app-path-icon name="place-pin" [path]="iconPaths['place-pin']" />
         <span>{{ content().locationLabel }}</span>
       </dt>
       <dd>{{ content().location }}</dd>
       <dt>
-        <mat-icon svgIcon="place-history" aria-hidden="true"></mat-icon>
+        <app-path-icon name="place-history" [path]="iconPaths['place-history']" />
         <span>{{ content().contextLabel }}</span>
       </dt>
       <dd>{{ content().context }}</dd>
@@ -68,7 +68,7 @@
     <ul class="saridibek-dialog__chips" [attr.aria-label]="content().locationLabel">
       @for (chip of content().chips; track chip.label) {
         <li>
-          <mat-icon [svgIcon]="chip.icon" aria-hidden="true"></mat-icon>
+          <app-path-icon [name]="chip.icon" [path]="iconPaths[chip.icon]" />
           <span>{{ chip.label }}</span>
         </li>
       }

@@ -190,65 +190,72 @@
   </section>
 
   <section class="surname-section layout-section" aria-labelledby="surname-root-meaning-title">
-    <div class="surname-frame surname-editorial-split">
-      <header class="surname-section-heading">
-        <p class="surname-kicker">{{ content().rootMeaning.kicker }}</p>
-        <h2 id="surname-root-meaning-title">{{ content().rootMeaning.heading }}</h2>
-      </header>
+    <div class="surname-frame">
+      <div class="surname-editorial-split">
+        <header class="surname-section-heading">
+          <p class="surname-kicker">{{ content().rootMeaning.kicker }}</p>
+          <h2 id="surname-root-meaning-title">{{ content().rootMeaning.heading }}</h2>
+        </header>
 
-      <div class="surname-prose">
-        @for (paragraph of content().rootMeaning.paragraphs; track $index) {
-          <p>{{ paragraph }}</p>
-
-          @if ($index === 2) {
-            <figure class="surname-place-feature surname-place-feature--dictionary">
-              <button
-                class="surname-place-feature__media"
-                type="button"
-                aria-haspopup="dialog"
-                [attr.aria-label]="content().dictionary.actionAriaLabel"
-                data-testid="kamus-dictionary-trigger"
-                (click)="openKamusDictionaryDialog()"
-              >
-                <img
-                  [ngSrc]="dictionaryAssets.original"
-                  [alt]="content().dictionary.alt"
-                  [width]="dictionaryAssets.width"
-                  [height]="dictionaryAssets.height"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </button>
-
-              <figcaption>
-                <p class="surname-kicker">{{ content().dictionary.kicker }}</p>
-                <h3>
-                  <app-path-icon name="historical-dictionary" [path]="documentIcon" />
-                  <span>{{ content().dictionary.title }}</span>
-                </h3>
-                <p>{{ content().dictionary.description }}</p>
-                <p class="surname-place-feature__date">
-                  <span>{{ content().dictionary.dateLabel }}</span>
-                  <strong>{{ content().dictionary.date }}</strong>
-                </p>
-                <button
-                  class="surname-place-feature__action"
-                  type="button"
-                  [attr.aria-label]="content().dictionary.actionAriaLabel"
-                  (click)="openKamusDictionaryDialog()"
-                >
-                  <app-path-icon name="open-dictionary-entry" [path]="imageSearchIcon" />
-                  <span>{{ content().dictionary.action }}</span>
-                </button>
-              </figcaption>
-            </figure>
+        <div class="surname-prose">
+          @for (paragraph of content().rootMeaning.paragraphs.slice(0, 3); track $index) {
+            <p>{{ paragraph }}</p>
           }
-        }
+        </div>
+      </div>
 
-        <aside class="surname-word-note">
-          <span>{{ content().rootMeaning.noteLabel }}</span>
-          <p>{{ content().rootMeaning.note }}</p>
-        </aside>
+      <figure
+        class="surname-place-feature surname-place-feature--dictionary surname-root-meaning__evidence"
+      >
+        <button
+          class="surname-place-feature__media"
+          type="button"
+          aria-haspopup="dialog"
+          [attr.aria-label]="content().dictionary.actionAriaLabel"
+          data-testid="kamus-dictionary-trigger"
+          (click)="openKamusDictionaryDialog()"
+        >
+          <img
+            [ngSrc]="dictionaryAssets.original"
+            [alt]="content().dictionary.alt"
+            [width]="dictionaryAssets.width"
+            [height]="dictionaryAssets.height"
+            loading="lazy"
+            decoding="async"
+          />
+        </button>
+
+        <figcaption>
+          <p class="surname-kicker">{{ content().dictionary.kicker }}</p>
+          <h3>
+            <app-path-icon name="historical-dictionary" [path]="documentIcon" />
+            <span>{{ content().dictionary.title }}</span>
+          </h3>
+          <p>{{ content().dictionary.description }}</p>
+          <p class="surname-place-feature__date">
+            <span>{{ content().dictionary.dateLabel }}</span>
+            <strong>{{ content().dictionary.date }}</strong>
+          </p>
+          <button
+            class="surname-place-feature__action"
+            type="button"
+            [attr.aria-label]="content().dictionary.actionAriaLabel"
+            (click)="openKamusDictionaryDialog()"
+          >
+            <app-path-icon name="open-dictionary-entry" [path]="imageSearchIcon" />
+            <span>{{ content().dictionary.action }}</span>
+          </button>
+        </figcaption>
+      </figure>
+
+      <div class="surname-editorial-split surname-root-meaning__conclusion">
+        <div class="surname-prose">
+          <p>{{ content().rootMeaning.paragraphs[3] }}</p>
+          <aside class="surname-word-note" [attr.aria-label]="content().rootMeaning.noteLabel">
+            <span>{{ content().rootMeaning.noteLabel }}</span>
+            <p>{{ content().rootMeaning.note }}</p>
+          </aside>
+        </div>
       </div>
     </div>
   </section>

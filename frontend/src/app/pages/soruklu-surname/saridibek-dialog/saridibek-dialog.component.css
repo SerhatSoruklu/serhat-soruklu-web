@@ -69,7 +69,7 @@
     background 160ms ease;
 }
 
-.saridibek-dialog__close mat-icon {
+.saridibek-dialog__close app-path-icon {
   width: 22px;
   height: 22px;
   display: block;
@@ -165,9 +165,9 @@
   letter-spacing: 0.18em;
 }
 
-.saridibek-dialog__eyebrow mat-icon,
-.saridibek-dialog__date mat-icon,
-.saridibek-dialog__details mat-icon {
+.saridibek-dialog__eyebrow app-path-icon,
+.saridibek-dialog__date app-path-icon,
+.saridibek-dialog__details app-path-icon {
   width: 17px;
   height: 17px;
   flex: 0 0 auto;
@@ -255,7 +255,7 @@
   line-height: 1.2;
 }
 
-.saridibek-dialog__chips mat-icon {
+.saridibek-dialog__chips app-path-icon {
   width: 15px;
   height: 15px;
   flex: 0 0 auto;
@@ -284,7 +284,7 @@
 .saridibek-dialog__source:hover,
 .saridibek-dialog__source:focus-visible {
   border-color: #f0d58c;
-  background: rgba(214, 168, 79, 0.1);
+  background: #211e18;
   color: #f5f7fa;
   outline: none;
 }
@@ -345,7 +345,7 @@
   background: rgba(255, 255, 255, 0.74);
 }
 
-.theme-resolved-light .saridibek-dialog__chips mat-icon {
+.theme-resolved-light .saridibek-dialog__chips app-path-icon {
   color: #b8872f;
 }
 

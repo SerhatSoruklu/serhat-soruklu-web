@@ -56,7 +56,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: "21"
 
       - name: Install locked dependencies
         if: steps.sonar-config.outputs.configured == 'true'
@@ -100,5 +100,5 @@ jobs:
             -Dsonar.test.inclusions=frontend/src/**/*.spec.ts,backend/**/*.test.js
             -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/.angular/**,**/coverage/**,frontend/src/**/*.spec.ts,backend/**/*.test.js
             -Dsonar.coverage.exclusions=frontend/src/**/*.html,frontend/src/**/*.css,frontend/src/app/app.config.ts,frontend/src/app/layout/site-header/**/*.ts,frontend/src/app/pages/**/*.ts
-            -Dsonar.cpd.exclusions=frontend/src/**/*.html,frontend/src/**/*.css,frontend/src/app/layout/site-header/**/*.ts,frontend/src/app/pages/soruklu-surname/soruklu-surname.component.ts
+            -Dsonar.cpd.exclusions=frontend/src/**/*.html,frontend/src/**/*.css,frontend/src/app/layout/site-header/**/*.ts,frontend/src/app/pages/soruklu-surname/soruklu-surname.component.ts,frontend/src/app/pages/soruklu-surname/evliya-document.content.ts,frontend/src/app/pages/soruklu-surname/kamus-dictionary.content.ts
             -Dsonar.javascript.lcov.reportPaths=frontend/coverage/frontend/lcov.info,backend/coverage/lcov.info

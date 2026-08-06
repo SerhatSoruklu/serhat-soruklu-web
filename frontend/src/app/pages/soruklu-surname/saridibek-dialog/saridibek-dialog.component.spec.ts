@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatIconRegistry } from '@angular/material/icon';
 
 import { evliyaDocumentDialogData } from '../evliya-document.content';
 import { kamusDictionaryDialogData } from '../kamus-dictionary.content';
@@ -111,10 +110,10 @@ describe('SaridibekDialogComponent', () => {
   it('uses the same close interaction as the profile dialog', () => {
     const fixture = TestBed.createComponent(SaridibekDialogComponent);
     fixture.detectChanges();
-    const iconRegistry = TestBed.inject(MatIconRegistry);
+    const nativeElement = fixture.nativeElement as HTMLElement;
 
-    expect(iconRegistry.getNamedSvgIcon('place-close')).toBeTruthy();
-    (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('button')?.click();
+    expect(nativeElement.querySelector('[data-mat-icon-name="place-close"] path')).toBeTruthy();
+    nativeElement.querySelector<HTMLButtonElement>('button')?.click();
     expect(dialogRef.close).toHaveBeenCalledOnce();
   });
 });

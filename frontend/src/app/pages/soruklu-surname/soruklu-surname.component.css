@@ -630,6 +630,14 @@ h3 {
   font-size: clamp(1.15rem, 3vw, 1.45rem);
 }
 
+.surname-root-meaning__evidence {
+  margin-top: 36px;
+}
+
+.surname-root-meaning__conclusion {
+  margin-top: 28px;
+}
+
 .surname-place-feature__media::after {
   position: absolute;
   inset: 0;
@@ -1459,6 +1467,10 @@ h3 {
 
   .surname-place-feature--dictionary {
     grid-template-columns: minmax(0, 1fr) minmax(280px, 0.78fr);
+  }
+
+  .surname-root-meaning__conclusion > .surname-prose {
+    grid-column: 2;
   }
 }
 
