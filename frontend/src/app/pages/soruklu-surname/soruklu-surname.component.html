@@ -127,7 +127,10 @@
         }
       </ol>
 
-      <aside class="surname-geography-note surname-register-summary">
+      <aside
+        class="surname-geography-note surname-register-summary"
+        [attr.aria-label]="content().registerSummary.label"
+      >
         <span>{{ content().registerSummary.label }}</span>
         <p>{{ content().registerSummary.body }}</p>
         <p class="surname-register-summary__boundary">{{ content().registerSummary.boundary }}</p>
@@ -232,7 +235,7 @@
         }
       </div>
 
-      <aside class="surname-account-conclusion">
+      <aside class="surname-account-conclusion" [attr.aria-label]="content().account.heading">
         <p>{{ content().account.conclusion }}</p>
       </aside>
 
@@ -532,16 +535,20 @@
           </ul>
           <p class="surname-research-status__boundary">{{ content().researchStatus.boundary }}</p>
 
-          <dl class="surname-research-status__metadata">
+          <div class="surname-research-status__metadata">
             <div>
-              <dt class="surname-kicker">{{ content().researchStatus.reviewLabel }}</dt>
-              <dd>{{ content().researchStatus.reviewDate }}</dd>
+              <p class="surname-kicker">{{ content().researchStatus.reviewLabel }}</p>
+              <p class="surname-research-status__metadata-value">
+                {{ content().researchStatus.reviewDate }}
+              </p>
             </div>
             <div>
-              <dt class="surname-kicker">{{ content().researchStatus.statusLabel }}</dt>
-              <dd>{{ content().researchStatus.status }}</dd>
+              <p class="surname-kicker">{{ content().researchStatus.statusLabel }}</p>
+              <p class="surname-research-status__metadata-value">
+                {{ content().researchStatus.status }}
+              </p>
             </div>
-          </dl>
+          </div>
         </div>
       </article>
     </div>
@@ -579,7 +586,7 @@
                 </a>
               </h3>
               <p class="surname-sources__role">{{ source.role }}</p>
-              <p class="surname-sources__authority">{{ source.authority }}</p>
+              <p class="surname-sources__authority">{{ source.sourceDetails }}</p>
               <p>{{ source.description }}</p>
             </div>
             <a

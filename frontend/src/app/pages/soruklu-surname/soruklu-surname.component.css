@@ -1078,11 +1078,11 @@ h3 {
   gap: 5px;
 }
 
-.surname-research-status__metadata dt {
+.surname-research-status__metadata .surname-kicker {
   margin-bottom: 0;
 }
 
-.surname-research-status__metadata dd {
+.surname-research-status__metadata-value {
   margin: 0;
   color: #dce1e9;
   font-weight: 600;
@@ -1163,7 +1163,7 @@ h3 {
   padding: 4px 7px;
   border: 1px solid rgba(214, 168, 79, 0.24);
   border-radius: 4px;
-  background: rgba(214, 168, 79, 0.045);
+  background: #10141c;
   color: #f0d58c;
   font-size: 9px;
   font-weight: 700;
@@ -1870,7 +1870,7 @@ h3 {
   color: #5f6673;
 }
 
-:host-context(.theme-resolved-light) .surname-research-status__metadata dd {
+:host-context(.theme-resolved-light) .surname-research-status__metadata-value {
   color: #2c3441;
 }
 

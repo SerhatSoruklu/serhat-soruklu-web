@@ -527,7 +527,7 @@ const surnameContent = {
         {
           number: '01',
           title: 'Terim Sorunları ve Terim Yapma Yolları',
-          authority: 'Turkish Language Association · Hamza Zülfikar · 2025 edition',
+          sourceDetails: 'Turkish Language Association · Hamza Zülfikar · 2025 edition',
           description: 'Explains -lı / -li / -lu / -lü and gives place-association examples.',
           role: 'Linguistic structure',
           url: sourceUrls.suffix,
@@ -535,7 +535,7 @@ const surnameContent = {
         {
           number: '02',
           title: 'Tahrir Defterlerine Göre Vezirköprü Yöresinde İskân ve Nüfus (1485–1576)',
-          authority:
+          sourceDetails:
             'Mehmet Öz · Belleten · August 1993 · c. 57 · sy. 219 · s. 509–538 · DOI 10.37879/belleten.1993.509 · Table 17 · printed page 536',
           description:
             'Publishes Table 17, listing Sorukderesi as a mezraa with no registered population in 1485, a mezraa with six nefer around 1520, and a karye with 55 nefer in 1576. The article identifies TT 37 pages 571–672 as the Vezirköprü section and states that the 1485 survey was conducted by an emin named Tâceddin.',
@@ -545,7 +545,7 @@ const surnameContent = {
         {
           number: '03',
           title: 'Vezirköprü Araştırmaları',
-          authority:
+          sourceDetails:
             'Ed. Cevdet Yılmaz · Vezirköprü Belediyesi Kültür Yayınları No. 2 · 21 March 2014 · ISBN 978-975-94391-1-8 · relevant printed pages 18, 32, 34, 295–297, 468–470',
           description:
             'A collected research volume that republishes Mehmet Öz’s tahrir article with some place-name corrections, gives the legend “M = Mezraa (ekinlik),” contains a source-critical study of the 1495 Taceddin İbrahim Paşa vakfiye, and uses “Sarıdibek (Soruk) havzası” and “Soruk Vadisi” in modern regional context. Its republication of Öz is not independent corroboration of the Sorukderesi row.',
@@ -555,7 +555,7 @@ const surnameContent = {
         {
           number: '04',
           title: 'Evliya Çelebi in Vezirköprü, 1648',
-          authority: 'Cedrus IX · Tønnes Bekker-Nielsen · 2021',
+          sourceDetails: 'Cedrus IX · Tønnes Bekker-Nielsen · 2021',
           description: 'Reproduces Súrúk and critiques the route’s first-hand reliability.',
           role: 'Travel-text tradition',
           url: sourceUrls.evliya,
@@ -563,7 +563,7 @@ const surnameContent = {
         {
           number: '05',
           title: 'Amasya Tarihi, 1–4. ciltler, dijital sayfa 128',
-          authority: 'Amasya Municipality digital edition · Hüseyin Hüsâmeddin Yasar',
+          sourceDetails: 'Amasya Municipality digital edition · Hüseyin Hüsâmeddin Yasar',
           description:
             'Records “Gökceğiz Veled Soruk,” identifies Bahâeddîn Gökceğiz with the Salur, and associates him with events around H.575/1179–80.',
           role: 'Later historical account',
@@ -572,7 +572,7 @@ const surnameContent = {
         {
           number: '06',
           title: 'Amasya Tarihi, volumes 1–4, digital page 170',
-          authority: 'Amasya Municipality digital edition · Hüseyin Hüsâmeddin Yasar',
+          sourceDetails: 'Amasya Municipality digital edition · Hüseyin Hüsâmeddin Yasar',
           description: 'Records Soruklu Hâfız Ali Efendi’s appointment, return and death.',
           role: 'Later historical account',
           url: sourceUrls.sorukluHafizAli,
@@ -580,7 +580,7 @@ const surnameContent = {
         {
           number: '07',
           title: 'Amasya Tarihi, volumes 1–4, digital page 200',
-          authority: 'Amasya Municipality digital edition · Hüseyin Hüsâmeddin Yasar',
+          sourceDetails: 'Amasya Municipality digital edition · Hüseyin Hüsâmeddin Yasar',
           description:
             'Associates the settlement named Soruk with a figure called Soruk Bey in a Karalı/Kanık context.',
           role: 'Undated later naming tradition',
@@ -589,7 +589,7 @@ const surnameContent = {
         {
           number: '08',
           title: 'Amasya Tarihi, 1–4. ciltler, dijital sayfa 338',
-          authority: 'Amasya Municipality digital edition · Hüseyin Hüsâmeddin Yasar',
+          sourceDetails: 'Amasya Municipality digital edition · Hüseyin Hüsâmeddin Yasar',
           description:
             'Calls the same figure “Soruk Beyzâde Bahâeddîn Gökceğiz Bey” and reports his appointment as atabeg after H.575.',
           role: 'Internal textual support within the same later source',
@@ -598,7 +598,7 @@ const surnameContent = {
         {
           number: '09',
           title: 'HÜSEYİN HÜSÂMEDDİN YASAR',
-          authority: 'TDV İslâm Ansiklopedisi · Turgut Akpınar',
+          sourceDetails: 'TDV İslâm Ansiklopedisi · Turgut Akpınar',
           description:
             'Explains that Hüseyin Hüsâmeddin used manuscripts, court records, vakfiyes, inscriptions and gravestones, while noting scholarly reservations because he often did not identify the source underlying an individual claim and sometimes relied on excessive etymological comparisons.',
           role: 'Source-critical context',
@@ -607,7 +607,7 @@ const surnameContent = {
         {
           number: '10',
           title: 'TÂCÎZÂDE CÂFER ÇELEBİ',
-          authority: 'TDV İslâm Ansiklopedisi · İsmail E. Erünsal',
+          sourceDetails: 'TDV İslâm Ansiklopedisi · İsmail E. Erünsal',
           description:
             'Provides source-critical context for Tâcî Bey, whom biographical sources describe as Şehzade Bayezid’s defterdar and Amasya serasker, while distinguishing family information derived only from Hüseyin Hüsâmeddin from information supported by other biographical sources. It does not identify Tâcî Bey as the survey emin or as the İbrahim Paşa named in the Vezirköprü vakfiye.',
           role: 'Source-critical research lead',
@@ -616,7 +616,7 @@ const surnameContent = {
         {
           number: '11',
           title: 'Kırsal Kalkınma Amaçlı Hibe Projelerinin Değerlendirilmesi: TR83 Bölgesi Örneği',
-          authority: 'Ministry of Agriculture research publication · TEPGE · publication 270',
+          sourceDetails: 'Ministry of Agriculture research publication · TEPGE · publication 270',
           description: 'Labels the 1200s, Kınık and Yörük-bey details as local tradition.',
           role: 'Local tradition',
           url: sourceUrls.oralTradition,
@@ -624,7 +624,7 @@ const surnameContent = {
         {
           number: '12',
           title: 'Amasya İstiklal Mahkemesi, volume 12/1',
-          authority: 'Grand National Assembly of Türkiye · published court records',
+          sourceDetails: 'Grand National Assembly of Türkiye · published court records',
           description: 'Names Soruk villagers by household identifiers before the Surname Law.',
           role: 'Published court records',
           url: sourceUrls.earlyRepublic,
@@ -632,7 +632,7 @@ const surnameContent = {
         {
           number: '13',
           title: 'Cumhuriyet Arşivi Çorum Belgeleri Kataloğu',
-          authority: 'Çorum Municipality cultural publication · 2017 · pages 195–196',
+          sourceDetails: 'Çorum Municipality cultural publication · 2017 · pages 195–196',
           description:
             'Catalogues the 1959 boundary records for Vezirköprü Soruk and Osmancık Gökdere.',
           role: 'Archive catalogue',
@@ -641,7 +641,7 @@ const surnameContent = {
         {
           number: '14',
           title: 'Sarıdibek Köyünde 3000 Dönüm Arazi Çöl Haline Geldi',
-          authority: 'Vezirköprü Vatandaş · 1974 report reproduced in 2024',
+          sourceDetails: 'Vezirköprü Vatandaş · 1974 report reproduced in 2024',
           description:
             'Identifies Sarıdibek as former Soruk and reports movement towards Osmancık.',
           role: 'Local reporting',
@@ -650,7 +650,7 @@ const surnameContent = {
         {
           number: '15',
           title: 'Çorum İl Özel İdaresi 2024 Yılı Faaliyet Raporu',
-          authority: 'Official public-administration report',
+          sourceDetails: 'Official public-administration report',
           description: 'Separately lists Yenidanişment/Soruk in Osmancık.',
           role: 'Modern administrative continuity',
           url: sourceUrls.currentOsmancik,
@@ -658,7 +658,7 @@ const surnameContent = {
         {
           number: '16',
           title: 'Vezirköprü: Genel Bakış',
-          authority: 'Vezirköprü Chamber of Commerce and Industry',
+          sourceDetails: 'Vezirköprü Chamber of Commerce and Industry',
           description: 'Places Sarıdibek and Tahtaköprü in Soruk Valley.',
           role: 'Modern regional context',
           url: sourceUrls.sorukValley,
@@ -666,7 +666,7 @@ const surnameContent = {
         {
           number: '17',
           title: 'Tekmen and Karataş public-record example',
-          authority: 'Çorum Haber · local public notice · 2023',
+          sourceDetails: 'Çorum Haber · local public notice · 2023',
           description: 'Documents one public association of Soruklu with Tekmen and Karataş.',
           role: 'Regional surname occurrence',
           url: sourceUrls.tekmenPublic,
@@ -674,7 +674,7 @@ const surnameContent = {
         {
           number: '18',
           title: 'Bafra Municipality 2024 Activity Report',
-          authority: 'Bafra Municipality · official public report',
+          sourceDetails: 'Bafra Municipality · official public report',
           description: 'Documents one official public occurrence of the Soruklu surname in Bafra.',
           role: 'Regional surname occurrence',
           url: sourceUrls.bafraPublic,
@@ -683,7 +683,7 @@ const surnameContent = {
           number: '19',
           title:
             'Researcher and writer Salim Savcı and Tekmen Village muhtar Servet Köroğlu visited the District Governor',
-          authority: 'Osmancık District Governorate · 31 March 2017',
+          sourceDetails: 'Osmancık District Governorate · 31 March 2017',
           description:
             'Officially identifies Servet Köroğlu as the muhtar of Tekmen village in Osmancık in March 2017, supporting the attribution of the local testimony.',
           role: 'Local testimony attribution',
@@ -692,7 +692,7 @@ const surnameContent = {
         {
           number: '20',
           title: 'Suuci < Sugeci / (Bel) Yazıtı Ne Zaman Yazıldı?',
-          authority:
+          sourceDetails:
             'Turkish Language Association · Osman Fikri Sertkaya · 2000 · pages 307–312; relevant page 311',
           description:
             'Transcribes “Küm surug(ı)m” in the Süci inscription and translates the clause with “fame” and “renown”.',
@@ -702,7 +702,7 @@ const surnameContent = {
         {
           number: '21',
           title: 'Eski Türk Yazıt ve El Yazmalarında İkilemeler',
-          authority:
+          sourceDetails:
             'Journal of Old Turkic Studies · Erhan Aydın and Ahmet Karaman · 2019 · page 267',
           description:
             'Classifies kü sorug among synonymous pairings and glosses the pair as “fame, renown”.',
@@ -712,7 +712,7 @@ const surnameContent = {
         {
           number: '22',
           title: 'Kazakça Ağızlar Sözlüğü’nde Kayıtlı Bazı Eskicil Sözcükler Üzerine',
-          authority:
+          sourceDetails:
             'Turkish Language Association · Sherubay Kurmanbaiuly, Marlen Adilov and Zhumagali İbragimov · 2022 · page 181',
           description:
             'Provides the competing “questions” gloss for Süci sorug and records related inquiry and search senses.',
@@ -722,7 +722,7 @@ const surnameContent = {
         {
           number: '23',
           title: 'Kâmûs-ı Türkî: soruk',
-          authority: 'Şemseddin Sami · digitised dictionary entry · page 838',
+          sourceDetails: 'Şemseddin Sami · digitised dictionary entry · page 838',
           description:
             'Supplies the page-838 facsimile entry and records the Ottoman Turkish word soruk with the equivalents sual and pürsiş.',
           role: 'Direct access to historical lexicography · etymological comparison',
@@ -731,7 +731,7 @@ const surnameContent = {
         {
           number: '24',
           title: 'Evliya Çelebi Seyahatnamesi, volume 2, printed page 402',
-          authority:
+          sourceDetails:
             'İkdam Matbaası · 1896 · University of Toronto scan hosted by Internet Archive · public domain',
           description:
             'The Ottoman-script printed page visibly preserves صوروق in the route from Göl towards Zeytun.',
@@ -741,7 +741,7 @@ const surnameContent = {
         {
           number: '25',
           title: 'Evliya Çelebi',
-          authority: 'TDV İslâm Ansiklopedisi · Mücteba İlgürel',
+          sourceDetails: 'TDV İslâm Ansiklopedisi · Mücteba İlgürel',
           description:
             'Provides the biographical basis for the short profile of the Ottoman traveller and his ten-volume Seyahatname.',
           role: 'Source-critical context',
@@ -1224,7 +1224,7 @@ const surnameContent = {
         {
           number: '01',
           title: 'Terim Sorunları ve Terim Yapma Yolları',
-          authority: 'Türk Dil Kurumu · Hamza Zülfikar · 2025 baskısı',
+          sourceDetails: 'Türk Dil Kurumu · Hamza Zülfikar · 2025 baskısı',
           description: '-lı / -li / -lu / -lü eklerini ve yer bağlantılı örnekleri açıklar.',
           role: 'Dilbilimsel yapı',
           url: sourceUrls.suffix,
@@ -1232,7 +1232,7 @@ const surnameContent = {
         {
           number: '02',
           title: 'Tahrir Defterlerine Göre Vezirköprü Yöresinde İskân ve Nüfus (1485–1576)',
-          authority:
+          sourceDetails:
             'Mehmet Öz · Belleten · Ağustos 1993 · c. 57 · sy. 219 · s. 509–538 · DOI 10.37879/belleten.1993.509 · Tablo 17 · basılı sayfa 536',
           description:
             'Sorukderesi’ni 1485’te kayıtlı nüfusu bulunmayan bir mezraa, yaklaşık 1520’de 6 neferli bir mezraa ve 1576’da 55 neferli bir karye olarak gösteren Tablo 17’yi yayımlar. Makale TT 37’nin 571–672. sayfalarını Vezirköprü bölümüne ayırır ve 1485 tahririnin Tâceddin adlı bir emin tarafından yürütüldüğünü belirtir.',
@@ -1242,7 +1242,7 @@ const surnameContent = {
         {
           number: '03',
           title: 'Vezirköprü Araştırmaları',
-          authority:
+          sourceDetails:
             'Ed. Cevdet Yılmaz · Vezirköprü Belediyesi Kültür Yayınları No. 2 · 21 Mart 2014 · ISBN 978-975-94391-1-8 · ilgili basılı sayfalar 18, 32, 34, 295–297, 468–470',
           description:
             'Mehmet Öz’ün tahrir makalesini bazı yer adı düzeltmeleriyle yeniden yayımlayan, “M = Mezraa (ekinlik)” açıklamasını veren, 1495 tarihli Taceddin İbrahim Paşa vakfiyesini kaynak-eleştirel biçimde inceleyen ve güncel bölgesel bağlamda “Sarıdibek (Soruk) havzası” ile “Soruk Vadisi” ifadelerini kullanan derleme araştırma cildidir. Öz makalesinin yeniden yayımı, Sorukderesi satırı için bağımsız ikinci kanıt değildir.',
@@ -1252,7 +1252,7 @@ const surnameContent = {
         {
           number: '04',
           title: 'Evliya Çelebi in Vezirköprü, 1648',
-          authority: 'Cedrus IX · Tønnes Bekker-Nielsen · 2021',
+          sourceDetails: 'Cedrus IX · Tønnes Bekker-Nielsen · 2021',
           description: 'Súrúk adını aktarır ve güzergâhın birinci el güvenilirliğini inceler.',
           role: 'Seyahat metni geleneği',
           url: sourceUrls.evliya,
@@ -1260,7 +1260,7 @@ const surnameContent = {
         {
           number: '05',
           title: 'Amasya Tarihi, 1–4. ciltler, dijital sayfa 128',
-          authority: 'Amasya Belediyesi dijital baskısı · Hüseyin Hüsâmeddin Yasar',
+          sourceDetails: 'Amasya Belediyesi dijital baskısı · Hüseyin Hüsâmeddin Yasar',
           description:
             '“Gökceğiz Veled Soruk” ifadesini kaydeder, Bahâeddîn Gökceğiz’i Salur ile ilişkilendirir ve onu H.575/1179–80 civarındaki olaylarla bağlantılı gösterir.',
           role: 'Daha sonraki tarih anlatısı',
@@ -1269,7 +1269,7 @@ const surnameContent = {
         {
           number: '06',
           title: 'Amasya Tarihi, 1–4. ciltler, dijital sayfa 170',
-          authority: 'Amasya Belediyesi dijital baskısı · Hüseyin Hüsâmeddin Yasar',
+          sourceDetails: 'Amasya Belediyesi dijital baskısı · Hüseyin Hüsâmeddin Yasar',
           description: 'Soruklu Hâfız Ali Efendi’nin görevini, dönüşünü ve ölümünü kaydeder.',
           role: 'Daha sonraki tarih anlatısı',
           url: sourceUrls.sorukluHafizAli,
@@ -1277,7 +1277,7 @@ const surnameContent = {
         {
           number: '07',
           title: 'Amasya Tarihi, 1–4. ciltler, dijital sayfa 200',
-          authority: 'Amasya Belediyesi dijital baskısı · Hüseyin Hüsâmeddin Yasar',
+          sourceDetails: 'Amasya Belediyesi dijital baskısı · Hüseyin Hüsâmeddin Yasar',
           description:
             'Soruk adlı yerleşimi Karalı/Kanık bağlamındaki Soruk Bey ile ilişkilendirir.',
           role: 'Tarihsiz, daha sonraki adlandırma anlatısı',
@@ -1286,7 +1286,7 @@ const surnameContent = {
         {
           number: '08',
           title: 'Amasya Tarihi, 1–4. ciltler, dijital sayfa 338',
-          authority: 'Amasya Belediyesi dijital baskısı · Hüseyin Hüsâmeddin Yasar',
+          sourceDetails: 'Amasya Belediyesi dijital baskısı · Hüseyin Hüsâmeddin Yasar',
           description:
             'Aynı kişiyi “Soruk Beyzâde Bahâeddîn Gökceğiz Bey” olarak adlandırır ve H.575’ten sonra atabeg olarak görevlendirildiğini bildirir.',
           role: 'Aynı daha sonraki kaynak içinde metinsel destek',
@@ -1295,7 +1295,7 @@ const surnameContent = {
         {
           number: '09',
           title: 'HÜSEYİN HÜSÂMEDDİN YASAR',
-          authority: 'TDV İslâm Ansiklopedisi · Turgut Akpınar',
+          sourceDetails: 'TDV İslâm Ansiklopedisi · Turgut Akpınar',
           description:
             'Hüseyin Hüsâmeddin’in yazmalar, mahkeme sicilleri, vakfiyeler, kitabeler ve mezar taşları gibi ilk kaynaklardan yararlandığını; ancak tek tek iddiaların dayandığı kaynakları çoğu zaman göstermemesi ve bazı aşırı etimolojik benzetmeleri sebebiyle ilmî çekinceler bulunduğunu açıklar.',
           role: 'Kaynak-eleştirel bağlam',
@@ -1304,7 +1304,7 @@ const surnameContent = {
         {
           number: '10',
           title: 'TÂCÎZÂDE CÂFER ÇELEBİ',
-          authority: 'TDV İslâm Ansiklopedisi · İsmail E. Erünsal',
+          sourceDetails: 'TDV İslâm Ansiklopedisi · İsmail E. Erünsal',
           description:
             'Tâcî Bey hakkında Şehzade Bayezid’in defterdarı ve Amasya seraskeri olarak aktarılan biyografik bağlamı verir; yalnız Hüseyin Hüsâmeddin’e dayanan aile bilgilerini diğer biyografik kaynaklarla desteklenen bilgilerden ayırır. Tâcî Bey’i tahrir emini veya Vezirköprü vakfiyesinde adı geçen İbrahim Paşa olarak tanımlamaz.',
           role: 'Kaynak-eleştirel araştırma ipucu',
@@ -1313,7 +1313,7 @@ const surnameContent = {
         {
           number: '11',
           title: 'Kırsal Kalkınma Amaçlı Hibe Projelerinin Değerlendirilmesi: TR83 Bölgesi Örneği',
-          authority: 'Tarım Bakanlığı araştırma yayını · TEPGE · yayın 270',
+          sourceDetails: 'Tarım Bakanlığı araştırma yayını · TEPGE · yayın 270',
           description: '1200’ler, Kınık ve Yörük beyi ayrıntılarını yerel rivayet olarak kaydeder.',
           role: 'Yerel rivayet',
           url: sourceUrls.oralTradition,
@@ -1321,7 +1321,7 @@ const surnameContent = {
         {
           number: '12',
           title: 'Amasya İstiklal Mahkemesi, cilt 12/1',
-          authority: 'Türkiye Büyük Millet Meclisi · yayımlanmış mahkeme kayıtları',
+          sourceDetails: 'Türkiye Büyük Millet Meclisi · yayımlanmış mahkeme kayıtları',
           description: 'Soruk köylülerini Soyadı Kanunu öncesi hane/sülale adlarıyla kaydeder.',
           role: 'Yayımlanmış mahkeme kayıtları',
           url: sourceUrls.earlyRepublic,
@@ -1329,7 +1329,7 @@ const surnameContent = {
         {
           number: '13',
           title: 'Cumhuriyet Arşivi Çorum Belgeleri Kataloğu',
-          authority: 'Çorum Belediyesi kültür yayını · 2017 · sayfa 195–196',
+          sourceDetails: 'Çorum Belediyesi kültür yayını · 2017 · sayfa 195–196',
           description:
             'Vezirköprü Soruk ve Osmancık Gökdere’ye ait 1959 sınır kayıtlarını kataloglar.',
           role: 'Arşiv kataloğu',
@@ -1338,7 +1338,7 @@ const surnameContent = {
         {
           number: '14',
           title: 'Sarıdibek Köyünde 3000 Dönüm Arazi Çöl Haline Geldi',
-          authority: 'Vezirköprü Vatandaş · 1974 haberi, 2024’te yeniden yayımlandı',
+          sourceDetails: 'Vezirköprü Vatandaş · 1974 haberi, 2024’te yeniden yayımlandı',
           description:
             'Sarıdibek’i eski adı Soruk ile tanımlar ve Osmancık yönüne hareketi aktarır.',
           role: 'Yerel haber',
@@ -1347,7 +1347,7 @@ const surnameContent = {
         {
           number: '15',
           title: 'Çorum İl Özel İdaresi 2024 Yılı Faaliyet Raporu',
-          authority: 'Resmî kamu idaresi raporu',
+          sourceDetails: 'Resmî kamu idaresi raporu',
           description: 'Osmancık’taki Yenidanişment/Soruk kaydını ayrıca verir.',
           role: 'Güncel idarî süreklilik',
           url: sourceUrls.currentOsmancik,
@@ -1355,7 +1355,7 @@ const surnameContent = {
         {
           number: '16',
           title: 'Vezirköprü: Genel Bakış',
-          authority: 'Vezirköprü Ticaret ve Sanayi Odası',
+          sourceDetails: 'Vezirköprü Ticaret ve Sanayi Odası',
           description: 'Sarıdibek ile Tahtaköprü’yü Soruk Vadisi içinde tanımlar.',
           role: 'Güncel bölgesel bağlam',
           url: sourceUrls.sorukValley,
@@ -1363,7 +1363,7 @@ const surnameContent = {
         {
           number: '17',
           title: 'Tekmen ve Karataş için kamuya açık kayıt örneği',
-          authority: 'Çorum Haber · yerel kamu duyurusu · 2023',
+          sourceDetails: 'Çorum Haber · yerel kamu duyurusu · 2023',
           description: 'Soruklu soyadını Tekmen ve Karataş ile ilişkilendiren bir kamu kaydıdır.',
           role: 'Bölgesel soyadı kullanımı',
           url: sourceUrls.tekmenPublic,
@@ -1371,7 +1371,7 @@ const surnameContent = {
         {
           number: '18',
           title: 'Bafra Belediyesi 2024 Yılı Faaliyet Raporu',
-          authority: 'Bafra Belediyesi · resmî kamu raporu',
+          sourceDetails: 'Bafra Belediyesi · resmî kamu raporu',
           description: 'Bafra’da Soruklu soyadının geçtiği resmî bir kamu kaydıdır.',
           role: 'Bölgesel soyadı kullanımı',
           url: sourceUrls.bafraPublic,
@@ -1380,7 +1380,7 @@ const surnameContent = {
           number: '19',
           title:
             'Araştırmacı Yazar Salim Savcı ve Tekmen Köyü Muhtarı Servet Köroğlu Sayın Kaymakamımızı Ziyaret Etti',
-          authority: 'Osmancık Kaymakamlığı · 31 Mart 2017',
+          sourceDetails: 'Osmancık Kaymakamlığı · 31 Mart 2017',
           description:
             'Servet Köroğlu’nu Mart 2017’de Osmancık’a bağlı Tekmen Köyü muhtarı olarak resmen tanımlar ve yerel anlatının kişiye atfını destekler.',
           role: 'Yerel anlatı atfı',
@@ -1389,7 +1389,7 @@ const surnameContent = {
         {
           number: '20',
           title: 'Suuci < Sugeci / (Bel) Yazıtı Ne Zaman Yazıldı?',
-          authority:
+          sourceDetails:
             'Türk Dil Kurumu · Osman Fikri Sertkaya · 2000 · sayfa 307–312; ilgili sayfa 311',
           description:
             'Süci Yazıtı’ndaki “Küm surug(ı)m” biçimini aktarır ve cümleyi “şan” ile “şöhret” sözleriyle çevirir.',
@@ -1399,7 +1399,7 @@ const surnameContent = {
         {
           number: '21',
           title: 'Eski Türk Yazıt ve El Yazmalarında İkilemeler',
-          authority:
+          sourceDetails:
             'Journal of Old Turkic Studies · Erhan Aydın ve Ahmet Karaman · 2019 · sayfa 267',
           description:
             'Kü sorug ifadesini eş anlamlı ikilemeler arasında sınıflandırır ve “şan, şöhret” karşılığını verir.',
@@ -1409,7 +1409,7 @@ const surnameContent = {
         {
           number: '22',
           title: 'Kazakça Ağızlar Sözlüğü’nde Kayıtlı Bazı Eskicil Sözcükler Üzerine',
-          authority:
+          sourceDetails:
             'Türk Dil Kurumu · Sherubay Kurmanbaiuly, Marlen Adilov ve Zhumagali İbragimov · 2022 · sayfa 181',
           description:
             'Süci’deki sorug için farklı olarak “sorular” karşılığını verir; soru, sorgu ve arama ile ilgili kullanımları kaydeder.',
@@ -1419,7 +1419,7 @@ const surnameContent = {
         {
           number: '23',
           title: 'Kâmûs-ı Türkî: soruk',
-          authority: 'Şemseddin Sami · dijital sözlük maddesi · sayfa 838',
+          sourceDetails: 'Şemseddin Sami · dijital sözlük maddesi · sayfa 838',
           description:
             '838. sayfadaki tıpkıbasım maddeyi sunar ve Osmanlı Türkçesindeki soruk sözünü sual ve pürsiş karşılıklarıyla kaydeder.',
           role: 'Tarihî sözlük metnine doğrudan erişim · etimolojik karşılaştırma',
@@ -1428,7 +1428,7 @@ const surnameContent = {
         {
           number: '24',
           title: 'Evliya Çelebi Seyahatnamesi, 2. cilt, basılı sayfa 402',
-          authority:
+          sourceDetails:
             'İkdam Matbaası · 1896 · University of Toronto taraması, Internet Archive · kamu malı',
           description:
             'Osmanlı harfli basılı sayfada Göl’den Zeytun yönüne uzanan güzergâhta صوروق biçimi açıkça görülür.',
@@ -1438,7 +1438,7 @@ const surnameContent = {
         {
           number: '25',
           title: 'Evliya Çelebi',
-          authority: 'TDV İslâm Ansiklopedisi · Mücteba İlgürel',
+          sourceDetails: 'TDV İslâm Ansiklopedisi · Mücteba İlgürel',
           description:
             'Osmanlı seyyahı ve on ciltlik Seyahatname hakkındaki kısa tanıtımın biyografik temelini sağlar.',
           role: 'Kaynak-eleştirel bağlam',

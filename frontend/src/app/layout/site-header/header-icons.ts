@@ -5,13 +5,14 @@ import {
   mdiGithub,
   mdiMenu,
   mdiNoteTextOutline,
-  mdiShieldOutline,
   mdiSitemapOutline,
   mdiThemeLightDark,
   mdiTranslate,
   mdiWeatherNight,
   mdiWhiteBalanceSunny,
 } from '@mdi/js';
+
+export { mdiShieldOutline as HEADER_IDENTITY_ICON_PATH } from '@mdi/js';
 
 import { ResolvedTheme, ThemeSetting } from '../../core/theme/theme.service';
 
@@ -41,8 +42,6 @@ export const HEADER_NAV_ITEMS: HeaderNavItem[] = [
   { exact: true, iconClass: 'github-icon', iconPath: mdiGithub, label: 'GitHub', path: '/github' },
   { exact: true, iconPath: mdiEmailOutline, label: 'Contact', path: '/contact' },
 ];
-
-export const HEADER_IDENTITY_ICON_PATH = mdiShieldOutline;
 
 export const HEADER_IDENTITY_ITEMS: HeaderIdentityItem[] = [
   { label: 'Soruklu Surname', path: '/soruklu-surname' },
