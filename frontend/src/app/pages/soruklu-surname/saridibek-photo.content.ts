@@ -27,7 +27,7 @@ export const saridibekPhotoContent: Record<SurnameLanguage, SurnameImageContent>
     context: 'The settlement identified in the research as the village formerly called Soruk.',
     contextLabel: 'Historical context',
     date: '13 November 2019',
-    dateLabel: 'File date',
+    dateLabel: 'File or gallery date',
     description:
       'A landscape record from Sarıdibek, the Vezirköprü settlement identified in the research as the village formerly called Soruk.',
     dialogEyebrow: 'Place record',
@@ -53,7 +53,7 @@ export const saridibekPhotoContent: Record<SurnameLanguage, SurnameImageContent>
     context: 'Araştırmada eski adı Soruk olarak belirtilen yerleşim.',
     contextLabel: 'Tarihî bağlam',
     date: '13 Kasım 2019',
-    dateLabel: 'Dosyada belirtilen tarih',
+    dateLabel: 'Dosya veya galeri tarihi',
     description:
       'Araştırmada eski adı Soruk olarak belirtilen Vezirköprü yerleşimi Sarıdibek’ten bir manzara kaydı.',
     dialogEyebrow: 'Yer kaydı',

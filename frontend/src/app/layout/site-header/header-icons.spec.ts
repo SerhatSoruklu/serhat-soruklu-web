@@ -1,7 +1,15 @@
-import { mdiThemeLightDark, mdiTranslate, mdiWeatherNight, mdiWhiteBalanceSunny } from '@mdi/js';
+import {
+  mdiShieldOutline,
+  mdiThemeLightDark,
+  mdiTranslate,
+  mdiWeatherNight,
+  mdiWhiteBalanceSunny,
+} from '@mdi/js';
 
 import {
   getThemeTriggerIconPath,
+  HEADER_IDENTITY_ICON_PATH,
+  HEADER_IDENTITY_ITEMS,
   HEADER_LANGUAGE_ICON_PATH,
   HEADER_MENU_ICON_PATHS,
   HEADER_NAV_ITEMS,
@@ -22,6 +30,12 @@ describe('header icons', () => {
     expect(HEADER_MENU_ICON_PATHS.menu).toContain('M3');
     expect(HEADER_MENU_ICON_PATHS.close).toContain('M19');
     expect(HEADER_LANGUAGE_ICON_PATH).toBe(mdiTranslate);
+    expect(HEADER_IDENTITY_ICON_PATH).toBe(mdiShieldOutline);
+    expect(HEADER_IDENTITY_ITEMS).toEqual([
+      { label: 'Soruklu Surname', path: '/soruklu-surname' },
+      { label: 'Soruklu Order', path: '/soruklu-order' },
+      { label: 'Velari', path: '/velari' },
+    ]);
   });
 
   it('selects the trigger icon from theme setting and resolved theme', () => {

@@ -211,6 +211,66 @@
       }
     }
 
+    <div
+      class="mobile-nav__identity"
+      [class.mobile-nav__identity--active]="isIdentityRoute()"
+    >
+      <button
+        class="mobile-nav__identity-trigger"
+        type="button"
+        aria-controls="mobile-identity-routes"
+        [attr.aria-expanded]="identityMenuOpen()"
+        [attr.tabindex]="menuOpen() ? 0 : -1"
+        data-testid="mobile-identity-button"
+        (click)="toggleIdentityMenu()"
+      >
+        <span class="mobile-nav__identity-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path [attr.d]="identityIconPath"></path>
+          </svg>
+        </span>
+        <span class="mobile-nav__identity-copy">
+          <span class="mobile-nav__identity-label">Identity</span>
+          <span class="mobile-nav__identity-note">Surname · Order · Velari</span>
+        </span>
+        <svg
+          class="mobile-nav__identity-chevron"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path [attr.d]="identityChevronPath"></path>
+        </svg>
+      </button>
+
+      @if (identityMenuOpen()) {
+        <div
+          id="mobile-identity-routes"
+          class="mobile-nav__identity-routes"
+          aria-label="Identity routes"
+          data-testid="mobile-identity-routes"
+        >
+          @for (item of identityItems; track item.path; let itemIndex = $index) {
+            <a
+              class="mobile-nav__identity-route"
+              [routerLink]="item.path"
+              routerLinkActive="mobile-nav__identity-route--active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              ariaCurrentWhenActive="page"
+              [attr.tabindex]="menuOpen() ? 0 : -1"
+              (click)="followIdentityLink(item.path)"
+            >
+              <span class="mobile-nav__identity-route-index" aria-hidden="true">
+                0{{ itemIndex + 1 }}
+              </span>
+              <span>{{ item.label }}</span>
+              <span class="mobile-nav__identity-route-arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          }
+        </div>
+      }
+    </div>
+
     <footer class="mobile-nav__footer" aria-label="Mobile menu footer">
       <div class="mobile-nav__quick-links" aria-label="Quick links">
         @for (link of quickLinks; track link.path) {

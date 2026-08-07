@@ -12,6 +12,8 @@ import {
   mdiWhiteBalanceSunny,
 } from '@mdi/js';
 
+export { mdiShieldOutline as HEADER_IDENTITY_ICON_PATH } from '@mdi/js';
+
 import { ResolvedTheme, ThemeSetting } from '../../core/theme/theme.service';
 
 export interface HeaderNavItem {
@@ -28,12 +30,23 @@ export interface HeaderThemeOption {
   value: ThemeSetting;
 }
 
+export interface HeaderIdentityItem {
+  label: string;
+  path: string;
+}
+
 export const HEADER_NAV_ITEMS: HeaderNavItem[] = [
   { exact: true, iconPath: mdiBriefcaseOutline, label: 'Work', path: '/work' },
   { exact: false, iconPath: mdiSitemapOutline, label: 'Systems', path: '/systems' },
   { exact: true, iconPath: mdiNoteTextOutline, label: 'Writing', path: '/writing' },
   { exact: true, iconClass: 'github-icon', iconPath: mdiGithub, label: 'GitHub', path: '/github' },
   { exact: true, iconPath: mdiEmailOutline, label: 'Contact', path: '/contact' },
+];
+
+export const HEADER_IDENTITY_ITEMS: HeaderIdentityItem[] = [
+  { label: 'Soruklu Surname', path: '/soruklu-surname' },
+  { label: 'Soruklu Order', path: '/soruklu-order' },
+  { label: 'Velari', path: '/velari' },
 ];
 
 export const HEADER_THEME_OPTIONS: HeaderThemeOption[] = [

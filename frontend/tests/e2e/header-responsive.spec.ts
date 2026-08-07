@@ -389,6 +389,50 @@ test.describe('responsive shell header', () => {
     assertNoConsoleErrors();
   });
 
+  test('desktop identity picker keeps an attached hover and keyboard interaction area', async ({
+    page,
+  }, testInfo) => {
+    const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
+
+    await page.setViewportSize({ width: 1820, height: 1000 });
+    await page.goto('/');
+
+    const identityButton = page.getByTestId('desktop-identity-button');
+    await identityButton.hover();
+    const identityMenu = page.getByTestId('desktop-identity-menu');
+    await expect(identityMenu).toBeVisible();
+
+    const buttonBox = await identityButton.boundingBox();
+    const menuBox = await identityMenu.boundingBox();
+    expect(buttonBox).not.toBeNull();
+    expect(menuBox).not.toBeNull();
+
+    await page.mouse.move(
+      buttonBox!.x + buttonBox!.width / 2,
+      buttonBox!.y + buttonBox!.height / 2,
+    );
+    await page.mouse.move(menuBox!.x + 24, menuBox!.y + 8, { steps: 16 });
+    await expect(identityMenu).toBeVisible();
+
+    await page.mouse.move(10, 280);
+    await expect(identityMenu).toBeHidden();
+
+    await identityButton.hover();
+    await identityMenu.getByRole('link', { name: 'Soruklu Order' }).click();
+    await expect(page).toHaveURL('/soruklu-order');
+
+    await page.goto('/');
+    await page.mouse.move(10, 280);
+    await page.getByTestId('desktop-identity-button').focus();
+    await expect(page.getByTestId('desktop-identity-menu')).toBeVisible();
+    await page.keyboard.press('Tab');
+    await expect(page.getByTestId('desktop-identity-menu')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.getByTestId('desktop-identity-menu')).toBeHidden();
+    await expectNoHorizontalOverflow(page);
+    assertNoConsoleErrors();
+  });
+
   test('desktop logo follows dark and light theme selection', async ({ page }, testInfo) => {
     const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
 
@@ -638,6 +682,31 @@ test.describe('responsive shell header', () => {
         mobileNav.getByRole('link', { name: 'GitHub' }).locator('svg.mobile-nav__github-icon'),
       ).toBeVisible();
       await expect(mobileNav.getByRole('link', { name: 'Contact' })).toBeVisible();
+
+      const identityRoutes = [
+        { label: 'Soruklu Surname', path: '/soruklu-surname' },
+        { label: 'Soruklu Order', path: '/soruklu-order' },
+        { label: 'Velari', path: '/velari' },
+      ];
+
+      for (const identityRoute of identityRoutes) {
+        if (!(await mobileNav.isVisible())) {
+          await mobileHeader.getByTestId('mobile-menu-button').click();
+        }
+
+        const identityButton = mobileNav.getByTestId('mobile-identity-button');
+        const urlBeforeExpansion = page.url();
+        await identityButton.click();
+        await expect(identityButton).toHaveAttribute('aria-expanded', 'true');
+        await expect(page).toHaveURL(urlBeforeExpansion);
+
+        const identityChooser = mobileNav.getByTestId('mobile-identity-routes');
+        await expect(identityChooser).toBeVisible();
+        await expect(identityChooser.getByRole('link')).toHaveCount(3);
+        await identityChooser.getByRole('link', { name: identityRoute.label }).click();
+        await expect(page).toHaveURL(identityRoute.path);
+        await expect(mobileNav).toBeHidden();
+      }
 
       await mobileHeader.getByTestId('mobile-theme-menu-button').click();
       await expect(mobileNav).toBeHidden();

@@ -28,6 +28,8 @@ describe('SorukluSurnameComponent', () => {
     expect(nativeElement.querySelector('.surname-formation__equation')?.textContent).toBe(
       'Soruk+-lu→Soruklu',
     );
+    expect(text).toContain('H.575 / 1179–80');
+    expect(text).toContain('1485');
     expect(text).toContain('c. 1520');
     expect(text).toContain('1576');
     expect(text).toContain('1648');
@@ -35,32 +37,61 @@ describe('SorukluSurnameComponent', () => {
     expect(text).toContain('1959');
     expect(text).toContain('1974');
     expect(text).toContain('What we know in 30 seconds');
-    expect(text).toContain('What may Soruk itself mean?');
-    expect(text).toContain('The original lexical meaning of Soruk remains unresolved.');
-    expect(text).toContain('Research status · low confidence');
-    expect(text).toContain('No reviewed source demonstrates the required sound development');
+    expect(text).toContain('The lexical origin of Soruk remains unresolved');
+    expect(text).toContain('Etymological comparison · low confidence');
     expect(text).toContain('Kâmûs-ı Türkî: the historical word soruk');
     expect(text).toContain('Dictionary evidence · origin unproven');
-    expect(text).toContain('Direct modern descent remains unproven.');
+    expect(text).toContain('Direct descent from either figure to modern Soruklu families remains unproven.');
+    expect(text).toContain('The evidence develops across distinct kinds of historical record.');
     expect(text).toContain(
-      'The Soruk place name and the Soruklu identifier appear in records across centuries.',
+      'The Soruk name element is documented in the form Sorukderesi from at least 1485.',
     );
-    expect(text).toContain('A historical explanation survives—but its date does not.');
-    expect(text).toContain('Two Soruk locations; one regional research corridor.');
+    expect(text).toContain(
+      'The underlying eighteenth-century appointment record has not yet been examined directly.',
+    );
+    expect(text).toContain(
+      'The reviewed sources do not establish whether these names continuously denoted the same administrative settlement.',
+    );
+    expect(text).toContain('What “M. Sorukderesi” means');
+    expect(text).toContain('The Soruk Bey traditions');
+    expect(text).toContain('The unresolved Tâceddin question');
+    expect(text).toContain('Two distinct Soruk localities');
     expect(text).toContain('The living footprint of a rare surname');
     expect(text).toContain('approximately 500 living people may carry the Soruklu surname today');
     expect(text).toContain('served as muhtar of Tekmen village in Osmancık');
-    expect(text).toContain('Working estimate · low confidence');
-    expect(text).toContain('may be in the low thousands');
     expect(text).toContain('The surname and the Soruklu Order are separate subjects.');
     expect(text).toContain('Vezirkopru Saridibek Village');
     expect(text).toContain('Soruk in the Ottoman-script Seyahatname');
     expect(text).toContain('1896 edition · account dated 1648');
-    expect(text).toContain('File date');
+    expect(text).toContain('File or gallery date');
     expect(text).toContain('Year');
-    expect(text).toContain('Research lead · not verified');
+    expect(text).toContain('Research lead · identities not established');
     expect(text).toContain('The evidence has a clear boundary.');
+    expect(text).toContain('Research frozen · 7 August 2026');
+    expect(text).toContain('Frozen pending new evidence');
+    const unknownSection = nativeElement.querySelector('[aria-labelledby="surname-unknown-title"]');
+    const researchStatusSection = nativeElement.querySelector(
+      '[aria-labelledby="surname-research-status-title"]',
+    );
+    const sourcesSection = nativeElement.querySelector('[aria-labelledby="surname-sources-title"]');
+    expect(
+      Boolean(
+        (unknownSection?.compareDocumentPosition(researchStatusSection!) ?? 0) &
+          Node.DOCUMENT_POSITION_FOLLOWING,
+      ),
+    ).toBe(true);
+    expect(
+      Boolean(
+        (researchStatusSection?.compareDocumentPosition(sourcesSection!) ?? 0) &
+          Node.DOCUMENT_POSITION_FOLLOWING,
+      ),
+    ).toBe(true);
+    expect(nativeElement.querySelectorAll('.surname-timeline > li')).toHaveLength(10);
+    expect(nativeElement.querySelectorAll('.surname-tradition-card')).toHaveLength(3);
+    expect(nativeElement.querySelectorAll('.surname-records > li')).toHaveLength(10);
+    expect(nativeElement.querySelectorAll('.surname-sources > li')).toHaveLength(25);
     expect(text).not.toMatch(/has a coat of arms|is a noble|is a dynasty|are direct descendants/i);
+    expect(text).not.toContain('The Soruk place name is documented from at least 1485.');
     expect(text).not.toMatch(/current muhtar|mayor/i);
     expect(nativeElement.querySelector('[src*="soruklu-order"]')).toBeNull();
   });
@@ -83,33 +114,48 @@ describe('SorukluSurnameComponent', () => {
     );
     expect(nativeElement.textContent).toContain('Kanıt değerlendirmesi');
     expect(nativeElement.textContent).toContain(
-      'Soruk kelimesinin kendisi ne anlama geliyor olabilir?',
+      'Soruk kelimesinin sözlük kökeni henüz çözülememiştir',
     );
-    expect(nativeElement.textContent).toContain('Araştırma durumu · düşük güven');
-    expect(nativeElement.textContent).toContain(
-      'İncelenen kaynaklar sorug veya surug biçiminden Soruk adına gereken ses gelişimini',
-    );
+    expect(nativeElement.textContent).toContain('Etimolojik karşılaştırma · düşük güven');
     expect(nativeElement.textContent).toContain('Kâmûs-ı Türkî’de tarihî soruk kelimesi');
     expect(nativeElement.textContent).toContain('Sözlük kanıtı · köken kanıtlanmış değil');
     expect(nativeElement.textContent).toContain('30 saniyede bildiklerimiz');
+    expect(nativeElement.textContent).toContain('Kanıtlar farklı tarihî kayıt türleri içinde gelişir.');
     expect(nativeElement.textContent).toContain(
-      'Soruk yer adı ve Soruklu kişi tanımı, yüzyıllara yayılan kayıtlarda görülür.',
+      'Soruk ad unsuru, Sorukderesi biçiminde en az 1485’e kadar belgelenmektedir.',
     );
     expect(nativeElement.textContent).toContain(
-      'İki Soruk yeri; tek bir bölgesel araştırma hattı.',
+      'Dayanak 18. yüzyıl görevlendirme kaydı henüz doğrudan incelenmemiştir.',
     );
+    expect(nativeElement.textContent).toContain(
+      'bu adların kesintisiz biçimde aynı idarî yerleşimi gösterip göstermediğini kesinleştirmemektedir',
+    );
+    expect(nativeElement.textContent).toContain('“M. Sorukderesi” ne anlama geliyor?');
+    expect(nativeElement.textContent).toContain('Soruk Bey anlatıları');
+    expect(nativeElement.textContent).toContain('Tâceddin meselesi henüz çözülemedi');
+    expect(nativeElement.textContent).toContain('Birbirinden ayrı iki Soruk yerleşimi');
     expect(nativeElement.textContent).toContain('Nadir bir soyadının yaşayan izi');
     expect(nativeElement.textContent).toContain(
       'Osmancık’ın Tekmen köyünde muhtarlık yapmış olan Servet Köroğlu',
     );
-    expect(nativeElement.textContent).toContain('Çalışma tahmini · düşük güven');
-    expect(nativeElement.textContent).toContain('birkaç bin düzeyinde olabileceğini');
     expect(nativeElement.textContent).toContain('Soyadı ile Soruklu Order ayrı konulardır.');
     expect(nativeElement.textContent).toContain('Vezirköprü Sarıdibek Köyü');
     expect(nativeElement.textContent).toContain('Osmanlı harfli Seyahatname’de Soruk');
-    expect(nativeElement.textContent).toContain('Dosyada belirtilen tarih');
+    expect(nativeElement.textContent).toContain('Dosya veya galeri tarihi');
     expect(nativeElement.textContent).toContain('Kanıtlanmamış noktalar');
+    expect(nativeElement.textContent).toContain('Araştırma donduruldu · 7 Ağustos 2026');
+    expect(nativeElement.textContent).toContain('Yeni kanıt bulunana kadar donduruldu');
+    expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(
+      'https://serhatsoruklu.com/soruklu-surname',
+    );
+    expect(nativeElement.querySelectorAll('.surname-timeline > li')).toHaveLength(10);
+    expect(nativeElement.querySelectorAll('.surname-tradition-card')).toHaveLength(3);
+    expect(nativeElement.querySelectorAll('.surname-records > li')).toHaveLength(10);
+    expect(nativeElement.querySelectorAll('.surname-sources > li')).toHaveLength(25);
     expect(nativeElement.textContent).not.toMatch(/güncel muhtar|belediye başkanı/i);
+    expect(nativeElement.textContent).not.toContain(
+      'Soruk yer adı en az 1485’e kadar belgelenmektedir.',
+    );
     expect(button?.textContent).toContain('Read in English');
     expect(title.getTitle()).toBe('Soruklu Soyadı: Anlamı ve Kökeni | Serhat Soruklu');
     expect(document.documentElement.lang).toBe('tr-TR');
@@ -145,16 +191,32 @@ describe('SorukluSurnameComponent', () => {
       'a[href="/soruklu-order"]',
     );
 
-    expect(sourceTitles).toHaveLength(20);
-    expect(sourceActions).toHaveLength(20);
-    expect(sources).toHaveLength(40);
+    expect(sourceTitles).toHaveLength(25);
+    expect(sourceActions).toHaveLength(25);
+    expect(sources).toHaveLength(50);
     expect(sources.every((link) => link.target === '_blank')).toBe(true);
     expect(sources.every((link) => link.rel === 'noopener noreferrer')).toBe(true);
     expect(sourceTitles.map((link) => link.href)).toEqual(sourceActions.map((link) => link.href));
+    expect(new Set(sourceTitles.map((link) => link.href)).size).toBe(25);
+    expect(sourceTitles[2]?.href).toBe(
+      'https://www.cevdetyilmaz.com.tr/wp-content/uploads/2014-VEZIRKOPRU-ARASTIRMALARI.pdf',
+    );
+    expect(sourceTitles[4]?.href).toBe(
+      'https://amasya.bel.tr/uploads/e-kitap/kitap/1-4/files/basic-html/page128.html',
+    );
+    expect(sourceTitles[7]?.href).toBe(
+      'https://amasya.bel.tr/uploads/e-kitap/kitap/1-4/files/basic-html/page338.html',
+    );
+    expect(sourceTitles[8]?.href).toBe(
+      'https://islamansiklopedisi.org.tr/huseyin-husameddin-yasar',
+    );
     expect(sourceTitles[9]?.href).toBe(
+      'https://islamansiklopedisi.org.tr/tacizade-cafer-celebi',
+    );
+    expect(sourceTitles[14]?.href).toBe(
       'https://www.corumozelidare.gov.tr/kurumlar/corumozelidare.gov.tr/GENEL-HABERLER/2025/CORUM-IL-OZEL-IDARESI-2024-YILI-FAALIYET-RAPORU.pdf',
     );
-    expect(sourceTitles[13]?.href).toBe(
+    expect(sourceTitles[18]?.href).toBe(
       'https://www.osmancik.gov.tr/arastirmaci-yazar-salim-savci-ve-tekmen-koyu-muhtari-servet-koroglu-sayin-kaymakamimizi-ziyaret-etti',
     );
     expect(orderLinks).toHaveLength(2);

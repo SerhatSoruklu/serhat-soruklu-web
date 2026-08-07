@@ -16,6 +16,8 @@ import { ThemeService, ThemeSetting } from '../../core/theme/theme.service';
 import { LanguageDialogService } from '../../shared/dialogs/language-dialog/language-dialog.service';
 import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
 import {
+  HEADER_IDENTITY_ICON_PATH,
+  HEADER_IDENTITY_ITEMS,
   HEADER_LANGUAGE_ICON_PATH,
   HEADER_NAV_ITEMS,
   HEADER_THEME_OPTIONS,
@@ -57,6 +59,9 @@ export class SiteHeaderComponent implements AfterViewInit, OnDestroy {
   readonly themeService = inject(ThemeService);
   readonly topNavigation = inject(TopNavigationService);
   readonly isScrolled = signal(this.getScrollTop() >= SCROLLED_ENABLE_THRESHOLD);
+  readonly identityIconPath = HEADER_IDENTITY_ICON_PATH;
+  readonly identityItems = HEADER_IDENTITY_ITEMS;
+  readonly identityMenuOpen = signal(false);
   readonly languageDialog = inject(LanguageDialogService);
   readonly languageIconPath = HEADER_LANGUAGE_ICON_PATH;
   readonly navItems = HEADER_NAV_ITEMS;
@@ -94,7 +99,36 @@ export class SiteHeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   toggleThemeMenu(): void {
+    this.identityMenuOpen.set(false);
     this.themeMenuOpen.update((open) => !open);
+  }
+
+  toggleIdentityMenu(): void {
+    this.themeMenuOpen.set(false);
+    this.identityMenuOpen.update((open) => !open);
+  }
+
+  openIdentityMenu(): void {
+    this.themeMenuOpen.set(false);
+    this.identityMenuOpen.set(true);
+  }
+
+  closeIdentityMenu(): void {
+    this.identityMenuOpen.set(false);
+  }
+
+  closeIdentityMenuAfterFocus(event: FocusEvent): void {
+    const nextTarget = event.relatedTarget as Node | null;
+    const currentTarget = event.currentTarget as HTMLElement;
+
+    if (!nextTarget || !currentTarget.contains(nextTarget)) {
+      this.closeIdentityMenu();
+    }
+  }
+
+  followIdentityLink(path: string): void {
+    this.closeIdentityMenu();
+    this.topNavigation.handleLinkClick(path);
   }
 
   setTheme(setting: ThemeSetting): void {
@@ -103,12 +137,19 @@ export class SiteHeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   openLanguageDialog(): void {
+    this.identityMenuOpen.set(false);
     this.themeMenuOpen.set(false);
     void this.languageDialog.open();
   }
 
   @HostListener('document:click', ['$event'])
   closeThemeMenuOnOutsideClick(event: MouseEvent): void {
+    const target = event.target as Element | null;
+
+    if (!target?.closest('.identity-selector')) {
+      this.identityMenuOpen.set(false);
+    }
+
     if (!this.elementRef.nativeElement.contains(event.target as Node)) {
       this.themeMenuOpen.set(false);
     }
@@ -116,7 +157,20 @@ export class SiteHeaderComponent implements AfterViewInit, OnDestroy {
 
   @HostListener('document:keydown.escape')
   closeThemeMenuOnEscape(): void {
+    this.blurActiveElement();
+    this.identityMenuOpen.set(false);
     this.themeMenuOpen.set(false);
+  }
+
+  private blurActiveElement(): void {
+    const activeElement = this.elementRef.nativeElement.ownerDocument.activeElement;
+
+    if (
+      activeElement instanceof HTMLElement &&
+      this.elementRef.nativeElement.contains(activeElement)
+    ) {
+      activeElement.blur();
+    }
   }
 
   private updateScrollProgress(): void {

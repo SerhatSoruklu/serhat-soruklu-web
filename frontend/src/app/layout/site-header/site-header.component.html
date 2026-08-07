@@ -56,6 +56,71 @@
           <span>{{ item.label }}</span>
         </a>
       }
+
+      <div
+        class="identity-selector"
+        (mouseenter)="openIdentityMenu()"
+        (mouseleave)="closeIdentityMenu()"
+        (focusin)="openIdentityMenu()"
+        (focusout)="closeIdentityMenuAfterFocus($event)"
+      >
+        <button
+          class="identity-selector__trigger"
+          type="button"
+          aria-label="Explore identity pages"
+          aria-controls="desktop-identity-routes"
+          [attr.aria-expanded]="identityMenuOpen()"
+          data-testid="desktop-identity-button"
+          (click)="toggleIdentityMenu()"
+        >
+          <svg
+            class="identity-selector__trigger-icon"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path [attr.d]="identityIconPath"></path>
+          </svg>
+          <span class="identity-selector__trigger-label">Identity</span>
+          <span class="identity-selector__signal" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+
+        @if (identityMenuOpen()) {
+          <div
+            id="desktop-identity-routes"
+            class="identity-selector__menu"
+            aria-label="Identity routes"
+            data-testid="desktop-identity-menu"
+          >
+            <div class="identity-selector__menu-heading">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path [attr.d]="identityIconPath"></path>
+              </svg>
+              <span>Identity routes</span>
+            </div>
+            @for (item of identityItems; track item.path; let itemIndex = $index) {
+              <a
+                class="identity-selector__route"
+                [routerLink]="item.path"
+                routerLinkActive="identity-selector__route--active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                ariaCurrentWhenActive="page"
+                (click)="followIdentityLink(item.path)"
+              >
+                <span class="identity-selector__route-index" aria-hidden="true">
+                  0{{ itemIndex + 1 }}
+                </span>
+                <span>{{ item.label }}</span>
+                <span class="identity-selector__route-arrow" aria-hidden="true">&rarr;</span>
+              </a>
+            }
+          </div>
+        }
+      </div>
     </nav>
 
     <div class="site-header__actions">

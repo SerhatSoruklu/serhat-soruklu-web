@@ -77,6 +77,8 @@
 
 :host-context(.theme-resolved-light) .mobile-nav__link:focus-visible,
 :host-context(.theme-resolved-light) .mobile-nav__system-child:focus-visible,
+:host-context(.theme-resolved-light) .mobile-nav__identity-trigger:focus-visible,
+:host-context(.theme-resolved-light) .mobile-nav__identity-route:focus-visible,
 :host-context(.theme-resolved-light) .mobile-nav__home:focus-visible,
 :host-context(.theme-resolved-light) .mobile-nav__quick-link:focus-visible,
 :host-context(.theme-resolved-light) .mobile-nav__quick-url:focus-visible,
@@ -110,7 +112,7 @@
 :host-context(.theme-resolved-light) .mobile-brand__subtitle,
 :host-context(.theme-resolved-light) .mobile-header__icon-button,
 :host-context(.theme-resolved-light) .mobile-theme__option--active .icon {
-  color: #b8872f;
+  color: #8c621d;
 }
 
 :host-context(.theme-resolved-light) .mobile-theme__option,
@@ -120,8 +122,83 @@
 :host-context(.theme-resolved-light) .mobile-nav__home-note,
 :host-context(.theme-resolved-light) .mobile-nav__quick-link,
 :host-context(.theme-resolved-light) .mobile-nav__system-child,
+:host-context(.theme-resolved-light) .mobile-nav__identity-route,
 :host-context(.theme-resolved-light) .mobile-nav__link {
   color: #5f6673;
+}
+
+:host-context(.theme-resolved-light) .mobile-nav__identity {
+  border-top-color: rgba(229, 224, 214, 0.9);
+}
+
+:host-context(.theme-resolved-light) .mobile-nav__identity-trigger {
+  border-color: rgba(184, 135, 47, 0.46);
+  background:
+    linear-gradient(135deg, rgba(184, 135, 47, 0.12), transparent 54%),
+    rgba(255, 255, 255, 0.48);
+  color: #2c3441;
+}
+
+:host-context(.theme-resolved-light) .mobile-nav__identity-icon {
+  border-color: rgba(184, 135, 47, 0.3);
+  background: rgba(248, 247, 243, 0.82);
+  color: #8c621d;
+}
+
+:host-context(.theme-resolved-light) .mobile-nav__identity-label,
+:host-context(.theme-resolved-light) .mobile-nav__identity-chevron,
+:host-context(.theme-resolved-light) .mobile-nav__identity-route-index,
+:host-context(.theme-resolved-light) .mobile-nav__identity-route-arrow {
+  color: #b8872f;
+}
+
+:host-context(.theme-resolved-light) .mobile-nav__identity-note {
+  color: #5f6673;
+}
+
+:host-context(.theme-resolved-light) .mobile-nav__identity-trigger:hover,
+:host-context(.theme-resolved-light) .mobile-nav__identity-trigger:focus-visible,
+:host-context(.theme-resolved-light) .mobile-nav__identity-trigger[aria-expanded='true'],
+:host-context(.theme-resolved-light) .mobile-nav__identity--active .mobile-nav__identity-trigger {
+  border-color: #b8872f;
+  background:
+    linear-gradient(135deg, rgba(184, 135, 47, 0.16), transparent 58%),
+    #ffffff;
+  box-shadow: inset 3px 0 0 #b8872f;
+  color: #10141c;
+}
+
+:host-context(.theme-resolved-light) .mobile-nav__identity-trigger:focus-visible {
+  box-shadow:
+    inset 3px 0 0 #b8872f,
+    0 0 0 2px rgba(184, 135, 47, 0.34);
+}
+
+:host-context(.theme-resolved-light) .mobile-nav__identity-routes {
+  border-left-color: rgba(184, 135, 47, 0.28);
+  background: linear-gradient(90deg, rgba(184, 135, 47, 0.07), rgba(184, 135, 47, 0));
+}
+
+:host-context(.theme-resolved-light) .mobile-nav__identity-routes::before {
+  background: rgba(184, 135, 47, 0.58);
+}
+
+:host-context(.theme-resolved-light) .mobile-nav__identity-route {
+  border-color: rgba(229, 224, 214, 0.82);
+  background: rgba(255, 255, 255, 0.42);
+}
+
+:host-context(.theme-resolved-light) .mobile-nav__identity-route:hover,
+:host-context(.theme-resolved-light) .mobile-nav__identity-route:focus-visible,
+:host-context(.theme-resolved-light) .mobile-nav__identity-route--active {
+  border-color: rgba(184, 135, 47, 0.38);
+  background: #ffffff;
+  color: #10141c;
+}
+
+:host-context(.theme-resolved-light) .mobile-nav__identity-route--active {
+  box-shadow: inset 3px 0 0 #b8872f;
+  color: #8f6424;
 }
 
 :host-context(.theme-resolved-light) .mobile-nav__link:hover,

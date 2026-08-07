@@ -10,13 +10,15 @@ import {
   signal,
 } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { mdiArrowRight, mdiHomeVariantOutline } from '@mdi/js';
+import { mdiArrowRight, mdiChevronDown, mdiHomeVariantOutline } from '@mdi/js';
 
 import { TopNavigationService } from '../../../core/navigation/top-navigation.service';
 import { ThemeService, ThemeSetting } from '../../../core/theme/theme.service';
 import { LanguageDialogService } from '../../../shared/dialogs/language-dialog/language-dialog.service';
 import { TooltipDirective } from '../../../shared/tooltip/tooltip.directive';
 import {
+  HEADER_IDENTITY_ICON_PATH,
+  HEADER_IDENTITY_ITEMS,
   HEADER_LANGUAGE_ICON_PATH,
   HEADER_MENU_ICON_PATHS,
   HEADER_NAV_ITEMS,
@@ -67,6 +69,10 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
   readonly themeTriggerIconPaths = HEADER_THEME_TRIGGER_ICON_PATHS;
   readonly currentYear = new Date().getFullYear();
   readonly homeIconPath = mdiHomeVariantOutline;
+  readonly identityChevronPath = mdiChevronDown;
+  readonly identityIconPath = HEADER_IDENTITY_ICON_PATH;
+  readonly identityItems = HEADER_IDENTITY_ITEMS;
+  readonly identityMenuOpen = signal(false);
   readonly quickLinkArrowPath = mdiArrowRight;
   readonly quickLinks = [
     {
@@ -123,15 +129,32 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
 
   toggleMenu(): void {
     this.themeMenuOpen.set(false);
-    this.menuOpen.update((open) => !open);
+    const nextOpen = !this.menuOpen();
+
+    this.menuOpen.set(nextOpen);
+
+    if (!nextOpen) {
+      this.identityMenuOpen.set(false);
+    }
   }
 
   closeMenu(): void {
     this.blurActiveElement();
+    this.identityMenuOpen.set(false);
     this.menuOpen.set(false);
   }
 
+  toggleIdentityMenu(): void {
+    this.identityMenuOpen.update((open) => !open);
+  }
+
+  followIdentityLink(path: string): void {
+    this.topNavigation.handleLinkClick(path);
+    this.closeMenu();
+  }
+
   toggleThemeMenu(): void {
+    this.identityMenuOpen.set(false);
     this.menuOpen.set(false);
     this.themeMenuOpen.update((open) => !open);
   }
@@ -143,6 +166,7 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
   }
 
   openLanguageDialog(): void {
+    this.identityMenuOpen.set(false);
     this.menuOpen.set(false);
     this.themeMenuOpen.set(false);
     void this.languageDialog.open();
@@ -160,10 +184,17 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
     );
   }
 
+  isIdentityRoute(): boolean {
+    const currentPath = this.router.url.split(/[?#]/, 1)[0];
+
+    return this.identityItems.some((link) => link.path === currentPath);
+  }
+
   @HostListener('document:click', ['$event'])
   closeOpenPanelsOnOutsideClick(event: MouseEvent): void {
     if (!this.elementRef.nativeElement.contains(event.target as Node)) {
       this.blurActiveElement();
+      this.identityMenuOpen.set(false);
       this.menuOpen.set(false);
       this.themeMenuOpen.set(false);
     }
@@ -172,6 +203,7 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
   @HostListener('document:keydown.escape')
   closeOpenPanelsOnEscape(): void {
     this.blurActiveElement();
+    this.identityMenuOpen.set(false);
     this.menuOpen.set(false);
     this.themeMenuOpen.set(false);
   }

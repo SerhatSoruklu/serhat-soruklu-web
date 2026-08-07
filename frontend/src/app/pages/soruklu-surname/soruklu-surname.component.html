@@ -102,7 +102,7 @@
         <p>{{ content().timeline.introduction }}</p>
       </header>
 
-      <ol class="surname-timeline">
+      <ol class="surname-timeline" data-testid="surname-timeline">
         @for (entry of content().timeline.entries; track entry.date) {
           <li>
             <div class="surname-timeline__date">
@@ -117,13 +117,37 @@
               <span>{{ entry.date }}</span>
             </div>
             <article>
-              <p class="surname-timeline__label">{{ entry.label }}</p>
+              <p class="surname-timeline__label">{{ entry.category }}</p>
               <h3>{{ entry.title }}</h3>
-              <p>{{ entry.description }}</p>
+              <p class="surname-timeline__body">{{ entry.body }}</p>
+              <p class="surname-timeline__limitation">{{ entry.limitation }}</p>
+              <p class="surname-evidence-label">{{ entry.evidenceLabel }}</p>
             </article>
           </li>
         }
       </ol>
+
+      <aside
+        class="surname-geography-note surname-register-summary"
+        [attr.aria-label]="content().registerSummary.label"
+      >
+        <span>{{ content().registerSummary.label }}</span>
+        <p>{{ content().registerSummary.body }}</p>
+        <p class="surname-register-summary__boundary">{{ content().registerSummary.boundary }}</p>
+      </aside>
+
+      <div class="surname-context-notes" data-testid="surname-register-notes">
+        @for (note of content().registerNotes; track note.title) {
+          <article class="surname-context-note">
+            <p class="surname-context-note__label">{{ note.label }}</p>
+            <h3>{{ note.title }}</h3>
+            <p>{{ note.body }}</p>
+            @if (note.context) {
+              <p class="surname-context-note__context">{{ note.context }}</p>
+            }
+          </article>
+        }
+      </div>
 
       <figure class="surname-place-feature surname-place-feature--document">
         <button
@@ -189,6 +213,46 @@
     </div>
   </section>
 
+  <section class="surname-section layout-section" aria-labelledby="surname-account-title">
+    <div class="surname-frame">
+      <header class="surname-section-heading surname-section-heading--wide">
+        <div>
+          <p class="surname-kicker">{{ content().account.kicker }}</p>
+          <h2 id="surname-account-title">{{ content().account.heading }}</h2>
+        </div>
+        <p>{{ content().account.introduction }}</p>
+      </header>
+
+      <div class="surname-traditions" data-testid="surname-bey-traditions">
+        @for (item of content().account.items; track item.title) {
+          <article class="surname-tradition-card">
+            <p class="surname-evidence-label">{{ item.label }}</p>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.body }}</p>
+            <p class="surname-tradition-card__support">{{ item.support }}</p>
+            <p class="surname-tradition-card__limitation">{{ item.limitation }}</p>
+          </article>
+        }
+      </div>
+
+      <aside class="surname-account-conclusion" [attr.aria-label]="content().account.heading">
+        <p>{{ content().account.conclusion }}</p>
+      </aside>
+
+      <aside
+        class="surname-research-card"
+        aria-labelledby="surname-taceddin-title"
+        data-testid="surname-taceddin-research"
+      >
+        <p class="surname-kicker">{{ content().taceddin.heading }}</p>
+        <h3 id="surname-taceddin-title">{{ content().taceddin.title }}</h3>
+        <p>{{ content().taceddin.body }}</p>
+        <p class="surname-research-card__limitation">{{ content().taceddin.limitation }}</p>
+        <p class="surname-evidence-label">{{ content().taceddin.label }}</p>
+      </aside>
+    </div>
+  </section>
+
   <section class="surname-section layout-section" aria-labelledby="surname-root-meaning-title">
     <div class="surname-frame">
       <div class="surname-editorial-split">
@@ -197,11 +261,10 @@
           <h2 id="surname-root-meaning-title">{{ content().rootMeaning.heading }}</h2>
         </header>
 
-        <div class="surname-prose">
-          @for (paragraph of content().rootMeaning.paragraphs.slice(0, 3); track $index) {
-            <p>{{ paragraph }}</p>
-          }
-        </div>
+        <aside class="surname-word-note">
+          <span>{{ content().rootMeaning.label }}</span>
+          <p>{{ content().rootMeaning.body }}</p>
+        </aside>
       </div>
 
       <figure
@@ -248,15 +311,6 @@
         </figcaption>
       </figure>
 
-      <div class="surname-editorial-split surname-root-meaning__conclusion">
-        <div class="surname-prose">
-          <p>{{ content().rootMeaning.paragraphs[3] }}</p>
-          <aside class="surname-word-note" [attr.aria-label]="content().rootMeaning.noteLabel">
-            <span>{{ content().rootMeaning.noteLabel }}</span>
-            <p>{{ content().rootMeaning.note }}</p>
-          </aside>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -273,7 +327,7 @@
         <p>{{ content().records.introduction }}</p>
       </header>
 
-      <ol class="surname-records">
+      <ol class="surname-records" data-testid="surname-evidence-audit">
         @for (item of content().records.items; track item.index) {
           <li>
             <span class="surname-records__index" aria-hidden="true">{{ item.index }}</span>
@@ -285,26 +339,6 @@
           </li>
         }
       </ol>
-    </div>
-  </section>
-
-  <section class="surname-section layout-section" aria-labelledby="surname-account-title">
-    <div class="surname-frame surname-editorial-split">
-      <header class="surname-section-heading">
-        <p class="surname-kicker">{{ content().account.kicker }}</p>
-        <h2 id="surname-account-title">{{ content().account.heading }}</h2>
-      </header>
-
-      <div class="surname-prose">
-        @for (paragraph of content().account.paragraphs; track $index) {
-          <p>{{ paragraph }}</p>
-        }
-
-        <aside class="surname-word-note">
-          <span>{{ content().account.wordLabel }}</span>
-          <p>{{ content().account.wordNote }}</p>
-        </aside>
-      </div>
     </div>
   </section>
 
@@ -455,10 +489,6 @@
         <p>{{ content().population.attribution }}</p>
       </aside>
 
-      <aside class="surname-geography-note">
-        <span>{{ content().population.workingEstimateLabel }}</span>
-        <p>{{ content().population.workingEstimate }}</p>
-      </aside>
     </div>
   </section>
 
@@ -481,6 +511,46 @@
         </ul>
         <p class="surname-uncertainty__boundary">{{ content().unknown.boundary }}</p>
       </div>
+    </div>
+  </section>
+
+  <section
+    class="surname-section surname-section--research-status layout-section"
+    aria-labelledby="surname-research-status-title"
+  >
+    <div class="surname-frame">
+      <article class="surname-research-status">
+        <header class="surname-research-status__header">
+          <p class="surname-kicker">{{ content().researchStatus.badge }}</p>
+          <h2 id="surname-research-status-title">{{ content().researchStatus.heading }}</h2>
+          <p>{{ content().researchStatus.summary }}</p>
+        </header>
+
+        <div class="surname-research-status__body">
+          <p>{{ content().researchStatus.criteriaIntroduction }}</p>
+          <ul>
+            @for (criterion of content().researchStatus.criteria; track $index) {
+              <li>{{ criterion }}</li>
+            }
+          </ul>
+          <p class="surname-research-status__boundary">{{ content().researchStatus.boundary }}</p>
+
+          <div class="surname-research-status__metadata">
+            <div>
+              <p class="surname-kicker">{{ content().researchStatus.reviewLabel }}</p>
+              <p class="surname-research-status__metadata-value">
+                {{ content().researchStatus.reviewDate }}
+              </p>
+            </div>
+            <div>
+              <p class="surname-kicker">{{ content().researchStatus.statusLabel }}</p>
+              <p class="surname-research-status__metadata-value">
+                {{ content().researchStatus.status }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -515,7 +585,8 @@
                   {{ source.title }}
                 </a>
               </h3>
-              <p class="surname-sources__authority">{{ source.authority }}</p>
+              <p class="surname-sources__role">{{ source.role }}</p>
+              <p class="surname-sources__authority">{{ source.sourceDetails }}</p>
               <p>{{ source.description }}</p>
             </div>
             <a
