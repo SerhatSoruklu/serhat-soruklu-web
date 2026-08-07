@@ -77,6 +77,10 @@ test.describe('Soruklu surname', () => {
     ).toBeVisible();
     await expect(page.getByText('What remains unproven', { exact: true })).toBeVisible();
     await expect(
+      page.getByText('Research frozen · 7 August 2026', { exact: true }),
+    ).toBeVisible();
+    await expect(page.getByText('Frozen pending new evidence', { exact: true })).toBeVisible();
+    await expect(
       page.getByRole('heading', { level: 2, name: 'The living footprint of a rare surname' }),
     ).toBeVisible();
     await expect(
@@ -125,6 +129,12 @@ test.describe('Soruklu surname', () => {
       page.getByText('Neye varılabilir, neye varılamaz?', { exact: true }),
     ).toBeVisible();
     await expect(page.getByText('Kanıtlanmamış noktalar', { exact: true })).toBeVisible();
+    await expect(
+      page.getByText('Araştırma donduruldu · 7 Ağustos 2026', { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByText('Yeni kanıt bulunana kadar donduruldu', { exact: true }),
+    ).toBeVisible();
     await expect(page.getByText('Nadir bir soyadının yaşayan izi', { exact: true })).toBeVisible();
     await expect(page.getByText('Tâceddin meselesi henüz çözülemedi', { exact: true })).toBeVisible();
     await expect(page.getByText('Kaynak notları', { exact: true })).toBeVisible();
@@ -246,6 +256,7 @@ test.describe('Soruklu surname', () => {
       await expect(page.locator('.surname-tradition-card')).toHaveCount(3);
       await expect(page.locator('.surname-records > li')).toHaveCount(10);
       await expect(page.locator('.surname-sources > li')).toHaveCount(25);
+      await expect(page.locator('.surname-research-status')).toBeVisible();
       await page.locator('app-site-footer').scrollIntoViewIfNeeded();
       const layout = await readLayout();
 
@@ -267,6 +278,7 @@ test.describe('Soruklu surname', () => {
       await expect(page.locator('.surname-tradition-card')).toHaveCount(3);
       await expect(page.locator('.surname-records > li')).toHaveCount(10);
       await expect(page.locator('.surname-sources > li')).toHaveCount(25);
+      await expect(page.locator('.surname-research-status')).toBeVisible();
       await page.locator('app-site-footer').scrollIntoViewIfNeeded();
       const turkishLayout = await readLayout();
       expect(turkishLayout.bodyWidth).toBeLessThanOrEqual(turkishLayout.viewportWidth);

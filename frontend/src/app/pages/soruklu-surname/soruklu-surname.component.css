@@ -325,6 +325,9 @@ h3 {
 .surname-records li > div > p:last-child,
 .surname-geography-table td,
 .surname-geography-note p,
+.surname-research-status__header > p:last-child,
+.surname-research-status__body > p,
+.surname-research-status__body li,
 .surname-sources__copy > p:last-child,
 .surname-relationship__inner > div > p:last-child,
 .surname-closing__copy > p:last-child {
@@ -1027,6 +1030,64 @@ h3 {
   line-height: 1.7;
 }
 
+.surname-research-status {
+  display: grid;
+  gap: 28px;
+  padding: 24px 20px;
+  border: 1px solid rgba(214, 168, 79, 0.2);
+  border-radius: 10px;
+  background: rgba(16, 20, 28, 0.48);
+}
+
+.surname-research-status__header h2 {
+  margin: 8px 0 14px;
+  font-size: clamp(1.55rem, 5vw, 2.25rem);
+}
+
+.surname-research-status__header > p:last-child,
+.surname-research-status__body > p {
+  margin-bottom: 0;
+}
+
+.surname-research-status__body ul {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+  padding-left: 20px;
+}
+
+.surname-research-status__body li::marker {
+  color: #d6a84f;
+}
+
+.surname-research-status__boundary {
+  padding-top: 18px;
+  border-top: 1px solid rgba(168, 176, 189, 0.13);
+}
+
+.surname-research-status__metadata {
+  display: grid;
+  gap: 14px;
+  margin: 22px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(214, 168, 79, 0.18);
+}
+
+.surname-research-status__metadata > div {
+  display: grid;
+  gap: 5px;
+}
+
+.surname-research-status__metadata dt {
+  margin-bottom: 0;
+}
+
+.surname-research-status__metadata dd {
+  margin: 0;
+  color: #dce1e9;
+  font-weight: 600;
+}
+
 .surname-sources {
   border-top: 1px solid rgba(168, 176, 189, 0.16);
 }
@@ -1434,6 +1495,15 @@ h3 {
     padding: 30px 24px;
   }
 
+  .surname-research-status {
+    padding: 30px 28px;
+  }
+
+  .surname-research-status__metadata {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
   .surname-context-notes {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1561,6 +1631,12 @@ h3 {
 }
 
 @media (min-width: 1024px) {
+  .surname-research-status {
+    grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.28fr);
+    gap: 48px;
+    padding: 36px 34px;
+  }
+
   .surname-hero {
     min-height: min(760px, 94vh);
   }
@@ -1781,6 +1857,30 @@ h3 {
 :host-context(.theme-resolved-light) .surname-section--surface,
 :host-context(.theme-resolved-light) .surname-relationship {
   background: rgba(248, 247, 243, 0.82);
+}
+
+:host-context(.theme-resolved-light) .surname-research-status {
+  border-color: rgba(184, 135, 47, 0.27);
+  background: rgba(255, 255, 255, 0.76);
+}
+
+:host-context(.theme-resolved-light) .surname-research-status__header > p:last-child,
+:host-context(.theme-resolved-light) .surname-research-status__body > p,
+:host-context(.theme-resolved-light) .surname-research-status__body li {
+  color: #5f6673;
+}
+
+:host-context(.theme-resolved-light) .surname-research-status__metadata dd {
+  color: #2c3441;
+}
+
+:host-context(.theme-resolved-light) .surname-research-status__body li::marker {
+  color: #9a6a1e;
+}
+
+:host-context(.theme-resolved-light) .surname-research-status__boundary,
+:host-context(.theme-resolved-light) .surname-research-status__metadata {
+  border-color: rgba(184, 135, 47, 0.18);
 }
 
 :host-context(.theme-resolved-light) .surname-language-switch,

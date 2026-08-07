@@ -512,6 +512,42 @@
   </section>
 
   <section
+    class="surname-section surname-section--research-status layout-section"
+    aria-labelledby="surname-research-status-title"
+  >
+    <div class="surname-frame">
+      <article class="surname-research-status">
+        <header class="surname-research-status__header">
+          <p class="surname-kicker">{{ content().researchStatus.badge }}</p>
+          <h2 id="surname-research-status-title">{{ content().researchStatus.heading }}</h2>
+          <p>{{ content().researchStatus.summary }}</p>
+        </header>
+
+        <div class="surname-research-status__body">
+          <p>{{ content().researchStatus.criteriaIntroduction }}</p>
+          <ul>
+            @for (criterion of content().researchStatus.criteria; track $index) {
+              <li>{{ criterion }}</li>
+            }
+          </ul>
+          <p class="surname-research-status__boundary">{{ content().researchStatus.boundary }}</p>
+
+          <dl class="surname-research-status__metadata">
+            <div>
+              <dt class="surname-kicker">{{ content().researchStatus.reviewLabel }}</dt>
+              <dd>{{ content().researchStatus.reviewDate }}</dd>
+            </div>
+            <div>
+              <dt class="surname-kicker">{{ content().researchStatus.statusLabel }}</dt>
+              <dd>{{ content().researchStatus.status }}</dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section
     class="surname-section surname-section--sources surname-section--surface layout-section"
     aria-labelledby="surname-sources-title"
   >

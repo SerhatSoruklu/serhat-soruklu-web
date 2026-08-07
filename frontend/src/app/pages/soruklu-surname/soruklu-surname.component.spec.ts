@@ -67,6 +67,25 @@ describe('SorukluSurnameComponent', () => {
     expect(text).toContain('Year');
     expect(text).toContain('Research lead · identities not established');
     expect(text).toContain('The evidence has a clear boundary.');
+    expect(text).toContain('Research frozen · 7 August 2026');
+    expect(text).toContain('Frozen pending new evidence');
+    const unknownSection = nativeElement.querySelector('[aria-labelledby="surname-unknown-title"]');
+    const researchStatusSection = nativeElement.querySelector(
+      '[aria-labelledby="surname-research-status-title"]',
+    );
+    const sourcesSection = nativeElement.querySelector('[aria-labelledby="surname-sources-title"]');
+    expect(
+      Boolean(
+        (unknownSection?.compareDocumentPosition(researchStatusSection!) ?? 0) &
+          Node.DOCUMENT_POSITION_FOLLOWING,
+      ),
+    ).toBe(true);
+    expect(
+      Boolean(
+        (researchStatusSection?.compareDocumentPosition(sourcesSection!) ?? 0) &
+          Node.DOCUMENT_POSITION_FOLLOWING,
+      ),
+    ).toBe(true);
     expect(nativeElement.querySelectorAll('.surname-timeline > li')).toHaveLength(10);
     expect(nativeElement.querySelectorAll('.surname-tradition-card')).toHaveLength(3);
     expect(nativeElement.querySelectorAll('.surname-records > li')).toHaveLength(10);
@@ -124,6 +143,11 @@ describe('SorukluSurnameComponent', () => {
     expect(nativeElement.textContent).toContain('Osmanlı harfli Seyahatname’de Soruk');
     expect(nativeElement.textContent).toContain('Dosya veya galeri tarihi');
     expect(nativeElement.textContent).toContain('Kanıtlanmamış noktalar');
+    expect(nativeElement.textContent).toContain('Araştırma donduruldu · 7 Ağustos 2026');
+    expect(nativeElement.textContent).toContain('Yeni kanıt bulunana kadar donduruldu');
+    expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(
+      'https://serhatsoruklu.com/soruklu-surname',
+    );
     expect(nativeElement.querySelectorAll('.surname-timeline > li')).toHaveLength(10);
     expect(nativeElement.querySelectorAll('.surname-tradition-card')).toHaveLength(3);
     expect(nativeElement.querySelectorAll('.surname-records > li')).toHaveLength(10);

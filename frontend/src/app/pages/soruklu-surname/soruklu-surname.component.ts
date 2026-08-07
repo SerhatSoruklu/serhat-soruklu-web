@@ -493,6 +493,28 @@ const surnameContent = {
       boundary:
         'The surname has a supportable meaning and documented regional history without turning possibility into pedigree.',
     },
+    researchStatus: {
+      heading: 'Research status',
+      badge: 'Research frozen · 7 August 2026',
+      summary:
+        'This page is considered stable as of 7 August 2026. Further revisions should be evidence-driven rather than editorial.',
+      criteriaIntroduction:
+        'Reopen the research only if materially new evidence is found, such as:',
+      criteria: [
+        'the original TT.d 37 folio or another primary Ottoman record',
+        'an independent medieval source concerning Soruk, Soruk Bey, or Bahâeddîn Gökceğiz',
+        'evidence securely connecting Sorukderesi, Soruk, and Sarıdibek',
+        'family-specific civil, population, cemetery, land, or early surname records',
+        'credible evidence resolving the identity of the Tâceddin associated with the 1485 survey',
+        'evidence that materially changes one of the current confidence assessments',
+      ],
+      boundary:
+        'Minor wording preferences, repeated secondary sources, or additional local tradition should not by themselves trigger a revision.',
+      reviewLabel: 'Last substantive review',
+      reviewDate: '7 August 2026',
+      statusLabel: 'Status',
+      status: 'Frozen pending new evidence',
+    },
     sources: {
       kicker: 'Source notes',
       heading: 'The evidence behind the explanation.',
@@ -1167,6 +1189,28 @@ const surnameContent = {
       ],
       boundary:
         'Soyadının desteklenebilir bir anlamı ve belgeli bölgesel geçmişi, ihtimali soy kütüğüne dönüştürmeden de anlamlıdır.',
+    },
+    researchStatus: {
+      heading: 'Araştırma durumu',
+      badge: 'Araştırma donduruldu · 7 Ağustos 2026',
+      summary:
+        'Bu sayfa 7 Ağustos 2026 itibarıyla kararlı sürüm olarak kabul edilmektedir. Bundan sonraki değişiklikler editoryal değil, yeni kanıta dayalı olmalıdır.',
+      criteriaIntroduction:
+        'Araştırma yalnızca maddi nitelikte yeni bir kanıt bulunduğunda yeniden açılmalıdır. Örneğin:',
+      criteria: [
+        'TT.d 37’nin Sorukderesi kaydını içeren asıl varağı veya başka bir birincil Osmanlı kaydı',
+        'Soruk, Soruk Bey veya Bahâeddîn Gökceğiz hakkında bağımsız bir Orta Çağ kaynağı',
+        'Sorukderesi, Soruk ve Sarıdibek arasında güvenilir biçimde bağlantı kuran yeni bir kaynak',
+        'aileye özgü nüfus, medeni kayıt, mezarlık, tapu veya erken dönem soyadı kayıtları',
+        '1485 tahririyle ilişkili Tâceddin’in kimliğini güvenilir biçimde çözen kanıt',
+        'mevcut güven değerlendirmelerinden birini maddi olarak değiştiren yeni kanıt',
+      ],
+      boundary:
+        'Küçük ifade tercihleri, aynı bilgiyi tekrarlayan ikincil kaynaklar veya yeni yerel rivayetler tek başına sayfanın yeniden açılması için yeterli olmamalıdır.',
+      reviewLabel: 'Son esaslı inceleme',
+      reviewDate: '7 Ağustos 2026',
+      statusLabel: 'Durum',
+      status: 'Yeni kanıt bulunana kadar donduruldu',
     },
     sources: {
       kicker: 'Kaynak notları',
