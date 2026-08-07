@@ -4,6 +4,8 @@ import { mdiThemeLightDark, mdiTranslate, mdiWeatherNight, mdiWhiteBalanceSunny 
 
 import { routes } from '../../../app.routes';
 import {
+  HEADER_IDENTITY_ICON_PATH,
+  HEADER_IDENTITY_ITEMS,
   HEADER_LANGUAGE_ICON_PATH,
   HEADER_NAV_ITEMS,
   HEADER_THEME_OPTIONS,
@@ -41,6 +43,8 @@ describe('MobileHeaderComponent', () => {
     const component = fixture.componentInstance;
 
     expect(component.navItems).toBe(HEADER_NAV_ITEMS);
+    expect(component.identityItems).toBe(HEADER_IDENTITY_ITEMS);
+    expect(component.identityIconPath).toBe(HEADER_IDENTITY_ICON_PATH);
     expect(component.themeOptions).toBe(HEADER_THEME_OPTIONS);
     expect(component.languageIconPath).toBe(HEADER_LANGUAGE_ICON_PATH);
     expect(component.languageIconPath).toBe(mdiTranslate);
@@ -48,6 +52,33 @@ describe('MobileHeaderComponent', () => {
     expect(component.themeTriggerIconPaths.dark).toBe(mdiWeatherNight);
     expect(component.themeTriggerIconPaths.light).toBe(mdiWhiteBalanceSunny);
     expect(component.themeTriggerIconPaths.system).toBe(mdiThemeLightDark);
+  });
+
+  it('expands the compact identity chooser without navigating', () => {
+    const fixture = TestBed.createComponent(MobileHeaderComponent);
+    const component = fixture.componentInstance;
+
+    component.toggleMenu();
+    fixture.detectChanges();
+
+    const trigger = fixture.nativeElement.querySelector(
+      '[data-testid="mobile-identity-button"]',
+    ) as HTMLButtonElement;
+
+    expect(trigger.getAttribute('aria-expanded')).toBe('false');
+    component.toggleIdentityMenu();
+    fixture.detectChanges();
+
+    const links = Array.from(
+      fixture.nativeElement.querySelectorAll('[data-testid="mobile-identity-routes"] a'),
+    ).map((link) => (link as HTMLAnchorElement).getAttribute('href'));
+
+    expect(trigger.getAttribute('aria-expanded')).toBe('true');
+    expect(component.menuOpen()).toBe(true);
+    expect(links).toEqual(['/soruklu-surname', '/soruklu-order', '/velari']);
+
+    component.closeMenu();
+    expect(component.identityMenuOpen()).toBe(false);
   });
 
   it('renders the mobile language availability dialog trigger', () => {
@@ -73,5 +104,10 @@ describe('MobileHeaderComponent', () => {
     component.toggleThemeMenu();
     component.closeOpenPanelsOnEscape();
     expect(component.themeMenuOpen()).toBe(false);
+
+    component.toggleMenu();
+    component.toggleIdentityMenu();
+    component.closeOpenPanelsOnEscape();
+    expect(component.identityMenuOpen()).toBe(false);
   });
 });

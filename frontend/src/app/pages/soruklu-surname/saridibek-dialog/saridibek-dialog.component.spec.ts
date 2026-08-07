@@ -33,7 +33,7 @@ describe('SaridibekDialogComponent', () => {
     expect(nativeElement.querySelector('h2')?.textContent?.trim()).toBe(
       'Vezirkopru Saridibek Village',
     );
-    expect(nativeElement.textContent).toContain('File date');
+    expect(nativeElement.textContent).toContain('File or gallery date');
     expect(nativeElement.textContent).toContain('13 November 2019');
     expect(nativeElement.textContent).toContain('Türkiye');
     expect(image?.width).toBe(1448);
@@ -55,7 +55,7 @@ describe('SaridibekDialogComponent', () => {
     expect(nativeElement.querySelector('h2')?.textContent?.trim()).toBe(
       'Vezirköprü Sarıdibek Köyü',
     );
-    expect(nativeElement.textContent).toContain('Dosyada belirtilen tarih');
+    expect(nativeElement.textContent).toContain('Dosya veya galeri tarihi');
     expect(nativeElement.textContent).toContain('13 Kasım 2019');
     expect(nativeElement.textContent).toContain('Tarihî bağlam');
     expect(nativeElement.querySelector('button')?.getAttribute('aria-label')).toBe(

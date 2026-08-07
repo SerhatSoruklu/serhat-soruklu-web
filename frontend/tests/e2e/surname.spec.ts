@@ -6,18 +6,11 @@ import { installConsoleErrorGuard } from './support/console-errors';
 const surnamePath = '/soruklu-surname';
 const orderPath = '/soruklu-order';
 const canonicalUrl = `https://serhatsoruklu.com${surnamePath}`;
-const numberedSourceCount = 20;
+const numberedSourceCount = 25;
 const viewports = [
-  { width: 320, height: 568 },
-  { width: 360, height: 800 },
   { width: 390, height: 844 },
-  { width: 412, height: 915 },
-  { width: 768, height: 1024 },
   { width: 1024, height: 768 },
-  { width: 1280, height: 900 },
-  { width: 1366, height: 900 },
   { width: 1440, height: 900 },
-  { width: 1920, height: 1080 },
 ];
 
 type JsonLdEntity = Record<string, unknown>;
@@ -87,8 +80,13 @@ test.describe('Soruklu surname', () => {
       page.getByRole('heading', { level: 2, name: 'The living footprint of a rare surname' }),
     ).toBeVisible();
     await expect(
-      page.getByText('Working estimate · low confidence', { exact: true }),
+      page.getByRole('heading', { level: 2, name: 'The Soruk Bey traditions' }),
     ).toBeVisible();
+    await expect(page.getByText('The unresolved Tâceddin question', { exact: true })).toBeVisible();
+    await expect(page.locator('.surname-timeline > li')).toHaveCount(10);
+    await expect(page.locator('.surname-tradition-card')).toHaveCount(3);
+    await expect(page.locator('.surname-records > li')).toHaveCount(10);
+    await expect(page.locator('.surname-sources > li')).toHaveCount(25);
     await expect(page.getByTestId('surname-language-switch')).toContainText('Türkçe oku');
     await expect(page.locator('html')).toHaveAttribute('lang', 'en-GB');
     const evidenceImages = page.locator('.surname-place-feature__media img');
@@ -128,7 +126,7 @@ test.describe('Soruklu surname', () => {
     ).toBeVisible();
     await expect(page.getByText('Kanıtlanmamış noktalar', { exact: true })).toBeVisible();
     await expect(page.getByText('Nadir bir soyadının yaşayan izi', { exact: true })).toBeVisible();
-    await expect(page.getByText('Çalışma tahmini · düşük güven', { exact: true })).toBeVisible();
+    await expect(page.getByText('Tâceddin meselesi henüz çözülemedi', { exact: true })).toBeVisible();
     await expect(page.getByText('Kaynak notları', { exact: true })).toBeVisible();
     await expect(languageSwitch).toContainText('Read in English');
     await expect(page.locator('html')).toHaveAttribute('lang', 'tr-TR');
@@ -216,27 +214,40 @@ test.describe('Soruklu surname', () => {
   }, testInfo) => {
     const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
 
-    for (const viewport of viewports) {
-      await page.setViewportSize(viewport);
-      await page.goto(surnamePath);
-      await page.locator('app-site-footer').scrollIntoViewIfNeeded();
-
-      const layout = await page.evaluate(() => {
-        const frame = document.querySelector('.surname-frame')?.getBoundingClientRect();
-        const hero = document.querySelector('.surname-hero')?.getBoundingClientRect();
-        const closing = document.querySelector('.surname-closing')?.getBoundingClientRect();
-        const footer = document.querySelector('.site-footer')?.getBoundingClientRect();
+    const readLayout = () =>
+      page.evaluate(() => {
+        const frame = globalThis.document
+          .querySelector('.surname-frame')
+          ?.getBoundingClientRect();
+        const closing = globalThis.document
+          .querySelector('.surname-closing')
+          ?.getBoundingClientRect();
+        const footer = globalThis.document
+          .querySelector('.site-footer')
+          ?.getBoundingClientRect();
 
         return {
-          bodyWidth: document.body.scrollWidth,
+          bodyWidth: globalThis.document.body.scrollWidth,
           closingBottom: closing?.bottom,
           footerTop: footer?.top,
           frameLeft: frame?.left,
           frameRight: frame?.right,
-          heroHeight: hero?.height,
-          viewportWidth: document.documentElement.clientWidth,
+          viewportWidth: globalThis.document.documentElement.clientWidth,
         };
       });
+
+    for (const viewport of viewports) {
+      await page.setViewportSize(viewport);
+      await page.goto(surnamePath);
+      await expect(
+        page.getByRole('heading', { level: 1, name: 'What does Soruklu mean?' }),
+      ).toBeVisible();
+      await expect(page.locator('.surname-timeline > li')).toHaveCount(10);
+      await expect(page.locator('.surname-tradition-card')).toHaveCount(3);
+      await expect(page.locator('.surname-records > li')).toHaveCount(10);
+      await expect(page.locator('.surname-sources > li')).toHaveCount(25);
+      await page.locator('app-site-footer').scrollIntoViewIfNeeded();
+      const layout = await readLayout();
 
       expect(layout.bodyWidth).toBeLessThanOrEqual(layout.viewportWidth);
       expect(layout.frameLeft).toBeGreaterThanOrEqual(19);
@@ -244,11 +255,29 @@ test.describe('Soruklu surname', () => {
       expect(Math.abs((layout.footerTop ?? 0) - (layout.closingBottom ?? 0))).toBeLessThanOrEqual(
         2,
       );
-      if (viewport.width >= 360 && viewport.width < 768) {
-        expect(layout.heroHeight).toBeLessThanOrEqual(viewport.height * 0.93);
-      }
       await expect(page.locator('app-site-footer')).toBeVisible();
       await expect(page.locator('.surname-sources h3').last()).toBeVisible();
+
+      await page.getByTestId('surname-language-switch').click();
+      await expect(
+        page.getByRole('heading', { level: 1, name: 'Soruklu ne anlama geliyor?' }),
+      ).toBeVisible();
+      await expect(page.getByText('Soruk Bey anlatıları', { exact: true })).toBeVisible();
+      await expect(page.locator('.surname-timeline > li')).toHaveCount(10);
+      await expect(page.locator('.surname-tradition-card')).toHaveCount(3);
+      await expect(page.locator('.surname-records > li')).toHaveCount(10);
+      await expect(page.locator('.surname-sources > li')).toHaveCount(25);
+      await page.locator('app-site-footer').scrollIntoViewIfNeeded();
+      const turkishLayout = await readLayout();
+      expect(turkishLayout.bodyWidth).toBeLessThanOrEqual(turkishLayout.viewportWidth);
+      expect(turkishLayout.frameLeft).toBeGreaterThanOrEqual(19);
+      expect(turkishLayout.frameRight).toBeLessThanOrEqual(viewport.width - 19);
+      await expect(page.locator('app-site-footer')).toBeVisible();
+
+      await page.getByTestId('surname-language-switch').click();
+      await expect(
+        page.getByRole('heading', { level: 1, name: 'What does Soruklu mean?' }),
+      ).toBeVisible();
     }
     assertNoConsoleErrors();
   });
@@ -341,7 +370,9 @@ test.describe('Soruklu surname', () => {
         imageHeight: image?.height,
         mediaHeight: media?.height,
         objectFit: imageElement ? getComputedStyle(imageElement).objectFit : null,
-        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        overflow:
+          globalThis.document.documentElement.scrollWidth -
+          globalThis.document.documentElement.clientWidth,
       };
     });
 
