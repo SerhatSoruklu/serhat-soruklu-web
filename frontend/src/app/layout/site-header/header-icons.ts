@@ -36,6 +36,7 @@ export interface HeaderIdentityItem {
 }
 
 export interface HeaderIdentityNavigation {
+  availabilityNote: string;
   label: string;
   note: string;
   routesAriaLabel: string;
@@ -60,6 +61,8 @@ export const HEADER_IDENTITY_ITEMS: HeaderIdentityItem[] = [
 
 export const HEADER_IDENTITY_NAVIGATION: Record<'en' | 'tr', HeaderIdentityNavigation> = {
   en: {
+    availabilityNote:
+      'Only Identity pages have a Turkish translation. The rest of the site is in English.',
     label: 'Identity',
     note: 'Surname · Order · Velari',
     routesAriaLabel: 'Identity routes',
@@ -68,6 +71,8 @@ export const HEADER_IDENTITY_NAVIGATION: Record<'en' | 'tr', HeaderIdentityNavig
     items: HEADER_IDENTITY_ITEMS,
   },
   tr: {
+    availabilityNote:
+      'Şu anda yalnızca Kimlik sayfalarının Türkçe çevirisi var. Sitenin geri kalanı İngilizcedir.',
     label: 'Kimlik',
     note: 'Soyadı · Order · Velari',
     routesAriaLabel: 'Kimlik sayfaları',

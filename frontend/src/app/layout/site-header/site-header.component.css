@@ -319,6 +319,18 @@
   fill: currentColor;
 }
 
+.identity-selector__availability-note {
+  margin: 0;
+  padding: 5px 9px 7px;
+  color: #a8b0bd;
+  font-family: 'IBM Plex Mono', 'Space Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  line-height: 1.5;
+  text-transform: none;
+}
+
 .identity-selector__route {
   display: grid;
   grid-template-columns: 24px minmax(0, 1fr) 18px;

@@ -100,6 +100,11 @@ describe('SiteHeaderComponent', () => {
         ?.textContent?.replace(/\s+/g, ' '),
     ).toContain('Kimlik');
     expect(menu.getAttribute('aria-label')).toBe('Kimlik sayfaları');
+    expect(
+      menu.querySelector('[data-testid="desktop-identity-note"]')?.textContent?.trim(),
+    ).toBe(
+      'Şu anda yalnızca Kimlik sayfalarının Türkçe çevirisi var. Sitenin geri kalanı İngilizcedir.',
+    );
     expect(routeLabels).toEqual(['01 Soruklu Soyadı→', '02 Soruklu Order→', '03 Velari→']);
     expect(turkishButton?.getAttribute('aria-pressed')).toBe('true');
     expect(globalThis.localStorage.getItem('serhatsoruklu-identity-language')).toBe('tr');

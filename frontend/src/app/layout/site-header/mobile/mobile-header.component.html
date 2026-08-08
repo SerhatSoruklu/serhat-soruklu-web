@@ -257,6 +257,12 @@
             <span>{{ identityNavigation().routesHeading }}</span>
             <app-identity-language-selector />
           </div>
+          <p
+            class="mobile-nav__identity-availability-note"
+            data-testid="mobile-identity-note"
+          >
+            {{ identityNavigation().availabilityNote }}
+          </p>
           @for (item of identityNavigation().items; track item.path; let itemIndex = $index) {
             <a
               class="mobile-nav__identity-route"

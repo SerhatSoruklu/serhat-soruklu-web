@@ -96,6 +96,13 @@ describe('MobileHeaderComponent', () => {
     expect(identityText).toContain('Kimlik');
     expect(identityText).toContain('Soruklu Soyadı');
     expect(identityText).not.toContain('Soruklu Surname');
+    expect(
+      fixture.nativeElement
+        .querySelector('[data-testid="mobile-identity-note"]')
+        ?.textContent?.trim(),
+    ).toBe(
+      'Şu anda yalnızca Kimlik sayfalarının Türkçe çevirisi var. Sitenin geri kalanı İngilizcedir.',
+    );
     expect(turkishButton?.textContent?.trim()).toBe('');
     expect(turkishButton?.getAttribute('aria-pressed')).toBe('true');
     expect(fixture.nativeElement.querySelector('.mobile-nav__link')?.textContent).toContain('Work');

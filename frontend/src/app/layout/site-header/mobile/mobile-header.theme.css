@@ -184,6 +184,10 @@
   color: #b8872f;
 }
 
+:host-context(.theme-resolved-light) .mobile-nav__identity-availability-note {
+  color: #5f6673;
+}
+
 :host-context(.theme-resolved-light) .mobile-nav__identity-routes::before {
   background: rgba(184, 135, 47, 0.58);
 }

@@ -92,6 +92,10 @@
   color: #b8872f;
 }
 
+:host-context(.theme-resolved-light) .identity-selector__availability-note {
+  color: #5f6673;
+}
+
 :host-context(.theme-resolved-light) .identity-selector__route {
   color: #2c3441;
 }

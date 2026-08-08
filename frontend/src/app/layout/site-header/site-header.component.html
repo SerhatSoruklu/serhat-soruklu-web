@@ -107,6 +107,9 @@
               </span>
               <app-identity-language-selector />
             </div>
+            <p class="identity-selector__availability-note" data-testid="desktop-identity-note">
+              {{ identityNavigation().availabilityNote }}
+            </p>
             @for (item of identityNavigation().items; track item.path; let itemIndex = $index) {
               <a
                 class="identity-selector__route"
