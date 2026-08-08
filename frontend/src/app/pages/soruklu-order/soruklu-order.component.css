@@ -36,6 +36,7 @@ h3 {
 
 .order-eyebrow,
 .order-kicker,
+.order-language-switch,
 .order-facts dt,
 .order-motto,
 .order-action {
@@ -75,6 +76,104 @@ h3 {
 .order-hero__copy {
   min-width: 0;
   max-width: 800px;
+}
+
+.order-hero__topline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.order-language-switch {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px 8px 9px;
+  border: 1px solid rgba(214, 168, 79, 0.34);
+  border-radius: 8px;
+  background: rgba(16, 20, 28, 0.82);
+  color: #f5f7fa;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  animation: order-language-switch-attention 4.8s ease-in-out infinite;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.order-language-switch__flag {
+  display: grid;
+  width: 32px;
+  height: 24px;
+  flex: 0 0 32px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(245, 247, 250, 0.16);
+  border-radius: 4px;
+  background: #07090d;
+}
+
+.order-language-switch__flag svg {
+  width: 30px;
+  height: 20px;
+}
+
+.order-language-switch__click-icon {
+  width: 19px;
+  height: 19px;
+  color: #f0d58c;
+  transform-origin: 20% 20%;
+  animation: order-language-switch-click 4.8s ease-in-out infinite;
+}
+
+@keyframes order-language-switch-attention {
+  0%,
+  58%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(214, 168, 79, 0);
+  }
+
+  72% {
+    box-shadow:
+      0 0 0 3px rgba(214, 168, 79, 0.14),
+      0 0 22px rgba(214, 168, 79, 0.2);
+  }
+
+  86% {
+    box-shadow: 0 0 0 1px rgba(214, 168, 79, 0.08);
+  }
+}
+
+@keyframes order-language-switch-click {
+  0%,
+  64%,
+  84%,
+  100% {
+    transform: scale(1);
+  }
+
+  72% {
+    transform: scale(0.84);
+  }
+
+  78% {
+    transform: scale(1.08);
+  }
+}
+
+.order-language-switch:hover {
+  border-color: #f0d58c;
+  background: rgba(20, 25, 34, 0.96);
+  color: #f0d58c;
+  transform: translateY(-1px);
 }
 
 .order-eyebrow,
@@ -542,9 +641,14 @@ h3 {
   color: #f0d58c;
 }
 
-.order-action:focus-visible {
+.order-action:focus-visible,
+.order-language-switch:focus-visible {
   outline: 2px solid #f0d58c;
   outline-offset: 3px;
+}
+
+.order-language-switch:focus-visible {
+  border-radius: 6px;
 }
 
 .order-x-icon {
@@ -648,6 +752,29 @@ h3 {
 }
 
 @media (min-width: 768px) {
+  .order-language-switch {
+    min-height: 52px;
+    gap: 11px;
+    padding: 9px 16px 9px 10px;
+    font-size: 13px;
+  }
+
+  .order-language-switch__flag {
+    width: 34px;
+    height: 25px;
+    flex-basis: 34px;
+  }
+
+  .order-language-switch__flag svg {
+    width: 32px;
+    height: 22px;
+  }
+
+  .order-language-switch__click-icon {
+    width: 20px;
+    height: 20px;
+  }
+
   .order-hero__inner {
     padding-top: 140px;
     padding-bottom: 80px;
@@ -733,6 +860,28 @@ h3 {
 }
 
 @media (min-width: 1280px) {
+  .order-language-switch {
+    min-height: 54px;
+    gap: 12px;
+    padding: 10px 18px 10px 11px;
+  }
+
+  .order-language-switch__flag {
+    width: 36px;
+    height: 27px;
+    flex-basis: 36px;
+  }
+
+  .order-language-switch__flag svg {
+    width: 34px;
+    height: 23px;
+  }
+
+  .order-language-switch__click-icon {
+    width: 21px;
+    height: 21px;
+  }
+
   .order-frame {
     max-width: 1320px;
   }
@@ -776,6 +925,7 @@ h3 {
 :host-context(.theme-resolved-light) h1,
 :host-context(.theme-resolved-light) h2,
 :host-context(.theme-resolved-light) h3,
+:host-context(.theme-resolved-light) .order-language-switch,
 :host-context(.theme-resolved-light) .order-hero__lead,
 :host-context(.theme-resolved-light) .order-facts dd,
 :host-context(.theme-resolved-light) .order-facts a,
@@ -829,6 +979,21 @@ h3 {
   color: #303846;
 }
 
+:host-context(.theme-resolved-light) .order-language-switch {
+  border-color: rgba(184, 135, 47, 0.32);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+:host-context(.theme-resolved-light) .order-language-switch:hover {
+  border-color: #b8872f;
+  background: #ffffff;
+  color: #8c621d;
+}
+
+:host-context(.theme-resolved-light) .order-language-switch:focus-visible {
+  outline-color: rgba(184, 135, 47, 0.78);
+}
+
 :host-context(.theme-resolved-light) .order-surname-link a {
   color: #8a641f;
 }
@@ -850,11 +1015,15 @@ h3 {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .order-language-switch,
+  .order-language-switch__click-icon,
   .order-action {
+    animation: none;
     transition: none;
   }
 
-  .order-action:hover {
+  .order-action:hover,
+  .order-language-switch:hover {
     transform: none;
   }
 }

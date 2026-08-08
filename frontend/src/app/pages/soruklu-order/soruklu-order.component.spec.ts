@@ -1,6 +1,10 @@
+import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
+import { Title } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { siX } from 'simple-icons';
+
+import { pageSeoMetadata } from '../../core/seo/seo.config';
 
 import { SorukluOrderComponent } from './soruklu-order.component';
 
@@ -10,6 +14,45 @@ describe('SorukluOrderComponent', () => {
       imports: [SorukluOrderComponent],
       providers: [provideRouter([])],
     }).compileComponents();
+  });
+
+  it('switches the complete route-local page between English and Turkish in place', () => {
+    const fixture = TestBed.createComponent(SorukluOrderComponent);
+    fixture.detectChanges();
+
+    const nativeElement = fixture.nativeElement as HTMLElement;
+    const document = TestBed.inject(DOCUMENT);
+    const title = TestBed.inject(Title);
+    const switchButton = nativeElement.querySelector<HTMLButtonElement>(
+      '[data-testid="order-language-switch"]',
+    );
+
+    expect(nativeElement.querySelector('.order-page')?.getAttribute('lang')).toBe('en-GB');
+    expect(switchButton?.textContent).toContain('Türkçe oku');
+
+    switchButton?.click();
+    fixture.detectChanges();
+
+    const turkishText = nativeElement.textContent?.replace(/\s+/g, ' ') ?? '';
+
+    expect(nativeElement.querySelector('.order-page')?.getAttribute('lang')).toBe('tr-TR');
+    expect(document.documentElement.lang).toBe('tr-TR');
+    expect(title.getTitle()).toBe('Soruklu Order | Aile Mirasını Koruma Girişimi');
+    expect(switchButton?.textContent).toContain('Read in English');
+    expect(nativeElement.querySelector('h1')?.textContent?.trim()).toBe('Soruklu Order');
+    expect(turkishText).toContain('Aile mirasını korumaya yönelik küçük ve gönüllü bir girişim.');
+    expect(turkishText).toContain('Koruma tedbirleri ve hukuki sınırlar');
+    expect(turkishText).toContain('Davranışla sürdürülen devamlılık');
+    expect(turkishText).not.toContain('Family stewardship · Established 2025');
+    expect(turkishText).not.toContain('A voluntary project, carried forward practically.');
+
+    switchButton?.click();
+    fixture.detectChanges();
+
+    expect(nativeElement.querySelector('.order-page')?.getAttribute('lang')).toBe('en-GB');
+    expect(document.documentElement.lang).toBe('en-GB');
+    expect(title.getTitle()).toBe(pageSeoMetadata.sorukluOrder.title);
+    expect(nativeElement.textContent).toContain('Family stewardship · Established 2025');
   });
 
   it('renders the approved family stewardship identity within the first section', () => {
