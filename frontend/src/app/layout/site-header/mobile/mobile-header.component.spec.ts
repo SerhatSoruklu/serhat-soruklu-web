@@ -87,6 +87,12 @@ describe('MobileHeaderComponent', () => {
       ?.textContent?.replace(/\s+/g, ' ');
 
     expect(component.identityLanguage.language()).toBe('tr');
+    expect(
+      fixture.nativeElement.querySelector('[data-testid="mobile-header"]')?.getAttribute('lang'),
+    ).toBe('en-GB');
+    expect(
+      fixture.nativeElement.querySelector('.mobile-nav__identity')?.getAttribute('lang'),
+    ).toBe('tr-TR');
     expect(identityText).toContain('Kimlik');
     expect(identityText).toContain('Soruklu Soyadı');
     expect(identityText).not.toContain('Soruklu Surname');

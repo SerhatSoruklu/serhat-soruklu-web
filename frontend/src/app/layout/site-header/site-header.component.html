@@ -1,5 +1,6 @@
 <header
   class="site-header"
+  lang="en-GB"
   [class.site-header--scrolled]="isScrolled()"
   data-testid="desktop-header"
   [style.--scroll-progress]="scrollProgress()"
@@ -59,6 +60,7 @@
 
       <div
         class="identity-selector"
+        [attr.lang]="identityLanguage.language() === 'tr' ? 'tr-TR' : 'en-GB'"
         (mouseenter)="openIdentityMenu()"
         (mouseleave)="closeIdentityMenu()"
         (focusin)="openIdentityMenu()"

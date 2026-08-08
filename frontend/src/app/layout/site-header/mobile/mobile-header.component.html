@@ -1,5 +1,6 @@
 <header
   class="mobile-header"
+  lang="en-GB"
   [ngClass]="{
     'mobile-header--nav-open': menuOpen(),
     'mobile-header--panel-open': menuOpen() || themeMenuOpen(),
@@ -213,6 +214,7 @@
 
     <div
       class="mobile-nav__identity"
+      [attr.lang]="identityLanguage.language() === 'tr' ? 'tr-TR' : 'en-GB'"
       [class.mobile-nav__identity--active]="isIdentityRoute()"
     >
       <button

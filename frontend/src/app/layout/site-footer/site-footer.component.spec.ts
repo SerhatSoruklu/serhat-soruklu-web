@@ -49,6 +49,7 @@ describe('SiteFooterComponent', () => {
       nativeElement.querySelectorAll<HTMLElement>('.site-footer__group-title'),
     ).map((title) => title.textContent?.trim().replace(/\s+/g, ' '));
 
+    expect(nativeElement.querySelector('.site-footer')?.getAttribute('lang')).toBe('en-GB');
     expect(nativeElement.querySelector('.site-footer__name')?.textContent?.trim()).toBe(
       'Serhat Soruklu',
     );

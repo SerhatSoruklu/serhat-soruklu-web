@@ -89,6 +89,12 @@ describe('SiteHeaderComponent', () => {
     expect(component.identityLanguage.language()).toBe('tr');
     expect(component.identityNavigation()).toBe(HEADER_IDENTITY_NAVIGATION.tr);
     expect(
+      fixture.nativeElement.querySelector('[data-testid="desktop-header"]')?.getAttribute('lang'),
+    ).toBe('en-GB');
+    expect(
+      fixture.nativeElement.querySelector('.identity-selector')?.getAttribute('lang'),
+    ).toBe('tr-TR');
+    expect(
       fixture.nativeElement
         .querySelector('[data-testid="desktop-identity-button"]')
         ?.textContent?.replace(/\s+/g, ' '),
