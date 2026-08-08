@@ -322,8 +322,9 @@ h3 {
   border-top: 1px solid rgba(168, 176, 189, 0.16);
 }
 
-.order-facts > div {
+.order-facts > dl {
   min-width: 0;
+  margin: 0;
   padding: 19px 0;
   border-bottom: 1px solid rgba(168, 176, 189, 0.13);
 }
@@ -718,11 +719,11 @@ h3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .order-facts > div {
+  .order-facts > dl {
     padding: 20px;
   }
 
-  .order-facts > div:nth-child(odd) {
+  .order-facts > dl:nth-child(odd) {
     border-right: 1px solid rgba(168, 176, 189, 0.13);
   }
 
@@ -815,11 +816,11 @@ h3 {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
-  .order-facts > div {
+  .order-facts > dl {
     border-right: 1px solid rgba(168, 176, 189, 0.13);
   }
 
-  .order-facts > div:last-child {
+  .order-facts > dl:last-child {
     border-right: 0;
   }
 

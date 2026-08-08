@@ -127,14 +127,14 @@
         <p class="velari-eyebrow">{{ content().glance.kicker }}</p>
         <h2 id="velari-glance-title">{{ content().glance.heading }}</h2>
       </header>
-      <dl class="velari-facts">
+      <div class="velari-facts">
         @for (fact of content().glance.facts; track $index) {
-          <div>
+          <dl>
             <dt>{{ fact.label }}</dt>
             <dd>{{ fact.value }}</dd>
-          </div>
+          </dl>
         }
-        <div>
+        <dl>
           <dt>{{ content().glance.instagramLabel }}</dt>
           <dd>
             <a
@@ -146,8 +146,8 @@
               &#64;velarifaith <span aria-hidden="true">↗</span>
             </a>
           </dd>
-        </div>
-      </dl>
+        </dl>
+      </div>
     </div>
   </section>
 
@@ -329,10 +329,8 @@
             </div>
             <h3>{{ manuscript.title }}</h3>
             <dl>
-              <div>
-                <dt>{{ content().manuscripts.themesLabel }}</dt>
-                <dd>{{ manuscript.themes }}</dd>
-              </div>
+              <dt>{{ content().manuscripts.themesLabel }}</dt>
+              <dd>{{ manuscript.themes }}</dd>
             </dl>
             <p>{{ manuscript.description }}</p>
             <a

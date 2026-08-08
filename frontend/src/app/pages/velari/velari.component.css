@@ -470,8 +470,9 @@ h3 {
   border-top: 1px solid #2b313c;
 }
 
-.velari-facts > div {
+.velari-facts > dl {
   min-width: 0;
+  margin: 0;
   padding: 16px 0;
   border-bottom: 1px solid #252b36;
 }
@@ -809,7 +810,7 @@ h3 {
   margin: 5px 0 0;
 }
 
-.velari-manuscripts dl > div {
+.velari-manuscripts dl {
   padding: 14px 0;
   border-top: 1px solid #252b36;
   border-bottom: 1px solid #252b36;
@@ -1019,15 +1020,15 @@ h3 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .velari-facts > div {
+  .velari-facts > dl {
     padding-right: 18px;
   }
 
-  .velari-facts > div:nth-child(odd) {
+  .velari-facts > dl:nth-child(odd) {
     border-right: 1px solid #252b36;
   }
 
-  .velari-facts > div:nth-child(even) {
+  .velari-facts > dl:nth-child(even) {
     padding-left: 18px;
   }
 
@@ -1176,19 +1177,19 @@ h3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .velari-facts > div,
-  .velari-facts > div:nth-child(odd),
-  .velari-facts > div:nth-child(even) {
+  .velari-facts > dl,
+  .velari-facts > dl:nth-child(odd),
+  .velari-facts > dl:nth-child(even) {
     padding-right: 20px;
     padding-left: 20px;
     border-right: 1px solid #252b36;
   }
 
-  .velari-facts > div:nth-child(3n + 1) {
+  .velari-facts > dl:nth-child(3n + 1) {
     padding-left: 0;
   }
 
-  .velari-facts > div:nth-child(3n) {
+  .velari-facts > dl:nth-child(3n) {
     border-right: 0;
   }
 }
@@ -1369,11 +1370,11 @@ h3 {
 }
 
 :host-context(.theme-resolved-light) .velari-facts,
-:host-context(.theme-resolved-light) .velari-facts > div,
+:host-context(.theme-resolved-light) .velari-facts > dl,
 :host-context(.theme-resolved-light) .velari-principles,
 :host-context(.theme-resolved-light) .velari-principles article,
 :host-context(.theme-resolved-light) .velari-boundary p + p,
-:host-context(.theme-resolved-light) .velari-manuscripts dl > div,
+:host-context(.theme-resolved-light) .velari-manuscripts dl,
 :host-context(.theme-resolved-light) .velari-project-notes > article {
   border-color: #e5e0d6;
 }

@@ -163,6 +163,33 @@ h1 span {
   text-wrap: pretty;
 }
 
+.home-hero__coupyn-role {
+  max-width: 690px;
+  margin: 14px 0 0;
+  color: #aeb6c1;
+  font-size: 15px;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.home-hero__coupyn-role a {
+  color: #f0d58c;
+  font-weight: 700;
+  text-decoration-color: rgba(214, 168, 79, 0.72);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.home-hero__coupyn-role a:hover {
+  color: #d6a84f;
+}
+
+.home-hero__coupyn-role a:focus-visible {
+  border-radius: 3px;
+  outline: 2px solid #f0d58c;
+  outline-offset: 3px;
+}
+
 .home-hero__proof {
   display: flex;
   flex-wrap: wrap;
@@ -1224,6 +1251,23 @@ a.system-panel__button--quiet:hover {
 
 :host-context(.theme-resolved-light) .home-hero__subtitle {
   color: #3f4652;
+}
+
+:host-context(.theme-resolved-light) .home-hero__coupyn-role {
+  color: #5f6673;
+}
+
+:host-context(.theme-resolved-light) .home-hero__coupyn-role a {
+  color: #8c621d;
+  text-decoration-color: rgba(184, 135, 47, 0.72);
+}
+
+:host-context(.theme-resolved-light) .home-hero__coupyn-role a:hover {
+  color: #b8872f;
+}
+
+:host-context(.theme-resolved-light) .home-hero__coupyn-role a:focus-visible {
+  outline-color: #b8872f;
 }
 
 :host-context(.theme-resolved-light) .home-hero__proof li {

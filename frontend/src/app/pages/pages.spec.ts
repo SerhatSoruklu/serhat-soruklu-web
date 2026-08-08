@@ -53,6 +53,29 @@ describe('page components', () => {
     });
   }
 
+  it('states and links Serhat Soruklu’s Coupyn leadership relationship on the homepage', async () => {
+    await TestBed.configureTestingModule({
+      imports: [HomeComponent],
+      providers: [provideRouter([])],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+
+    const statement = (fixture.nativeElement as HTMLElement).querySelector<HTMLElement>(
+      '.home-hero__coupyn-role',
+    );
+    const normalizedStatement = statement?.textContent?.replace(/\s+/g, ' ').trim();
+    const coupynLink = statement?.querySelector<HTMLAnchorElement>('a');
+
+    expect(normalizedStatement).toBe(
+      'Serhat Soruklu is the founder and CEO of Coupyn, a coupon, referral and affiliate intelligence platform.',
+    );
+    expect(coupynLink?.href).toBe('https://coupyn.com/');
+    expect(coupynLink?.target).toBe('_blank');
+    expect(coupynLink?.rel).toContain('noopener');
+  });
+
   it('links the ChatPDM systems card to the live product', async () => {
     await TestBed.configureTestingModule({
       imports: [SystemsComponent],

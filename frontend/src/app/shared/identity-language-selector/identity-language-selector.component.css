@@ -4,8 +4,12 @@
 
 .identity-language-options {
   display: inline-flex;
+  min-width: 0;
   align-items: center;
   gap: 5px;
+  margin: 0;
+  border: 0;
+  padding: 0;
 }
 
 .identity-language-option {

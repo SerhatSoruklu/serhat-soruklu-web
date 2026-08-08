@@ -79,14 +79,14 @@
         <h2 id="order-glance-title">{{ content().glance.heading }}</h2>
       </header>
 
-      <dl class="order-facts">
+      <div class="order-facts">
         @for (fact of content().glance.facts; track $index) {
-          <div>
+          <dl>
             <dt>{{ fact.label }}</dt>
             <dd>{{ fact.value }}</dd>
-          </div>
+          </dl>
         }
-        <div>
+        <dl>
           <dt>{{ content().glance.publicChannelLabel }}</dt>
           <dd>
             <a
@@ -99,8 +99,8 @@
               <span aria-hidden="true">↗</span>
             </a>
           </dd>
-        </div>
-      </dl>
+        </dl>
+      </div>
     </div>
   </section>
 
