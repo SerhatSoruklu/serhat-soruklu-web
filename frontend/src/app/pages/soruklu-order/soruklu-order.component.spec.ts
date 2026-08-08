@@ -10,10 +10,30 @@ import { SorukluOrderComponent } from './soruklu-order.component';
 
 describe('SorukluOrderComponent', () => {
   beforeEach(async () => {
+    globalThis.localStorage.clear();
+    globalThis.sessionStorage.clear();
+
     await TestBed.configureTestingModule({
       imports: [SorukluOrderComponent],
       providers: [provideRouter([])],
     }).compileComponents();
+  });
+
+  afterEach(() => {
+    globalThis.localStorage.clear();
+    globalThis.sessionStorage.clear();
+  });
+
+  it('opens in the saved Identity language', () => {
+    globalThis.localStorage.setItem('serhatsoruklu-identity-language', 'tr');
+
+    const fixture = TestBed.createComponent(SorukluOrderComponent);
+    fixture.detectChanges();
+
+    const nativeElement = fixture.nativeElement as HTMLElement;
+
+    expect(nativeElement.querySelector('.order-page')?.getAttribute('lang')).toBe('tr-TR');
+    expect(nativeElement.textContent).toContain('Aile mirasını korumaya yönelik küçük ve gönüllü');
   });
 
   it('switches the complete route-local page between English and Turkish in place', () => {

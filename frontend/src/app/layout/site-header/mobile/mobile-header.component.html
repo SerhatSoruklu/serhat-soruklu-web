@@ -218,6 +218,7 @@
       <button
         class="mobile-nav__identity-trigger"
         type="button"
+        [attr.aria-label]="identityNavigation().triggerAriaLabel"
         aria-controls="mobile-identity-routes"
         [attr.aria-expanded]="identityMenuOpen()"
         [attr.tabindex]="menuOpen() ? 0 : -1"
@@ -230,8 +231,8 @@
           </svg>
         </span>
         <span class="mobile-nav__identity-copy">
-          <span class="mobile-nav__identity-label">Identity</span>
-          <span class="mobile-nav__identity-note">Surname · Order · Velari</span>
+          <span class="mobile-nav__identity-label">{{ identityNavigation().label }}</span>
+          <span class="mobile-nav__identity-note">{{ identityNavigation().note }}</span>
         </span>
         <svg
           class="mobile-nav__identity-chevron"
@@ -247,10 +248,14 @@
         <div
           id="mobile-identity-routes"
           class="mobile-nav__identity-routes"
-          aria-label="Identity routes"
+          [attr.aria-label]="identityNavigation().routesAriaLabel"
           data-testid="mobile-identity-routes"
         >
-          @for (item of identityItems; track item.path; let itemIndex = $index) {
+          <div class="mobile-nav__identity-routes-heading">
+            <span>{{ identityNavigation().routesHeading }}</span>
+            <app-identity-language-selector />
+          </div>
+          @for (item of identityNavigation().items; track item.path; let itemIndex = $index) {
             <a
               class="mobile-nav__identity-route"
               [routerLink]="item.path"

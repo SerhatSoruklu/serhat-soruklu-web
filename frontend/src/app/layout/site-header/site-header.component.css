@@ -292,6 +292,7 @@
 .identity-selector__menu-heading {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
   min-height: 34px;
   padding: 0 9px 5px;
@@ -304,7 +305,15 @@
   text-transform: uppercase;
 }
 
-.identity-selector__menu-heading svg {
+.identity-selector__menu-heading-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.identity-selector__menu-heading-copy svg {
+  flex: 0 0 auto;
   width: 16px;
   height: 16px;
   fill: currentColor;

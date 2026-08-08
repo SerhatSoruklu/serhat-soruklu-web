@@ -67,7 +67,7 @@
         <button
           class="identity-selector__trigger"
           type="button"
-          aria-label="Explore identity pages"
+          [attr.aria-label]="identityNavigation().triggerAriaLabel"
           aria-controls="desktop-identity-routes"
           [attr.aria-expanded]="identityMenuOpen()"
           data-testid="desktop-identity-button"
@@ -81,7 +81,7 @@
           >
             <path [attr.d]="identityIconPath"></path>
           </svg>
-          <span class="identity-selector__trigger-label">Identity</span>
+          <span class="identity-selector__trigger-label">{{ identityNavigation().label }}</span>
           <span class="identity-selector__signal" aria-hidden="true">
             <span></span>
             <span></span>
@@ -93,16 +93,19 @@
           <div
             id="desktop-identity-routes"
             class="identity-selector__menu"
-            aria-label="Identity routes"
+            [attr.aria-label]="identityNavigation().routesAriaLabel"
             data-testid="desktop-identity-menu"
           >
             <div class="identity-selector__menu-heading">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path [attr.d]="identityIconPath"></path>
-              </svg>
-              <span>Identity routes</span>
+              <span class="identity-selector__menu-heading-copy">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path [attr.d]="identityIconPath"></path>
+                </svg>
+                <span>{{ identityNavigation().routesHeading }}</span>
+              </span>
+              <app-identity-language-selector />
             </div>
-            @for (item of identityItems; track item.path; let itemIndex = $index) {
+            @for (item of identityNavigation().items; track item.path; let itemIndex = $index) {
               <a
                 class="identity-selector__route"
                 [routerLink]="item.path"

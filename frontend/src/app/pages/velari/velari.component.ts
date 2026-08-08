@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   mdiArrowRight,
@@ -8,13 +8,12 @@ import {
   mdiInstagram,
 } from '@mdi/js';
 
+import { IdentityLanguageService } from '../../core/identity/identity-language.service';
 import { TopNavigationService } from '../../core/navigation/top-navigation.service';
 import { pageSeoMetadata } from '../../core/seo/seo.config';
 import { SeoService } from '../../core/seo/seo.service';
 import { PathIconComponent } from '../../shared/icons/path-icon.component';
 import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
-
-type VelariLanguage = 'en' | 'tr';
 
 const velariContent = {
   en: {
@@ -598,12 +597,13 @@ const velariContent = {
   templateUrl: './velari.component.html',
   styleUrl: './velari.component.css',
 })
-export class VelariComponent implements OnInit, OnDestroy {
+export class VelariComponent implements OnDestroy {
   private readonly document = inject(DOCUMENT);
+  private readonly identityLanguage = inject(IdentityLanguageService);
   private readonly seoService = inject(SeoService);
 
   readonly topNavigation = inject(TopNavigationService);
-  readonly language = signal<VelariLanguage>('en');
+  readonly language = this.identityLanguage.language;
   readonly content = computed(() => velariContent[this.language()]);
   readonly emblemPath = '/assets/brand/velari/velari-faith-emblem.jpg';
   readonly emblemSrcset =
@@ -616,8 +616,11 @@ export class VelariComponent implements OnInit, OnDestroy {
     'velari-instagram': mdiInstagram,
   };
 
-  ngOnInit(): void {
-    this.applyLanguageMetadata();
+  constructor() {
+    effect(() => {
+      this.language();
+      this.applyLanguageMetadata();
+    });
   }
 
   ngOnDestroy(): void {
@@ -625,8 +628,7 @@ export class VelariComponent implements OnInit, OnDestroy {
   }
 
   toggleLanguage(): void {
-    this.language.update((language) => (language === 'en' ? 'tr' : 'en'));
-    this.applyLanguageMetadata();
+    this.identityLanguage.toggleLanguage();
   }
 
   private applyLanguageMetadata(): void {

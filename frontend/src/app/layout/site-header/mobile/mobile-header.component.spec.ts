@@ -6,6 +6,7 @@ import { routes } from '../../../app.routes';
 import {
   HEADER_IDENTITY_ICON_PATH,
   HEADER_IDENTITY_ITEMS,
+  HEADER_IDENTITY_NAVIGATION,
   HEADER_LANGUAGE_ICON_PATH,
   HEADER_NAV_ITEMS,
   HEADER_THEME_OPTIONS,
@@ -15,10 +16,18 @@ import { MobileHeaderComponent } from './mobile-header.component';
 
 describe('MobileHeaderComponent', () => {
   beforeEach(async () => {
+    globalThis.localStorage.clear();
+    globalThis.sessionStorage.clear();
+
     await TestBed.configureTestingModule({
       imports: [MobileHeaderComponent],
       providers: [provideRouter(routes)],
     }).compileComponents();
+  });
+
+  afterEach(() => {
+    globalThis.localStorage.clear();
+    globalThis.sessionStorage.clear();
   });
 
   it('keeps menu and theme dropdown mutually exclusive', () => {
@@ -43,7 +52,8 @@ describe('MobileHeaderComponent', () => {
     const component = fixture.componentInstance;
 
     expect(component.navItems).toBe(HEADER_NAV_ITEMS);
-    expect(component.identityItems).toBe(HEADER_IDENTITY_ITEMS);
+    expect(component.identityNavigation()).toBe(HEADER_IDENTITY_NAVIGATION.en);
+    expect(component.identityNavigation().items).toBe(HEADER_IDENTITY_ITEMS);
     expect(component.identityIconPath).toBe(HEADER_IDENTITY_ICON_PATH);
     expect(component.themeOptions).toBe(HEADER_THEME_OPTIONS);
     expect(component.languageIconPath).toBe(HEADER_LANGUAGE_ICON_PATH);
@@ -52,6 +62,37 @@ describe('MobileHeaderComponent', () => {
     expect(component.themeTriggerIconPaths.dark).toBe(mdiWeatherNight);
     expect(component.themeTriggerIconPaths.light).toBe(mdiWhiteBalanceSunny);
     expect(component.themeTriggerIconPaths.system).toBe(mdiThemeLightDark);
+  });
+
+  it('selects Turkish with icon-only flags and translates only the mobile Identity group', () => {
+    const fixture = TestBed.createComponent(MobileHeaderComponent);
+    const component = fixture.componentInstance;
+
+    component.toggleMenu();
+    component.toggleIdentityMenu();
+    fixture.detectChanges();
+
+    const identityRoutes = fixture.nativeElement.querySelector(
+      '[data-testid="mobile-identity-routes"]',
+    ) as HTMLElement;
+    const turkishButton = identityRoutes.querySelector<HTMLButtonElement>(
+      '[data-testid="identity-language-tr"]',
+    );
+
+    turkishButton?.click();
+    fixture.detectChanges();
+
+    const identityText = fixture.nativeElement
+      .querySelector('.mobile-nav__identity')
+      ?.textContent?.replace(/\s+/g, ' ');
+
+    expect(component.identityLanguage.language()).toBe('tr');
+    expect(identityText).toContain('Kimlik');
+    expect(identityText).toContain('Soruklu Soyadı');
+    expect(identityText).not.toContain('Soruklu Surname');
+    expect(turkishButton?.textContent?.trim()).toBe('');
+    expect(turkishButton?.getAttribute('aria-pressed')).toBe('true');
+    expect(fixture.nativeElement.querySelector('.mobile-nav__link')?.textContent).toContain('Work');
   });
 
   it('expands the compact identity chooser without navigating', () => {

@@ -9,10 +9,30 @@ import { VelariComponent } from './velari.component';
 
 describe('VelariComponent', () => {
   beforeEach(async () => {
+    globalThis.localStorage.clear();
+    globalThis.sessionStorage.clear();
+
     await TestBed.configureTestingModule({
       imports: [VelariComponent],
       providers: [provideRouter([])],
     }).compileComponents();
+  });
+
+  afterEach(() => {
+    globalThis.localStorage.clear();
+    globalThis.sessionStorage.clear();
+  });
+
+  it('opens in the saved Identity language', () => {
+    globalThis.localStorage.setItem('serhatsoruklu-identity-language', 'tr');
+
+    const fixture = TestBed.createComponent(VelariComponent);
+    fixture.detectChanges();
+
+    const nativeElement = fixture.nativeElement as HTMLElement;
+
+    expect(nativeElement.querySelector('.velari-page')?.getAttribute('lang')).toBe('tr-TR');
+    expect(nativeElement.textContent).toContain('Modern bir inanç çerçevesi');
   });
 
   it('switches the complete route-local page between English and Turkish in place', () => {

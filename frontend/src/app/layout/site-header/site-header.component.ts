@@ -2,6 +2,7 @@ import { DOCUMENT, isPlatformBrowser, NgClass } from '@angular/common';
 import {
   AfterViewInit,
   Component,
+  computed,
   ElementRef,
   HostListener,
   inject,
@@ -11,13 +12,15 @@ import {
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
+import { IdentityLanguageService } from '../../core/identity/identity-language.service';
 import { TopNavigationService } from '../../core/navigation/top-navigation.service';
 import { ThemeService, ThemeSetting } from '../../core/theme/theme.service';
 import { LanguageDialogService } from '../../shared/dialogs/language-dialog/language-dialog.service';
+import { IdentityLanguageSelectorComponent } from '../../shared/identity-language-selector/identity-language-selector.component';
 import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
 import {
   HEADER_IDENTITY_ICON_PATH,
-  HEADER_IDENTITY_ITEMS,
+  HEADER_IDENTITY_NAVIGATION,
   HEADER_LANGUAGE_ICON_PATH,
   HEADER_NAV_ITEMS,
   HEADER_THEME_OPTIONS,
@@ -30,7 +33,14 @@ const SCROLLED_DISABLE_THRESHOLD = 2;
 
 @Component({
   selector: 'app-site-header',
-  imports: [MobileHeaderComponent, NgClass, RouterLink, RouterLinkActive, TooltipDirective],
+  imports: [
+    IdentityLanguageSelectorComponent,
+    MobileHeaderComponent,
+    NgClass,
+    RouterLink,
+    RouterLinkActive,
+    TooltipDirective,
+  ],
   templateUrl: './site-header.component.html',
   styleUrls: [
     './site-header.component.css',
@@ -60,7 +70,10 @@ export class SiteHeaderComponent implements AfterViewInit, OnDestroy {
   readonly topNavigation = inject(TopNavigationService);
   readonly isScrolled = signal(this.getScrollTop() >= SCROLLED_ENABLE_THRESHOLD);
   readonly identityIconPath = HEADER_IDENTITY_ICON_PATH;
-  readonly identityItems = HEADER_IDENTITY_ITEMS;
+  readonly identityLanguage = inject(IdentityLanguageService);
+  readonly identityNavigation = computed(
+    () => HEADER_IDENTITY_NAVIGATION[this.identityLanguage.language()],
+  );
   readonly identityMenuOpen = signal(false);
   readonly languageDialog = inject(LanguageDialogService);
   readonly languageIconPath = HEADER_LANGUAGE_ICON_PATH;

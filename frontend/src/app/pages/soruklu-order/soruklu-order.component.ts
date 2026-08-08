@@ -1,14 +1,13 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { mdiCursorDefaultClickOutline } from '@mdi/js';
 import { siX } from 'simple-icons';
 
+import { IdentityLanguageService } from '../../core/identity/identity-language.service';
 import { pageSeoMetadata } from '../../core/seo/seo.config';
 import { SeoService } from '../../core/seo/seo.service';
 import { PathIconComponent } from '../../shared/icons/path-icon.component';
-
-type OrderLanguage = 'en' | 'tr';
 
 const orderContent = {
   en: {
@@ -376,19 +375,23 @@ const orderContent = {
   templateUrl: './soruklu-order.component.html',
   styleUrl: './soruklu-order.component.css',
 })
-export class SorukluOrderComponent implements OnInit, OnDestroy {
+export class SorukluOrderComponent implements OnDestroy {
   private readonly document = inject(DOCUMENT);
+  private readonly identityLanguage = inject(IdentityLanguageService);
   private readonly seoService = inject(SeoService);
 
-  readonly language = signal<OrderLanguage>('en');
+  readonly language = this.identityLanguage.language;
   readonly content = computed(() => orderContent[this.language()]);
   readonly emblemPath = '/assets/brand/soruklu-order/the-soruklu-order-emblem.png';
   readonly officialXUrl = 'https://x.com/sorukluorder';
   readonly xIconPath = siX.path;
   readonly cursorClickIcon = mdiCursorDefaultClickOutline;
 
-  ngOnInit(): void {
-    this.applyLanguageMetadata();
+  constructor() {
+    effect(() => {
+      this.language();
+      this.applyLanguageMetadata();
+    });
   }
 
   ngOnDestroy(): void {
@@ -396,8 +399,7 @@ export class SorukluOrderComponent implements OnInit, OnDestroy {
   }
 
   toggleLanguage(): void {
-    this.language.update((language) => (language === 'en' ? 'tr' : 'en'));
-    this.applyLanguageMetadata();
+    this.identityLanguage.toggleLanguage();
   }
 
   private applyLanguageMetadata(): void {
