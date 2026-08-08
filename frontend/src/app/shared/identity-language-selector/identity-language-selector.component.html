@@ -1,0 +1,46 @@
+<fieldset
+  class="identity-language-options"
+  [attr.aria-label]="
+    identityLanguage.language() === 'tr'
+      ? 'Kimlik sayfalarının dilini seçin'
+      : 'Choose the language for Identity pages'
+  "
+  data-testid="identity-language-options"
+>
+  <button
+    class="identity-language-option"
+    type="button"
+    aria-label="Use English for Identity pages"
+    [attr.aria-pressed]="identityLanguage.language() === 'en'"
+    [class.identity-language-option--selected]="identityLanguage.language() === 'en'"
+    data-testid="identity-language-en"
+    (click)="selectLanguage('en', $event)"
+  >
+    <svg viewBox="0 0 30 20" aria-hidden="true" focusable="false">
+      <rect width="30" height="20" rx="2" fill="#173b74"></rect>
+      <path d="M0 0 30 20M30 0 0 20" stroke="#ffffff" stroke-width="4"></path>
+      <path d="M0 0 30 20M30 0 0 20" stroke="#c8102e" stroke-width="1.8"></path>
+      <path d="M15 0v20M0 10h30" stroke="#ffffff" stroke-width="6"></path>
+      <path d="M15 0v20M0 10h30" stroke="#c8102e" stroke-width="3.2"></path>
+    </svg>
+  </button>
+  <button
+    class="identity-language-option"
+    type="button"
+    aria-label="Kimlik sayfaları için Türkçe kullan"
+    [attr.aria-pressed]="identityLanguage.language() === 'tr'"
+    [class.identity-language-option--selected]="identityLanguage.language() === 'tr'"
+    data-testid="identity-language-tr"
+    (click)="selectLanguage('tr', $event)"
+  >
+    <svg viewBox="0 0 30 20" aria-hidden="true" focusable="false">
+      <rect width="30" height="20" rx="2" fill="#d81e34"></rect>
+      <circle cx="12" cy="10" r="5.2" fill="#ffffff"></circle>
+      <circle cx="13.7" cy="10" r="4.2" fill="#d81e34"></circle>
+      <path
+        d="m19.3 7.2.7 1.9 2-.1-1.6 1.2.7 1.9-1.7-1.1-1.6 1.2.5-2-1.7-1.1 2 .1Z"
+        fill="#ffffff"
+      ></path>
+    </svg>
+  </button>
+</fieldset>

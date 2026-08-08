@@ -2,6 +2,7 @@ import { DOCUMENT, isPlatformBrowser, NgClass } from '@angular/common';
 import {
   AfterViewInit,
   Component,
+  computed,
   ElementRef,
   HostListener,
   inject,
@@ -12,13 +13,15 @@ import {
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { mdiArrowRight, mdiChevronDown, mdiHomeVariantOutline } from '@mdi/js';
 
+import { IdentityLanguageService } from '../../../core/identity/identity-language.service';
 import { TopNavigationService } from '../../../core/navigation/top-navigation.service';
 import { ThemeService, ThemeSetting } from '../../../core/theme/theme.service';
+import { IdentityLanguageSelectorComponent } from '../../../shared/identity-language-selector/identity-language-selector.component';
 import { LanguageDialogService } from '../../../shared/dialogs/language-dialog/language-dialog.service';
 import { TooltipDirective } from '../../../shared/tooltip/tooltip.directive';
 import {
   HEADER_IDENTITY_ICON_PATH,
-  HEADER_IDENTITY_ITEMS,
+  HEADER_IDENTITY_NAVIGATION,
   HEADER_LANGUAGE_ICON_PATH,
   HEADER_MENU_ICON_PATHS,
   HEADER_NAV_ITEMS,
@@ -31,7 +34,13 @@ const SCROLLED_DISABLE_THRESHOLD = 2;
 
 @Component({
   selector: 'app-mobile-header',
-  imports: [NgClass, RouterLink, RouterLinkActive, TooltipDirective],
+  imports: [
+    IdentityLanguageSelectorComponent,
+    NgClass,
+    RouterLink,
+    RouterLinkActive,
+    TooltipDirective,
+  ],
   templateUrl: './mobile-header.component.html',
   styleUrls: ['./mobile-header.component.css', './mobile-header.theme.css'],
 })
@@ -71,7 +80,10 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
   readonly homeIconPath = mdiHomeVariantOutline;
   readonly identityChevronPath = mdiChevronDown;
   readonly identityIconPath = HEADER_IDENTITY_ICON_PATH;
-  readonly identityItems = HEADER_IDENTITY_ITEMS;
+  readonly identityLanguage = inject(IdentityLanguageService);
+  readonly identityNavigation = computed(
+    () => HEADER_IDENTITY_NAVIGATION[this.identityLanguage.language()],
+  );
   readonly identityMenuOpen = signal(false);
   readonly quickLinkArrowPath = mdiArrowRight;
   readonly quickLinks = [
@@ -187,7 +199,7 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
   isIdentityRoute(): boolean {
     const currentPath = this.router.url.split(/[?#]/, 1)[0];
 
-    return this.identityItems.some((link) => link.path === currentPath);
+    return this.identityNavigation().items.some((link) => link.path === currentPath);
   }
 
   @HostListener('document:click', ['$event'])

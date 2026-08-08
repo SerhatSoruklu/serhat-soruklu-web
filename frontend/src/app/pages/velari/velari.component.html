@@ -1,29 +1,62 @@
-<div class="velari-page">
+<div class="velari-page" [attr.lang]="content().htmlLang">
   <section class="velari-hero layout-section" aria-labelledby="velari-title">
     <div class="velari-frame velari-hero__inner">
       <div class="velari-hero__copy">
-        <p class="velari-eyebrow">A modern belief framework</p>
-        <h1 id="velari-title">Velari</h1>
-        <p class="velari-hero__lead">An evolving personal belief framework and writing project.</p>
-        <p class="velari-hero__definition">
-          Velari is Serhat Soruklu’s evolving personal belief framework and writing project. It
-          explores an approach called <strong>Helio-pantheism</strong>, drawing on pantheistic ideas
-          and using the Sun and Light as symbols of life, clarity, interconnectedness, discipline
-          and responsibility.
-        </p>
-        <p class="velari-hero__boundary">
-          Velari is not currently an organised religion or membership body. It makes no claim to
-          supernatural revelation or authority over other people.
-        </p>
-        <p class="velari-byline">Written by Serhat Soruklu</p>
+        <div class="velari-hero__topline">
+          <p class="velari-eyebrow">{{ content().hero.eyebrow }}</p>
+          <button
+            class="velari-language-switch"
+            type="button"
+            [attr.aria-label]="content().switchAriaLabel"
+            data-testid="velari-language-switch"
+            (click)="toggleLanguage()"
+          >
+            <span class="velari-language-switch__flag" aria-hidden="true">
+              @if (language() === 'en') {
+                <svg viewBox="0 0 30 20" focusable="false">
+                  <rect width="30" height="20" rx="2" fill="#d81e34"></rect>
+                  <circle cx="12" cy="10" r="5.2" fill="#ffffff"></circle>
+                  <circle cx="13.7" cy="10" r="4.2" fill="#d81e34"></circle>
+                  <path
+                    d="m19.3 7.2.7 1.9 2-.1-1.6 1.2.7 1.9-1.7-1.1-1.6 1.2.5-2-1.7-1.1 2 .1Z"
+                    fill="#ffffff"
+                  ></path>
+                </svg>
+              } @else {
+                <svg viewBox="0 0 30 20" focusable="false">
+                  <rect width="30" height="20" rx="2" fill="#173b74"></rect>
+                  <path d="M0 0 30 20M30 0 0 20" stroke="#ffffff" stroke-width="4"></path>
+                  <path d="M0 0 30 20M30 0 0 20" stroke="#c8102e" stroke-width="1.8"></path>
+                  <path d="M15 0v20M0 10h30" stroke="#ffffff" stroke-width="6"></path>
+                  <path d="M15 0v20M0 10h30" stroke="#c8102e" stroke-width="3.2"></path>
+                </svg>
+              }
+            </span>
+            <span>{{ content().switchLabel }}</span>
+            <app-path-icon
+              class="velari-language-switch__click-icon"
+              name="velari-language-cursor-click"
+              [path]="cursorClickIcon"
+            />
+          </button>
+        </div>
 
-        <div class="velari-actions" aria-label="Velari page actions">
+        <h1 id="velari-title">{{ content().hero.title }}</h1>
+        <p class="velari-hero__lead">{{ content().hero.lead }}</p>
+        <p class="velari-hero__definition">
+          {{ content().hero.definitionBefore }}<strong>{{ content().hero.approach }}</strong
+          >{{ content().hero.definitionAfter }}
+        </p>
+        <p class="velari-hero__boundary">{{ content().hero.boundary }}</p>
+        <p class="velari-byline">{{ content().hero.byline }}</p>
+
+        <div class="velari-actions" [attr.aria-label]="content().hero.actionsLabel">
           <a
             class="velari-action velari-action--primary"
             [routerLink]="['/velari']"
             fragment="velari-overview"
           >
-            <span>Read the ideas</span>
+            <span>{{ content().hero.ideasAction }}</span>
             <app-path-icon
               name="velari-arrow"
               [path]="iconPaths['velari-arrow']"
@@ -35,14 +68,14 @@
             [href]="instagramUrl"
             target="_blank"
             rel="me noopener noreferrer"
-            aria-label="Open Velari on Instagram"
+            [attr.aria-label]="content().instagramAriaLabel"
           >
             <app-path-icon
               name="velari-instagram"
               [path]="iconPaths['velari-instagram']"
               aria-hidden="true"
             ></app-path-icon>
-            <span>Velari on Instagram</span>
+            <span>{{ content().hero.instagramAction }}</span>
             <app-path-icon
               class="velari-action__external"
               name="velari-external"
@@ -55,7 +88,7 @@
 
       <figure class="velari-symbol" aria-labelledby="velari-symbol-caption">
         <div class="velari-symbol__compass">
-          @for (principle of emblemPrinciples; track principle.position) {
+          @for (principle of content().emblemPrinciples; track principle.position) {
             <button
               type="button"
               [class]="'velari-symbol__word velari-symbol__word--' + principle.position"
@@ -71,7 +104,7 @@
               [src]="emblemPath"
               [attr.srcset]="emblemSrcset"
               sizes="(min-width: 1024px) 390px, (min-width: 520px) 420px, calc(100vw - 112px)"
-              alt="Velari symbol"
+              [alt]="content().hero.symbolAlt"
               width="1080"
               height="1080"
               loading="eager"
@@ -81,8 +114,8 @@
           </div>
         </div>
         <figcaption id="velari-symbol-caption">
-          <span>The Velari symbol</span>
-          <span>Project artwork</span>
+          <span>{{ content().hero.symbolCaption }}</span>
+          <span>{{ content().hero.symbolType }}</span>
         </figcaption>
       </figure>
     </div>
@@ -91,30 +124,30 @@
   <section class="velari-glance layout-section" aria-labelledby="velari-glance-title">
     <div class="velari-frame">
       <header class="velari-section-heading velari-section-heading--compact">
-        <p class="velari-eyebrow">At a glance</p>
-        <h2 id="velari-glance-title">A personal project, clearly described.</h2>
+        <p class="velari-eyebrow">{{ content().glance.kicker }}</p>
+        <h2 id="velari-glance-title">{{ content().glance.heading }}</h2>
       </header>
-      <dl class="velari-facts">
-        @for (fact of facts; track fact.label) {
-          <div>
+      <div class="velari-facts">
+        @for (fact of content().glance.facts; track $index) {
+          <dl>
             <dt>{{ fact.label }}</dt>
             <dd>{{ fact.value }}</dd>
-          </div>
+          </dl>
         }
-        <div>
-          <dt>Instagram</dt>
+        <dl>
+          <dt>{{ content().glance.instagramLabel }}</dt>
           <dd>
             <a
               [href]="instagramUrl"
               target="_blank"
               rel="me noopener noreferrer"
-              aria-label="Open Velari on Instagram"
+              [attr.aria-label]="content().instagramAriaLabel"
             >
               &#64;velarifaith <span aria-hidden="true">↗</span>
             </a>
           </dd>
-        </div>
-      </dl>
+        </dl>
+      </div>
     </div>
   </section>
 
@@ -126,39 +159,22 @@
     <div class="velari-frame velari-overview">
       <article class="velari-reading-block">
         <header class="velari-section-heading">
-          <p class="velari-eyebrow">In plain terms</p>
-          <h2 id="velari-overview-title">What Velari is</h2>
+          <p class="velari-eyebrow">{{ content().overview.kicker }}</p>
+          <h2 id="velari-overview-title">{{ content().overview.heading }}</h2>
         </header>
         <div class="velari-prose velari-prose--lead">
-          <p>
-            Velari is an authored belief framework concerned with how people develop clarity,
-            self-restraint, compassion, resilience and responsibility.
-          </p>
-          <p>
-            It uses Light and the Sun symbolically, representing awareness, truth, life, energy and
-            the movement from confusion toward understanding.
-          </p>
-          <p>
-            The project draws on spiritual, philosophical, pantheistic and reflective traditions,
-            but does not present its ideas as scientific proof, supernatural revelation or
-            unquestionable doctrine.
-          </p>
+          @for (paragraph of content().overview.paragraphs; track $index) {
+            <p>{{ paragraph }}</p>
+          }
         </div>
       </article>
 
       <aside class="velari-boundary" aria-labelledby="velari-boundary-title">
-        <p class="velari-eyebrow">Scope and boundaries</p>
-        <h2 id="velari-boundary-title">Reflection without authority.</h2>
-        <p>
-          Velari is a personal belief framework and writing project. It is not currently an
-          organised religion, membership body, spiritual authority or substitute for medical,
-          psychological, legal or independent judgement.
-        </p>
-        <p>
-          Readers are free to disagree with, reinterpret or reject its ideas. No person is expected
-          to surrender autonomy, healthcare decisions, legal rights or personal judgement to the
-          project or its author.
-        </p>
+        <p class="velari-eyebrow">{{ content().overview.boundaryKicker }}</p>
+        <h2 id="velari-boundary-title">{{ content().overview.boundaryHeading }}</h2>
+        @for (paragraph of content().overview.boundaryParagraphs; track $index) {
+          <p>{{ paragraph }}</p>
+        }
       </aside>
     </div>
   </section>
@@ -168,29 +184,19 @@
     aria-labelledby="velari-light-title"
   >
     <div class="velari-frame velari-light">
-      <div class="velari-light__marker" aria-hidden="true">
-        <span></span>
-      </div>
+      <div class="velari-light__marker" aria-hidden="true"><span></span></div>
       <div class="velari-reading-block">
         <header class="velari-section-heading">
-          <p class="velari-eyebrow">Symbolic language</p>
-          <h2 id="velari-light-title">Light as a symbol</h2>
+          <p class="velari-eyebrow">{{ content().light.kicker }}</p>
+          <h2 id="velari-light-title">{{ content().light.heading }}</h2>
         </header>
         <div class="velari-prose">
+          @for (paragraph of content().light.paragraphs; track $index) {
+            <p>{{ paragraph }}</p>
+          }
           <p>
-            Velari uses Light as a symbol of clarity, awareness, truth, learning and personal
-            transformation.
-          </p>
-          <p>
-            The Sun represents life, energy, visibility and the conditions that make growth
-            possible. These are philosophical and poetic symbols, not scientific evidence of a
-            theology.
-          </p>
-          <p>
-            <strong>Helio-pantheism</strong> is the project’s name for its exploration of solar
-            symbolism and pantheistic ideas, including the possibility of experiencing meaning and
-            interconnectedness throughout existence. These influences are explored rather than
-            imposed as doctrine.
+            <strong>{{ content().light.approach }}</strong
+            >{{ content().light.approachBody }}
           </p>
         </div>
       </div>
@@ -201,24 +207,23 @@
     <div class="velari-frame">
       <header class="velari-section-heading velari-section-heading--split">
         <div>
-          <p class="velari-eyebrow">Reflective framework</p>
-          <h2 id="velari-movements-title">Three movements of reflection</h2>
+          <p class="velari-eyebrow">{{ content().movements.kicker }}</p>
+          <h2 id="velari-movements-title">{{ content().movements.heading }}</h2>
         </div>
-        <p>
-          A simple editorial model for considering direction, conduct and understanding—not a
-          hierarchy or prescribed spiritual path.
-        </p>
+        <p>{{ content().movements.introduction }}</p>
       </header>
 
       <ol class="velari-movements">
-        @for (movement of movements; track movement.number) {
+        @for (movement of content().movements.items; track movement.number) {
           <li>
             <article>
-              <p class="velari-card-label">Reflection {{ movement.number }}</p>
+              <p class="velari-card-label">
+                {{ content().movements.cardLabel }} {{ movement.number }}
+              </p>
               <h3>{{ movement.title }}</h3>
               <p>{{ movement.statement }}</p>
-              <ul aria-label="Working themes">
-                @for (theme of movement.themes; track theme) {
+              <ul [attr.aria-label]="content().movements.themesAriaLabel">
+                @for (theme of movement.themes; track $index) {
                   <li>{{ theme }}</li>
                 }
               </ul>
@@ -236,17 +241,14 @@
     <div class="velari-frame">
       <header class="velari-section-heading velari-section-heading--split">
         <div>
-          <p class="velari-eyebrow">Core principles</p>
-          <h2 id="velari-principles-title">Ideas explored through practice</h2>
+          <p class="velari-eyebrow">{{ content().principles.kicker }}</p>
+          <h2 id="velari-principles-title">{{ content().principles.heading }}</h2>
         </div>
-        <p>
-          These principles are subjects for reflection and conduct. They are not commandments or
-          mandatory beliefs.
-        </p>
+        <p>{{ content().principles.introduction }}</p>
       </header>
 
       <div class="velari-principles">
-        @for (principle of principles; track principle.title) {
+        @for (principle of content().principles.items; track $index) {
           <article>
             <h3>{{ principle.title }}</h3>
             <p>{{ principle.description }}</p>
@@ -260,22 +262,19 @@
     <div class="velari-frame">
       <header class="velari-section-heading velari-section-heading--split">
         <div>
-          <p class="velari-eyebrow">Daily reflection</p>
-          <h2 id="velari-reflection-title">Optional prompts for an ordinary day</h2>
+          <p class="velari-eyebrow">{{ content().reflection.kicker }}</p>
+          <h2 id="velari-reflection-title">{{ content().reflection.heading }}</h2>
         </div>
-        <p>
-          These prompts can support journalling or private reflection. They are not rituals,
-          obligations or substitutes for professional support or independent judgement.
-        </p>
+        <p>{{ content().reflection.introduction }}</p>
       </header>
 
       <div class="velari-reflections">
-        @for (reflection of reflections; track reflection.phase) {
+        @for (reflection of content().reflection.items; track $index) {
           <article>
             <p class="velari-card-label">{{ reflection.phase }}</p>
             <h3>{{ reflection.introduction }}</h3>
             <ul>
-              @for (prompt of reflection.prompts; track prompt) {
+              @for (prompt of reflection.prompts; track $index) {
                 <li>{{ prompt }}</li>
               }
             </ul>
@@ -291,34 +290,21 @@
   >
     <div class="velari-frame">
       <header class="velari-section-heading">
-        <p class="velari-eyebrow">Ethics in context</p>
-        <h2 id="velari-ethics-title">Choice, consequence and coexistence</h2>
+        <p class="velari-eyebrow">{{ content().ethics.kicker }}</p>
+        <h2 id="velari-ethics-title">{{ content().ethics.heading }}</h2>
       </header>
 
       <div class="velari-ethics">
         <article>
-          <h3>Choice and consequence</h3>
-          <p>
-            Velari uses “karma” as a philosophical shorthand for consequence, character formation
-            and reciprocal effect. Choices can shape habits, relationships, reputation and future
-            opportunities.
-          </p>
-          <p>
-            This does not mean that victims deserve the harm inflicted on them. Responsibility for
-            abuse, exploitation, violence or cruelty belongs to the person choosing the harmful
-            conduct.
-          </p>
+          <h3>{{ content().ethics.choiceHeading }}</h3>
+          @for (paragraph of content().ethics.choiceParagraphs; track $index) {
+            <p>{{ paragraph }}</p>
+          }
         </article>
         <article>
-          <h3>Other beliefs and philosophies</h3>
-          <p>
-            Velari can draw insight from different traditions without claiming that all traditions
-            are identical. It supports freedom of religion, freedom of thought and the freedom not
-            to believe.
-          </p>
-          <blockquote>
-            “Many paths, one Light” is a metaphor for coexistence, not conformity.
-          </blockquote>
+          <h3>{{ content().ethics.beliefsHeading }}</h3>
+          <p>{{ content().ethics.beliefsBody }}</p>
+          <blockquote>{{ content().ethics.quote }}</blockquote>
         </article>
       </div>
     </div>
@@ -328,38 +314,32 @@
     <div class="velari-frame">
       <header class="velari-section-heading velari-section-heading--split">
         <div>
-          <p class="velari-eyebrow">Developing manuscripts</p>
-          <h2 id="velari-manuscripts-title">Three works in progress</h2>
+          <p class="velari-eyebrow">{{ content().manuscripts.kicker }}</p>
+          <h2 id="velari-manuscripts-title">{{ content().manuscripts.heading }}</h2>
         </div>
-        <p>
-          Three developing manuscripts explore clarity and virtue, fear and self-deception, and the
-          practical work of choosing, repairing and continuing. They are unfinished and not yet
-          published.
-        </p>
+        <p>{{ content().manuscripts.introduction }}</p>
       </header>
 
       <div class="velari-manuscripts">
-        @for (manuscript of manuscripts; track manuscript.title) {
+        @for (manuscript of content().manuscripts.items; track $index) {
           <article>
             <div class="velari-manuscript__topline">
-              <span>Developing manuscript</span>
-              <span>Not yet published</span>
+              <span>{{ content().manuscripts.status }}</span>
+              <span>{{ content().manuscripts.publicationStatus }}</span>
             </div>
             <h3>{{ manuscript.title }}</h3>
             <dl>
-              <div>
-                <dt>Working themes</dt>
-                <dd>{{ manuscript.themes }}</dd>
-              </div>
+              <dt>{{ content().manuscripts.themesLabel }}</dt>
+              <dd>{{ manuscript.themes }}</dd>
             </dl>
             <p>{{ manuscript.description }}</p>
             <a
               [href]="manuscript.instagramUrl"
               target="_blank"
               rel="noopener noreferrer"
-              [attr.aria-label]="'View the project note for ' + manuscript.title + ' on Instagram'"
+              [attr.aria-label]="content().manuscripts.actionAriaLabel(manuscript.title)"
             >
-              <span>View project note</span>
+              <span>{{ content().manuscripts.action }}</span>
               <app-path-icon
                 name="velari-external"
                 [path]="iconPaths['velari-external']"
@@ -379,18 +359,13 @@
     <div class="velari-frame velari-authorship">
       <article>
         <header class="velari-section-heading">
-          <p class="velari-eyebrow">Authorship</p>
-          <h2 id="velari-authorship-title">Written by Serhat Soruklu</h2>
+          <p class="velari-eyebrow">{{ content().authorship.kicker }}</p>
+          <h2 id="velari-authorship-title">{{ content().authorship.heading }}</h2>
         </header>
         <div class="velari-prose">
-          <p>
-            Velari is written and developed by Serhat Soruklu as a personal spiritual, philosophical
-            and literary project.
-          </p>
-          <p>
-            Its ideas remain open to reasoned criticism, revision and correction. Authorship does
-            not create authority over readers, and disagreement does not create disloyalty.
-          </p>
+          @for (paragraph of content().authorship.paragraphs; track $index) {
+            <p>{{ paragraph }}</p>
+          }
         </div>
       </article>
 
@@ -408,15 +383,10 @@
           />
         </div>
         <div>
-          <p class="velari-eyebrow">Project artwork</p>
-          <h2 id="velari-symbol-note-title">The Velari symbol</h2>
-          <p>
-            The Velari symbol is project artwork representing Light, continuity, discipline and
-            reflection. It is not a mark of membership or a source of authority.
-          </p>
-          <p class="velari-symbol-note__words">
-            Discipline · Indomitable · Resilience · Equanimity
-          </p>
+          <p class="velari-eyebrow">{{ content().symbolNote.kicker }}</p>
+          <h2 id="velari-symbol-note-title">{{ content().symbolNote.heading }}</h2>
+          <p>{{ content().symbolNote.body }}</p>
+          <p class="velari-symbol-note__words">{{ content().symbolNote.words }}</p>
         </div>
       </article>
     </div>
@@ -426,26 +396,26 @@
     <div class="velari-frame velari-project-notes">
       <article>
         <header class="velari-section-heading">
-          <p class="velari-eyebrow">Project notes</p>
-          <h2 id="velari-instagram-title">Velari on Instagram</h2>
+          <p class="velari-eyebrow">{{ content().projectNotes.kicker }}</p>
+          <h2 id="velari-instagram-title">{{ content().projectNotes.heading }}</h2>
         </header>
         <p>
-          Visual notes, excerpts and project updates are published through
-          <strong>&#64;velarifaith</strong> on Instagram.
+          {{ content().projectNotes.bodyBefore }}<strong>&#64;velarifaith</strong
+          >{{ content().projectNotes.bodyAfter }}
         </p>
         <a
           class="velari-action velari-action--secondary"
           [href]="instagramUrl"
           target="_blank"
           rel="me noopener noreferrer"
-          aria-label="Open Velari on Instagram"
+          [attr.aria-label]="content().instagramAriaLabel"
         >
           <app-path-icon
             name="velari-instagram"
             [path]="iconPaths['velari-instagram']"
             aria-hidden="true"
           ></app-path-icon>
-          <span>Open &#64;velarifaith</span>
+          <span>{{ content().projectNotes.action }}</span>
           <app-path-icon
             class="velari-action__external"
             name="velari-external"
@@ -457,14 +427,10 @@
 
       <article aria-labelledby="velari-revision-title">
         <header class="velari-section-heading">
-          <p class="velari-eyebrow">Ongoing revision</p>
-          <h2 id="velari-revision-title">An evolving writing project</h2>
+          <p class="velari-eyebrow">{{ content().projectNotes.revisionKicker }}</p>
+          <h2 id="velari-revision-title">{{ content().projectNotes.revisionHeading }}</h2>
         </header>
-        <p>
-          Velari remains open to study, criticism and careful revision. Its value depends on whether
-          its ideas help readers think and act more clearly, responsibly and compassionately—not on
-          claims of revelation, destiny or historical importance.
-        </p>
+        <p>{{ content().projectNotes.revisionBody }}</p>
       </article>
     </div>
   </section>
@@ -472,11 +438,9 @@
   <section class="velari-closing layout-section" aria-labelledby="velari-closing-title">
     <div class="velari-frame velari-closing__inner">
       <div>
-        <p class="velari-eyebrow">A literary closing</p>
-        <h2 id="velari-closing-title">
-          Continue with discipline. Reflect with honesty. Return with greater clarity.
-        </h2>
-        <p class="velari-closing__line">May the Light guide us.</p>
+        <p class="velari-eyebrow">{{ content().closing.kicker }}</p>
+        <h2 id="velari-closing-title">{{ content().closing.heading }}</h2>
+        <p class="velari-closing__line">{{ content().closing.line }}</p>
       </div>
       <div class="velari-actions">
         <a
@@ -484,14 +448,14 @@
           [href]="instagramUrl"
           target="_blank"
           rel="me noopener noreferrer"
-          aria-label="Open Velari on Instagram"
+          [attr.aria-label]="content().instagramAriaLabel"
         >
           <app-path-icon
             name="velari-instagram"
             [path]="iconPaths['velari-instagram']"
             aria-hidden="true"
           ></app-path-icon>
-          <span>Velari on Instagram</span>
+          <span>{{ content().closing.instagramAction }}</span>
           <app-path-icon
             class="velari-action__external"
             name="velari-external"
@@ -504,7 +468,7 @@
           routerLink="/"
           (click)="topNavigation.handleLinkClick('/')"
         >
-          <span>Return to Serhat Soruklu</span>
+          <span>{{ content().closing.returnAction }}</span>
           <app-path-icon
             name="velari-arrow"
             [path]="iconPaths['velari-arrow']"

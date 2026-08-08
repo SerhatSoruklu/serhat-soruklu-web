@@ -1,14 +1,81 @@
+import { DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
+import { Title } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
+
+import { pageSeoMetadata } from '../../core/seo/seo.config';
 
 import { VelariComponent } from './velari.component';
 
 describe('VelariComponent', () => {
+  const identityLanguageCookie = 'serhatsoruklu-identity-language';
+
   beforeEach(async () => {
+    globalThis.localStorage.clear();
+    globalThis.sessionStorage.clear();
+    globalThis.document.cookie = `${identityLanguageCookie}=; Path=/; Max-Age=0; SameSite=Lax`;
+
     await TestBed.configureTestingModule({
       imports: [VelariComponent],
       providers: [provideRouter([])],
     }).compileComponents();
+  });
+
+  afterEach(() => {
+    globalThis.localStorage.clear();
+    globalThis.sessionStorage.clear();
+    globalThis.document.cookie = `${identityLanguageCookie}=; Path=/; Max-Age=0; SameSite=Lax`;
+  });
+
+  it('opens in the saved Identity language', () => {
+    globalThis.localStorage.setItem('serhatsoruklu-identity-language', 'tr');
+
+    const fixture = TestBed.createComponent(VelariComponent);
+    fixture.detectChanges();
+
+    const nativeElement = fixture.nativeElement as HTMLElement;
+
+    expect(nativeElement.querySelector('.velari-page')?.getAttribute('lang')).toBe('tr-TR');
+    expect(nativeElement.textContent).toContain('Modern bir inanç çerçevesi');
+  });
+
+  it('switches the complete route-local page between English and Turkish in place', () => {
+    const fixture = TestBed.createComponent(VelariComponent);
+    fixture.detectChanges();
+
+    const nativeElement = fixture.nativeElement as HTMLElement;
+    const document = TestBed.inject(DOCUMENT);
+    const title = TestBed.inject(Title);
+    const switchButton = nativeElement.querySelector<HTMLButtonElement>(
+      '[data-testid="velari-language-switch"]',
+    );
+
+    expect(nativeElement.querySelector('.velari-page')?.getAttribute('lang')).toBe('en-GB');
+    expect(switchButton?.textContent).toContain('Türkçe oku');
+
+    switchButton?.click();
+    fixture.detectChanges();
+
+    const turkishText = nativeElement.textContent?.replace(/\s+/g, ' ') ?? '';
+
+    expect(nativeElement.querySelector('.velari-page')?.getAttribute('lang')).toBe('tr-TR');
+    expect(document.documentElement.lang).toBe('tr-TR');
+    expect(title.getTitle()).toBe('Velari | Kişisel İnanç Çerçevesi ve Yazı Projesi');
+    expect(switchButton?.textContent).toContain('Read in English');
+    expect(nativeElement.querySelector('h1')?.textContent?.trim()).toBe('Velari');
+    expect(turkishText).toContain('Modern bir inanç çerçevesi');
+    expect(turkishText).toContain('Uygulama yoluyla araştırılan fikirler');
+    expect(turkishText).toContain('Işık bize yol göstersin.');
+    expect(turkishText).not.toContain('A modern belief framework');
+    expect(turkishText).not.toContain('Continue with discipline.');
+
+    switchButton?.click();
+    fixture.detectChanges();
+
+    expect(nativeElement.querySelector('.velari-page')?.getAttribute('lang')).toBe('en-GB');
+    expect(document.documentElement.lang).toBe('en-GB');
+    expect(title.getTitle()).toBe(pageSeoMetadata.velari.title);
+    expect(nativeElement.textContent).toContain('A modern belief framework');
   });
 
   it('presents Velari as an authored modern belief framework within the first section', () => {

@@ -1,21 +1,54 @@
-<div class="order-page">
+<div class="order-page" [attr.lang]="content().htmlLang">
   <section class="order-hero layout-section" aria-labelledby="order-title">
     <div class="order-frame order-hero__inner">
       <div class="order-hero__copy">
-        <p class="order-eyebrow">Family stewardship · Established 2025</p>
-        <h1 id="order-title">The Soruklu Order</h1>
-        <p class="order-hero__lead">A small, voluntary family stewardship initiative.</p>
-        <p class="order-hero__summary">
-          Established in 2025, the Soruklu Order preserves authorised family records, supports
-          practical cooperation, and encourages responsible conduct across generations.
-        </p>
-        <p class="order-hero__boundary">
-          Participation is voluntary and based on informed consent. The initiative does not
-          represent the entire Soruklu family and holds no authority over any person.
-        </p>
+        <div class="order-hero__topline">
+          <p class="order-eyebrow">{{ content().hero.eyebrow }}</p>
+          <button
+            class="order-language-switch"
+            type="button"
+            [attr.aria-label]="content().switchAriaLabel"
+            data-testid="order-language-switch"
+            (click)="toggleLanguage()"
+          >
+            <span class="order-language-switch__flag" aria-hidden="true">
+              @if (language() === 'en') {
+                <svg viewBox="0 0 30 20" focusable="false">
+                  <rect width="30" height="20" rx="2" fill="#d81e34"></rect>
+                  <circle cx="12" cy="10" r="5.2" fill="#ffffff"></circle>
+                  <circle cx="13.7" cy="10" r="4.2" fill="#d81e34"></circle>
+                  <path
+                    d="m19.3 7.2.7 1.9 2-.1-1.6 1.2.7 1.9-1.7-1.1-1.6 1.2.5-2-1.7-1.1 2 .1Z"
+                    fill="#ffffff"
+                  ></path>
+                </svg>
+              } @else {
+                <svg viewBox="0 0 30 20" focusable="false">
+                  <rect width="30" height="20" rx="2" fill="#173b74"></rect>
+                  <path d="M0 0 30 20M30 0 0 20" stroke="#ffffff" stroke-width="4"></path>
+                  <path d="M0 0 30 20M30 0 0 20" stroke="#c8102e" stroke-width="1.8"></path>
+                  <path d="M15 0v20M0 10h30" stroke="#ffffff" stroke-width="6"></path>
+                  <path d="M15 0v20M0 10h30" stroke="#c8102e" stroke-width="3.2"></path>
+                </svg>
+              }
+            </span>
+            <span>{{ content().switchLabel }}</span>
+            <app-path-icon
+              class="order-language-switch__click-icon"
+              name="order-language-cursor-click"
+              [path]="cursorClickIcon"
+            />
+          </button>
+        </div>
+
+        <h1 id="order-title">{{ content().hero.title }}</h1>
+        <p class="order-hero__lead">{{ content().hero.lead }}</p>
+        <p class="order-hero__summary">{{ content().hero.summary }}</p>
+        <p class="order-hero__boundary">{{ content().hero.boundary }}</p>
         <p class="order-motto">
-          Discipline <span aria-hidden="true">·</span> Responsibility
-          <span aria-hidden="true">·</span> Continuity
+          {{ content().hero.motto[0] }} <span aria-hidden="true">·</span>
+          {{ content().hero.motto[1] }} <span aria-hidden="true">·</span>
+          {{ content().hero.motto[2] }}
         </p>
       </div>
 
@@ -23,7 +56,7 @@
         <div class="order-hero-mark__image">
           <img
             [src]="emblemPath"
-            alt="Soruklu Order interwoven family emblem"
+            [alt]="content().hero.emblemAlt"
             width="400"
             height="400"
             loading="eager"
@@ -32,8 +65,8 @@
           />
         </div>
         <figcaption>
-          <span>Family mark</span>
-          <span>Used on authorised initiative materials</span>
+          <span>{{ content().hero.markLabel }}</span>
+          <span>{{ content().hero.markCaption }}</span>
         </figcaption>
       </figure>
     </div>
@@ -42,62 +75,49 @@
   <section class="order-glance layout-section" aria-labelledby="order-glance-title">
     <div class="order-frame">
       <header class="order-section-heading order-section-heading--compact">
-        <p class="order-kicker">At a glance</p>
-        <h2 id="order-glance-title">A limited and practical purpose.</h2>
+        <p class="order-kicker">{{ content().glance.kicker }}</p>
+        <h2 id="order-glance-title">{{ content().glance.heading }}</h2>
       </header>
 
-      <dl class="order-facts">
-        @for (fact of facts; track fact.label) {
-          <div>
+      <div class="order-facts">
+        @for (fact of content().glance.facts; track $index) {
+          <dl>
             <dt>{{ fact.label }}</dt>
             <dd>{{ fact.value }}</dd>
-          </div>
+          </dl>
         }
-        <div>
-          <dt>Public channel</dt>
+        <dl>
+          <dt>{{ content().glance.publicChannelLabel }}</dt>
           <dd>
             <a
               [href]="officialXUrl"
               target="_blank"
               rel="me noopener noreferrer"
-              aria-label="Open the official Soruklu Order account on X"
+              [attr.aria-label]="content().xAriaLabel"
             >
-              &#64;SorukluOrder on X
+              {{ content().glance.publicChannelValue }}
               <span aria-hidden="true">↗</span>
             </a>
           </dd>
-        </div>
-      </dl>
+        </dl>
+      </div>
     </div>
   </section>
 
   <section class="order-section layout-section" aria-labelledby="order-definition-title">
     <div class="order-frame order-editorial-split">
       <header class="order-section-heading">
-        <p class="order-kicker">What it is</p>
-        <h2 id="order-definition-title">A small family initiative, clearly bounded.</h2>
+        <p class="order-kicker">{{ content().definition.kicker }}</p>
+        <h2 id="order-definition-title">{{ content().definition.heading }}</h2>
       </header>
 
       <div class="order-prose order-prose--lead">
-        <p>
-          The Soruklu Order is the name of a small family project established by Serhat Soruklu in
-          2025. It provides a voluntary framework for preserving authorised family context,
-          documenting agreed principles, coordinating practical support, and carrying useful
-          knowledge forward.
-        </p>
-        <p>
-          It is not a lodge, religion, fraternity, political movement, public institution, or source
-          of authority. It has no degrees, ceremonial ranks, professional powers, or jurisdiction
-          over the wider Soruklu family.
-        </p>
-        <p>
-          Participation creates no authority over non-participants and no obligation beyond what
-          each person freely agrees.
-        </p>
+        @for (paragraph of content().definition.paragraphs; track $index) {
+          <p>{{ paragraph }}</p>
+        }
         <p class="order-surname-link">
           <a routerLink="/soruklu-surname">
-            Looking for the surname’s history? Read about the meaning and documented origins of
-            Soruklu.
+            {{ content().definition.surnameAction }}
             <span aria-hidden="true">→</span>
           </a>
         </p>
@@ -112,16 +132,14 @@
     <div class="order-frame">
       <header class="order-section-heading order-section-heading--wide">
         <div>
-          <p class="order-kicker">What we actually do</p>
-          <h2 id="order-work-title">Practical stewardship, not ceremony.</h2>
+          <p class="order-kicker">{{ content().work.kicker }}</p>
+          <h2 id="order-work-title">{{ content().work.heading }}</h2>
         </div>
-        <p>
-          The work is limited to useful family records, voluntary cooperation, and clear conduct.
-        </p>
+        <p>{{ content().work.introduction }}</p>
       </header>
 
       <ul class="order-activity-list">
-        @for (activity of activities; track activity) {
+        @for (activity of content().work.activities; track $index) {
           <li>
             <span class="order-check" aria-hidden="true">✓</span>
             <span>{{ activity }}</span>
@@ -135,14 +153,14 @@
     <div class="order-frame">
       <header class="order-section-heading order-section-heading--wide">
         <div>
-          <p class="order-kicker">Principles</p>
-          <h2 id="order-principles-title">Standards for everyday conduct.</h2>
+          <p class="order-kicker">{{ content().principles.kicker }}</p>
+          <h2 id="order-principles-title">{{ content().principles.heading }}</h2>
         </div>
-        <p>These principles matter only when participants apply them in ordinary decisions.</p>
+        <p>{{ content().principles.introduction }}</p>
       </header>
 
       <ul class="order-principles">
-        @for (principle of principles; track principle.title) {
+        @for (principle of content().principles.items; track $index) {
           <li>
             <h3>{{ principle.title }}</h3>
             <p>{{ principle.description }}</p>
@@ -158,23 +176,14 @@
   >
     <div class="order-frame order-editorial-split">
       <header class="order-section-heading">
-        <p class="order-kicker">Participation and boundaries</p>
-        <h2 id="order-participation-title">Consent comes before participation.</h2>
+        <p class="order-kicker">{{ content().participation.kicker }}</p>
+        <h2 id="order-participation-title">{{ content().participation.heading }}</h2>
       </header>
 
       <div class="order-prose">
-        <p>
-          Participation is by invitation and informed consent. Sharing the Soruklu surname does not
-          create membership, endorsement, involvement, or obligation.
-        </p>
-        <p>
-          The wider Soruklu family consists of independent people and households. The Soruklu Order
-          does not speak for, control, or collectively represent everyone who shares the surname.
-        </p>
-        <p>
-          Participants may leave the initiative. Responsibilities may be changed or discontinued by
-          agreement.
-        </p>
+        @for (paragraph of content().participation.paragraphs; track $index) {
+          <p>{{ paragraph }}</p>
+        }
       </div>
     </div>
   </section>
@@ -183,14 +192,14 @@
     <div class="order-frame">
       <header class="order-section-heading order-section-heading--wide">
         <div>
-          <p class="order-kicker">Practical responsibilities</p>
-          <h2 id="order-responsibilities-title">A small set of administrative tasks.</h2>
+          <p class="order-kicker">{{ content().responsibilities.kicker }}</p>
+          <h2 id="order-responsibilities-title">{{ content().responsibilities.heading }}</h2>
         </div>
-        <p>Responsibilities exist to keep records, consent, and public boundaries clear.</p>
+        <p>{{ content().responsibilities.introduction }}</p>
       </header>
 
       <div class="order-responsibilities">
-        @for (responsibility of responsibilities; track responsibility.title) {
+        @for (responsibility of content().responsibilities.items; track $index) {
           <article>
             <h3>{{ responsibility.title }}</h3>
             <p>{{ responsibility.description }}</p>
@@ -198,10 +207,7 @@
         }
       </div>
 
-      <p class="order-clarification">
-        These are informal administrative responsibilities, not ranks, honours, professional
-        licences, or positions of authority. They apply only within the voluntary initiative.
-      </p>
+      <p class="order-clarification">{{ content().responsibilities.clarification }}</p>
     </div>
   </section>
 
@@ -211,24 +217,14 @@
   >
     <div class="order-frame order-editorial-split">
       <header class="order-section-heading">
-        <p class="order-kicker">Safeguarding and lawful boundaries</p>
-        <h2 id="order-safeguarding-title">Independent services remain independent.</h2>
+        <p class="order-kicker">{{ content().safeguarding.kicker }}</p>
+        <h2 id="order-safeguarding-title">{{ content().safeguarding.heading }}</h2>
       </header>
 
       <div class="order-prose">
-        <p>
-          Participants are expected to act lawfully, respect individual autonomy, and use
-          appropriate safeguarding procedures.
-        </p>
-        <p>
-          Criminal allegations, medical concerns, legal disputes, and safeguarding matters belong
-          with the relevant independent authorities and qualified professionals.
-        </p>
-        <p>
-          The initiative does not investigate offences, determine guilt, adjudicate disputes,
-          provide legal or medical services, or replace police, courts, social services,
-          safeguarding bodies, or healthcare providers.
-        </p>
+        @for (paragraph of content().safeguarding.paragraphs; track $index) {
+          <p>{{ paragraph }}</p>
+        }
       </div>
     </div>
   </section>
@@ -239,54 +235,49 @@
         <img [src]="emblemPath" alt="" width="400" height="400" loading="lazy" decoding="async" />
       </div>
       <div class="order-mark-section__copy">
-        <p class="order-kicker">Family mark</p>
-        <h2 id="order-mark-title">The family mark.</h2>
-        <p>
-          The emblem is the identifying mark used for authorised Soruklu Order materials. It does
-          not represent public office, legal authority, hereditary status, or authority over the
-          wider family.
-        </p>
+        <p class="order-kicker">{{ content().mark.kicker }}</p>
+        <h2 id="order-mark-title">{{ content().mark.heading }}</h2>
+        <p>{{ content().mark.body }}</p>
       </div>
     </div>
   </section>
 
   <section
     class="order-section order-section--public layout-section"
-    aria-label="Public information"
+    [attr.aria-label]="content().publicInformationAriaLabel"
   >
     <div class="order-frame order-public-grid">
       <article aria-labelledby="order-updates-title">
-        <p class="order-kicker">Official updates</p>
-        <h2 id="order-updates-title">One public channel.</h2>
+        <p class="order-kicker">{{ content().updates.kicker }}</p>
+        <h2 id="order-updates-title">{{ content().updates.heading }}</h2>
         <p>
-          Official public updates from the initiative are published through
-          <strong>&#64;SorukluOrder</strong> on X.
+          {{ content().updates.bodyBefore }}<strong>&#64;SorukluOrder</strong
+          >{{ content().updates.bodyAfter }}
         </p>
         <a
           class="order-action order-action--primary"
           [href]="officialXUrl"
           target="_blank"
           rel="me noopener noreferrer"
-          aria-label="Open the official Soruklu Order account on X"
+          [attr.aria-label]="content().xAriaLabel"
         >
           <svg class="order-x-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
             <path [attr.d]="xIconPath"></path>
           </svg>
-          <span>Open &#64;SorukluOrder on X</span>
+          <span>{{ content().updates.action }}</span>
           <span aria-hidden="true">↗</span>
         </a>
       </article>
 
       <article class="order-identity-notice" aria-labelledby="order-identity-title">
-        <p class="order-kicker">Identity notice</p>
-        <h2 id="order-identity-title">Authorised public identity.</h2>
-        <p>This page and &#64;SorukluOrder are the initiative’s authorised public channels.</p>
+        <p class="order-kicker">{{ content().identity.kicker }}</p>
+        <h2 id="order-identity-title">{{ content().identity.heading }}</h2>
+        <p>{{ content().identity.introduction }}</p>
         <p>
-          The domain <span class="order-domain">sorukluorder.org</span> is unaffiliated. It was not
-          created, commissioned, authorised, operated, or endorsed by Serhat Soruklu, the Soruklu
-          Order, its participants, or the wider Soruklu family.
+          {{ content().identity.domainBefore }}<span class="order-domain">sorukluorder.org</span
+          >{{ content().identity.domainAfter }}
         </p>
-        <p>Its content does not represent this initiative.</p>
+        <p>{{ content().identity.conclusion }}</p>
       </article>
     </div>
   </section>
@@ -294,21 +285,19 @@
   <section class="order-closing layout-section" aria-labelledby="order-closing-title">
     <div class="order-frame order-closing__inner">
       <div class="order-closing__copy">
-        <p class="order-kicker">Continuity through conduct</p>
-        <h2 id="order-closing-title">A voluntary project, carried forward practically.</h2>
-        <p>
-          The Soruklu Order continues through the voluntary choices, responsible conduct, and
-          practical contributions of its participants.
-        </p>
+        <p class="order-kicker">{{ content().closing.kicker }}</p>
+        <h2 id="order-closing-title">{{ content().closing.heading }}</h2>
+        <p>{{ content().closing.body }}</p>
         <p class="order-motto">
-          Discipline <span aria-hidden="true">·</span> Responsibility
-          <span aria-hidden="true">·</span> Continuity
+          {{ content().closing.motto[0] }} <span aria-hidden="true">·</span>
+          {{ content().closing.motto[1] }} <span aria-hidden="true">·</span>
+          {{ content().closing.motto[2] }}
         </p>
       </div>
 
-      <div class="order-closing__actions" aria-label="Soruklu Order closing links">
+      <div class="order-closing__actions" [attr.aria-label]="content().closing.actionsAriaLabel">
         <a class="order-action order-action--secondary" routerLink="/">
-          <span>Return to Serhat Soruklu</span>
+          <span>{{ content().closing.returnAction }}</span>
           <span aria-hidden="true">→</span>
         </a>
         <a
@@ -316,12 +305,12 @@
           [href]="officialXUrl"
           target="_blank"
           rel="me noopener noreferrer"
-          aria-label="Open the official Soruklu Order account on X"
+          [attr.aria-label]="content().xAriaLabel"
         >
           <svg class="order-x-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
             <path [attr.d]="xIconPath"></path>
           </svg>
-          <span>Official updates</span>
+          <span>{{ content().closing.updatesAction }}</span>
           <span aria-hidden="true">↗</span>
         </a>
       </div>

@@ -179,6 +179,15 @@
   background: linear-gradient(90deg, rgba(184, 135, 47, 0.07), rgba(184, 135, 47, 0));
 }
 
+:host-context(.theme-resolved-light) .mobile-nav__identity-routes-heading {
+  border-bottom-color: rgba(229, 224, 214, 0.84);
+  color: #b8872f;
+}
+
+:host-context(.theme-resolved-light) .mobile-nav__identity-availability-note {
+  color: #5f6673;
+}
+
 :host-context(.theme-resolved-light) .mobile-nav__identity-routes::before {
   background: rgba(184, 135, 47, 0.58);
 }

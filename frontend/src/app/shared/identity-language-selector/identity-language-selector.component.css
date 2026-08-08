@@ -1,0 +1,105 @@
+:host {
+  display: inline-flex;
+}
+
+.identity-language-options {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.identity-language-option {
+  position: relative;
+  display: grid;
+  width: 36px;
+  height: 30px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid #252b36;
+  border-radius: 7px;
+  background: rgba(7, 9, 13, 0.6);
+  box-shadow: none;
+  cursor: pointer;
+  opacity: 0.66;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.identity-language-option svg {
+  display: block;
+  width: 25px;
+  height: auto;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(245, 247, 250, 0.12);
+}
+
+.identity-language-option:hover,
+.identity-language-option:focus-visible {
+  border-color: rgba(214, 168, 79, 0.68);
+  background: #10141c;
+  box-shadow: 0 0 0 2px rgba(214, 168, 79, 0.12);
+  opacity: 1;
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.identity-language-option--selected {
+  border-color: #d6a84f;
+  background: rgba(214, 168, 79, 0.12);
+  box-shadow:
+    inset 0 0 0 1px rgba(240, 213, 140, 0.2),
+    0 0 0 2px rgba(214, 168, 79, 0.1);
+  opacity: 1;
+}
+
+.identity-language-option--selected::after {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 5px;
+  height: 5px;
+  border: 1px solid #07090d;
+  border-radius: 50%;
+  background: #f0d58c;
+  box-shadow: 0 0 4px rgba(240, 213, 140, 0.52);
+  content: '';
+}
+
+:host-context(.theme-resolved-light) .identity-language-option {
+  border-color: #e5e0d6;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+:host-context(.theme-resolved-light) .identity-language-option:hover,
+:host-context(.theme-resolved-light) .identity-language-option:focus-visible {
+  border-color: rgba(184, 135, 47, 0.68);
+  background: #ffffff;
+  box-shadow: 0 0 0 2px rgba(184, 135, 47, 0.12);
+}
+
+:host-context(.theme-resolved-light) .identity-language-option--selected {
+  border-color: #b8872f;
+  background: rgba(184, 135, 47, 0.12);
+  box-shadow:
+    inset 0 0 0 1px rgba(184, 135, 47, 0.16),
+    0 0 0 2px rgba(184, 135, 47, 0.08);
+}
+
+:host-context(.theme-resolved-light) .identity-language-option--selected::after {
+  border-color: #ffffff;
+  background: #b8872f;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .identity-language-option {
+    transition: none;
+  }
+}
