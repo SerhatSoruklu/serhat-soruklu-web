@@ -15,9 +15,12 @@ import {
 import { MobileHeaderComponent } from './mobile-header.component';
 
 describe('MobileHeaderComponent', () => {
+  const identityLanguageCookie = 'serhatsoruklu-identity-language';
+
   beforeEach(async () => {
     globalThis.localStorage.clear();
     globalThis.sessionStorage.clear();
+    globalThis.document.cookie = `${identityLanguageCookie}=; Path=/; Max-Age=0; SameSite=Lax`;
 
     await TestBed.configureTestingModule({
       imports: [MobileHeaderComponent],
@@ -28,6 +31,7 @@ describe('MobileHeaderComponent', () => {
   afterEach(() => {
     globalThis.localStorage.clear();
     globalThis.sessionStorage.clear();
+    globalThis.document.cookie = `${identityLanguageCookie}=; Path=/; Max-Age=0; SameSite=Lax`;
   });
 
   it('keeps menu and theme dropdown mutually exclusive', () => {

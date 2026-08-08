@@ -8,9 +8,12 @@ import { pageSeoMetadata } from '../../core/seo/seo.config';
 import { VelariComponent } from './velari.component';
 
 describe('VelariComponent', () => {
+  const identityLanguageCookie = 'serhatsoruklu-identity-language';
+
   beforeEach(async () => {
     globalThis.localStorage.clear();
     globalThis.sessionStorage.clear();
+    globalThis.document.cookie = `${identityLanguageCookie}=; Path=/; Max-Age=0; SameSite=Lax`;
 
     await TestBed.configureTestingModule({
       imports: [VelariComponent],
@@ -21,6 +24,7 @@ describe('VelariComponent', () => {
   afterEach(() => {
     globalThis.localStorage.clear();
     globalThis.sessionStorage.clear();
+    globalThis.document.cookie = `${identityLanguageCookie}=; Path=/; Max-Age=0; SameSite=Lax`;
   });
 
   it('opens in the saved Identity language', () => {

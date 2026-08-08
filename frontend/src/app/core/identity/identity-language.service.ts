@@ -1,5 +1,5 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { effect, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { effect, inject, Injectable, PLATFORM_ID, REQUEST, signal } from '@angular/core';
 
 import { SorukluSurnameLanguageService } from '../../pages/soruklu-surname/soruklu-surname-language.service';
 
@@ -7,11 +7,13 @@ export type IdentityLanguage = 'en' | 'tr';
 
 const IDENTITY_LANGUAGE_STORAGE_KEY = 'serhatsoruklu-identity-language';
 const SURNAME_LANGUAGE_STORAGE_KEY = 'serhatsoruklu-surname-language';
+const IDENTITY_LANGUAGE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 @Injectable({ providedIn: 'root' })
 export class IdentityLanguageService {
   private readonly document = inject(DOCUMENT);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly request = inject(REQUEST, { optional: true });
   private readonly browserWindow = this.isBrowser ? this.document.defaultView : null;
   private readonly surnameLanguage = inject(SorukluSurnameLanguageService);
   private readonly languageValue = signal<IdentityLanguage>(this.readSavedLanguage());
@@ -47,6 +49,15 @@ export class IdentityLanguageService {
   }
 
   private readSavedLanguage(): IdentityLanguage {
+    const cookieHeader = this.isBrowser
+      ? this.document.cookie
+      : (this.request?.headers.get('cookie') ?? '');
+    const savedCookieLanguage = this.readCookieLanguage(cookieHeader);
+
+    if (savedCookieLanguage) {
+      return savedCookieLanguage;
+    }
+
     if (!this.browserWindow) {
       return 'en';
     }
@@ -78,9 +89,20 @@ export class IdentityLanguageService {
     try {
       this.browserWindow.localStorage.setItem(IDENTITY_LANGUAGE_STORAGE_KEY, language);
       this.browserWindow.sessionStorage.setItem(SURNAME_LANGUAGE_STORAGE_KEY, language);
+      this.document.cookie = `${IDENTITY_LANGUAGE_STORAGE_KEY}=${language}; Path=/; Max-Age=${IDENTITY_LANGUAGE_COOKIE_MAX_AGE}; SameSite=Lax`;
     } catch {
       // The Identity language control remains functional when storage is unavailable.
     }
+  }
+
+  private readCookieLanguage(cookieHeader: string): IdentityLanguage | null {
+    const languageCookie = cookieHeader
+      .split(';')
+      .map((cookie) => cookie.trim())
+      .find((cookie) => cookie.startsWith(`${IDENTITY_LANGUAGE_STORAGE_KEY}=`));
+    const language = languageCookie?.slice(IDENTITY_LANGUAGE_STORAGE_KEY.length + 1);
+
+    return language === 'en' || language === 'tr' ? language : null;
   }
 
   private switchRenderedSurnamePage(language: IdentityLanguage): boolean {

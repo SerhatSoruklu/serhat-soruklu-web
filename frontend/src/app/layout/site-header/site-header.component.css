@@ -186,7 +186,8 @@
 .identity-selector__trigger {
   position: relative;
   display: inline-grid;
-  grid-template-columns: 18px max-content 18px;
+  grid-template-columns: 18px minmax(0, 1fr) 18px;
+  width: 146px;
   min-height: 44px;
   align-items: center;
   gap: 9px;
@@ -210,6 +211,10 @@
     background 160ms ease,
     box-shadow 160ms ease,
     color 160ms ease;
+}
+
+.identity-selector__trigger-label {
+  text-align: center;
 }
 
 .identity-selector__trigger:hover,

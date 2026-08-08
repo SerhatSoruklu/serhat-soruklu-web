@@ -15,9 +15,12 @@ import {
 import { SiteHeaderComponent } from './site-header.component';
 
 describe('SiteHeaderComponent', () => {
+  const identityLanguageCookie = 'serhatsoruklu-identity-language';
+
   beforeEach(async () => {
     globalThis.localStorage.clear();
     globalThis.sessionStorage.clear();
+    globalThis.document.cookie = `${identityLanguageCookie}=; Path=/; Max-Age=0; SameSite=Lax`;
 
     await TestBed.configureTestingModule({
       imports: [SiteHeaderComponent],
@@ -28,6 +31,7 @@ describe('SiteHeaderComponent', () => {
   afterEach(() => {
     globalThis.localStorage.clear();
     globalThis.sessionStorage.clear();
+    globalThis.document.cookie = `${identityLanguageCookie}=; Path=/; Max-Age=0; SameSite=Lax`;
   });
 
   it('toggles the desktop theme menu and selects a theme', () => {
