@@ -67,10 +67,12 @@ describe('SiteFooterComponent', () => {
       'ChatPDM',
       'DBF',
       'CIM',
+      'About',
       'Soruklu surname',
       'Soruklu Order',
       'Velari',
       'Contact',
+      'Press / Media',
     ]);
     expect(nativeElement.textContent).toContain(`© ${currentYear} Serhat Soruklu.`);
   });
@@ -93,11 +95,12 @@ describe('SiteFooterComponent', () => {
       '/systems/continuity-identity-model',
     ]);
     expect(component.identityLinks.map((link) => link.path)).toEqual([
+      '/about',
       '/soruklu-surname',
       '/soruklu-order',
       '/velari',
     ]);
-    expect(component.reachLinks.map((link) => link.path)).toEqual(['/contact']);
+    expect(component.reachLinks.map((link) => link.path)).toEqual(['/contact', '/press']);
   });
 
   it('uses static inline SVG icon paths for footer groups', () => {

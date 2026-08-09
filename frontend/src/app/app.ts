@@ -1,4 +1,4 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser, ViewportScroller } from '@angular/common';
 import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -19,6 +19,7 @@ export class App {
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly router = inject(Router);
   private readonly themeService = inject(ThemeService);
+  private readonly viewportScroller = inject(ViewportScroller);
   readonly isHomeRoute = toSignal(
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd),
@@ -43,6 +44,14 @@ export class App {
     ),
     { initialValue: this.isSystemsAtmosphereUrl(this.currentLocationPath()) },
   );
+  readonly usesAboutAtmosphere = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event) => this.isAboutAtmosphereUrl(event.urlAfterRedirects)),
+      startWith(this.isAboutAtmosphereUrl(this.currentLocationPath())),
+    ),
+    { initialValue: this.isAboutAtmosphereUrl(this.currentLocationPath()) },
+  );
   readonly usesContactAtmosphere = toSignal(
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd),
@@ -50,6 +59,14 @@ export class App {
       startWith(this.isContactAtmosphereUrl(this.currentLocationPath())),
     ),
     { initialValue: this.isContactAtmosphereUrl(this.currentLocationPath()) },
+  );
+  readonly usesPressAtmosphere = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event) => this.isPressAtmosphereUrl(event.urlAfterRedirects)),
+      startWith(this.isPressAtmosphereUrl(this.currentLocationPath())),
+    ),
+    { initialValue: this.isPressAtmosphereUrl(this.currentLocationPath()) },
   );
   readonly usesOrderAtmosphere = toSignal(
     this.router.events.pipe(
@@ -78,6 +95,7 @@ export class App {
 
   constructor() {
     this.themeService.setting();
+    this.viewportScroller.setOffset([0, 120]);
     this.disableNativeScrollRestoration();
   }
 
@@ -106,8 +124,16 @@ export class App {
     return url.split(/[?#]/)[0] === '/systems';
   }
 
+  private isAboutAtmosphereUrl(url: string): boolean {
+    return url.split(/[?#]/)[0] === '/about';
+  }
+
   private isContactAtmosphereUrl(url: string): boolean {
     return url.split(/[?#]/)[0] === '/contact';
+  }
+
+  private isPressAtmosphereUrl(url: string): boolean {
+    return url.split(/[?#]/)[0] === '/press';
   }
 
   private isOrderAtmosphereUrl(url: string): boolean {

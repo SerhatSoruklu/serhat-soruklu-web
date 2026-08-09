@@ -1,6 +1,7 @@
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { environment } from '../../../environments/environment';
 import { CONTACT_REQUEST_TIMEOUT_MS, ContactComponent } from './contact.component';
@@ -13,7 +14,8 @@ describe('ContactComponent', () => {
       imports: [ContactComponent],
       providers: [
         provideHttpClient(),
-        provideHttpClientTesting()
+        provideHttpClientTesting(),
+        provideRouter([])
       ]
     }).compileComponents();
 
@@ -39,6 +41,31 @@ describe('ContactComponent', () => {
     expect(compiled.querySelector('textarea[formControlName="message"]')).toBeTruthy();
     expect(compiled.querySelector('form')?.textContent).not.toContain('\\n');
     expect(submitButton?.disabled).toBe(true);
+  });
+
+  it('links journalists to press resources and offers a dedicated media enquiry topic', () => {
+    const fixture = TestBed.createComponent(ContactComponent);
+    fixture.detectChanges();
+
+    const callout = (fixture.nativeElement as HTMLElement).querySelector<HTMLElement>(
+      '.contact-press-callout',
+    );
+    const link = callout?.querySelector<HTMLAnchorElement>('a');
+
+    expect(callout?.querySelector('h2')?.textContent?.trim()).toBe(
+      'Working on a story or fact check?',
+    );
+    expect(callout?.textContent).toContain(
+      'Verified biographies, company facts, images and public verification links',
+    );
+    expect(link?.getAttribute('href')).toBe('/press');
+    expect(
+      fixture.componentInstance.topics.find((topic) => topic.label === 'Press / media enquiry'),
+    ).toEqual(
+      expect.objectContaining({
+        note: 'Interviews, fact checks, publication permissions, and media requests.',
+      }),
+    );
   });
 
   it('keeps required free-text fields invalid when they contain only whitespace', async () => {

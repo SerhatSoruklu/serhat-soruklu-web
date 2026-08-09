@@ -1,0 +1,357 @@
+.cdk-overlay-pane.serhat-about-profile-dialog-panel {
+  max-width: calc(100vw - 40px) !important;
+}
+
+.serhat-about-profile-dialog-panel .mat-mdc-dialog-surface {
+  overflow: hidden;
+  border: 1px solid rgba(214, 168, 79, 0.34);
+  border-radius: 22px;
+  background: #0b0e14;
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.62),
+    0 0 0 1px rgba(245, 247, 250, 0.025);
+}
+
+.serhat-about-profile-dialog-backdrop {
+  background: rgba(2, 4, 8, 0.84);
+  backdrop-filter: blur(8px);
+}
+
+.about-profile-dialog {
+  position: relative;
+  display: grid;
+  max-height: calc(100dvh - 40px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  background:
+    radial-gradient(circle at 14% 8%, rgba(214, 168, 79, 0.1), transparent 34%),
+    linear-gradient(150deg, #0b0e14 0%, #10141c 100%);
+  color: #f5f7fa;
+  scrollbar-color: rgba(214, 168, 79, 0.5) transparent;
+}
+
+.about-profile-dialog__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 5;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(245, 247, 250, 0.2);
+  border-radius: 50%;
+  background: rgba(7, 9, 13, 0.8);
+  color: #f5f7fa;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.about-profile-dialog__close app-path-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.about-profile-dialog__close:focus-visible {
+  border-color: #f0d58c;
+  outline: 2px solid #f0d58c;
+  outline-offset: 3px;
+}
+
+.about-profile-dialog__media {
+  position: relative;
+  min-height: min(66dvh, 650px);
+  overflow: hidden;
+  border-bottom: 1px solid #252b36;
+  background: #07090d;
+}
+
+.about-profile-dialog__media::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 34%;
+  background: linear-gradient(180deg, transparent, rgba(7, 9, 13, 0.42));
+  content: '';
+  pointer-events: none;
+}
+
+.about-profile-dialog__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  object-fit: contain;
+  object-position: 50% 50%;
+}
+
+.about-profile-dialog__content {
+  display: flex;
+  flex-direction: column;
+  padding: 34px 24px 30px;
+}
+
+.about-profile-dialog__eyebrow {
+  margin: 0 0 16px;
+  color: #d6a84f;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.5;
+}
+
+.about-profile-dialog__title {
+  margin: 0;
+  color: #f5f7fa;
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(2rem, 9vw, 3.5rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.about-profile-dialog__summary {
+  max-width: 46rem;
+  margin: 20px 0 0;
+  color: #a8b0bd;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.about-profile-dialog__details {
+  display: grid;
+  gap: 0;
+  margin: 30px 0 0;
+  border-top: 1px solid #252b36;
+}
+
+.about-profile-dialog__details div {
+  display: grid;
+  grid-template-columns: minmax(88px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  padding: 14px 0;
+  border-bottom: 1px solid #252b36;
+}
+
+.about-profile-dialog__details dt,
+.about-profile-dialog__details dd {
+  min-width: 0;
+  margin: 0;
+}
+
+.about-profile-dialog__details dt {
+  color: #7f8896;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  line-height: 1.55;
+  text-transform: uppercase;
+}
+
+.about-profile-dialog__details dd {
+  color: #f5f7fa;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.about-profile-dialog__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-profile-dialog__chips li {
+  padding: 7px 10px;
+  border: 1px solid rgba(214, 168, 79, 0.25);
+  border-radius: 999px;
+  background: rgba(214, 168, 79, 0.07);
+  color: #f0d58c;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
+}
+
+.about-profile-dialog__action {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 30px;
+  padding: 0 18px;
+  border: 1px solid #d6a84f;
+  border-radius: 10px;
+  background: rgba(214, 168, 79, 0.1);
+  color: #f5f7fa;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.about-profile-dialog__action app-path-icon {
+  width: 19px;
+  height: 19px;
+  transition: transform 160ms ease;
+}
+
+.about-profile-dialog__action:focus-visible {
+  outline: 2px solid #f0d58c;
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .about-profile-dialog__close:hover {
+    border-color: #d6a84f;
+    background: rgba(214, 168, 79, 0.12);
+    color: #f0d58c;
+    transform: rotate(4deg);
+  }
+
+  .about-profile-dialog__action:hover {
+    background: rgba(214, 168, 79, 0.16);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.24);
+    transform: translateY(-2px);
+  }
+
+  .about-profile-dialog__action:hover app-path-icon {
+    transform: translate(2px, -2px);
+  }
+}
+
+@media (min-width: 768px) {
+  .about-profile-dialog__content {
+    padding: 42px 38px 38px;
+  }
+
+  .about-profile-dialog__details {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+
+  .about-profile-dialog__details div {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-profile-dialog {
+    grid-template-columns: minmax(0, 1.03fr) minmax(420px, 0.97fr);
+    min-height: min(760px, calc(100dvh - 40px));
+    overflow: hidden;
+  }
+
+  .about-profile-dialog__media {
+    min-height: 0;
+    border-right: 1px solid #252b36;
+    border-bottom: 0;
+  }
+
+  .about-profile-dialog__content {
+    min-height: 0;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 62px 48px 44px;
+  }
+
+  .about-profile-dialog__title {
+    font-size: clamp(2.75rem, 4vw, 4.5rem);
+  }
+}
+
+.theme-resolved-light .serhat-about-profile-dialog-panel .mat-mdc-dialog-surface {
+  border-color: rgba(184, 135, 47, 0.34);
+  background: #f8f7f3;
+  box-shadow:
+    0 30px 90px rgba(17, 24, 39, 0.22),
+    0 0 0 1px rgba(17, 24, 39, 0.04);
+}
+
+.theme-resolved-light .serhat-about-profile-dialog-backdrop {
+  background: rgba(17, 24, 39, 0.56);
+}
+
+.theme-resolved-light .about-profile-dialog {
+  background:
+    radial-gradient(circle at 14% 8%, rgba(184, 135, 47, 0.1), transparent 34%),
+    linear-gradient(150deg, #ffffff 0%, #f8f7f3 100%);
+  color: #111827;
+}
+
+.theme-resolved-light .about-profile-dialog__close {
+  border-color: rgba(17, 24, 39, 0.16);
+  background: rgba(255, 255, 255, 0.86);
+  color: #111827;
+}
+
+.theme-resolved-light .about-profile-dialog__media {
+  border-color: #e5e0d6;
+  background: #eef0f2;
+}
+
+.theme-resolved-light .about-profile-dialog__media::after {
+  background: linear-gradient(180deg, transparent, rgba(17, 24, 39, 0.12));
+}
+
+.theme-resolved-light .about-profile-dialog__eyebrow {
+  color: #815b1c;
+}
+
+.theme-resolved-light .about-profile-dialog__title,
+.theme-resolved-light .about-profile-dialog__details dd {
+  color: #111827;
+}
+
+.theme-resolved-light .about-profile-dialog__summary,
+.theme-resolved-light .about-profile-dialog__details dt {
+  color: #5f6673;
+}
+
+.theme-resolved-light .about-profile-dialog__details,
+.theme-resolved-light .about-profile-dialog__details div {
+  border-color: #e5e0d6;
+}
+
+.theme-resolved-light .about-profile-dialog__chips li {
+  border-color: rgba(184, 135, 47, 0.28);
+  background: rgba(184, 135, 47, 0.08);
+  color: #815b1c;
+}
+
+.theme-resolved-light .about-profile-dialog__action {
+  border-color: #b8872f;
+  background: rgba(184, 135, 47, 0.08);
+  color: #111827;
+}
+
+.theme-resolved-light .about-profile-dialog__close:focus-visible,
+.theme-resolved-light .about-profile-dialog__action:focus-visible {
+  outline-color: #815b1c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-profile-dialog__close,
+  .about-profile-dialog__action,
+  .about-profile-dialog__action app-path-icon {
+    transition: none;
+  }
+}

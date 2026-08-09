@@ -14,10 +14,15 @@ import {
   mdiShieldCheckOutline,
   mdiSitemapOutline,
   mdiTransitConnectionVariant,
-  mdiWeb
+  mdiWeb,
 } from '@mdi/js';
 
 import { ThemeService } from '../../../core/theme/theme.service';
+import {
+  FOUNDER_PORTRAIT_HEIGHT,
+  FOUNDER_PORTRAITS,
+  FOUNDER_PORTRAIT_WIDTH,
+} from '../../portraits/founder-portrait.config';
 import { PortraitDialogChip, PortraitDialogFocusPoint } from './portrait-dialog.types';
 
 @Component({
@@ -25,7 +30,7 @@ import { PortraitDialogChip, PortraitDialogFocusPoint } from './portrait-dialog.
   imports: [MatIconModule, NgClass],
   templateUrl: './portrait-dialog.component.html',
   styleUrl: './portrait-dialog.component.css',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class PortraitDialogComponent {
   private readonly dialogRef = inject<MatDialogRef<PortraitDialogComponent>>(MatDialogRef);
@@ -34,16 +39,19 @@ export class PortraitDialogComponent {
 
   readonly themeService = inject(ThemeService);
   readonly isLightPortrait = computed(() => this.themeService.resolvedTheme() === 'light');
+  readonly portrait = computed(() => FOUNDER_PORTRAITS[this.themeService.resolvedTheme()]);
+  readonly portraitHeight = FOUNDER_PORTRAIT_HEIGHT;
+  readonly portraitWidth = FOUNDER_PORTRAIT_WIDTH;
   readonly focusPoints: PortraitDialogFocusPoint[] = [
     { label: 'deterministic architecture', icon: 'portrait-architecture' },
     { label: 'operational clarity', icon: 'portrait-clarity' },
     { label: 'infrastructure ownership', icon: 'portrait-infrastructure' },
     { label: 'scalable web platforms', icon: 'portrait-platforms' },
-    { label: 'safe system behavior', icon: 'portrait-safety' }
+    { label: 'safe system behavior', icon: 'portrait-safety' },
   ];
   readonly currentSystems: PortraitDialogChip[] = [
     { label: 'Coupyn.com', href: 'https://coupyn.com', icon: 'portrait-domain' },
-    { label: 'ChatPDM.com', href: 'https://chatpdm.com', icon: 'portrait-domain' }
+    { label: 'ChatPDM.com', href: 'https://chatpdm.com', icon: 'portrait-domain' },
   ];
   readonly chips: PortraitDialogChip[] = [
     { label: 'Angular', icon: 'portrait-code' },
@@ -51,7 +59,7 @@ export class PortraitDialogComponent {
     { label: 'MongoDB', icon: 'portrait-database' },
     { label: 'OVH', icon: 'portrait-server' },
     { label: 'SSR', icon: 'portrait-platforms' },
-    { label: 'SEO', icon: 'portrait-seo' }
+    { label: 'SEO', icon: 'portrait-seo' },
   ];
 
   constructor() {
@@ -76,13 +84,15 @@ export class PortraitDialogComponent {
       'portrait-rocket': mdiRocketLaunchOutline,
       'portrait-safety': mdiShieldCheckOutline,
       'portrait-server': mdiServerNetwork,
-      'portrait-seo': mdiMagnifyScan
+      'portrait-seo': mdiMagnifyScan,
     };
 
     for (const [name, path] of Object.entries(icons)) {
       this.iconRegistry.addSvgIconLiteral(
         name,
-        this.sanitizer.bypassSecurityTrustHtml(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"><path d="${path}"/></svg>`) // NOSONAR: icon paths are compile-time constants from @mdi/js, not user input.
+        this.sanitizer.bypassSecurityTrustHtml(
+          `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"><path d="${path}"/></svg>`,
+        ), // NOSONAR: icon paths are compile-time constants from @mdi/js, not user input.
       );
     }
   }

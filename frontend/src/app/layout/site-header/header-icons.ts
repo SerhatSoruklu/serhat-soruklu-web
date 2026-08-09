@@ -54,6 +54,7 @@ export const HEADER_NAV_ITEMS: HeaderNavItem[] = [
 ];
 
 export const HEADER_IDENTITY_ITEMS: HeaderIdentityItem[] = [
+  { label: 'About', path: '/about' },
   { label: 'Soruklu Surname', path: '/soruklu-surname' },
   { label: 'Soruklu Order', path: '/soruklu-order' },
   { label: 'Velari', path: '/velari' },
@@ -64,7 +65,7 @@ export const HEADER_IDENTITY_NAVIGATION: Record<'en' | 'tr', HeaderIdentityNavig
     availabilityNote:
       'Only Identity pages have a Turkish translation. The rest of the site is in English.',
     label: 'Identity',
-    note: 'Surname · Order · Velari',
+    note: 'About · Surname · Order · Velari',
     routesAriaLabel: 'Identity routes',
     routesHeading: 'Identity routes',
     triggerAriaLabel: 'Explore identity pages',
@@ -74,11 +75,12 @@ export const HEADER_IDENTITY_NAVIGATION: Record<'en' | 'tr', HeaderIdentityNavig
     availabilityNote:
       'Şu anda yalnızca Kimlik sayfalarının Türkçe çevirisi var. Sitenin geri kalanı İngilizcedir.',
     label: 'Kimlik',
-    note: 'Soyadı · Order · Velari',
+    note: 'Hakkında · Soyadı · Order · Velari',
     routesAriaLabel: 'Kimlik sayfaları',
     routesHeading: 'Kimlik sayfaları',
     triggerAriaLabel: 'Kimlik sayfalarını keşfedin',
     items: [
+      { label: 'Hakkında', path: '/about' },
       { label: 'Soruklu Soyadı', path: '/soruklu-surname' },
       { label: 'Soruklu Order', path: '/soruklu-order' },
       { label: 'Velari', path: '/velari' },

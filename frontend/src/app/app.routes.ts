@@ -88,6 +88,14 @@ export const routes: Routes = [
     },
   },
   {
+    path: 'about',
+    loadComponent: () =>
+      import('./pages/about/about.component').then((component) => component.AboutComponent),
+    data: {
+      seo: pageSeoMetadata.about,
+    },
+  },
+  {
     path: 'soruklu-surname',
     loadComponent: () =>
       import('./pages/soruklu-surname/soruklu-surname.component').then(
@@ -121,6 +129,14 @@ export const routes: Routes = [
       import('./pages/contact/contact.component').then((component) => component.ContactComponent),
     data: {
       seo: pageSeoMetadata.contact,
+    },
+  },
+  {
+    path: 'press',
+    loadComponent: () =>
+      import('./pages/press/press.component').then((component) => component.PressComponent),
+    data: {
+      seo: pageSeoMetadata.press,
     },
   },
   {

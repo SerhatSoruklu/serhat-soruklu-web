@@ -5,7 +5,6 @@ import { mdiCursorDefaultClickOutline } from '@mdi/js';
 import { siX } from 'simple-icons';
 
 import { IdentityLanguageService } from '../../core/identity/identity-language.service';
-import { pageSeoMetadata } from '../../core/seo/seo.config';
 import { SeoService } from '../../core/seo/seo.service';
 import { PathIconComponent } from '../../shared/icons/path-icon.component';
 import { orderContent } from './soruklu-order.content';
@@ -23,7 +22,7 @@ export class SorukluOrderComponent implements OnDestroy {
 
   readonly language = this.identityLanguage.language;
   readonly content = computed(() => orderContent[this.language()]);
-  readonly emblemPath = '/assets/brand/soruklu-order/the-soruklu-order-emblem.png';
+  readonly emblemPath = '/assets/brand/soruklu-order/the-soruklu-order-emblem.jpg';
   readonly officialXUrl = 'https://x.com/sorukluorder';
   readonly xIconPath = siX.path;
   readonly cursorClickIcon = mdiCursorDefaultClickOutline;
@@ -47,17 +46,11 @@ export class SorukluOrderComponent implements OnDestroy {
     const content = this.content();
 
     this.document.documentElement.lang = content.htmlLang;
-    this.seoService.setMetadata({
+    this.seoService.applyLocalizedIdentityRuntimeMetadata('soruklu-order', {
       title: content.seo.title,
       description: content.seo.description,
-      canonicalUrl: pageSeoMetadata.sorukluOrder.path,
-      ogImage: pageSeoMetadata.sorukluOrder.ogImage,
-      ogImageAlt: pageSeoMetadata.sorukluOrder.ogImageAlt,
-      ogImageHeight: pageSeoMetadata.sorukluOrder.ogImageHeight,
-      ogImageType: pageSeoMetadata.sorukluOrder.ogImageType,
-      ogImageWidth: pageSeoMetadata.sorukluOrder.ogImageWidth,
+      inLanguage: content.htmlLang,
       locale: this.language() === 'tr' ? 'tr_TR' : 'en_GB',
-      robots: 'index, follow',
     });
   }
 }

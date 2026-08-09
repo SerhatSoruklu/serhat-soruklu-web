@@ -6,7 +6,7 @@ import { installConsoleErrorGuard } from './support/console-errors';
 const canonicalBaseUrl = 'https://serhatsoruklu.com';
 const orderPath = '/soruklu-order';
 const officialXUrl = 'https://x.com/sorukluorder';
-const emblemPath = '/assets/brand/soruklu-order/the-soruklu-order-emblem.png';
+const emblemPath = '/assets/brand/soruklu-order/the-soruklu-order-emblem.jpg';
 const socialSourcePath = '/assets/social/serhat-soruklu-soruklu-order-og.svg';
 const velariPath = '/velari';
 const velariInstagramUrl = 'https://www.instagram.com/velarifaith/';
@@ -167,6 +167,10 @@ test.describe('identity routes', () => {
     const footer = page.locator('app-site-footer');
     const groupTitles = footer.locator('.site-footer__group-title');
     await expect(groupTitles).toHaveText(['Navigate', 'Systems', 'Identity', 'Reach Us']);
+    await expect(footer.getByRole('link', { name: 'About', exact: true })).toHaveAttribute(
+      'href',
+      '/about',
+    );
     await expect(footer.getByRole('link', { name: 'Soruklu Order', exact: true })).toHaveAttribute(
       'href',
       orderPath,
@@ -176,9 +180,15 @@ test.describe('identity routes', () => {
       '/velari',
     );
     await expect(
+      page.locator('.site-nav').getByRole('link', { name: 'About', exact: true }),
+    ).toHaveCount(0);
+    await expect(
       page.locator('.site-nav').getByRole('link', { name: 'Soruklu Order' }),
     ).toHaveCount(0);
     await expect(page.locator('.site-nav').getByRole('link', { name: 'Velari' })).toHaveCount(0);
+    await expect(
+      page.locator('.mobile-nav').getByRole('link', { name: 'About', exact: true }),
+    ).toHaveCount(0);
     await expect(
       page.locator('.mobile-nav').getByRole('link', { name: 'Soruklu Order' }),
     ).toHaveCount(0);
@@ -361,6 +371,7 @@ test.describe('identity routes', () => {
           '@type': 'Thing',
           name: 'The Soruklu Order',
           description: pageSeoMetadata.sorukluOrder.description,
+          inLanguage: 'en-GB',
         },
         isPartOf: { '@id': `${canonicalBaseUrl}/#website` },
         author: { '@id': `${canonicalBaseUrl}/#person` },

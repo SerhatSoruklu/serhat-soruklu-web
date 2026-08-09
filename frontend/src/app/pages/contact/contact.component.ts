@@ -10,6 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { RouterLink } from '@angular/router';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
@@ -23,6 +24,7 @@ import {
   mdiFormatListBulleted,
   mdiHandshakeOutline,
   mdiMessageTextOutline,
+  mdiNewspaperVariantOutline,
   mdiSendOutline,
   mdiServerNetwork,
   mdiShieldCheckOutline,
@@ -133,7 +135,7 @@ interface MessageResizeState {
 
 @Component({
   selector: 'app-contact',
-  imports: [MatIconModule, MatProgressSpinnerModule, ReactiveFormsModule],
+  imports: [MatIconModule, MatProgressSpinnerModule, ReactiveFormsModule, RouterLink],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css'
 })
@@ -199,6 +201,13 @@ export class ContactComponent {
       messageHint: '20 to 2000 characters. Mention context, timeline, role, and a practical next step.',
       messagePlaceholder: 'Describe the collaboration context, timing, role, and what a useful next step is.',
       icon: 'contact-topic-collab'
+    },
+    {
+      label: 'Press / media enquiry',
+      note: 'Interviews, fact checks, publication permissions, and media requests.',
+      messageHint: '20 to 2000 characters. Mention the publication, deadline, request, and intended use.',
+      messagePlaceholder: 'Describe the publication, deadline, interview or fact-check request, and intended use.',
+      icon: 'contact-topic-press'
     },
     {
       label: 'Other',
@@ -651,6 +660,7 @@ export class ContactComponent {
       'contact-topic-infra': mdiServerNetwork,
       'contact-topic-message': mdiMessageTextOutline,
       'contact-topic-other': mdiFormatListBulleted,
+      'contact-topic-press': mdiNewspaperVariantOutline,
       'contact-topic-product': mdiBriefcaseOutline,
       'contact-topic-shield': mdiShieldCheckOutline,
       'contact-topic-systems': mdiSitemapOutline,

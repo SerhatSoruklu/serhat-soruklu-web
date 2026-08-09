@@ -60,7 +60,7 @@ export class GitHubComponent {
       category: 'Research system / DBF',
       title: 'Deterministic Boundary Firewall',
       description:
-        'A boundary-enforcement model for checking claims before egress, refusing unsupported transitions, and preserving deterministic behaviour across tool boundaries.',
+        'A bounded pre-egress phrase-and-pattern gate that checks configured tripwires before model or tool calls and returns deterministic refusal payloads.',
       technologies: ['Python', 'Boundary enforcement', 'Refusal-safe'],
       githubUrl: 'https://github.com/SerhatSoruklu/deterministic-boundary-firewall',
       systemPath: '/systems/deterministic-boundary-firewall',

@@ -1,0 +1,313 @@
+<div class="about-page" [attr.lang]="content().htmlLang">
+  <section class="about-hero layout-section" aria-labelledby="about-title">
+    <div class="about-frame about-hero__inner">
+      <div class="about-hero__copy">
+        <div class="about-hero__topline">
+          <p class="about-eyebrow">{{ content().hero.eyebrow }}</p>
+          <button
+            class="about-language-switch"
+            type="button"
+            [attr.aria-label]="content().switchAriaLabel"
+            data-testid="about-language-switch"
+            (click)="toggleLanguage()"
+          >
+            <span class="about-language-switch__flag" aria-hidden="true">
+              @if (language() === 'en') {
+                <svg viewBox="0 0 30 20" focusable="false">
+                  <rect width="30" height="20" rx="2" fill="#d81e34"></rect>
+                  <circle cx="12" cy="10" r="5.2" fill="#ffffff"></circle>
+                  <circle cx="13.7" cy="10" r="4.2" fill="#d81e34"></circle>
+                  <path
+                    d="m19.3 7.2.7 1.9 2-.1-1.6 1.2.7 1.9-1.7-1.1-1.6 1.2.5-2-1.7-1.1 2 .1Z"
+                    fill="#ffffff"
+                  ></path>
+                </svg>
+              } @else {
+                <svg viewBox="0 0 30 20" focusable="false">
+                  <rect width="30" height="20" rx="2" fill="#173b74"></rect>
+                  <path d="M0 0 30 20M30 0 0 20" stroke="#ffffff" stroke-width="4"></path>
+                  <path d="M0 0 30 20M30 0 0 20" stroke="#c8102e" stroke-width="1.8"></path>
+                  <path d="M15 0v20M0 10h30" stroke="#ffffff" stroke-width="6"></path>
+                  <path d="M15 0v20M0 10h30" stroke="#c8102e" stroke-width="3.2"></path>
+                </svg>
+              }
+            </span>
+            <span>{{ content().switchLabel }}</span>
+            <app-path-icon
+              class="about-language-switch__click-icon"
+              name="about-language-cursor-click"
+              [path]="iconPaths.click"
+            />
+          </button>
+        </div>
+
+        <h1 id="about-title">{{ content().hero.title }}</h1>
+        <p class="about-hero__role">{{ content().hero.role }}</p>
+        <p class="about-hero__lead">{{ content().hero.lead }}</p>
+        <p class="about-hero__supporting">{{ content().hero.supporting }}</p>
+
+        <div class="about-route" [attr.aria-label]="content().hero.routeLabel">
+          <span>Osmancık</span>
+          <span class="about-route__line" aria-hidden="true"><i></i></span>
+          <span>Tottenham</span>
+          <span class="about-route__line" aria-hidden="true"><i></i></span>
+          <span>Coupyn</span>
+        </div>
+
+        <dl
+          class="about-hero__facts"
+          [attr.aria-label]="content().hero.factsLabel"
+          data-testid="about-profile-facts"
+        >
+          @for (fact of content().hero.facts; track fact.label) {
+            <div>
+              <dt>{{ fact.label }}</dt>
+              <dd>{{ fact.value }}</dd>
+            </div>
+          }
+        </dl>
+      </div>
+
+      <figure class="about-portrait">
+        <button
+          class="about-portrait__trigger"
+          type="button"
+          aria-haspopup="dialog"
+          data-testid="about-portrait-trigger"
+          (click)="openProfileDialog()"
+        >
+          <span class="about-portrait__index" aria-hidden="true">SS / 1996</span>
+          <img
+            [src]="portraitPath"
+            [alt]="content().hero.portraitAlt"
+            width="1173"
+            height="1341"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+          <span class="about-portrait__action">
+            <span>{{ content().hero.portraitAction }}</span>
+            <app-path-icon name="about-portrait-arrow" [path]="iconPaths.arrow" />
+          </span>
+        </button>
+      </figure>
+    </div>
+  </section>
+
+  <nav class="about-chapters layout-section" [attr.aria-label]="content().chapters.label">
+    <div class="about-frame">
+      <p class="about-eyebrow">{{ content().chapters.eyebrow }}</p>
+      <ol>
+        @for (chapter of content().chapters.items; track chapter.id) {
+          <li>
+            <a [routerLink]="['/about']" [fragment]="chapter.id">
+              <span aria-hidden="true">{{ chapter.number }}</span>
+              <strong>{{ chapter.label }}</strong>
+              <span class="about-chapters__arrow" aria-hidden="true">↓</span>
+            </a>
+          </li>
+        }
+      </ol>
+    </div>
+  </nav>
+
+  <ol class="about-history" [attr.aria-label]="content().chapters.label">
+    @for (chapter of content().history; track chapter.id) {
+      <li>
+        <section
+          [id]="chapter.id"
+          class="about-section layout-section"
+          [attr.aria-labelledby]="chapter.id + '-title'"
+        >
+          <div class="about-frame about-chapter">
+            <header class="about-section-heading">
+              <p class="about-eyebrow">{{ chapter.kicker }}</p>
+              <h2 [id]="chapter.id + '-title'">{{ chapter.heading }}</h2>
+            </header>
+            <div class="about-prose">
+              @for (paragraph of chapter.paragraphs; track $index) {
+                <p>{{ paragraph }}</p>
+              }
+              @if (chapter.calloutLabel) {
+                <aside class="about-anecdote">
+                  <span>{{ chapter.calloutLabel }}</span>
+                  <strong>{{ chapter.calloutMetric }}</strong>
+                </aside>
+              }
+              @if (chapter.callout) {
+                <blockquote>{{ chapter.callout }}</blockquote>
+              }
+            </div>
+          </div>
+        </section>
+      </li>
+    }
+  </ol>
+
+  <section
+    id="coupyn"
+    class="about-section about-section--coupyn layout-section"
+    aria-labelledby="about-coupyn-title"
+  >
+    <div class="about-frame about-coupyn">
+      <div class="about-coupyn__copy">
+        <header class="about-section-heading">
+          <p class="about-eyebrow">{{ content().coupyn.kicker }}</p>
+          <h2 id="about-coupyn-title">{{ content().coupyn.heading }}</h2>
+        </header>
+        <div class="about-prose">
+          @for (paragraph of content().coupyn.paragraphs; track $index) {
+            <p>{{ paragraph }}</p>
+          }
+        </div>
+        <div class="about-actions">
+          <a class="about-action about-action--primary" routerLink="/systems/coupyn">
+            <span>{{ content().coupyn.internalAction }}</span>
+            <app-path-icon name="about-coupyn-arrow" [path]="iconPaths.arrow" />
+          </a>
+          <a
+            class="about-action"
+            href="https://coupyn.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            [attr.aria-label]="content().coupyn.externalAriaLabel"
+          >
+            <span>{{ content().coupyn.externalAction }}</span>
+            <app-path-icon name="about-coupyn-external" [path]="iconPaths.external" />
+          </a>
+        </div>
+      </div>
+      <aside class="about-scale" [attr.aria-label]="content().coupyn.scaleAriaLabel">
+        <span>{{ content().coupyn.scaleLabel }}</span>
+        <strong>{{ content().coupyn.scaleValue }}</strong>
+        <p>{{ content().coupyn.scaleDetail }}</p>
+        <div aria-hidden="true">
+          @for (item of [1, 2, 3, 4, 5, 6, 7]; track item) {
+            <i></i>
+          }
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="systems" class="about-section layout-section" aria-labelledby="about-systems-title">
+    <div class="about-frame">
+      <header class="about-section-heading about-section-heading--wide">
+        <div>
+          <p class="about-eyebrow">{{ content().systems.kicker }}</p>
+          <h2 id="about-systems-title">{{ content().systems.heading }}</h2>
+        </div>
+        <p>{{ content().systems.introduction }}</p>
+      </header>
+
+      <div class="about-systems">
+        @for (system of content().systems.cards; track system.title) {
+          <article class="about-system-card">
+            <span class="about-system-card__index" aria-hidden="true">{{ system.index }}</span>
+            <h3>{{ system.title }}</h3>
+            <p>{{ system.description }}</p>
+            @if (system.path) {
+              <a [routerLink]="system.path">
+                <span>{{ content().systems.openAction }}</span>
+                <app-path-icon name="about-system-arrow" [path]="iconPaths.arrow" />
+              </a>
+            } @else if (system.externalUrl) {
+              <a
+                [href]="system.externalUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                [attr.aria-label]="content().systems.externalAriaLabel"
+              >
+                <span>{{ content().systems.externalAction }}</span>
+                <app-path-icon name="about-system-external" [path]="iconPaths.external" />
+              </a>
+            }
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section
+    id="principles"
+    class="about-section about-section--surface layout-section"
+    aria-labelledby="about-principles-title"
+  >
+    <div class="about-frame">
+      <header class="about-section-heading about-section-heading--wide">
+        <div>
+          <p class="about-eyebrow">{{ content().principles.kicker }}</p>
+          <h2 id="about-principles-title">{{ content().principles.heading }}</h2>
+        </div>
+      </header>
+      <ol class="about-principles">
+        @for (principle of content().principles.cards; track principle.index) {
+          <li>
+            <article>
+              <span aria-hidden="true">{{ principle.index }}</span>
+              <h3>{{ principle.title }}</h3>
+              <p>{{ principle.description }}</p>
+            </article>
+          </li>
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section
+    id="public-identity"
+    class="about-section layout-section"
+    aria-labelledby="about-public-identity-title"
+  >
+    <div class="about-frame about-public-identity">
+      <header class="about-section-heading">
+        <p class="about-eyebrow">{{ content().publicIdentity.kicker }}</p>
+        <h2 id="about-public-identity-title">{{ content().publicIdentity.heading }}</h2>
+        <p>{{ content().publicIdentity.introduction }}</p>
+      </header>
+      <ul class="about-profiles" [attr.aria-label]="content().publicIdentity.linksLabel">
+        @for (profile of profiles; track profile.url) {
+          <li>
+            <a
+              [href]="profile.url"
+              target="_blank"
+              [attr.rel]="profile.personal ? 'me noopener noreferrer' : 'noopener noreferrer'"
+              [attr.aria-label]="profile.label + content().publicIdentity.linkAriaSuffix"
+            >
+              <app-path-icon [name]="'about-profile-' + profile.label" [path]="profile.icon" />
+              <span>{{ profile.label }}</span>
+              <app-path-icon
+                class="about-profiles__external"
+                name="about-profile-external"
+                [path]="iconPaths.external"
+              />
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="about-closing layout-section" aria-labelledby="about-closing-title">
+    <div class="about-frame about-closing__inner">
+      <p class="about-eyebrow">{{ content().closing.kicker }}</p>
+      <h2 id="about-closing-title">{{ content().closing.heading }}</h2>
+      <p>{{ content().closing.paragraph }}</p>
+      <div class="about-actions about-actions--closing">
+        <a class="about-action about-action--primary" routerLink="/work">
+          <span>{{ content().closing.workAction }}</span>
+          <app-path-icon name="about-work-arrow" [path]="iconPaths.arrow" />
+        </a>
+        <a class="about-action" routerLink="/systems">
+          <span>{{ content().closing.systemsAction }}</span>
+          <app-path-icon name="about-systems-arrow" [path]="iconPaths.arrow" />
+        </a>
+        <a class="about-action" routerLink="/contact">
+          <span>{{ content().closing.contactAction }}</span>
+          <app-path-icon name="about-contact-arrow" [path]="iconPaths.arrow" />
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,410 @@
+<div class="press-page" lang="en-GB">
+  <section class="press-hero layout-section" aria-labelledby="press-title">
+    <div class="press-frame press-hero__inner">
+      <div class="press-hero__copy">
+        <p class="press-eyebrow">{{ content.hero.eyebrow }}</p>
+        <h1 id="press-title">{{ content.hero.title }}</h1>
+        <p class="press-hero__lead">{{ content.hero.lead }}</p>
+        <p class="press-hero__supporting">{{ content.hero.supporting }}</p>
+
+        <div class="press-actions" aria-label="Press page actions">
+          <a class="press-action press-action--primary" routerLink="/contact">
+            <span>Media enquiries</span>
+            <span aria-hidden="true">→</span>
+          </a>
+          <a class="press-action" routerLink="/about">
+            <span>Full biography</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <a class="press-hero__anchor" [routerLink]="['/press']" fragment="founder-photography">
+          <span>View founder photography</span>
+          <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+
+      <aside class="press-dossier" aria-label="Press reference dossier">
+        <div class="press-dossier__topline">
+          <span>{{ content.hero.dossierLabel }}</span>
+          <strong>{{ content.hero.dossierId }}</strong>
+        </div>
+        <dl>
+          @for (item of content.hero.dossierItems; track item.label) {
+            <div>
+              <dt>{{ item.label }}</dt>
+              <dd>{{ item.value }}</dd>
+            </div>
+          }
+        </dl>
+        <p>
+          <span aria-hidden="true">✓</span>
+          Facts and source boundaries are stated explicitly.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="press-section press-facts layout-section" aria-labelledby="press-facts-title">
+    <div class="press-frame">
+      <header class="press-heading press-heading--wide">
+        <div>
+          <p class="press-eyebrow">02 / QUICK FACTS</p>
+          <h2 id="press-facts-title">Quick facts</h2>
+        </div>
+        <p>Approved first-party facts for concise reference and fact checking.</p>
+      </header>
+
+      <div class="press-fact-grid">
+        @for (sheet of content.factSheets; track sheet.title) {
+          <article class="press-fact-sheet">
+            <header>
+              <span aria-hidden="true">{{ sheet.index }}</span>
+              <h3>{{ sheet.title }}</h3>
+            </header>
+            <dl>
+              @for (fact of sheet.facts; track fact.label) {
+                <div>
+                  <dt>{{ fact.label }}</dt>
+                  <dd>
+                    @if (fact.url) {
+                      <a
+                        [href]="fact.url"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        [attr.aria-label]="fact.value + ' — opens in a new tab'"
+                      >
+                        {{ fact.value }}
+                        <span aria-hidden="true">↗</span>
+                      </a>
+                    } @else {
+                      {{ fact.value }}
+                    }
+                  </dd>
+                </div>
+              }
+            </dl>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="press-section press-bios layout-section" aria-labelledby="press-bios-title">
+    <div class="press-frame">
+      <header class="press-heading press-heading--wide">
+        <div>
+          <p class="press-eyebrow">03 / BIOGRAPHIES</p>
+          <h2 id="press-bios-title">Approved biographies</h2>
+        </div>
+        <p>
+          Short first-party biographies for reference. For a complete account, see the full About
+          page.
+        </p>
+      </header>
+
+      <div class="press-bio-grid">
+        @for (biography of content.biographies; track biography.label) {
+          <article class="press-bio-card">
+            <h3 class="press-bio-card__label">{{ biography.label }}</h3>
+            <p>{{ biography.text }}</p>
+          </article>
+        }
+      </div>
+
+      <a class="press-inline-link" routerLink="/about">
+        <span>Read full biography</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section
+    id="founder-photography"
+    class="press-section press-photography layout-section"
+    aria-labelledby="press-photography-title"
+  >
+    <div class="press-frame">
+      <header class="press-heading press-heading--wide">
+        <div>
+          <p class="press-eyebrow">04 / FOUNDER PHOTOGRAPHY</p>
+          <h2 id="press-photography-title">Founder photography</h2>
+        </div>
+        <p>
+          A high-resolution portrait and clearly labelled AI-assisted founder photographs for
+          reference and media enquiries.
+        </p>
+      </header>
+
+      <ul class="press-asset-grid" aria-label="Founder photography assets">
+        @for (asset of content.photography; track asset.src) {
+          <li>
+            <article class="press-asset-card">
+              <figure>
+                <div
+                  class="press-asset-card__preview"
+                  [class.press-asset-card__preview--portrait]="asset.height > asset.width"
+                >
+                  <img
+                    [src]="asset.src"
+                    [alt]="asset.alt"
+                    [attr.width]="asset.width"
+                    [attr.height]="asset.height"
+                    loading="lazy"
+                    decoding="async"
+                    fetchpriority="low"
+                  />
+                  <span>{{ asset.assetLabel }}</span>
+                </div>
+                <figcaption>
+                  <h3>{{ asset.title }}</h3>
+                  <p>
+                    {{ asset.width }} × {{ asset.height }} · {{ asset.format }} ·
+                    {{ asset.fileSize }}
+                  </p>
+                  @if (asset.provenance) {
+                    <p class="press-asset-card__provenance">{{ asset.provenance }}</p>
+                  }
+                </figcaption>
+              </figure>
+              <div class="press-asset-card__actions">
+                <a
+                  [href]="asset.src"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  [attr.aria-label]="
+                    'Open full resolution ↗ — ' + asset.title + ', opens in a new tab'
+                  "
+                >
+                  <span>Open full resolution</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+                <a [href]="asset.src" [attr.download]="asset.fileName">
+                  <span>Download image</span>
+                  <span aria-hidden="true">↓</span>
+                </a>
+              </div>
+            </article>
+          </li>
+        }
+      </ul>
+
+      <p class="press-permission-note">
+        The workstation images are AI-assisted edited photographs of Serhat Soruklu. Only his face
+        was regenerated from his supplied portrait reference; the underlying body, workstation and
+        background are real. Both files retain embedded Content Credentials identifying trained
+        algorithmic media created with gpt-image 2.0. For publication or media-use permissions,
+        contact Serhat.
+      </p>
+    </div>
+  </section>
+
+  <section
+    class="press-section press-coupyn-media layout-section"
+    aria-labelledby="press-coupyn-media-title"
+  >
+    <div class="press-frame">
+      <header class="press-heading press-heading--wide">
+        <div>
+          <p class="press-eyebrow">05 / COUPYN MEDIA</p>
+          <h2 id="press-coupyn-media-title">Coupyn media assets</h2>
+        </div>
+        <p>Current public system artwork already maintained by this site.</p>
+      </header>
+
+      <article class="press-coupyn-asset">
+        <figure>
+          <div class="press-coupyn-asset__preview">
+            <img
+              [src]="content.coupynMedia.previewSrc"
+              [alt]="content.coupynMedia.previewAlt"
+              [attr.width]="content.coupynMedia.previewWidth"
+              [attr.height]="content.coupynMedia.previewHeight"
+              loading="lazy"
+              decoding="async"
+              fetchpriority="low"
+            />
+          </div>
+          <figcaption>
+            <p class="press-eyebrow">CURRENT FIRST-PARTY ARTWORK</p>
+            <h3>{{ content.coupynMedia.title }}</h3>
+            <p>{{ content.coupynMedia.description }}</p>
+
+            <ul class="press-format-list" aria-label="Available Coupyn media formats">
+              @for (format of content.coupynMedia.formats; track format.format) {
+                <li>
+                  <div>
+                    <strong>{{ format.format }}</strong>
+                    <span>{{ format.dimensions }} · {{ format.fileSize }}</span>
+                  </div>
+                  @if (format.openInNewTab) {
+                    <div class="press-format-list__actions">
+                      <a
+                        [href]="format.path"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        [attr.aria-label]="format.action + ' in a new tab'"
+                      >
+                        <span>{{ format.action }}</span>
+                        <span aria-hidden="true">↗</span>
+                      </a>
+                      <a [href]="format.path" [attr.download]="format.fileName">
+                        <span>Download PNG</span>
+                        <span aria-hidden="true">↓</span>
+                      </a>
+                    </div>
+                  } @else {
+                    <a [href]="format.path" [attr.download]="format.fileName">
+                      <span>{{ format.action }}</span>
+                      <span aria-hidden="true">↓</span>
+                    </a>
+                  }
+                </li>
+              }
+            </ul>
+          </figcaption>
+        </figure>
+      </article>
+    </div>
+  </section>
+
+  <section
+    class="press-section press-coupyn-overview layout-section"
+    aria-labelledby="press-coupyn-title"
+  >
+    <div class="press-frame press-coupyn-overview__inner">
+      <header class="press-heading">
+        <p class="press-eyebrow">06 / PLATFORM</p>
+        <h2 id="press-coupyn-title">What Coupyn is</h2>
+      </header>
+
+      <div class="press-coupyn-overview__content">
+        <p>{{ content.coupyn.description }}</p>
+        <ul class="press-technology-list" aria-label="Coupyn technical context">
+          @for (technology of content.coupyn.technicalContext; track technology) {
+            <li>{{ technology }}</li>
+          }
+        </ul>
+        <div class="press-actions">
+          <a class="press-action press-action--primary" routerLink="/systems/coupyn">
+            <span>Explore Coupyn system</span>
+            <span aria-hidden="true">→</span>
+          </a>
+          <a
+            class="press-action"
+            href="https://coupyn.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Coupyn in a new tab"
+          >
+            <span>Open Coupyn</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="press-section press-systems layout-section" aria-labelledby="press-systems-title">
+    <div class="press-frame">
+      <header class="press-heading press-heading--wide">
+        <div>
+          <p class="press-eyebrow">07 / SELECTED SYSTEMS</p>
+          <h2 id="press-systems-title">Selected technical work</h2>
+        </div>
+        <p>A concise reference index of production systems and public technical experiments.</p>
+      </header>
+
+      <ul class="press-system-grid" aria-label="Selected technical work">
+        @for (system of content.systems; track system.path) {
+          <li>
+            <article class="press-system-card">
+              <span aria-hidden="true">{{ system.index }}</span>
+              <h3>{{ system.title }}</h3>
+              <p>{{ system.description }}</p>
+              <a [routerLink]="system.path">
+                <span>View {{ system.title }}</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section
+    class="press-section press-verification layout-section"
+    aria-labelledby="press-verification-title"
+  >
+    <div class="press-frame">
+      <header class="press-heading press-heading--wide">
+        <div>
+          <p class="press-eyebrow">08 / PUBLIC REFERENCES</p>
+          <h2 id="press-verification-title">Public reference links</h2>
+        </div>
+        <p>
+          The links below distinguish official records, external public profiles and first-party
+          sources so company, professional and technical information can be checked against the
+          appropriate source.
+        </p>
+      </header>
+
+      <ul class="press-verification-list" aria-label="Public verification links">
+        @for (source of content.verification; track source.url) {
+          <li>
+            <a
+              [href]="source.url"
+              target="_blank"
+              [attr.rel]="source.rel"
+            >
+              <span class="press-verification-list__type">{{ source.sourceType }}</span>
+              <strong>{{ source.name }}</strong>
+              <span class="press-verification-list__description">{{ source.description }}</span>
+              <span
+                class="press-verification-list__arrow"
+                role="img"
+                aria-label="↗ — opens in a new tab"
+                >↗</span
+              >
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="press-closing layout-section" aria-labelledby="press-closing-title">
+    <div class="press-frame press-closing__inner">
+      <div>
+        <p class="press-eyebrow">MEDIA ENQUIRIES</p>
+        <h2 id="press-closing-title">Need a fact, image or interview?</h2>
+        <p>
+          For interviews, background information, fact checking or media-use questions, contact
+          Serhat directly through the site.
+        </p>
+      </div>
+
+      <div class="press-actions press-actions--closing">
+        <a class="press-action press-action--primary" routerLink="/contact">
+          <span>Contact Serhat</span>
+          <span aria-hidden="true">→</span>
+        </a>
+        <a class="press-action" routerLink="/about">
+          <span>Full biography</span>
+          <span aria-hidden="true">→</span>
+        </a>
+        <a
+          class="press-action"
+          href="https://coupyn.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open Coupyn in a new tab"
+        >
+          <span>Open Coupyn</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <base href="/" />
-    <title>Serhat Soruklu | Systems Architect</title>
+    <title>Serhat Soruklu | Systems Architect &amp; Founder</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Systems architecture, software engineering, and modern digital infrastructure built with precision, scale, and long-term thinking."
+      content="Serhat Soruklu is the founder and CEO of Coupyn, a systems architect and solo full-stack developer building production platforms and infrastructure."
     />
     <meta name="author" content="Serhat Soruklu" />
     <meta name="robots" content="index, follow" />
@@ -37,18 +37,37 @@
         ];
         var setting = 'dark';
         var resolvedTheme = 'dark';
+        var storedSetting = null;
+
+        function readCookie(name) {
+          var prefix = name + '=';
+          var cookies = document.cookie.split(';');
+
+          for (var index = 0; index < cookies.length; index += 1) {
+            var cookie = cookies[index].trim();
+
+            if (cookie.indexOf(prefix) === 0) {
+              return cookie.slice(prefix.length);
+            }
+          }
+
+          return null;
+        }
 
         try {
-          var storedSetting = browserGlobal.localStorage.getItem(storageKey);
-
-          if (storedSetting === 'dark' || storedSetting === 'light' || storedSetting === 'system') {
-            setting = storedSetting;
-          }
+          storedSetting = browserGlobal.localStorage.getItem(storageKey);
         } catch (error) {
           if (browserGlobal.console && typeof browserGlobal.console.debug === 'function') {
             browserGlobal.console.debug('Stored theme preference is unavailable.', error);
           }
-          setting = 'dark';
+        }
+
+        if (storedSetting !== 'dark' && storedSetting !== 'light' && storedSetting !== 'system') {
+          storedSetting = readCookie(storageKey);
+        }
+
+        if (storedSetting === 'dark' || storedSetting === 'light' || storedSetting === 'system') {
+          setting = storedSetting;
         }
 
         if (
@@ -84,6 +103,19 @@
 
         if (themeColor) {
           themeColor.setAttribute('content', resolvedTheme === 'light' ? '#ffffff' : '#07090d');
+        }
+
+        if (browserGlobal.location && browserGlobal.location.pathname === '/') {
+          var portraitPreload = document.createElement('link');
+
+          portraitPreload.rel = 'preload';
+          portraitPreload.as = 'image';
+          portraitPreload.href =
+            resolvedTheme === 'light'
+              ? '/assets/home/serhat-soruklu-founder-light.png'
+              : '/assets/home/serhat-soruklu-founder-dark.png';
+          portraitPreload.setAttribute('fetchpriority', 'high');
+          document.head.appendChild(portraitPreload);
         }
       })();
     </script>
@@ -172,10 +204,10 @@
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_GB" />
     <meta property="og:url" content="https://serhatsoruklu.com/" />
-    <meta property="og:title" content="Serhat Soruklu | Systems Architect" />
+    <meta property="og:title" content="Serhat Soruklu | Systems Architect &amp; Founder" />
     <meta
       property="og:description"
-      content="Systems architecture, software engineering, and modern digital infrastructure built with precision, scale, and long-term thinking."
+      content="Serhat Soruklu is the founder and CEO of Coupyn, a systems architect and solo full-stack developer building production platforms and infrastructure."
     />
     <meta
       property="og:image"
@@ -190,10 +222,10 @@
     />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Serhat Soruklu | Systems Architect" />
+    <meta name="twitter:title" content="Serhat Soruklu | Systems Architect &amp; Founder" />
     <meta
       name="twitter:description"
-      content="Systems architecture, software engineering, and modern digital infrastructure built with precision, scale, and long-term thinking."
+      content="Serhat Soruklu is the founder and CEO of Coupyn, a systems architect and solo full-stack developer building production platforms and infrastructure."
     />
     <meta
       name="twitter:image"

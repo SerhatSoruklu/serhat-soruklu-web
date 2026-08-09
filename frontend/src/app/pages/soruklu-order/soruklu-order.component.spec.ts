@@ -69,6 +69,14 @@ describe('SorukluOrderComponent', () => {
     expect(turkishText).toContain('Davranışla sürdürülen devamlılık');
     expect(turkishText).not.toContain('Family stewardship · Established 2025');
     expect(turkishText).not.toContain('A voluntary project, carried forward practically.');
+    const turkishGraph = JSON.parse(
+      document.getElementById('page-json-ld')?.textContent ?? '{}',
+    ) as { '@graph': Array<Record<string, unknown>> };
+    const turkishPage = turkishGraph['@graph'].find(
+      (entity) => entity['@type'] === 'AboutPage',
+    );
+    expect(turkishPage?.['inLanguage']).toBe('tr-TR');
+    expect((turkishPage?.['about'] as Record<string, unknown>)?.['inLanguage']).toBe('tr-TR');
 
     switchButton?.click();
     fixture.detectChanges();
@@ -77,6 +85,12 @@ describe('SorukluOrderComponent', () => {
     expect(document.documentElement.lang).toBe('en-GB');
     expect(title.getTitle()).toBe(pageSeoMetadata.sorukluOrder.title);
     expect(nativeElement.textContent).toContain('Family stewardship · Established 2025');
+    const englishGraph = JSON.parse(
+      document.getElementById('page-json-ld')?.textContent ?? '{}',
+    ) as { '@graph': Array<Record<string, unknown>> };
+    expect(
+      englishGraph['@graph'].find((entity) => entity['@type'] === 'AboutPage')?.['inLanguage'],
+    ).toBe('en-GB');
   });
 
   it('renders the approved family stewardship identity within the first section', () => {
@@ -128,13 +142,13 @@ describe('SorukluOrderComponent', () => {
     ]);
   });
 
-  it('uses the unchanged emblem path with one neutral description and one decorative repeat', () => {
+  it('uses the correctly typed emblem path with one neutral description and one decorative repeat', () => {
     const fixture = TestBed.createComponent(SorukluOrderComponent);
     fixture.detectChanges();
 
     const emblems = Array.from(
       (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLImageElement>(
-        'img[src="/assets/brand/soruklu-order/the-soruklu-order-emblem.png"]',
+        'img[src="/assets/brand/soruklu-order/the-soruklu-order-emblem.jpg"]',
       ),
     );
 

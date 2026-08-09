@@ -1,0 +1,59 @@
+<section
+  class="about-profile-dialog"
+  [attr.lang]="content().htmlLang"
+  data-testid="about-profile-dialog"
+>
+  <button
+    class="about-profile-dialog__close"
+    type="button"
+    [attr.aria-label]="content().dialog.closeAriaLabel"
+    (click)="close()"
+  >
+    <app-path-icon name="about-profile-close" [path]="iconPaths.close" />
+  </button>
+
+  <div class="about-profile-dialog__media">
+    <img
+      [src]="portraitPath"
+      [alt]="content().dialog.imageAlt"
+      width="1173"
+      height="1341"
+      decoding="async"
+      data-testid="about-profile-dialog-image"
+    />
+  </div>
+
+  <div class="about-profile-dialog__content">
+    <p class="about-profile-dialog__eyebrow">{{ content().dialog.eyebrow }}</p>
+    <h2 id="about-profile-dialog-title" class="about-profile-dialog__title">
+      {{ content().dialog.title }}
+    </h2>
+    <p class="about-profile-dialog__summary">{{ content().dialog.summary }}</p>
+
+    <dl class="about-profile-dialog__details">
+      @for (detail of content().dialog.details; track detail.label) {
+        <div>
+          <dt>{{ detail.label }}</dt>
+          <dd>{{ detail.value }}</dd>
+        </div>
+      }
+    </dl>
+
+    <ul class="about-profile-dialog__chips" [attr.aria-label]="content().dialog.chipsLabel">
+      @for (chip of content().dialog.chips; track chip) {
+        <li>{{ chip }}</li>
+      }
+    </ul>
+
+    <a
+      class="about-profile-dialog__action"
+      href="https://coupyn.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      [attr.aria-label]="content().dialog.actionAriaLabel"
+    >
+      <span>{{ content().dialog.action }}</span>
+      <app-path-icon name="about-profile-external" [path]="iconPaths.external" />
+    </a>
+  </div>
+</section>

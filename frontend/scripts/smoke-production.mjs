@@ -55,6 +55,26 @@ try {
     'Known HTTPS redirects must come from the fixed route allowlist without reflecting query data.',
   );
 
+  const insecureAboutRouteResponse = await fetch(`${baseUrl}/about?campaign=user-controlled`, {
+    redirect: 'manual',
+  });
+  assert.equal(insecureAboutRouteResponse.status, 308);
+  assert.equal(
+    insecureAboutRouteResponse.headers.get('location'),
+    'https://serhatsoruklu.com/about',
+    'The About HTTPS redirect must use the fixed route allowlist without reflecting query data.',
+  );
+
+  const insecurePressRouteResponse = await fetch(`${baseUrl}/press?campaign=user-controlled`, {
+    redirect: 'manual',
+  });
+  assert.equal(insecurePressRouteResponse.status, 308);
+  assert.equal(
+    insecurePressRouteResponse.headers.get('location'),
+    'https://serhatsoruklu.com/press',
+    'The Press HTTPS redirect must use the fixed route allowlist without reflecting query data.',
+  );
+
   const insecureUnknownRouteResponse = await fetch(`${baseUrl}/unknown-http-route`, {
     redirect: 'manual',
   });
@@ -64,7 +84,45 @@ try {
   const homeResponse = await secureFetch('/');
   const homeHtml = await homeResponse.text();
   assert.equal(homeResponse.status, 200, 'The home route must SSR with HTTP 200.');
-  assert.match(homeHtml, /<title>[^<]*Serhat Soruklu/i, 'The home response is not SSR HTML.');
+  assert.match(
+    homeHtml,
+    /<title>Serhat Soruklu \| Systems Architect &amp; Founder<\/title>/,
+    'The homepage must SSR its entity-led title.',
+  );
+  assert.match(
+    homeHtml,
+    /Serhat Soruklu is the founder and CEO of Coupyn, a systems architect and solo full-stack developer building production platforms and infrastructure\./,
+    'The homepage must SSR its entity-led metadata description.',
+  );
+  assert.match(homeHtml, /<link rel="canonical" href="https:\/\/serhatsoruklu\.com\/">/);
+  assert.match(
+    homeHtml,
+    /Founder &amp; CEO of Coupyn\. Systems architect and solo full-stack developer building production platforms, deterministic systems and self-managed infrastructure\./,
+    'The homepage must SSR its refreshed founder summary.',
+  );
+  assert.match(
+    homeHtml,
+    /I founded\s*<a\b[^>]*href="https:\/\/coupyn\.com"[^>]*>Coupyn<\/a>, a coupon, referral and affiliate intelligence platform that I build and operate independently\./,
+    'The homepage must SSR its independently operated Coupyn relationship.',
+  );
+  assert.match(
+    homeHtml,
+    /<a\b[^>]*href="\/about"[^>]*>\s*About Serhat\s*<\/a>/,
+    'The homepage must expose a crawlable About Serhat action.',
+  );
+  assert.match(
+    homeHtml,
+    /\/assets\/home\/serhat-soruklu-founder-dark\.png/,
+    'The dark homepage portrait must be present in the default SSR response.',
+  );
+  assert.match(homeHtml, /"@id":"https:\/\/serhatsoruklu\.com\/#person"/);
+  assert.match(homeHtml, /"@type":"Organization"/);
+  assert.match(homeHtml, /"@id":"https:\/\/coupyn\.com\/#organization"/);
+  assert.match(
+    homeHtml,
+    /"founder":\{"@id":"https:\/\/serhatsoruklu\.com\/#person"\}/,
+    'The homepage Coupyn Organization must refer to the canonical Person.',
+  );
   assert.equal(homeResponse.headers.get('x-powered-by'), null, 'X-Powered-By must be disabled.');
   assert.equal(homeResponse.headers.get('x-content-type-options'), 'nosniff');
   assert.equal(homeResponse.headers.get('x-frame-options'), 'DENY');
@@ -96,6 +154,123 @@ try {
   assert.match(workHtml, /<link rel="canonical" href="https:\/\/serhatsoruklu\.com\/work">/);
   assert.match(workHtml, /Built End-to-End/, 'The work response must include route content.');
 
+  const aboutResponse = await secureFetch('/about');
+  const aboutHtml = await aboutResponse.text();
+  assert.equal(aboutResponse.status, 200, 'The About route must SSR with HTTP 200.');
+  assert.match(aboutHtml, /<html\b[^>]*\blang="en-GB"/i);
+  assert.match(aboutHtml, /<title>About Serhat Soruklu \| Founder &amp; CEO of Coupyn<\/title>/);
+  assert.match(aboutHtml, /<link rel="canonical" href="https:\/\/serhatsoruklu\.com\/about">/);
+  assert.match(aboutHtml, /<h1\b[^>]*>\s*Serhat Soruklu\s*<\/h1>/i);
+  assert.match(
+    aboutHtml,
+    /Serhat Soruklu is a London-based software developer and founder of Coupyn\./,
+    'The About response must contain the default English biography.',
+  );
+  assert.match(
+    aboutHtml,
+    /Serhat Soruklu is a London-based software developer and founder of Coupyn\. Read his journey from Osmancık and Tottenham to production-scale systems\./,
+    'The About response must contain its English metadata description.',
+  );
+  assert.match(
+    aboutHtml,
+    /https:\/\/serhatsoruklu\.com\/assets\/social\/serhat-soruklu-about-og\.png/,
+    'The About response must contain its absolute social-image URL.',
+  );
+  assert.match(aboutHtml, /"@type":"ProfilePage"/);
+  assert.match(aboutHtml, /"@id":"https:\/\/serhatsoruklu\.com\/#person"/);
+  assert.match(
+    aboutHtml,
+    /https:\/\/serhatsoruklu\.com\/assets\/about\/serhat-soruklu-ceo-founder-of-coupyn\.png/,
+    'The About structured data must contain the canonical portrait URL.',
+  );
+  assert.match(
+    aboutHtml,
+    /Public DevBest activity from around 2016 shows practical work with PHP, MySQL, Habbo content-management systems, emulators, game data, WebSockets and hosting problems\./,
+    'The About response must retain the factual English DevBest reference.',
+  );
+  assert.doesNotMatch(aboutHtml, /\bSly\b/i, 'The public English About response must omit Sly.');
+
+  const turkishAboutResponse = await secureFetch('/about', {
+    headers: {
+      cookie: 'serhatsoruklu-identity-language=tr',
+    },
+  });
+  const turkishAboutHtml = await turkishAboutResponse.text();
+  assert.equal(
+    turkishAboutResponse.status,
+    200,
+    'The Turkish-cookie About route must SSR with HTTP 200.',
+  );
+  assert.match(turkishAboutHtml, /<html\b[^>]*\blang="tr-TR"/i);
+  assert.match(
+    turkishAboutHtml,
+    /<title>Serhat Soruklu Hakkında \| Coupyn Kurucusu ve CEO'su<\/title>/,
+  );
+  assert.match(
+    turkishAboutHtml,
+    /<link rel="canonical" href="https:\/\/serhatsoruklu\.com\/about">/,
+    'Turkish runtime metadata must keep the single About canonical URL.',
+  );
+  assert.match(
+    turkishAboutHtml,
+    /Serhat Soruklu, Londra'da yaşayan bir yazılım geliştirici ve Coupyn'in kurucusudur\./,
+    'The Turkish cookie must server-render Turkish biography copy.',
+  );
+  assert.match(turkishAboutHtml, /content="tr_TR"/);
+  assert.match(turkishAboutHtml, /"@type":"ProfilePage"/);
+  assert.match(turkishAboutHtml, /"inLanguage":"tr-TR"/);
+  assert.match(
+    turkishAboutHtml,
+    /Yaklaşık 2016'dan itibaren görülebilen DevBest paylaşımları; PHP, MySQL, Habbo içerik yönetim sistemleri, emülatörler, oyun verileri, WebSocket'ler ve barındırma sorunlarıyla yürütülen uygulamalı çalışmaları gösterir\./,
+    'The About response must retain the factual Turkish DevBest reference.',
+  );
+  assert.doesNotMatch(
+    turkishAboutHtml,
+    /\bSly\b/i,
+    'The public Turkish About response must omit Sly.',
+  );
+
+  const pressResponse = await secureFetch('/press', {
+    headers: {
+      cookie: 'serhatsoruklu-identity-language=tr',
+    },
+  });
+  const pressHtml = await pressResponse.text();
+  assert.equal(pressResponse.status, 200, 'The Press route must SSR with HTTP 200.');
+  assert.match(
+    pressHtml,
+    /<html\b[^>]*\blang="en-GB"/i,
+    'Press must remain English when the shared Identity cookie requests Turkish.',
+  );
+  assert.match(pressHtml, /<title>Press &amp; Media \| Serhat Soruklu<\/title>/);
+  assert.match(
+    pressHtml,
+    /Verified biographies, company facts, media assets and public reference links for coverage of Serhat Soruklu and Coupyn\./,
+    'Press must SSR its English metadata and reference copy.',
+  );
+  assert.match(pressHtml, /<link rel="canonical" href="https:\/\/serhatsoruklu\.com\/press">/);
+  assert.match(pressHtml, /<meta name="robots" content="index, follow">/);
+  assert.match(
+    pressHtml,
+    /https:\/\/serhatsoruklu\.com\/assets\/social\/serhat-soruklu-press-og\.png/,
+    'Press must SSR its absolute social-image URL.',
+  );
+  assert.match(pressHtml, /<h1\b[^>]*>\s*Serhat Soruklu &amp; Coupyn\s*<\/h1>/i);
+  assert.match(pressHtml, /22 February 1996/);
+  assert.match(pressHtml, /href="\/about"/);
+  assert.match(pressHtml, /href="\/contact"/);
+  assert.match(
+    pressHtml,
+    /https:\/\/find-and-update\.company-information\.service\.gov\.uk\/company\/16939840/,
+  );
+  assert.match(pressHtml, /"@type":"WebPage"/);
+  assert.match(pressHtml, /"@id":"https:\/\/serhatsoruklu\.com\/press#webpage"/);
+  assert.match(pressHtml, /"@id":"https:\/\/serhatsoruklu\.com\/#person"/);
+  assert.match(pressHtml, /"@id":"https:\/\/coupyn\.com\/#organization"/);
+  assert.match(pressHtml, /"inLanguage":"en-GB"/);
+  assert.doesNotMatch(pressHtml, /"@type":"ProfilePage"/);
+  assert.doesNotMatch(pressHtml, /\bSly\b|Press Coverage/i);
+
   const surnameResponse = await secureFetch('/soruklu-surname');
   const surnameHtml = await surnameResponse.text();
   assert.equal(surnameResponse.status, 200, 'The surname route must SSR with HTTP 200.');
@@ -111,6 +286,34 @@ try {
   });
   assert.equal(surnameTrailingSlashResponse.status, 308);
   assert.equal(surnameTrailingSlashResponse.headers.get('location'), '/soruklu-surname');
+
+  const aboutTrailingSlashResponse = await secureFetch('/about/?campaign=release-smoke', {
+    redirect: 'manual',
+  });
+  assert.equal(
+    aboutTrailingSlashResponse.status,
+    308,
+    'The About trailing slash must canonicalize with HTTP 308.',
+  );
+  assert.equal(
+    aboutTrailingSlashResponse.headers.get('location'),
+    '/about',
+    'The About trailing-slash redirect must not reflect query data.',
+  );
+
+  const pressTrailingSlashResponse = await secureFetch('/press/?campaign=release-smoke', {
+    redirect: 'manual',
+  });
+  assert.equal(
+    pressTrailingSlashResponse.status,
+    308,
+    'The Press trailing slash must canonicalize with HTTP 308.',
+  );
+  assert.equal(
+    pressTrailingSlashResponse.headers.get('location'),
+    '/press',
+    'The Press trailing-slash redirect must not reflect query data.',
+  );
 
   const unknownResponse = await secureFetch('/release-smoke-does-not-exist');
   const unknownHtml = await unknownResponse.text();

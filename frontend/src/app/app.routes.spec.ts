@@ -1,9 +1,11 @@
 import { routes } from './app.routes';
 import { pageSeoMetadata } from './core/seo/seo.config';
+import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { GitHubComponent } from './pages/github/github.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { PressComponent } from './pages/press/press.component';
 import { SorukluOrderComponent } from './pages/soruklu-order/soruklu-order.component';
 import { SorukluSurnameComponent } from './pages/soruklu-surname/soruklu-surname.component';
 import { ChatpdmSystemComponent } from './pages/systems/chatpdm/chatpdm-system.component';
@@ -41,10 +43,12 @@ describe('routes', () => {
       'systems',
       'writing',
       'github',
+      'about',
       'soruklu-surname',
       'soruklu-order',
       'velari',
       'contact',
+      'press',
     ]);
     expect(publicRoutes.map((route) => route.data?.['seo'])).toEqual([
       pageSeoMetadata.home,
@@ -56,10 +60,12 @@ describe('routes', () => {
       pageSeoMetadata.systems,
       pageSeoMetadata.writing,
       pageSeoMetadata.github,
+      pageSeoMetadata.about,
       pageSeoMetadata.sorukluSurname,
       pageSeoMetadata.sorukluOrder,
       pageSeoMetadata.velari,
       pageSeoMetadata.contact,
+      pageSeoMetadata.press,
     ]);
   });
 
@@ -87,10 +93,12 @@ describe('routes', () => {
     expect(componentByPath.get('systems')).toBe(SystemsComponent);
     expect(componentByPath.get('writing')).toBe(WritingComponent);
     expect(componentByPath.get('github')).toBe(GitHubComponent);
+    expect(componentByPath.get('about')).toBe(AboutComponent);
     expect(componentByPath.get('soruklu-surname')).toBe(SorukluSurnameComponent);
     expect(componentByPath.get('soruklu-order')).toBe(SorukluOrderComponent);
     expect(componentByPath.get('velari')).toBe(VelariComponent);
     expect(componentByPath.get('contact')).toBe(ContactComponent);
+    expect(componentByPath.get('press')).toBe(PressComponent);
     expect(componentByPath.get('404')).toBe(NotFoundComponent);
     expect(componentByPath.get('**')).toBe(NotFoundComponent);
   });

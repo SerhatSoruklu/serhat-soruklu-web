@@ -19,6 +19,23 @@ export interface RouteSeoMetadata {
   structuredData?: StructuredDataProfile;
 }
 
+export interface AboutRuntimeMetadata {
+  description: string;
+  inLanguage: 'en-GB' | 'tr-TR';
+  locale: 'en_GB' | 'tr_TR';
+  portraitAlt: string;
+  title: string;
+}
+
+export type LocalizedIdentityProfile = 'soruklu-order' | 'soruklu-surname' | 'velari';
+
+export interface LocalizedIdentityRuntimeMetadata {
+  description: string;
+  inLanguage: 'en-GB' | 'tr-TR';
+  locale: 'en_GB' | 'tr_TR';
+  title: string;
+}
+
 interface SeoMetadata {
   title?: string;
   description?: string;
@@ -58,6 +75,77 @@ export class SeoService {
     this.setOpenGraphTags(metadata);
     this.setTwitterCardTags(metadata);
     this.setRobots(metadata.robots ?? 'index, follow');
+  }
+
+  applyAboutRuntimeMetadata(metadata: AboutRuntimeMetadata): void {
+    const routeSeo: RouteSeoMetadata = {
+      ...pageSeoMetadata.about,
+      label: metadata.inLanguage === 'tr-TR' ? 'Hakkında' : pageSeoMetadata.about.label,
+      title: metadata.title,
+      description: metadata.description,
+    };
+
+    this.setMetadata({
+      title: routeSeo.title,
+      description: routeSeo.description,
+      canonicalUrl: routeSeo.path,
+      ogImage: routeSeo.ogImage,
+      ogImageAlt: routeSeo.ogImageAlt,
+      ogImageHeight: routeSeo.ogImageHeight,
+      ogImageType: routeSeo.ogImageType,
+      ogImageWidth: routeSeo.ogImageWidth,
+      locale: metadata.locale,
+      robots: routeSeo.robots,
+    });
+    this.setJsonLd(
+      this.createAboutStructuredData(routeSeo, metadata.inLanguage, metadata.portraitAlt),
+    );
+  }
+
+  applyLocalizedIdentityRuntimeMetadata(
+    profile: LocalizedIdentityProfile,
+    metadata: LocalizedIdentityRuntimeMetadata,
+  ): void {
+    const baseSeo =
+      profile === 'soruklu-order'
+        ? pageSeoMetadata.sorukluOrder
+        : profile === 'soruklu-surname'
+          ? pageSeoMetadata.sorukluSurname
+          : pageSeoMetadata.velari;
+    const routeSeo: RouteSeoMetadata = {
+      ...baseSeo,
+      label:
+        profile === 'soruklu-surname' && metadata.inLanguage === 'tr-TR'
+          ? 'Soruklu soyadı'
+          : baseSeo.label,
+      title: metadata.title,
+      description: metadata.description,
+    };
+
+    this.setMetadata({
+      title: routeSeo.title,
+      description: routeSeo.description,
+      canonicalUrl: routeSeo.path,
+      ogImage: routeSeo.ogImage,
+      ogImageAlt: routeSeo.ogImageAlt,
+      ogImageHeight: routeSeo.ogImageHeight,
+      ogImageType: routeSeo.ogImageType,
+      ogImageWidth: routeSeo.ogImageWidth,
+      locale: metadata.locale,
+      robots: routeSeo.robots,
+    });
+
+    if (profile === 'soruklu-order') {
+      this.setJsonLd(this.createSorukluOrderStructuredData(routeSeo, metadata.inLanguage));
+      return;
+    }
+
+    if (profile === 'soruklu-surname') {
+      this.setJsonLd(this.createSorukluSurnameStructuredData(routeSeo, metadata.inLanguage));
+      return;
+    }
+
+    this.setJsonLd(this.createVelariStructuredData(routeSeo, metadata.inLanguage));
   }
 
   setTitle(title: string): void {
@@ -126,6 +214,10 @@ export class SeoService {
 
   setRobots(robots: RobotsDirective): void {
     this.meta.updateTag({ name: 'robots', content: robots });
+    this.meta.updateTag({
+      name: 'googlebot',
+      content: robots === 'index, follow' ? `${robots}, max-image-preview:large` : robots,
+    });
   }
 
   setJsonLd(data: object): void {
@@ -173,6 +265,22 @@ export class SeoService {
 
     if (routeSeo.structuredData === 'none') {
       this.removeJsonLd();
+      return;
+    }
+
+    if (routeSeo.structuredData === 'about') {
+      this.setJsonLd(
+        this.createAboutStructuredData(
+          routeSeo,
+          'en-GB',
+          'Portrait of Serhat Soruklu, founder and CEO of Coupyn.',
+        ),
+      );
+      return;
+    }
+
+    if (routeSeo.structuredData === 'press') {
+      this.setJsonLd(this.createPressStructuredData(routeSeo));
       return;
     }
 
@@ -275,13 +383,17 @@ export class SeoService {
       itemListElement: breadcrumb.itemListElement,
     };
 
+    const isHome = routeSeo.path === pageSeoMetadata.home.path;
+    const graph = [
+      ...(isHome ? [] : [breadcrumbNode]),
+      this.createWebsiteStructuredData(),
+      this.createPersonStructuredData(),
+      ...(isHome ? [this.createCoupynOrganizationStructuredData()] : []),
+    ];
+
     return {
       '@context': 'https://schema.org',
-      '@graph': [
-        breadcrumbNode,
-        this.createWebsiteStructuredData(),
-        this.createPersonStructuredData(),
-      ],
+      '@graph': graph,
     };
   }
 
@@ -304,6 +416,7 @@ export class SeoService {
 
   private createPersonStructuredData(): object {
     const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
+    const aboutUrl = this.toAbsoluteUrl(pageSeoMetadata.about.path);
 
     return {
       '@type': 'Person',
@@ -311,26 +424,197 @@ export class SeoService {
       name: seoConfig.authorName,
       url: homeUrl,
       image: this.toAbsoluteUrl(seoConfig.defaultPersonImage),
-      jobTitle: 'Founder, Systems Architect, Full-Stack Engineer',
+      mainEntityOfPage: {
+        '@id': `${aboutUrl}#webpage`,
+      },
+      birthDate: '1996-02-22',
+      birthPlace: {
+        '@type': 'Place',
+        name: 'Osmancık, Çorum, Turkey',
+      },
+      homeLocation: {
+        '@type': 'Place',
+        name: 'London, United Kingdom',
+      },
+      jobTitle: ['Founder and CEO of Coupyn', 'Systems Architect', 'Full-Stack Developer'],
       description:
-        'Founder and systems architect focused on software engineering, digital infrastructure, scalable platforms, and long-term systems.',
+        'London-based founder and CEO of Coupyn, systems architect, full-stack developer and infrastructure operator.',
+      worksFor: {
+        '@id': 'https://coupyn.com/#organization',
+      },
       knowsAbout: [
         'Systems architecture',
-        'Software engineering',
-        'Full-stack development',
+        'Full-stack web development',
         'Angular',
         'Node.js',
+        'Express',
         'MongoDB',
-        'Digital infrastructure',
-        'Scalable platforms',
-        'SEO architecture',
-        'Trust systems',
+        'Infrastructure operations',
+        'Technical SEO',
+        'Deterministic systems',
       ],
-      sameAs: ['https://github.com/SerhatSoruklu'],
+      sameAs: [
+        'https://github.com/SerhatSoruklu',
+        'https://www.linkedin.com/in/serhatsoruklu/',
+        'https://orcid.org/0009-0006-8963-5986',
+        'https://hashnode.com/@serhatsoruklu',
+        'https://dev.to/coupyn',
+        'https://medium.com/@coupyn',
+      ],
     };
   }
 
-  private createSorukluOrderStructuredData(routeSeo: RouteSeoMetadata): object {
+  private createCoupynOrganizationStructuredData(): object {
+    const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
+
+    return {
+      '@type': 'Organization',
+      '@id': 'https://coupyn.com/#organization',
+      name: 'Coupyn',
+      url: 'https://coupyn.com/',
+      description:
+        'A public coupon, referral and affiliate intelligence platform built and operated independently by Serhat Soruklu.',
+      founder: {
+        '@id': `${homeUrl}#person`,
+      },
+    };
+  }
+
+  private createAboutStructuredData(
+    routeSeo: RouteSeoMetadata,
+    inLanguage: 'en-GB' | 'tr-TR',
+    portraitAlt: string,
+  ): object {
+    const routeUrl = this.toAbsoluteUrl(routeSeo.path);
+    const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
+    const personId = `${homeUrl}#person`;
+    const websiteId = `${homeUrl}#website`;
+    const webpageId = `${routeUrl}#webpage`;
+    const breadcrumbId = `${routeUrl}#breadcrumb`;
+    const portraitUrl = this.toAbsoluteUrl(seoConfig.defaultPersonImage);
+
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'BreadcrumbList',
+          '@id': breadcrumbId,
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: pageSeoMetadata.home.label,
+              item: homeUrl,
+            },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: routeSeo.label,
+              item: routeUrl,
+            },
+          ],
+        },
+        {
+          '@type': 'ProfilePage',
+          '@id': webpageId,
+          name: routeSeo.title,
+          description: routeSeo.description,
+          url: routeUrl,
+          isPartOf: {
+            '@id': websiteId,
+          },
+          mainEntity: {
+            '@id': personId,
+          },
+          about: {
+            '@id': personId,
+          },
+          primaryImageOfPage: {
+            '@type': 'ImageObject',
+            url: portraitUrl,
+            width: 1173,
+            height: 1341,
+            caption: portraitAlt,
+          },
+          breadcrumb: {
+            '@id': breadcrumbId,
+          },
+          inLanguage,
+        },
+        this.createPersonStructuredData(),
+        this.createWebsiteStructuredData(),
+        this.createCoupynOrganizationStructuredData(),
+      ],
+    };
+  }
+
+  private createPressStructuredData(routeSeo: RouteSeoMetadata): object {
+    const routeUrl = this.toAbsoluteUrl(routeSeo.path);
+    const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
+    const personId = `${homeUrl}#person`;
+    const websiteId = `${homeUrl}#website`;
+    const organizationId = 'https://coupyn.com/#organization';
+    const webpageId = `${routeUrl}#webpage`;
+    const breadcrumbId = `${routeUrl}#breadcrumb`;
+    const socialImageUrl = this.toAbsoluteUrl(routeSeo.ogImage ?? seoConfig.defaultOgImage);
+
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'BreadcrumbList',
+          '@id': breadcrumbId,
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: pageSeoMetadata.home.label,
+              item: homeUrl,
+            },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: routeSeo.label,
+              item: routeUrl,
+            },
+          ],
+        },
+        {
+          '@type': 'WebPage',
+          '@id': webpageId,
+          name: routeSeo.title,
+          description: routeSeo.description,
+          url: routeUrl,
+          isPartOf: {
+            '@id': websiteId,
+          },
+          about: [{ '@id': personId }, { '@id': organizationId }],
+          author: {
+            '@id': personId,
+          },
+          primaryImageOfPage: {
+            '@type': 'ImageObject',
+            url: socialImageUrl,
+            width: 1200,
+            height: 630,
+            caption: routeSeo.ogImageAlt,
+          },
+          breadcrumb: {
+            '@id': breadcrumbId,
+          },
+          inLanguage: 'en-GB',
+        },
+        this.createPersonStructuredData(),
+        this.createWebsiteStructuredData(),
+        this.createCoupynOrganizationStructuredData(),
+      ],
+    };
+  }
+
+  private createSorukluOrderStructuredData(
+    routeSeo: RouteSeoMetadata,
+    inLanguage: 'en-GB' | 'tr-TR' = 'en-GB',
+  ): object {
     const routeUrl = this.toAbsoluteUrl(routeSeo.path);
     const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
     const personId = `${homeUrl}#person`;
@@ -372,6 +656,7 @@ export class SeoService {
             '@type': 'Thing',
             name: 'The Soruklu Order',
             description: routeSeo.description,
+            inLanguage,
           },
           author: {
             '@id': personId,
@@ -385,7 +670,7 @@ export class SeoService {
             width: 1200,
             height: 630,
           },
-          inLanguage: 'en-GB',
+          inLanguage,
         },
         this.createWebsiteStructuredData(),
         this.createPersonStructuredData(),
@@ -393,7 +678,10 @@ export class SeoService {
     };
   }
 
-  private createSorukluSurnameStructuredData(routeSeo: RouteSeoMetadata): object {
+  private createSorukluSurnameStructuredData(
+    routeSeo: RouteSeoMetadata,
+    inLanguage: 'en-GB' | 'tr-TR' = 'en-GB',
+  ): object {
     const routeUrl = this.toAbsoluteUrl(routeSeo.path);
     const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
     const personId = `${homeUrl}#person`;
@@ -442,7 +730,7 @@ export class SeoService {
             caption: routeSeo.ogImageAlt,
           },
           breadcrumb: { '@id': breadcrumbId },
-          inLanguage: 'en-GB',
+          inLanguage,
           citation: [
             'https://tdk.gov.tr/wp-content/uploads/2011/12/Terim-Sorunlari-ve-Terim-Yapma-Yollari-_2025_-WEB.pdf',
             'https://www.belleten.gov.tr/eng/full-text-pdf/2265/tur',
@@ -464,8 +752,11 @@ export class SeoService {
           '@id': termId,
           name: 'Soruklu',
           description:
-            'A Turkish surname most strongly read as Soruk plus -lu, expressing association with, belonging to, or origin from a place called Soruk.',
+            inLanguage === 'tr-TR'
+              ? routeSeo.description
+              : 'A Turkish surname most strongly read as Soruk plus -lu, expressing association with, belonging to, or origin from a place called Soruk.',
           url: routeUrl,
+          inLanguage,
           inDefinedTermSet: {
             '@type': 'DefinedTermSet',
             name: 'Turkish surnames',
@@ -477,7 +768,10 @@ export class SeoService {
     };
   }
 
-  private createVelariStructuredData(routeSeo: RouteSeoMetadata): object {
+  private createVelariStructuredData(
+    routeSeo: RouteSeoMetadata,
+    inLanguage: 'en-GB' | 'tr-TR' = 'en-GB',
+  ): object {
     const routeUrl = this.toAbsoluteUrl(routeSeo.path);
     const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
     const personId = `${homeUrl}#person`;
@@ -575,7 +869,7 @@ export class SeoService {
           breadcrumb: {
             '@id': breadcrumbId,
           },
-          inLanguage: 'en-GB',
+          inLanguage,
         },
         {
           '@type': 'CreativeWork',
@@ -597,7 +891,7 @@ export class SeoService {
             'resilience',
             'responsibility',
           ],
-          inLanguage: 'en-GB',
+          inLanguage,
           mainEntityOfPage: {
             '@id': webpageId,
           },

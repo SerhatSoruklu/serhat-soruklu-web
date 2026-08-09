@@ -369,6 +369,15 @@ test('validateContactPayload normalizes valid contact data', () => {
   );
 });
 
+test('validateContactPayload accepts the dedicated press and media enquiry topic', () => {
+  const topic = 'Press / media enquiry';
+  const result = validateContactPayload(validContactPayload({ topic }));
+
+  assert.ok(CONTACT_TOPICS.includes(topic));
+  assert.equal(result.errors, null);
+  assert.equal(result.data.topic, topic);
+});
+
 test('single-mailbox validation rejects wrappers, recipient lists, CRLF, and malformed domains', () => {
   const invalidAddresses = [
     'victim@example.com,other@example.com',
@@ -527,7 +536,7 @@ test('contact endpoint returns the explicit full-delivery contract', async (t) =
   t.after(() => new Promise((resolve) => server.close(resolve)));
   const submissionId = 'submission-full-0001';
   const response = await postJson(`${url}/api/contact`, {
-    ...validContactPayload(),
+    ...validContactPayload({ topic: 'Press / media enquiry' }),
     submissionId
   }, {
     'Idempotency-Key': submissionId
@@ -548,6 +557,7 @@ test('contact endpoint returns the explicit full-delivery contract', async (t) =
   assert.equal(response.headers.get('idempotency-key'), submissionId);
   assert.equal(sentMessages.length, 2);
   assert.equal(sentMessages[0].to, 'inbox@example.com');
+  assert.match(sentMessages[0].subject, /New contact: Press \/ media enquiry/);
   assert.equal(sentMessages[1].to, 'reader@example.com');
 });
 

@@ -3,88 +3,27 @@
   [ngClass]="{ 'portrait-dialog--light-portrait': isLightPortrait() }"
   data-testid="portrait-dialog"
 >
-  <button class="portrait-dialog__close" type="button" aria-label="Close portrait dialog" (click)="close()">
+  <button
+    class="portrait-dialog__close"
+    type="button"
+    aria-label="Close portrait dialog"
+    (click)="close()"
+  >
     <mat-icon svgIcon="portrait-close" aria-hidden="true"></mat-icon>
   </button>
 
-  <div class="portrait-dialog__media" aria-label="Serhat Soruklu portrait">
-    <picture
-      class="portrait-dialog__portrait-layer portrait-dialog__portrait-layer--dark"
-      data-testid="portrait-dialog-portrait-dark"
-      [attr.aria-hidden]="isLightPortrait() ? 'true' : null"
-    >
-      <source
-        type="image/avif"
-        srcset="
-          /assets/portfolio-image/serhat-soruklu-full-portrait-480.avif 480w,
-          /assets/portfolio-image/serhat-soruklu-full-portrait-720.avif 720w,
-          /assets/portfolio-image/serhat-soruklu-full-portrait-818.avif 818w
-        "
-        sizes="(min-width: 1024px) 520px, (min-width: 768px) calc(100vw - 80px), calc(100vw - 40px)"
-      >
-      <source
-        type="image/webp"
-        srcset="
-          /assets/portfolio-image/serhat-soruklu-full-portrait-480.webp 480w,
-          /assets/portfolio-image/serhat-soruklu-full-portrait-720.webp 720w,
-          /assets/portfolio-image/serhat-soruklu-full-portrait-818.webp 818w
-        "
-        sizes="(min-width: 1024px) 520px, (min-width: 768px) calc(100vw - 80px), calc(100vw - 40px)"
-      >
-      <img
-        src="/assets/portfolio-image/serhat-soruklu-full-portrait-818.jpg"
-        srcset="
-          /assets/portfolio-image/serhat-soruklu-full-portrait-480.jpg 480w,
-          /assets/portfolio-image/serhat-soruklu-full-portrait-720.jpg 720w,
-          /assets/portfolio-image/serhat-soruklu-full-portrait-818.jpg 818w
-        "
-        sizes="(min-width: 1024px) 520px, (min-width: 768px) calc(100vw - 80px), calc(100vw - 40px)"
-        width="1343"
-        height="1023"
-        alt="Serhat Soruklu in a technical workspace."
-        decoding="async"
-        loading="eager"
-      >
-    </picture>
-
-    <picture
-      class="portrait-dialog__portrait-layer portrait-dialog__portrait-layer--light"
-      data-testid="portrait-dialog-portrait-light"
-      [attr.aria-hidden]="isLightPortrait() ? null : 'true'"
-    >
-      <source
-        type="image/avif"
-        srcset="
-          /assets/portfolio-image/serhat-soruklu-full-portrait-light-480.avif 480w,
-          /assets/portfolio-image/serhat-soruklu-full-portrait-light-720.avif 720w,
-          /assets/portfolio-image/serhat-soruklu-full-portrait-light-818.avif 818w
-        "
-        sizes="(min-width: 1024px) 520px, (min-width: 768px) calc(100vw - 80px), calc(100vw - 40px)"
-      >
-      <source
-        type="image/webp"
-        srcset="
-          /assets/portfolio-image/serhat-soruklu-full-portrait-light-480.webp 480w,
-          /assets/portfolio-image/serhat-soruklu-full-portrait-light-720.webp 720w,
-          /assets/portfolio-image/serhat-soruklu-full-portrait-light-818.webp 818w
-        "
-        sizes="(min-width: 1024px) 520px, (min-width: 768px) calc(100vw - 80px), calc(100vw - 40px)"
-      >
-      <img
-        src="/assets/portfolio-image/serhat-soruklu-full-portrait-light-818.jpg"
-        srcset="
-          /assets/portfolio-image/serhat-soruklu-full-portrait-light-480.jpg 480w,
-          /assets/portfolio-image/serhat-soruklu-full-portrait-light-720.jpg 720w,
-          /assets/portfolio-image/serhat-soruklu-full-portrait-light-818.jpg 818w
-        "
-        sizes="(min-width: 1024px) 520px, (min-width: 768px) calc(100vw - 80px), calc(100vw - 40px)"
-        width="1437"
-        height="1095"
-        alt="Serhat Soruklu in a technical workspace."
-        decoding="async"
-        loading="eager"
-      >
-    </picture>
+  <div class="portrait-dialog__media">
+    <img
+      class="portrait-dialog__portrait-image"
+      data-testid="portrait-dialog-portrait-image"
+      [src]="portrait().src"
+      [alt]="portrait().alt"
+      [attr.data-portrait-theme]="themeService.resolvedTheme()"
+      [width]="portraitWidth"
+      [height]="portraitHeight"
+      decoding="async"
+      loading="eager"
+    />
   </div>
 
   <div class="portrait-dialog__content">
@@ -98,7 +37,7 @@
       <span>Systems Architect</span>
     </p>
     <p class="portrait-dialog__summary">
-      Solo founder building long-horizon internet systems with a focus on:
+      Founder and solo operator building production web systems with a focus on:
     </p>
 
     <ul class="portrait-dialog__list" aria-label="Architecture focus areas">
@@ -124,14 +63,20 @@
             rel="noopener noreferrer"
             [attr.aria-label]="'Open ' + item.label + ' in a new tab'"
           >
-            <mat-icon [svgIcon]="item.icon || 'portrait-architecture'" aria-hidden="true"></mat-icon>
+            <mat-icon
+              [svgIcon]="item.icon || 'portrait-architecture'"
+              aria-hidden="true"
+            ></mat-icon>
             <span>{{ item.label }}</span>
           </a>
         }
       </div>
     </div>
 
-    <div class="portrait-dialog__chip-row portrait-dialog__chip-row--tools" aria-label="Technology focus">
+    <div
+      class="portrait-dialog__chip-row portrait-dialog__chip-row--tools"
+      aria-label="Technology focus"
+    >
       @for (chip of chips; track chip.label) {
         <span class="portrait-dialog__tool-chip">
           <mat-icon [svgIcon]="chip.icon || 'portrait-code'" aria-hidden="true"></mat-icon>

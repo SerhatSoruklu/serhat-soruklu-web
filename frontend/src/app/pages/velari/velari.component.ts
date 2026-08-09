@@ -10,7 +10,6 @@ import {
 
 import { IdentityLanguageService } from '../../core/identity/identity-language.service';
 import { TopNavigationService } from '../../core/navigation/top-navigation.service';
-import { pageSeoMetadata } from '../../core/seo/seo.config';
 import { SeoService } from '../../core/seo/seo.service';
 import { PathIconComponent } from '../../shared/icons/path-icon.component';
 import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
@@ -60,17 +59,11 @@ export class VelariComponent implements OnDestroy {
     const content = this.content();
 
     this.document.documentElement.lang = content.htmlLang;
-    this.seoService.setMetadata({
+    this.seoService.applyLocalizedIdentityRuntimeMetadata('velari', {
       title: content.seo.title,
       description: content.seo.description,
-      canonicalUrl: pageSeoMetadata.velari.path,
-      ogImage: pageSeoMetadata.velari.ogImage,
-      ogImageAlt: pageSeoMetadata.velari.ogImageAlt,
-      ogImageHeight: pageSeoMetadata.velari.ogImageHeight,
-      ogImageType: pageSeoMetadata.velari.ogImageType,
-      ogImageWidth: pageSeoMetadata.velari.ogImageWidth,
+      inLanguage: content.htmlLang,
       locale: this.language() === 'tr' ? 'tr_TR' : 'en_GB',
-      robots: 'index, follow',
     });
   }
 }
