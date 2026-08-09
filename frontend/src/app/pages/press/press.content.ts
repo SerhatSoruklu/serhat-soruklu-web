@@ -60,13 +60,13 @@ export interface PressVerificationLink {
 }
 
 const founderWorkstationProvenance =
-  'AI-assisted edited photograph. The person shown is Serhat Soruklu. Only his face was regenerated from his supplied portrait reference; the underlying body, workstation and background are real. Embedded Content Credentials identify trained algorithmic media created with gpt-image 2.0.';
+  'AI-assisted edited image of Serhat Soruklu, created using supplied portrait and real-workspace photographic references. The image has been AI-generated or modified and should not be treated as an unaltered photograph.';
 
 export const pressContent = {
   hero: {
     eyebrow: 'PRESS / MEDIA',
     title: 'Serhat Soruklu & Coupyn',
-    lead: 'Verified facts, biographies, images and background material for journalists, researchers and media enquiries.',
+    lead: 'Reference facts, biographies, images and background material for journalists, researchers and media enquiries.',
     supporting:
       'This page provides first-party reference material for coverage of Serhat Soruklu, Coupyn and related technical work. Public verification and reference links are included where available.',
     dossierLabel: 'REFERENCE DOSSIER',

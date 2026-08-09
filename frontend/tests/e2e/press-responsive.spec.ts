@@ -264,7 +264,7 @@ test.describe('Press and media page', () => {
       page.getByRole('heading', { level: 1, name: 'Serhat Soruklu & Coupyn' }),
     ).toBeVisible();
     await expect(pressPage).toContainText(
-      'Verified facts, biographies, images and background material for journalists, researchers and media enquiries.',
+      'Reference facts, biographies, images and background material for journalists, researchers and media enquiries.',
     );
     await expect(pressPage).toContainText('first-party reference material');
 
@@ -308,8 +308,8 @@ test.describe('Press and media page', () => {
       'AI-ASSISTED PHOTOGRAPH',
     ]);
     await expect(page.locator('.press-asset-card__provenance')).toHaveText([
-      'AI-assisted edited photograph. The person shown is Serhat Soruklu. Only his face was regenerated from his supplied portrait reference; the underlying body, workstation and background are real. Embedded Content Credentials identify trained algorithmic media created with gpt-image 2.0.',
-      'AI-assisted edited photograph. The person shown is Serhat Soruklu. Only his face was regenerated from his supplied portrait reference; the underlying body, workstation and background are real. Embedded Content Credentials identify trained algorithmic media created with gpt-image 2.0.',
+      'AI-assisted edited image of Serhat Soruklu, created using supplied portrait and real-workspace photographic references. The image has been AI-generated or modified and should not be treated as an unaltered photograph.',
+      'AI-assisted edited image of Serhat Soruklu, created using supplied portrait and real-workspace photographic references. The image has been AI-generated or modified and should not be treated as an unaltered photograph.',
     ]);
     await expect(page.locator('.press-asset-card img').nth(1)).toHaveAttribute(
       'alt',
@@ -320,7 +320,7 @@ test.describe('Press and media page', () => {
       'AI-assisted edited photograph of Serhat Soruklu at his dark workstation.',
     );
     await expect(page.locator('.press-permission-note')).toContainText(
-      'The workstation images are AI-assisted edited photographs of Serhat Soruklu. Only his face was regenerated from his supplied portrait reference; the underlying body, workstation and background are real.',
+      'The workstation images are AI-assisted edited images of Serhat Soruklu, created using supplied portrait and real-workspace photographic references. The images have been AI-generated or modified and should not be treated as unaltered photographs.',
     );
     await expect(
       page.getByRole('heading', { level: 2, name: 'Coupyn media assets' }),
@@ -709,6 +709,14 @@ test.describe('Press and media page', () => {
 
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto(pressPath, { waitUntil: 'networkidle' });
+
+    const decorativeGridTop = await page.locator('.press-hero').evaluate((element) => {
+      const pseudoElement = globalThis.getComputedStyle(element, '::before');
+
+      return element.getBoundingClientRect().top + Number.parseFloat(pseudoElement.top);
+    });
+    const initialHeader = await visibleHeaderGeometry(page);
+    expect(decorativeGridTop).toBeGreaterThanOrEqual(initialHeader.bottom + 4);
 
     await page.locator('.press-hero a[href="/press#founder-photography"]').click();
     await expect(page).toHaveURL(/\/press#founder-photography$/);
