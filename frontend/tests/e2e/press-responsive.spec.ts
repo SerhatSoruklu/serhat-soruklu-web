@@ -270,7 +270,10 @@ test.describe('Press and media page', () => {
 
     await expect(page.getByRole('heading', { level: 2, name: 'Quick facts' })).toBeVisible();
     await expect(page.locator('.press-fact-sheet')).toHaveCount(2);
-    await expect(page.locator('.press-fact-sheet dl')).toHaveCount(2);
+    const factDefinitions = page.locator('.press-fact-sheet__facts > dl');
+    await expect(factDefinitions).toHaveCount(17);
+    await expect(factDefinitions.locator(':scope > dt')).toHaveCount(17);
+    await expect(factDefinitions.locator(':scope > dd')).toHaveCount(17);
     await expect(page.locator('.press-fact-sheet').first()).toContainText(
       'Osmancık, Çorum, Turkey',
     );

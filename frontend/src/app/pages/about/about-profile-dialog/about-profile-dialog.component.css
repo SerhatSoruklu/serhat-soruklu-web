@@ -131,10 +131,11 @@
   border-top: 1px solid #252b36;
 }
 
-.about-profile-dialog__details div {
+.about-profile-dialog__details > dl {
   display: grid;
   grid-template-columns: minmax(88px, 0.42fr) minmax(0, 1fr);
   gap: 18px;
+  margin: 0;
   padding: 14px 0;
   border-bottom: 1px solid #252b36;
 }
@@ -247,7 +248,7 @@
     column-gap: 24px;
   }
 
-  .about-profile-dialog__details div {
+  .about-profile-dialog__details > dl {
     grid-template-columns: 1fr;
     gap: 6px;
   }
@@ -327,7 +328,7 @@
 }
 
 .theme-resolved-light .about-profile-dialog__details,
-.theme-resolved-light .about-profile-dialog__details div {
+.theme-resolved-light .about-profile-dialog__details > dl {
   border-color: #e5e0d6;
 }
 

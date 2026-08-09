@@ -54,18 +54,19 @@
           <span>Coupyn</span>
         </div>
 
-        <dl
+        <div
           class="about-hero__facts"
+          role="group"
           [attr.aria-label]="content().hero.factsLabel"
           data-testid="about-profile-facts"
         >
           @for (fact of content().hero.facts; track fact.label) {
-            <div>
+            <dl>
               <dt>{{ fact.label }}</dt>
               <dd>{{ fact.value }}</dd>
-            </div>
+            </dl>
           }
-        </dl>
+        </div>
       </div>
 
       <figure class="about-portrait">

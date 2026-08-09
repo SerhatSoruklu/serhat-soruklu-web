@@ -278,8 +278,9 @@ h3 {
   border-left: 1px solid #252b36;
 }
 
-.about-hero__facts div {
+.about-hero__facts > dl {
   min-width: 0;
+  margin: 0;
   padding: 14px;
   border-right: 1px solid #252b36;
   border-bottom: 1px solid #252b36;
@@ -1135,7 +1136,7 @@ h3 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .about-hero__facts div {
+  .about-hero__facts > dl {
     padding: 17px;
   }
 
@@ -1215,7 +1216,7 @@ h3 {
     font-size: clamp(4.8rem, 7.3vw, 7.7rem);
   }
 
-  .about-hero__facts div {
+  .about-hero__facts > dl {
     padding: 15px 11px;
   }
 
@@ -1334,7 +1335,7 @@ h3 {
 :host-context(.theme-resolved-light) .about-chapters,
 :host-context(.theme-resolved-light) .about-section,
 :host-context(.theme-resolved-light) .about-hero__facts,
-:host-context(.theme-resolved-light) .about-hero__facts div,
+:host-context(.theme-resolved-light) .about-hero__facts > dl,
 :host-context(.theme-resolved-light) .about-chapters ol,
 :host-context(.theme-resolved-light) .about-chapters li,
 :host-context(.theme-resolved-light) .about-profiles,
@@ -1425,7 +1426,7 @@ h3 {
   outline-color: #815b1c;
 }
 
-:host-context(.theme-resolved-light) .about-hero__facts div,
+:host-context(.theme-resolved-light) .about-hero__facts > dl,
 :host-context(.theme-resolved-light) .about-history > li:nth-child(even) .about-section {
   background: rgba(248, 247, 243, 0.72);
 }

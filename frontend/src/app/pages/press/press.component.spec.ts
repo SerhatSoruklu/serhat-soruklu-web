@@ -63,7 +63,17 @@ describe('PressComponent', () => {
     );
 
     expect(facts).toHaveLength(2);
-    expect(nativeElement.querySelectorAll('.press-fact-sheet dl')).toHaveLength(2);
+    const factDefinitions = Array.from(
+      nativeElement.querySelectorAll<HTMLDListElement>('.press-fact-sheet__facts > dl'),
+    );
+    expect(factDefinitions).toHaveLength(17);
+    expect(
+      factDefinitions.every(
+        (definition) =>
+          definition.children.item(0)?.tagName === 'DT' &&
+          definition.children.item(1)?.tagName === 'DD',
+      ),
+    ).toBe(true);
     expect(text).toContain('Osmancık, Çorum, Turkey');
     expect(text).toContain('Coupyn Ltd');
     expect(text).toContain('Company number 16939840');

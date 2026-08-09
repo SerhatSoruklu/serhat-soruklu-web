@@ -29,14 +29,14 @@
           <span>{{ content.hero.dossierLabel }}</span>
           <strong>{{ content.hero.dossierId }}</strong>
         </div>
-        <dl>
+        <div class="press-dossier__facts">
           @for (item of content.hero.dossierItems; track item.label) {
-            <div>
+            <dl>
               <dt>{{ item.label }}</dt>
               <dd>{{ item.value }}</dd>
-            </div>
+            </dl>
           }
-        </dl>
+        </div>
         <p>
           <span aria-hidden="true">✓</span>
           Facts and source boundaries are stated explicitly.
@@ -62,9 +62,9 @@
               <span aria-hidden="true">{{ sheet.index }}</span>
               <h3>{{ sheet.title }}</h3>
             </header>
-            <dl>
+            <div class="press-fact-sheet__facts">
               @for (fact of sheet.facts; track fact.label) {
-                <div>
+                <dl>
                   <dt>{{ fact.label }}</dt>
                   <dd>
                     @if (fact.url) {
@@ -81,9 +81,9 @@
                       {{ fact.value }}
                     }
                   </dd>
-                </div>
+                </dl>
               }
-            </dl>
+            </div>
           </article>
         }
       </div>
@@ -353,11 +353,7 @@
       <ul class="press-verification-list" aria-label="Public verification links">
         @for (source of content.verification; track source.url) {
           <li>
-            <a
-              [href]="source.url"
-              target="_blank"
-              [attr.rel]="source.rel"
-            >
+            <a [href]="source.url" target="_blank" [attr.rel]="source.rel">
               <span class="press-verification-list__type">{{ source.sourceType }}</span>
               <strong>{{ source.name }}</strong>
               <span class="press-verification-list__description">{{ source.description }}</span>

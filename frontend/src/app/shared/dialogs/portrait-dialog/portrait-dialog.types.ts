@@ -1,10 +1,12 @@
 export interface PortraitDialogChip {
   href?: string;
   label: string;
-  icon?: string;
+  iconName: string;
+  iconPath: string;
 }
 
 export interface PortraitDialogFocusPoint {
   label: string;
-  icon: string;
+  iconName: string;
+  iconPath: string;
 }

@@ -9,7 +9,7 @@
     aria-label="Close portrait dialog"
     (click)="close()"
   >
-    <mat-icon svgIcon="portrait-close" aria-hidden="true"></mat-icon>
+    <app-path-icon name="portrait-close" [path]="iconPaths.close" />
   </button>
 
   <div class="portrait-dialog__media">
@@ -28,12 +28,12 @@
 
   <div class="portrait-dialog__content">
     <p class="portrait-dialog__eyebrow">
-      <mat-icon svgIcon="portrait-briefcase" aria-hidden="true"></mat-icon>
+      <app-path-icon name="portrait-briefcase" [path]="iconPaths.briefcase" />
       <span>Operator Profile</span>
     </p>
     <h2 id="portrait-dialog-title" class="portrait-dialog__title">Serhat Soruklu</h2>
     <p class="portrait-dialog__role">
-      <mat-icon svgIcon="portrait-architecture" aria-hidden="true"></mat-icon>
+      <app-path-icon name="portrait-architecture" [path]="iconPaths.architecture" />
       <span>Systems Architect</span>
     </p>
     <p class="portrait-dialog__summary">
@@ -43,7 +43,7 @@
     <ul class="portrait-dialog__list" aria-label="Architecture focus areas">
       @for (item of focusPoints; track item.label) {
         <li>
-          <mat-icon [svgIcon]="item.icon" aria-hidden="true"></mat-icon>
+          <app-path-icon [name]="item.iconName" [path]="item.iconPath" />
           <span>{{ item.label }}</span>
         </li>
       }
@@ -51,7 +51,7 @@
 
     <div class="portrait-dialog__systems" aria-label="Current systems">
       <span class="portrait-dialog__systems-label">
-        <mat-icon svgIcon="portrait-rocket" aria-hidden="true"></mat-icon>
+        <app-path-icon name="portrait-rocket" [path]="iconPaths.rocket" />
         <span>Current systems</span>
       </span>
       <div class="portrait-dialog__chip-row">
@@ -63,10 +63,7 @@
             rel="noopener noreferrer"
             [attr.aria-label]="'Open ' + item.label + ' in a new tab'"
           >
-            <mat-icon
-              [svgIcon]="item.icon || 'portrait-architecture'"
-              aria-hidden="true"
-            ></mat-icon>
+            <app-path-icon [name]="item.iconName" [path]="item.iconPath" />
             <span>{{ item.label }}</span>
           </a>
         }
@@ -79,7 +76,7 @@
     >
       @for (chip of chips; track chip.label) {
         <span class="portrait-dialog__tool-chip">
-          <mat-icon [svgIcon]="chip.icon || 'portrait-code'" aria-hidden="true"></mat-icon>
+          <app-path-icon [name]="chip.iconName" [path]="chip.iconPath" />
           <span class="portrait-dialog__chip-label">{{ chip.label }}</span>
         </span>
       }

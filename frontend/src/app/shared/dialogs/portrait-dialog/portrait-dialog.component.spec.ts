@@ -1,7 +1,7 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatIconRegistry } from '@angular/material/icon';
+import { mdiWeb } from '@mdi/js';
 
 import { ResolvedTheme, ThemeService } from '../../../core/theme/theme.service';
 import { PortraitDialogComponent } from './portrait-dialog.component';
@@ -93,12 +93,19 @@ describe('PortraitDialogComponent', () => {
     expect(lightImage.alt).toBe('Serhat Soruklu seated at his workstation in a bright office.');
   });
 
-  it('registers local icons and closes through the dialog ref', () => {
+  it('renders compile-time icon paths and closes through the dialog ref', () => {
     const fixture = TestBed.createComponent(PortraitDialogComponent);
-    const iconRegistry = TestBed.inject(MatIconRegistry);
     const component = fixture.componentInstance;
+    fixture.detectChanges();
 
-    expect(iconRegistry.getNamedSvgIcon('portrait-domain')).toBeTruthy();
+    const domainIcons = Array.from(
+      fixture.nativeElement.querySelectorAll('[data-mat-icon-name="portrait-domain"]'),
+    ) as HTMLElement[];
+
+    expect(domainIcons).toHaveLength(2);
+    expect(
+      domainIcons.every((icon) => icon.querySelector('path')?.getAttribute('d') === mdiWeb),
+    ).toBe(true);
 
     component.close();
 

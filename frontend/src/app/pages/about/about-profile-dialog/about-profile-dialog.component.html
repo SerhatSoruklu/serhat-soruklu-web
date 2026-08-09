@@ -30,14 +30,14 @@
     </h2>
     <p class="about-profile-dialog__summary">{{ content().dialog.summary }}</p>
 
-    <dl class="about-profile-dialog__details">
+    <div class="about-profile-dialog__details">
       @for (detail of content().dialog.details; track detail.label) {
-        <div>
+        <dl>
           <dt>{{ detail.label }}</dt>
           <dd>{{ detail.value }}</dd>
-        </div>
+        </dl>
       }
-    </dl>
+    </div>
 
     <ul class="about-profile-dialog__chips" [attr.aria-label]="content().dialog.chipsLabel">
       @for (chip of content().dialog.chips; track chip) {

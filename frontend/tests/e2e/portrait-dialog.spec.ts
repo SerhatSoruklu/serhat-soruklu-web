@@ -79,7 +79,7 @@ async function getDialogState(page: Page): Promise<{
   return page.getByTestId('portrait-dialog').evaluate((dialog) => {
     const panel = dialog.closest('.cdk-overlay-pane.serhat-portrait-dialog-panel')!;
     const close = dialog.querySelector('.portrait-dialog__close')!;
-    const closeIcon = close.querySelector('mat-icon')!;
+    const closeIcon = close.querySelector('.mat-icon')!;
     const content = dialog.querySelector('.portrait-dialog__content')!;
     const image = dialog.querySelector(
       '[data-testid="portrait-dialog-portrait-image"]',
@@ -87,7 +87,7 @@ async function getDialogState(page: Page): Promise<{
     const media = dialog.querySelector('.portrait-dialog__media')!;
     const summary = dialog.querySelector('.portrait-dialog__summary')!;
     const title = dialog.querySelector('.portrait-dialog__title')!;
-    const icons = Array.from(dialog.querySelectorAll('mat-icon'));
+    const icons = Array.from(dialog.querySelectorAll('.mat-icon'));
     const dialogBox = dialog.getBoundingClientRect();
     const panelBox = panel.getBoundingClientRect();
     const closeBox = close.getBoundingClientRect();
@@ -173,7 +173,7 @@ async function expectLastDialogContentReachable(page: Page): Promise<void> {
 function trackPortraitTraffic(page: Page): { failed: string[]; requested: string[] } {
   const failed: string[] = [];
   const requested: string[] = [];
-  const portraitPaths = new Set(Object.values(portraits).map(({ path }) => path));
+  const portraitPaths = new Set<string>(Object.values(portraits).map(({ path }) => path));
 
   page.on('request', (request) => {
     const path = new URL(request.url()).pathname;
