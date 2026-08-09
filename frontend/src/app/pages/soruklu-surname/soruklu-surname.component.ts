@@ -1538,17 +1538,11 @@ export class SorukluSurnameComponent implements OnInit, OnDestroy {
     const content = this.content();
 
     this.document.documentElement.lang = content.htmlLang;
-    this.seoService.setMetadata({
+    this.seoService.applyLocalizedIdentityRuntimeMetadata('soruklu-surname', {
       title: content.seo.title,
       description: content.seo.description,
-      canonicalUrl: pageSeoMetadata.sorukluSurname.path,
-      ogImage: pageSeoMetadata.sorukluSurname.ogImage,
-      ogImageAlt: pageSeoMetadata.sorukluSurname.ogImageAlt,
-      ogImageHeight: pageSeoMetadata.sorukluSurname.ogImageHeight,
-      ogImageType: pageSeoMetadata.sorukluSurname.ogImageType,
-      ogImageWidth: pageSeoMetadata.sorukluSurname.ogImageWidth,
+      inLanguage: content.htmlLang,
       locale: this.language() === 'tr' ? 'tr_TR' : 'en_GB',
-      robots: 'index, follow',
     });
   }
 

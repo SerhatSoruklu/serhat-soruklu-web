@@ -50,12 +50,16 @@ export class SiteFooterComponent {
   ];
 
   readonly identityLinks: FooterLink[] = [
+    { label: 'About', path: '/about' },
     { label: 'Soruklu surname', path: '/soruklu-surname' },
     { label: 'Soruklu Order', path: '/soruklu-order' },
     { label: 'Velari', path: '/velari' },
   ];
 
-  readonly reachLinks: FooterLink[] = [{ label: 'Contact', path: '/contact' }];
+  readonly reachLinks: FooterLink[] = [
+    { label: 'Contact', path: '/contact' },
+    { label: 'Press / Media', path: '/press' },
+  ];
 
   openLanguageDialog(): void {
     void this.languageDialog.open();

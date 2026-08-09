@@ -4,6 +4,7 @@ import { pageSeoMetadata } from '../../src/app/core/seo/seo.config';
 import { installConsoleErrorGuard } from './support/console-errors';
 
 const surnamePath = '/soruklu-surname';
+const aboutPath = '/about';
 const orderPath = '/soruklu-order';
 const canonicalUrl = `https://serhatsoruklu.com${surnamePath}`;
 const numberedSourceCount = 25;
@@ -76,9 +77,7 @@ test.describe('Soruklu surname', () => {
       page.getByText('What can—and cannot—be concluded.', { exact: true }),
     ).toBeVisible();
     await expect(page.getByText('What remains unproven', { exact: true })).toBeVisible();
-    await expect(
-      page.getByText('Research frozen · 7 August 2026', { exact: true }),
-    ).toBeVisible();
+    await expect(page.getByText('Research frozen · 7 August 2026', { exact: true })).toBeVisible();
     await expect(page.getByText('Frozen pending new evidence', { exact: true })).toBeVisible();
     await expect(
       page.getByRole('heading', { level: 2, name: 'The living footprint of a rare surname' }),
@@ -136,7 +135,9 @@ test.describe('Soruklu surname', () => {
       page.getByText('Yeni kanıt bulunana kadar donduruldu', { exact: true }),
     ).toBeVisible();
     await expect(page.getByText('Nadir bir soyadının yaşayan izi', { exact: true })).toBeVisible();
-    await expect(page.getByText('Tâceddin meselesi henüz çözülemedi', { exact: true })).toBeVisible();
+    await expect(
+      page.getByText('Tâceddin meselesi henüz çözülemedi', { exact: true }),
+    ).toBeVisible();
     await expect(page.getByText('Kaynak notları', { exact: true })).toBeVisible();
     await expect(languageSwitch).toContainText('Read in English');
     await expect(page.locator('html')).toHaveAttribute('lang', 'tr-TR');
@@ -172,6 +173,7 @@ test.describe('Soruklu surname', () => {
 
     const identity = page.locator('[aria-labelledby="site-footer-identity-title"]');
     await expect(identity.locator('.site-footer__link')).toHaveText([
+      'About',
       'Soruklu surname',
       'Soruklu Order',
       'Velari',
@@ -180,7 +182,7 @@ test.describe('Soruklu surname', () => {
       await identity
         .locator('.site-footer__link')
         .evaluateAll((links) => links.map((link) => link.getAttribute('href'))),
-    ).toEqual([surnamePath, orderPath, '/velari']);
+    ).toEqual([aboutPath, surnamePath, orderPath, '/velari']);
     await expect(
       identity.getByRole('link', { name: 'Soruklu surname', exact: true }),
     ).toHaveAttribute('aria-current', 'page');
@@ -226,15 +228,11 @@ test.describe('Soruklu surname', () => {
 
     const readLayout = () =>
       page.evaluate(() => {
-        const frame = globalThis.document
-          .querySelector('.surname-frame')
-          ?.getBoundingClientRect();
+        const frame = globalThis.document.querySelector('.surname-frame')?.getBoundingClientRect();
         const closing = globalThis.document
           .querySelector('.surname-closing')
           ?.getBoundingClientRect();
-        const footer = globalThis.document
-          .querySelector('.site-footer')
-          ?.getBoundingClientRect();
+        const footer = globalThis.document.querySelector('.site-footer')?.getBoundingClientRect();
 
         return {
           bodyWidth: globalThis.document.body.scrollWidth,

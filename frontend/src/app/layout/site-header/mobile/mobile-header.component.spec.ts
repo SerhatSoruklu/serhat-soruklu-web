@@ -94,11 +94,13 @@ describe('MobileHeaderComponent', () => {
     expect(
       fixture.nativeElement.querySelector('[data-testid="mobile-header"]')?.getAttribute('lang'),
     ).toBe('en-GB');
-    expect(
-      fixture.nativeElement.querySelector('.mobile-nav__identity')?.getAttribute('lang'),
-    ).toBe('tr-TR');
+    expect(fixture.nativeElement.querySelector('.mobile-nav__identity')?.getAttribute('lang')).toBe(
+      'tr-TR',
+    );
     expect(identityText).toContain('Kimlik');
+    expect(identityText).toContain('Hakkında');
     expect(identityText).toContain('Soruklu Soyadı');
+    expect(identityText).not.toContain('About');
     expect(identityText).not.toContain('Soruklu Surname');
     expect(
       fixture.nativeElement
@@ -133,7 +135,7 @@ describe('MobileHeaderComponent', () => {
 
     expect(trigger.getAttribute('aria-expanded')).toBe('true');
     expect(component.menuOpen()).toBe(true);
-    expect(links).toEqual(['/soruklu-surname', '/soruklu-order', '/velari']);
+    expect(links).toEqual(['/about', '/soruklu-surname', '/soruklu-order', '/velari']);
 
     component.closeMenu();
     expect(component.identityMenuOpen()).toBe(false);

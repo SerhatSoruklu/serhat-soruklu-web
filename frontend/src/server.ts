@@ -347,6 +347,12 @@ function sendKnownRouteRedirect(
     case '/':
       location = `${origin}/`;
       break;
+    case '/about':
+      location = `${origin}/about`;
+      break;
+    case '/press':
+      location = `${origin}/press`;
+      break;
     case '/404':
       location = `${origin}/404`;
       break;

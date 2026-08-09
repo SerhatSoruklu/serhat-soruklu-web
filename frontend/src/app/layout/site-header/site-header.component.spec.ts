@@ -78,16 +78,16 @@ describe('SiteHeaderComponent', () => {
     );
 
     expect(
-      menu.querySelector<HTMLButtonElement>('[data-testid="identity-language-en"]')?.getAttribute(
-        'aria-pressed',
-      ),
+      menu
+        .querySelector<HTMLButtonElement>('[data-testid="identity-language-en"]')
+        ?.getAttribute('aria-pressed'),
     ).toBe('true');
 
     turkishButton?.click();
     fixture.detectChanges();
 
-    const routeLabels = Array.from(menu.querySelectorAll('.identity-selector__route')).map(
-      (link) => link.textContent?.replace(/\s+/g, ' ').trim(),
+    const routeLabels = Array.from(menu.querySelectorAll('.identity-selector__route')).map((link) =>
+      link.textContent?.replace(/\s+/g, ' ').trim(),
     );
 
     expect(component.identityLanguage.language()).toBe('tr');
@@ -95,21 +95,24 @@ describe('SiteHeaderComponent', () => {
     expect(
       fixture.nativeElement.querySelector('[data-testid="desktop-header"]')?.getAttribute('lang'),
     ).toBe('en-GB');
-    expect(
-      fixture.nativeElement.querySelector('.identity-selector')?.getAttribute('lang'),
-    ).toBe('tr-TR');
+    expect(fixture.nativeElement.querySelector('.identity-selector')?.getAttribute('lang')).toBe(
+      'tr-TR',
+    );
     expect(
       fixture.nativeElement
         .querySelector('[data-testid="desktop-identity-button"]')
         ?.textContent?.replace(/\s+/g, ' '),
     ).toContain('Kimlik');
     expect(menu.getAttribute('aria-label')).toBe('Kimlik sayfaları');
-    expect(
-      menu.querySelector('[data-testid="desktop-identity-note"]')?.textContent?.trim(),
-    ).toBe(
+    expect(menu.querySelector('[data-testid="desktop-identity-note"]')?.textContent?.trim()).toBe(
       'Şu anda yalnızca Kimlik sayfalarının Türkçe çevirisi var. Sitenin geri kalanı İngilizcedir.',
     );
-    expect(routeLabels).toEqual(['01 Soruklu Soyadı→', '02 Soruklu Order→', '03 Velari→']);
+    expect(routeLabels).toEqual([
+      '01 Hakkında→',
+      '02 Soruklu Soyadı→',
+      '03 Soruklu Order→',
+      '04 Velari→',
+    ]);
     expect(turkishButton?.getAttribute('aria-pressed')).toBe('true');
     expect(globalThis.localStorage.getItem('serhatsoruklu-identity-language')).toBe('tr');
     expect(globalThis.sessionStorage.getItem('serhatsoruklu-surname-language')).toBe('tr');
@@ -133,7 +136,7 @@ describe('SiteHeaderComponent', () => {
     ).map((link) => (link as HTMLAnchorElement).getAttribute('href'));
 
     expect(trigger.getAttribute('aria-expanded')).toBe('true');
-    expect(links).toEqual(['/soruklu-surname', '/soruklu-order', '/velari']);
+    expect(links).toEqual(['/about', '/soruklu-surname', '/soruklu-order', '/velari']);
 
     component.closeIdentityMenu();
     expect(component.identityMenuOpen()).toBe(false);

@@ -1,7 +1,9 @@
+import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatIconRegistry } from '@angular/material/icon';
+import { mdiWeb } from '@mdi/js';
 
+import { ResolvedTheme, ThemeService } from '../../../core/theme/theme.service';
 import { PortraitDialogComponent } from './portrait-dialog.component';
 import { PortraitDialogService } from './portrait-dialog.service';
 
@@ -11,19 +13,27 @@ describe('PortraitDialogComponent', () => {
   beforeEach(async () => {
     closeCalled = false;
     globalThis.localStorage.clear();
+    const resolvedTheme = signal<ResolvedTheme>('dark');
 
     await TestBed.configureTestingModule({
       imports: [PortraitDialogComponent],
       providers: [
         {
+          provide: ThemeService,
+          useValue: {
+            resolvedTheme: resolvedTheme.asReadonly(),
+            setTheme: (theme: ResolvedTheme) => resolvedTheme.set(theme),
+          },
+        },
+        {
           provide: MatDialogRef,
           useValue: {
             close: () => {
               closeCalled = true;
-            }
-          }
-        }
-      ]
+            },
+          },
+        },
+      ],
     }).compileComponents();
   });
 
@@ -31,7 +41,9 @@ describe('PortraitDialogComponent', () => {
     const fixture = TestBed.createComponent(PortraitDialogComponent);
     fixture.detectChanges();
 
-    const links = Array.from(fixture.nativeElement.querySelectorAll('.portrait-dialog__system-chip')) as HTMLAnchorElement[];
+    const links = Array.from(
+      fixture.nativeElement.querySelectorAll('.portrait-dialog__system-chip'),
+    ) as HTMLAnchorElement[];
 
     expect(links.length).toBe(2);
     expect(links.map((link) => link.textContent?.trim())).toEqual(['Coupyn.com', 'ChatPDM.com']);
@@ -40,26 +52,60 @@ describe('PortraitDialogComponent', () => {
     expect(links.every((link) => link.rel === 'noopener noreferrer')).toBe(true);
   });
 
-  it('tracks the resolved portrait theme', () => {
+  it('renders one intrinsic portrait and updates the same image for the resolved theme', () => {
     const fixture = TestBed.createComponent(PortraitDialogComponent);
     const component = fixture.componentInstance;
 
+    fixture.detectChanges();
+
+    const darkImage = fixture.nativeElement.querySelector(
+      '[data-testid="portrait-dialog-portrait-image"]',
+    ) as HTMLImageElement;
+
     expect(component.isLightPortrait()).toBe(false);
+    expect(
+      fixture.nativeElement.querySelectorAll('[data-testid="portrait-dialog-portrait-image"]'),
+    ).toHaveLength(1);
+    expect(darkImage.getAttribute('src')).toBe('/assets/home/serhat-soruklu-founder-dark.png');
+    expect(darkImage.getAttribute('data-portrait-theme')).toBe('dark');
+    expect(darkImage.getAttribute('width')).toBe('1448');
+    expect(darkImage.getAttribute('height')).toBe('1086');
+    expect(darkImage.getAttribute('decoding')).toBe('async');
+    expect(darkImage.getAttribute('loading')).toBe('eager');
+    expect(darkImage.alt).toBe('Serhat Soruklu seated at his workstation in a dark office.');
+    expect(
+      fixture.nativeElement.querySelector('.portrait-dialog__summary')?.textContent?.trim(),
+    ).toBe('Founder and solo operator building production web systems with a focus on:');
 
     component.themeService.setTheme('light');
     TestBed.flushEffects();
     fixture.detectChanges();
 
+    const lightImage = fixture.nativeElement.querySelector(
+      '[data-testid="portrait-dialog-portrait-image"]',
+    ) as HTMLImageElement;
+
     expect(component.isLightPortrait()).toBe(true);
     expect(fixture.nativeElement.querySelector('.portrait-dialog--light-portrait')).not.toBeNull();
+    expect(lightImage).toBe(darkImage);
+    expect(lightImage.getAttribute('src')).toBe('/assets/home/serhat-soruklu-founder-light.png');
+    expect(lightImage.getAttribute('data-portrait-theme')).toBe('light');
+    expect(lightImage.alt).toBe('Serhat Soruklu seated at his workstation in a bright office.');
   });
 
-  it('registers local icons and closes through the dialog ref', () => {
+  it('renders compile-time icon paths and closes through the dialog ref', () => {
     const fixture = TestBed.createComponent(PortraitDialogComponent);
-    const iconRegistry = TestBed.inject(MatIconRegistry);
     const component = fixture.componentInstance;
+    fixture.detectChanges();
 
-    expect(iconRegistry.getNamedSvgIcon('portrait-domain')).toBeTruthy();
+    const domainIcons = Array.from(
+      fixture.nativeElement.querySelectorAll('[data-mat-icon-name="portrait-domain"]'),
+    ) as HTMLElement[];
+
+    expect(domainIcons).toHaveLength(2);
+    expect(
+      domainIcons.every((icon) => icon.querySelector('path')?.getAttribute('d') === mdiWeb),
+    ).toBe(true);
 
     component.close();
 

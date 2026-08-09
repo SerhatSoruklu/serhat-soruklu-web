@@ -14,6 +14,7 @@ const CONTACT_TOPICS = [
   'Coupyn',
   'ChatPDM',
   'Collaboration',
+  'Press / media enquiry',
   'Other'
 ];
 const CONTACT_TO_DEFAULT = 'mail@serhatsoruklu.com';

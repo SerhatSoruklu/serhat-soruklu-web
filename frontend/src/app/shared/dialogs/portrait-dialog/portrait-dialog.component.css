@@ -37,7 +37,7 @@
     radial-gradient(circle at 12% 12%, rgba(214, 168, 79, 0.12), transparent 30%),
     linear-gradient(135deg, rgba(16, 20, 28, 0.98), rgba(7, 9, 13, 0.98));
   color: #f5f7fa;
-  font-family: "Sora", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-family: 'Sora', Inter, ui-sans-serif, system-ui, sans-serif;
   box-shadow:
     0 26px 72px rgba(0, 0, 0, 0.42),
     0 0 0 1px rgba(245, 247, 250, 0.04) inset;
@@ -60,10 +60,14 @@
   background: rgba(7, 9, 13, 0.66);
   color: #f0d58c;
   cursor: pointer;
-  transition: border-color 160ms ease, box-shadow 160ms ease, color 160ms ease, background 160ms ease;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease,
+    background 160ms ease;
 }
 
-.portrait-dialog__close mat-icon {
+.portrait-dialog__close app-path-icon {
   width: 22px;
   height: 22px;
   display: block;
@@ -88,46 +92,23 @@
   align-items: center;
   justify-content: center;
   background:
-    radial-gradient(ellipse at 50% 20%, rgba(214, 168, 79, 0.12), transparent 44%),
-    #020306;
+    radial-gradient(ellipse at 50% 20%, rgba(214, 168, 79, 0.12), transparent 44%), #020306;
 }
 
 .portrait-dialog__media::after {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  content: "";
+  content: '';
   background: linear-gradient(90deg, transparent 78%, rgba(7, 9, 13, 0.4));
 }
 
-.portrait-dialog__portrait-layer {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 260ms ease;
-}
-
-.portrait-dialog__portrait-layer--dark {
+.portrait-dialog__portrait-image {
   position: relative;
-  opacity: 1;
-}
-
-.portrait-dialog--light-portrait .portrait-dialog__portrait-layer--dark {
-  opacity: 0;
-}
-
-.portrait-dialog--light-portrait .portrait-dialog__portrait-layer--light {
-  opacity: 1;
-}
-
-.portrait-dialog__portrait-layer img {
+  z-index: 1;
+  display: block;
   width: 100%;
   height: 100%;
-  display: block;
   object-fit: contain;
   object-position: center;
 }
@@ -143,7 +124,7 @@
 .portrait-dialog__eyebrow,
 .portrait-dialog__role,
 .portrait-dialog__systems-label {
-  font-family: "Space Mono", "IBM Plex Mono", monospace;
+  font-family: 'Space Mono', 'IBM Plex Mono', monospace;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -158,9 +139,9 @@
   letter-spacing: 0.18em;
 }
 
-.portrait-dialog__eyebrow mat-icon,
-.portrait-dialog__role mat-icon,
-.portrait-dialog__systems-label mat-icon {
+.portrait-dialog__eyebrow app-path-icon,
+.portrait-dialog__role app-path-icon,
+.portrait-dialog__systems-label app-path-icon {
   width: 17px;
   height: 17px;
   flex: 0 0 auto;
@@ -170,7 +151,7 @@
 .portrait-dialog__title {
   margin: 0;
   color: #f5f7fa;
-  font-family: "Sora", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-family: 'Sora', Inter, ui-sans-serif, system-ui, sans-serif;
   font-size: clamp(34px, 4vw, 46px);
   font-weight: 700;
   letter-spacing: 0;
@@ -214,7 +195,7 @@
   line-height: 1.35;
 }
 
-.portrait-dialog__list mat-icon {
+.portrait-dialog__list app-path-icon {
   width: 18px;
   height: 18px;
   color: #d6a84f;
@@ -259,7 +240,11 @@
 
 .portrait-dialog__system-chip {
   cursor: pointer;
-  transition: border-color 160ms ease, background 160ms ease, color 160ms ease, box-shadow 160ms ease;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .portrait-dialog__system-chip:hover,
@@ -271,8 +256,8 @@
   outline: none;
 }
 
-.portrait-dialog__system-chip mat-icon,
-.portrait-dialog__tool-chip mat-icon {
+.portrait-dialog__system-chip app-path-icon,
+.portrait-dialog__tool-chip app-path-icon {
   width: 15px;
   height: 15px;
   flex: 0 0 auto;
@@ -301,8 +286,7 @@
 
 .theme-resolved-light .portrait-dialog__media {
   background:
-    radial-gradient(ellipse at 50% 20%, rgba(184, 135, 47, 0.12), transparent 44%),
-    #f8f7f3;
+    radial-gradient(ellipse at 50% 20%, rgba(184, 135, 47, 0.12), transparent 44%), #f8f7f3;
 }
 
 .theme-resolved-light .portrait-dialog__media::after {
@@ -358,9 +342,9 @@
   background: rgba(255, 255, 255, 0.58);
 }
 
-.theme-resolved-light .portrait-dialog__list mat-icon,
-.theme-resolved-light .portrait-dialog__system-chip mat-icon,
-.theme-resolved-light .portrait-dialog__tool-chip mat-icon {
+.theme-resolved-light .portrait-dialog__list app-path-icon,
+.theme-resolved-light .portrait-dialog__system-chip app-path-icon,
+.theme-resolved-light .portrait-dialog__tool-chip app-path-icon {
   color: #b8872f;
 }
 
@@ -442,8 +426,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .portrait-dialog,
-  .portrait-dialog__close,
-  .portrait-dialog__portrait-layer {
+  .portrait-dialog__close {
     animation: none;
     transition: none;
   }

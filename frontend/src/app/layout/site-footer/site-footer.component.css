@@ -22,6 +22,8 @@
   transform: translateX(-50%);
 }
 
+:host-context(.site-main--about-atmosphere) .site-footer::before,
+:host-context(.site-main--press-atmosphere) .site-footer::before,
 :host-context(.site-main--order-atmosphere) .site-footer::before,
 :host-context(.site-main--surname-atmosphere) .site-footer::before {
   background: linear-gradient(
@@ -45,6 +47,8 @@
   opacity: 0;
 }
 
+:host-context(.site-main--about-atmosphere) .site-footer::after,
+:host-context(.site-main--press-atmosphere) .site-footer::after,
 :host-context(.site-main--order-atmosphere) .site-footer::after,
 :host-context(.site-main--surname-atmosphere) .site-footer::after,
 :host-context(.site-main--velari-atmosphere) .site-footer::after {
@@ -53,6 +57,40 @@
   z-index: 0;
   content: '';
   pointer-events: none;
+}
+
+:host-context(.site-main--about-atmosphere) .site-footer::after {
+  background: radial-gradient(
+    ellipse 760px 320px at 50% 0%,
+    rgba(214, 168, 79, 0.12),
+    transparent 62%
+  );
+}
+
+:host-context(.site-main--press-atmosphere) .site-footer::after {
+  background: radial-gradient(
+    ellipse 760px 340px at 50% 0%,
+    rgba(214, 168, 79, 0.1),
+    transparent 72%
+  );
+}
+
+:host-context(.theme-resolved-light):host-context(.site-main--about-atmosphere)
+  .site-footer::after {
+  background: radial-gradient(
+    ellipse 760px 320px at 50% 0%,
+    rgba(184, 135, 47, 0.12),
+    transparent 62%
+  );
+}
+
+:host-context(.theme-resolved-light):host-context(.site-main--press-atmosphere)
+  .site-footer::after {
+  background: radial-gradient(
+    ellipse 760px 340px at 50% 0%,
+    rgba(184, 135, 47, 0.09),
+    transparent 72%
+  );
 }
 
 :host-context(.site-main--order-atmosphere) .site-footer::after,
@@ -574,6 +612,14 @@
   }
 }
 
+@media (max-width: 1279px) {
+  .site-footer__group--reach .site-footer__link {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+}
+
 @media (max-width: 389px) {
   .site-footer__brand {
     align-items: flex-start;
@@ -601,9 +647,14 @@
   }
 
   .site-footer__nav {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     column-gap: 12px;
     row-gap: 22px;
+  }
+
+  .site-footer__group--reach .site-footer__link {
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
   }
 }
 

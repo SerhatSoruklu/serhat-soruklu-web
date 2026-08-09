@@ -14,7 +14,9 @@ export interface SeoMetadata {
 
 export type RobotsDirective = 'index, follow' | 'noindex, nofollow' | 'noindex, follow';
 export type StructuredDataProfile =
+  | 'about'
   | 'breadcrumb'
+  | 'press'
   | 'soruklu-surname'
   | 'soruklu-order'
   | 'velari'
@@ -22,7 +24,7 @@ export type StructuredDataProfile =
 
 const canonicalBaseUrl = 'https://serhatsoruklu.com';
 const defaultOgImage = '/assets/social/serhat-soruklu-og.png';
-const defaultPersonImage = '/assets/portfolio-image/serhat-soruklu-portrait-818.jpg';
+const defaultPersonImage = '/assets/about/serhat-soruklu-ceo-founder-of-coupyn.png';
 const rasterSocialImage = {
   ogImageHeight: 630,
   ogImageType: 'image/png',
@@ -32,13 +34,39 @@ const rasterSocialImage = {
 export const pageSeoMetadata = {
   home: {
     label: 'Home',
-    title: 'Systems Architect | Serhat Soruklu',
+    title: 'Serhat Soruklu | Systems Architect & Founder',
     description:
-      'Systems architecture, software engineering, and modern digital infrastructure built with precision, scale, and long-term thinking.',
+      'Serhat Soruklu is the founder and CEO of Coupyn, a systems architect and solo full-stack developer building production platforms and infrastructure.',
     path: '/',
     ogImage: defaultOgImage,
     ogImageAlt: 'Serhat Soruklu systems architect identity in deep navy and gold.',
     ...rasterSocialImage,
+  },
+  about: {
+    label: 'About',
+    title: 'About Serhat Soruklu | Founder & CEO of Coupyn',
+    description:
+      'Serhat Soruklu is a London-based software developer and founder of Coupyn. Read his journey from Osmancık and Tottenham to production-scale systems.',
+    path: '/about',
+    ogImage: '/assets/social/serhat-soruklu-about-og.png',
+    ogImageAlt:
+      'Portrait of Serhat Soruklu, founder and CEO of Coupyn, alongside his journey from Osmancık and Tottenham to building production systems.',
+    ...rasterSocialImage,
+    robots: 'index, follow',
+    structuredData: 'about',
+  },
+  press: {
+    label: 'Press / Media',
+    title: 'Press & Media | Serhat Soruklu',
+    description:
+      'Verified biographies, company facts, media assets and public reference links for coverage of Serhat Soruklu and Coupyn.',
+    path: '/press',
+    ogImage: '/assets/social/serhat-soruklu-press-og.png',
+    ogImageAlt:
+      'Serhat Soruklu press and media reference card with his portrait and Founder and CEO of Coupyn title.',
+    ...rasterSocialImage,
+    robots: 'index, follow',
+    structuredData: 'press',
   },
   work: {
     label: 'Work',
@@ -81,8 +109,8 @@ export const pageSeoMetadata = {
     ...rasterSocialImage,
   },
   dbfSystem: {
-    label: 'DBF',
-    title: 'DBF System | Serhat Soruklu',
+    label: 'Deterministic Boundary Firewall',
+    title: 'Deterministic Boundary Firewall | Serhat Soruklu',
     description:
       "Deterministic Boundary Firewall is Serhat Soruklu's research system for bounded pre-egress checks, refusal payloads, MCP parity, and drift-safe gates.",
     path: '/systems/deterministic-boundary-firewall',
@@ -91,8 +119,8 @@ export const pageSeoMetadata = {
     ...rasterSocialImage,
   },
   cimSystem: {
-    label: 'CIM',
-    title: 'CIM System | Serhat Soruklu',
+    label: 'Continuity Identity Model',
+    title: 'Continuity Identity Model | Serhat Soruklu',
     description:
       "Continuity Identity Model is Serhat Soruklu's deterministic protocol for identity continuity, state change, and inherited authority in machine actors.",
     path: '/systems/continuity-identity-model',

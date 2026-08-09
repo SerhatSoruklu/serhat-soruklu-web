@@ -163,6 +163,15 @@ describe('SorukluSurnameComponent', () => {
     expect(document.querySelector('meta[property="og:locale"]')?.getAttribute('content')).toBe(
       'tr_TR',
     );
+    const turkishGraph = JSON.parse(
+      document.getElementById('page-json-ld')?.textContent ?? '{}',
+    ) as { '@graph': Array<Record<string, unknown>> };
+    expect(
+      turkishGraph['@graph'].find((entity) => entity['@type'] === 'AboutPage')?.['inLanguage'],
+    ).toBe('tr-TR');
+    expect(
+      turkishGraph['@graph'].find((entity) => entity['@type'] === 'DefinedTerm')?.['inLanguage'],
+    ).toBe('tr-TR');
 
     button?.click();
     fixture.detectChanges();
@@ -174,6 +183,12 @@ describe('SorukluSurnameComponent', () => {
     expect(title.getTitle()).toBe(pageSeoMetadata.sorukluSurname.title);
     expect(document.documentElement.lang).toBe('en-GB');
     expect(globalThis.sessionStorage.getItem('serhatsoruklu-surname-language')).toBe('en');
+    const englishGraph = JSON.parse(
+      document.getElementById('page-json-ld')?.textContent ?? '{}',
+    ) as { '@graph': Array<Record<string, unknown>> };
+    expect(
+      englishGraph['@graph'].find((entity) => entity['@type'] === 'AboutPage')?.['inLanguage'],
+    ).toBe('en-GB');
   });
 
   it('uses safe external citations and clear internal cross-links', () => {

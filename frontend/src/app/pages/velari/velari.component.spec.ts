@@ -68,6 +68,17 @@ describe('VelariComponent', () => {
     expect(turkishText).toContain('Işık bize yol göstersin.');
     expect(turkishText).not.toContain('A modern belief framework');
     expect(turkishText).not.toContain('Continue with discipline.');
+    const turkishGraph = JSON.parse(
+      document.getElementById('page-json-ld')?.textContent ?? '{}',
+    ) as { '@graph': Array<Record<string, unknown>> };
+    expect(
+      turkishGraph['@graph'].find((entity) => entity['@type'] === 'AboutPage')?.['inLanguage'],
+    ).toBe('tr-TR');
+    expect(
+      turkishGraph['@graph'].find(
+        (entity) => entity['@type'] === 'CreativeWork' && entity['name'] === 'Velari',
+      )?.['inLanguage'],
+    ).toBe('tr-TR');
 
     switchButton?.click();
     fixture.detectChanges();
@@ -76,6 +87,12 @@ describe('VelariComponent', () => {
     expect(document.documentElement.lang).toBe('en-GB');
     expect(title.getTitle()).toBe(pageSeoMetadata.velari.title);
     expect(nativeElement.textContent).toContain('A modern belief framework');
+    const englishGraph = JSON.parse(
+      document.getElementById('page-json-ld')?.textContent ?? '{}',
+    ) as { '@graph': Array<Record<string, unknown>> };
+    expect(
+      englishGraph['@graph'].find((entity) => entity['@type'] === 'AboutPage')?.['inLanguage'],
+    ).toBe('en-GB');
   });
 
   it('presents Velari as an authored modern belief framework within the first section', () => {

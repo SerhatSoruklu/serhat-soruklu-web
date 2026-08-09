@@ -360,9 +360,11 @@ test.describe('responsive shell header', () => {
       desktopHeader.getByRole('link', { name: /Serhat Soruklu.*Systems Architect/i }),
     ).toBeVisible();
     await expect(desktopHeader.getByText('SYSTEMS ARCHITECT')).toBeVisible();
-    await expect(
-      desktopHeader.getByRole('navigation', { name: 'Primary navigation' }),
-    ).toBeVisible();
+    const primaryNavigation = desktopHeader.getByRole('navigation', {
+      name: 'Primary navigation',
+    });
+    await expect(primaryNavigation).toBeVisible();
+    await expect(primaryNavigation.getByRole('link', { name: /press/i })).toHaveCount(0);
     await expect(desktopHeader.getByRole('link', { name: 'Work' })).toBeVisible();
     await expect(
       desktopHeader.getByRole('link', { name: 'Work' }).locator('.site-nav__icon'),
@@ -401,6 +403,13 @@ test.describe('responsive shell header', () => {
     await identityButton.hover();
     const identityMenu = page.getByTestId('desktop-identity-menu');
     await expect(identityMenu).toBeVisible();
+    await expect(identityMenu.getByRole('link', { name: /press/i })).toHaveCount(0);
+    await expect(identityMenu.getByRole('link')).toHaveCount(4);
+    expect(
+      await identityMenu
+        .getByRole('link')
+        .evaluateAll((links) => links.map((link) => link.getAttribute('href'))),
+    ).toEqual(['/about', '/soruklu-surname', '/soruklu-order', '/velari']);
 
     const buttonBox = await identityButton.boundingBox();
     const menuBox = await identityMenu.boundingBox();
@@ -682,8 +691,10 @@ test.describe('responsive shell header', () => {
         mobileNav.getByRole('link', { name: 'GitHub' }).locator('svg.mobile-nav__github-icon'),
       ).toBeVisible();
       await expect(mobileNav.getByRole('link', { name: 'Contact' })).toBeVisible();
+      await expect(mobileNav.getByRole('link', { name: /press/i })).toHaveCount(0);
 
       const identityRoutes = [
+        { label: 'About', path: '/about' },
         { label: 'Soruklu Surname', path: '/soruklu-surname' },
         { label: 'Soruklu Order', path: '/soruklu-order' },
         { label: 'Velari', path: '/velari' },
@@ -702,7 +713,8 @@ test.describe('responsive shell header', () => {
 
         const identityChooser = mobileNav.getByTestId('mobile-identity-routes');
         await expect(identityChooser).toBeVisible();
-        await expect(identityChooser.getByRole('link')).toHaveCount(3);
+        await expect(identityChooser.getByRole('link', { name: /press/i })).toHaveCount(0);
+        await expect(identityChooser.getByRole('link')).toHaveCount(4);
         await identityChooser.getByRole('link', { name: identityRoute.label }).click();
         await expect(page).toHaveURL(identityRoute.path);
         await expect(mobileNav).toBeHidden();

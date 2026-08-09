@@ -27,7 +27,7 @@
   left: 0;
   height: 220px;
   pointer-events: none;
-  content: "";
+  content: '';
   background: linear-gradient(180deg, transparent, rgba(7, 9, 13, 0.045) 48%, transparent);
 }
 
@@ -101,7 +101,7 @@
 .home-section__phase {
   margin: 0;
   color: #d6a84f;
-  font-family: "Space Mono", "IBM Plex Mono", "JetBrains Mono", monospace;
+  font-family: 'Space Mono', 'IBM Plex Mono', 'JetBrains Mono', monospace;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -123,7 +123,7 @@
 h1,
 h2 {
   margin: 0;
-  font-family: "Sora", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-family: 'Sora', Inter, ui-sans-serif, system-ui, sans-serif;
   font-weight: 700;
   letter-spacing: 0;
 }
@@ -242,7 +242,7 @@ h1 span {
   position: relative;
   isolation: isolate;
   box-sizing: border-box;
-  width: min(100%, 360px);
+  width: min(100%, 620px);
   margin: 0 auto;
 }
 
@@ -260,7 +260,7 @@ h1 span {
 .home-hero__portrait::before {
   position: absolute;
   pointer-events: none;
-  content: "";
+  content: '';
 }
 
 .home-hero__portrait::before {
@@ -278,7 +278,7 @@ h1 span {
   position: relative;
   z-index: 1;
   display: block;
-  aspect-ratio: 818 / 1022;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   border: 1px solid rgba(214, 168, 79, 0.22);
   border-radius: 28px;
@@ -287,17 +287,18 @@ h1 span {
     0 22px 54px rgba(0, 0, 0, 0.3),
     0 0 0 1px rgba(245, 247, 250, 0.04) inset;
   transform: translateZ(0);
-  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
 }
 
-.home-hero__portrait-trigger:hover .home-hero__portrait-frame,
 .home-hero__portrait-trigger:focus-visible .home-hero__portrait-frame {
   border-color: rgba(214, 168, 79, 0.42);
   box-shadow:
     0 28px 64px rgba(0, 0, 0, 0.34),
     0 0 0 1px rgba(240, 213, 140, 0.12) inset,
     0 0 0 3px rgba(214, 168, 79, 0.08);
-  transform: scale(1.012);
 }
 
 .home-hero__portrait-trigger:focus-visible {
@@ -306,35 +307,55 @@ h1 span {
   outline-offset: 7px;
 }
 
-.home-hero__portrait-layer {
-  position: absolute;
-  inset: 0;
+.home-hero__portrait-picture {
+  width: 100%;
+  height: 100%;
   display: block;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 260ms ease;
-}
-
-.home-hero__portrait-layer--dark {
-  position: relative;
-  opacity: 1;
 }
 
 .home-hero__portrait img {
   width: 100%;
   height: 100%;
   display: block;
-  filter: saturate(0.92) contrast(1.04);
   object-fit: cover;
   object-position: center;
+  transition: transform 220ms ease;
 }
 
-:host-context(.theme-resolved-light) .home-hero__portrait-layer--dark {
-  opacity: 0;
+/*
+ * Existing visitors can have a localStorage preference but no SSR theme cookie
+ * on their first request after this migration. The head prepaint class is
+ * authoritative in that case, so keep a mismatched server portrait hidden
+ * inside its stable themed frame until hydration selects the correct source.
+ */
+:host-context(.theme-resolved-dark) .home-hero__portrait img[data-portrait-theme='light'],
+:host-context(.theme-resolved-light) .home-hero__portrait img[data-portrait-theme='dark'],
+.home-hero__portrait img[data-portrait-theme='dark']:not([data-portrait-ready-theme='dark']),
+.home-hero__portrait img[data-portrait-theme='light']:not([data-portrait-ready-theme='light']) {
+  visibility: hidden;
 }
 
-:host-context(.theme-resolved-light) .home-hero__portrait-layer--light {
-  opacity: 1;
+.home-hero__portrait-action {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(240, 213, 140, 0.34);
+  border-radius: 999px;
+  padding: 8px 11px;
+  background: rgba(7, 9, 13, 0.78);
+  color: #f5f7fa;
+  font-family: 'Space Mono', 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease;
 }
 
 .home-systems {
@@ -354,7 +375,7 @@ h1 span {
   right: 20px;
   height: 1px;
   pointer-events: none;
-  content: "";
+  content: '';
   background: linear-gradient(90deg, transparent, rgba(214, 168, 79, 0.09), transparent);
 }
 
@@ -421,7 +442,7 @@ h1 span {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  content: "";
+  content: '';
   background: linear-gradient(90deg, rgba(214, 168, 79, 0.12), transparent 28%, transparent);
   opacity: 0.5;
 }
@@ -435,7 +456,7 @@ h1 span {
 .system-panel__eyebrow {
   margin: 0 0 12px;
   color: #d6a84f;
-  font-family: "Space Mono", "IBM Plex Mono", "JetBrains Mono", monospace;
+  font-family: 'Space Mono', 'IBM Plex Mono', 'JetBrains Mono', monospace;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -491,7 +512,7 @@ h1 span {
 
 .project-logo__coupyn-word {
   color: #f8fafc;
-  font-family: "Coupyn Logo Open Sans", "Open Sans", Arial, sans-serif;
+  font-family: 'Coupyn Logo Open Sans', 'Open Sans', Arial, sans-serif;
   font-size: clamp(34px, 5vw, 52px);
   font-weight: 700;
   letter-spacing: -0.04em;
@@ -501,7 +522,8 @@ h1 span {
 .project-logo__coupyn-script {
   margin-left: -2px;
   color: #72acf3;
-  font-family: "Coupyn Logo Pacifico", "Pacifico", "Caveat", "Segoe Script", "Brush Script MT", cursive;
+  font-family:
+    'Coupyn Logo Pacifico', 'Pacifico', 'Caveat', 'Segoe Script', 'Brush Script MT', cursive;
   font-size: clamp(25px, 3.75vw, 38px);
   font-weight: 400;
   letter-spacing: 0.02em;
@@ -558,7 +580,7 @@ h1 span {
   align-items: baseline;
   flex: 0 1 auto;
   min-width: 0;
-  font-family: "ChatPDM Logo Inter", Inter, Arial, sans-serif;
+  font-family: 'ChatPDM Logo Inter', Inter, Arial, sans-serif;
   font-size: calc(var(--pdm-logo-circle-size) * 1.18);
   font-weight: 600;
   letter-spacing: -0.035em;
@@ -605,7 +627,7 @@ h1 span {
   height: 7px;
   border: 1px solid #d6a84f;
   border-radius: 50%;
-  content: "";
+  content: '';
   background: rgba(214, 168, 79, 0.18);
 }
 
@@ -827,7 +849,7 @@ a.system-panel__button--quiet:hover {
 .architecture-label,
 .architecture-engine-label {
   fill: #f5f7fa;
-  font-family: "Space Mono", "IBM Plex Mono", "JetBrains Mono", monospace;
+  font-family: 'Space Mono', 'IBM Plex Mono', 'JetBrains Mono', monospace;
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 0;
@@ -852,7 +874,7 @@ a.system-panel__button--quiet:hover {
 .architecture-caption,
 .architecture-engine-label--soft {
   fill: #a8b0bd;
-  font-family: "Space Mono", "IBM Plex Mono", "JetBrains Mono", monospace;
+  font-family: 'Space Mono', 'IBM Plex Mono', 'JetBrains Mono', monospace;
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -896,7 +918,7 @@ a.system-panel__button--quiet:hover {
   right: 20px;
   height: 1px;
   pointer-events: none;
-  content: "";
+  content: '';
   background: linear-gradient(90deg, transparent, rgba(168, 176, 189, 0.075), transparent);
 }
 
@@ -958,7 +980,7 @@ a.system-panel__button--quiet:hover {
 
 .principle-row__index {
   color: #d6a84f;
-  font-family: "Space Mono", "IBM Plex Mono", "JetBrains Mono", monospace;
+  font-family: 'Space Mono', 'IBM Plex Mono', 'JetBrains Mono', monospace;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -1002,7 +1024,7 @@ a.system-panel__button--quiet:hover {
   right: 20px;
   height: 1px;
   pointer-events: none;
-  content: "";
+  content: '';
   background: linear-gradient(90deg, transparent, rgba(214, 168, 79, 0.08), transparent);
 }
 
@@ -1060,11 +1082,12 @@ a.system-panel__button--quiet:hover {
   border: 1px solid rgba(168, 176, 189, 0.16);
   border-radius: 8px;
   padding: 18px 20px;
-  background:
-    linear-gradient(135deg, rgba(16, 20, 28, 0.68), rgba(7, 9, 13, 0.42));
+  background: linear-gradient(135deg, rgba(16, 20, 28, 0.68), rgba(7, 9, 13, 0.42));
   color: #f5f7fa;
   text-decoration: none;
-  transition: border-color 180ms ease, transform 180ms ease;
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease;
 }
 
 .home-next__panel::after {
@@ -1074,19 +1097,20 @@ a.system-panel__button--quiet:hover {
   width: clamp(54px, 16vw, 130px);
   height: 1px;
   pointer-events: none;
-  content: "";
+  content: '';
   background: linear-gradient(90deg, transparent, rgba(214, 168, 79, 0.72));
   opacity: 0;
   transform: translateY(-50%) scaleX(0);
   transform-origin: right center;
-  transition: transform 180ms ease, opacity 180ms ease;
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
 }
 
 .home-next__panel:hover,
 .home-next__panel:focus-visible {
   border-color: rgba(214, 168, 79, 0.32);
-  background:
-    linear-gradient(135deg, rgba(214, 168, 79, 0.07), rgba(16, 20, 28, 0.68));
+  background: linear-gradient(135deg, rgba(214, 168, 79, 0.07), rgba(16, 20, 28, 0.68));
   transform: translateY(-1px);
 }
 
@@ -1140,7 +1164,9 @@ a.system-panel__button--quiet:hover {
   justify-self: end;
   color: #d6a84f;
   opacity: 0.82;
-  transition: transform 180ms ease, opacity 180ms ease;
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
 }
 
 .home-next__panel-icon path {
@@ -1298,14 +1324,21 @@ a.system-panel__button--quiet:hover {
     0 0 28px rgba(184, 135, 47, 0.08);
 }
 
-:host-context(.theme-resolved-light) .home-hero__portrait-trigger:hover .home-hero__portrait-frame,
-:host-context(.theme-resolved-light) .home-hero__portrait-trigger:focus-visible .home-hero__portrait-frame {
+:host-context(.theme-resolved-light)
+  .home-hero__portrait-trigger:focus-visible
+  .home-hero__portrait-frame {
   border-color: rgba(184, 135, 47, 0.64);
   box-shadow:
     0 0 0 1px rgba(231, 196, 111, 0.28),
     0 26px 60px rgba(17, 24, 39, 0.13),
     0 0 0 1px rgba(255, 255, 255, 0.82) inset,
     0 0 0 3px rgba(184, 135, 47, 0.1);
+}
+
+:host-context(.theme-resolved-light) .home-hero__portrait-action {
+  border-color: rgba(184, 135, 47, 0.38);
+  background: rgba(255, 255, 255, 0.86);
+  color: #111827;
 }
 
 :host-context(.theme-resolved-light) .home-hero__portrait-trigger:focus-visible {
@@ -1576,8 +1609,7 @@ a.system-panel__button--quiet:hover {
 
 :host-context(.theme-resolved-light) .home-next__panel {
   border-color: rgba(229, 224, 214, 0.92);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(248, 247, 243, 0.78));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(248, 247, 243, 0.78));
   color: #111827;
 }
 
@@ -1593,8 +1625,7 @@ a.system-panel__button--quiet:hover {
 :host-context(.theme-resolved-light) .home-next__panel:hover,
 :host-context(.theme-resolved-light) .home-next__panel:focus-visible {
   border-color: rgba(184, 135, 47, 0.34);
-  background:
-    linear-gradient(135deg, rgba(184, 135, 47, 0.07), rgba(255, 255, 255, 0.92));
+  background: linear-gradient(135deg, rgba(184, 135, 47, 0.07), rgba(255, 255, 255, 0.92));
 }
 
 :host-context(.theme-resolved-light) .home-next__panel-icon {
@@ -1625,7 +1656,7 @@ a.system-panel__button--quiet:hover {
   }
 
   .home-hero__portrait {
-    width: 420px;
+    width: min(100%, 680px);
   }
 
   .home-section > div {
@@ -1691,13 +1722,13 @@ a.system-panel__button--quiet:hover {
   }
 
   .home-hero__layout {
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 330px);
+    grid-template-columns: minmax(0, 1.5fr) minmax(360px, 1fr);
     gap: clamp(36px, 5vw, 68px);
   }
 
   .home-hero__portrait {
     width: 100%;
-    max-width: 330px;
+    max-width: none;
     justify-self: end;
     margin: 0;
   }
@@ -1717,14 +1748,6 @@ a.system-panel__button--quiet:hover {
 
   .home-hero__support {
     margin-top: 26px;
-  }
-
-  .home-hero__proof {
-    flex-wrap: nowrap;
-  }
-
-  h1 span {
-    display: block;
   }
 
   .system-panel {
@@ -1846,14 +1869,6 @@ a.system-panel__button--quiet:hover {
     padding-bottom: clamp(104px, 10vh, 136px);
   }
 
-  .home-hero__layout {
-    grid-template-columns: minmax(0, 1fr) minmax(340px, 380px);
-  }
-
-  .home-hero__portrait {
-    max-width: 380px;
-  }
-
   h1 {
     max-width: 930px;
     font-size: clamp(42px, 3.6vw, 56px);
@@ -1913,23 +1928,64 @@ a.system-panel__button--quiet:hover {
     max-width: 1560px;
   }
 
-  .home-hero__layout {
-    grid-template-columns: minmax(0, 1fr) minmax(380px, 420px);
-  }
-
-  .home-hero__portrait {
-    max-width: 420px;
-  }
-
   h1 {
     max-width: 1040px;
     font-size: 60px;
   }
 }
 
+@media (min-width: 1024px) and (max-height: 820px) {
+  .home-hero__inner {
+    min-height: 0;
+    padding-top: 128px;
+    padding-bottom: 64px;
+  }
+
+  .home-hero__eyebrow {
+    margin-bottom: 14px;
+  }
+
+  .home-hero__intro {
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: clamp(38px, 3.25vw, 46px);
+    line-height: 1.04;
+  }
+
+  .home-hero__support {
+    margin-top: 20px;
+  }
+
+  .home-hero__subtitle {
+    font-size: 20px;
+    line-height: 1.38;
+  }
+
+  .home-hero__coupyn-role {
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  .home-hero__proof {
+    margin-top: 16px;
+  }
+
+  .home-hero__actions {
+    margin-top: 22px;
+  }
+}
+
 @media (max-width: 767px) {
   h1 {
-    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family:
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      sans-serif;
   }
 }
 
@@ -1950,8 +2006,14 @@ a.system-panel__button--quiet:hover {
     z-index: 2;
     height: 1px;
     pointer-events: none;
-    content: "";
-    background: linear-gradient(90deg, transparent, rgba(214, 168, 79, 0.38), rgba(168, 176, 189, 0.18), transparent);
+    content: '';
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(214, 168, 79, 0.38),
+      rgba(168, 176, 189, 0.18),
+      transparent
+    );
   }
 
   :host-context(.theme-resolved-light) .home-next .home-section-frame {
@@ -1959,7 +2021,13 @@ a.system-panel__button--quiet:hover {
   }
 
   :host-context(.theme-resolved-light) .home-next .home-section-frame::after {
-    background: linear-gradient(90deg, transparent, rgba(184, 135, 47, 0.36), rgba(95, 102, 115, 0.16), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(184, 135, 47, 0.36),
+      rgba(95, 102, 115, 0.16),
+      transparent
+    );
   }
 
   .home-hero__inner {
@@ -2076,11 +2144,50 @@ a.system-panel__button--quiet:hover {
   }
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .home-hero__portrait-trigger:hover .home-hero__portrait-frame {
+    border-color: rgba(214, 168, 79, 0.42);
+    box-shadow:
+      0 28px 64px rgba(0, 0, 0, 0.34),
+      0 0 0 1px rgba(240, 213, 140, 0.12) inset,
+      0 0 0 3px rgba(214, 168, 79, 0.08);
+    transform: translateY(-4px) scale(1.012);
+  }
+
+  .home-hero__portrait-trigger:hover img {
+    transform: scale(1.015);
+  }
+
+  .home-hero__portrait-trigger:hover .home-hero__portrait-action {
+    border-color: rgba(240, 213, 140, 0.58);
+    background: rgba(7, 9, 13, 0.9);
+  }
+
+  :host-context(.theme-resolved-light)
+    .home-hero__portrait-trigger:hover
+    .home-hero__portrait-frame {
+    border-color: rgba(184, 135, 47, 0.64);
+    box-shadow:
+      0 0 0 1px rgba(231, 196, 111, 0.28),
+      0 26px 60px rgba(17, 24, 39, 0.13),
+      0 0 0 1px rgba(255, 255, 255, 0.82) inset,
+      0 0 0 3px rgba(184, 135, 47, 0.1);
+  }
+
+  :host-context(.theme-resolved-light)
+    .home-hero__portrait-trigger:hover
+    .home-hero__portrait-action {
+    border-color: rgba(184, 135, 47, 0.62);
+    background: #ffffff;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .home-hero__grid,
   .home-hero__signal,
   .home-hero__portrait-frame,
-  .home-hero__portrait-layer,
+  .home-hero__portrait img,
+  .home-hero__portrait-action,
   .architecture-loop,
   .architecture-rail--feedback,
   .architecture-audit-tap,
@@ -2100,6 +2207,11 @@ a.system-panel__button--quiet:hover {
   .home-next__panel:focus-visible,
   .home-next__panel:hover .home-next__panel-icon,
   .home-next__panel:focus-visible .home-next__panel-icon {
+    transform: none;
+  }
+
+  .home-hero__portrait-trigger:hover .home-hero__portrait-frame,
+  .home-hero__portrait-trigger:hover img {
     transform: none;
   }
 }
