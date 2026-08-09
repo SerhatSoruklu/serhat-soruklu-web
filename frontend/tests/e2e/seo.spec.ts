@@ -57,12 +57,15 @@ function getMetaContent(html: string, attribute: 'name' | 'property', key: strin
 }
 
 function decodeHtmlEntities(value: string): string {
-  return value
-    .replaceAll('&amp;', '&')
-    .replaceAll('&quot;', '"')
-    .replaceAll('&#39;', "'")
-    .replaceAll('&lt;', '<')
-    .replaceAll('&gt;', '>');
+  const decodedEntities: Readonly<Record<string, string>> = {
+    '&amp;': '&',
+    '&quot;': '"',
+    '&#39;': "'",
+    '&lt;': '<',
+    '&gt;': '>',
+  };
+
+  return value.replace(/&(amp|quot|#39|lt|gt);/g, (entity) => decodedEntities[entity] ?? entity);
 }
 
 function getCanonicalHref(html: string): string | null {

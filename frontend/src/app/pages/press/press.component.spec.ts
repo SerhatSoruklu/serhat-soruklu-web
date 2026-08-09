@@ -153,8 +153,8 @@ describe('PressComponent', () => {
     const sourceNames = verificationLinks.map((link) =>
       link.querySelector('strong')?.textContent?.trim(),
     );
-    const companiesHouse = verificationLinks.find((link) =>
-      link.href.includes('find-and-update.company-information.service.gov.uk'),
+    const companiesHouse = verificationLinks.find(
+      (link) => link.querySelector('strong')?.textContent?.trim() === 'Companies House',
     );
 
     expect(systems).toHaveLength(4);

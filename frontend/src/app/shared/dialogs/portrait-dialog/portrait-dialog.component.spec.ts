@@ -1,7 +1,9 @@
+import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 
+import { ResolvedTheme, ThemeService } from '../../../core/theme/theme.service';
 import { PortraitDialogComponent } from './portrait-dialog.component';
 import { PortraitDialogService } from './portrait-dialog.service';
 
@@ -11,10 +13,18 @@ describe('PortraitDialogComponent', () => {
   beforeEach(async () => {
     closeCalled = false;
     globalThis.localStorage.clear();
+    const resolvedTheme = signal<ResolvedTheme>('dark');
 
     await TestBed.configureTestingModule({
       imports: [PortraitDialogComponent],
       providers: [
+        {
+          provide: ThemeService,
+          useValue: {
+            resolvedTheme: resolvedTheme.asReadonly(),
+            setTheme: (theme: ResolvedTheme) => resolvedTheme.set(theme),
+          },
+        },
         {
           provide: MatDialogRef,
           useValue: {
