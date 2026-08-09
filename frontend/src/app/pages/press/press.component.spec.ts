@@ -25,7 +25,7 @@ describe('PressComponent', () => {
     expect(nativeElement.querySelectorAll('h1')).toHaveLength(1);
     expect(nativeElement.querySelector('h1')?.textContent?.trim()).toBe('Serhat Soruklu & Coupyn');
     expect(text).toContain(
-      'Verified facts, biographies, images and background material for journalists, researchers and media enquiries.',
+      'Reference facts, biographies, images and background material for journalists, researchers and media enquiries.',
     );
     expect(text).toContain('first-party reference material');
     expect(text).not.toMatch(/\bSly\b/i);
@@ -134,13 +134,13 @@ describe('PressComponent', () => {
     ]);
     expect(nativeElement.textContent).toContain('AI-ASSISTED PHOTOGRAPH');
     expect(nativeElement.textContent).toContain(
-      'The person shown is Serhat Soruklu. Only his face was regenerated from his supplied portrait reference; the underlying body, workstation and background are real.',
+      'AI-assisted edited image of Serhat Soruklu, created using supplied portrait and real-workspace photographic references. The image has been AI-generated or modified and should not be treated as an unaltered photograph.',
     );
     expect(nativeElement.textContent).toContain(
-      'Embedded Content Credentials identify trained algorithmic media created with gpt-image 2.0.',
+      'retain embedded Content Credentials identifying trained algorithmic media created with gpt-image 2.0.',
     );
     expect(nativeElement.textContent).toContain(
-      'The workstation images are AI-assisted edited photographs of Serhat Soruklu.',
+      'The workstation images are AI-assisted edited images of Serhat Soruklu, created using supplied portrait and real-workspace photographic references.',
     );
     expect(coupynPreview?.getAttribute('src')).toBe(
       '/assets/social/serhat-soruklu-systems-coupyn-og.png',

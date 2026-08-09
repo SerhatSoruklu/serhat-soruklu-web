@@ -1159,6 +1159,10 @@ h1 {
     padding-top: 150px;
   }
 
+  .press-hero::before {
+    top: 118px;
+  }
+
   .press-hero__inner {
     grid-template-columns: minmax(0, 1.5fr) minmax(330px, 0.68fr);
     align-items: center;
