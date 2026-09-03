@@ -139,6 +139,57 @@
               @if (chapter.callout) {
                 <blockquote>{{ chapter.callout }}</blockquote>
               }
+              @if (chapter.academicPath; as academicPath) {
+                <section
+                  class="about-academic-path"
+                  [attr.aria-labelledby]="chapter.id + '-academic-path-title'"
+                >
+                  <header class="about-academic-path__header">
+                    <p class="about-eyebrow">{{ academicPath.eyebrow }}</p>
+                    <h3 [id]="chapter.id + '-academic-path-title'">{{ academicPath.heading }}</h3>
+                    <p>{{ academicPath.intro }}</p>
+                  </header>
+
+                  <ol
+                    class="about-academic-timeline"
+                    [attr.aria-label]="academicPath.timelineLabel"
+                  >
+                    @for (stage of academicPath.stages; track stage.number) {
+                      <li
+                        class="about-academic-stage"
+                        [class.about-academic-stage--current]="stage.state === 'current'"
+                        [attr.data-state]="stage.state"
+                        [attr.aria-current]="stage.state === 'current' ? 'step' : null"
+                      >
+                        <span class="about-academic-stage__rail" aria-hidden="true">
+                          <i></i>
+                        </span>
+                        <article class="about-academic-stage__body">
+                          <div class="about-academic-stage__chronology">
+                            <p class="about-academic-stage__meta">
+                              <span>{{ stage.number }}</span>
+                              <strong>{{ stage.stateLabel }}</strong>
+                            </p>
+                            <p class="about-academic-stage__date">{{ stage.date }}</p>
+                          </div>
+                          <div class="about-academic-stage__copy">
+                            <h4>{{ stage.title }}</h4>
+                            <p>{{ stage.description }}</p>
+                            @if (stage.target) {
+                              <p class="about-academic-stage__target">{{ stage.target }}</p>
+                            }
+                          </div>
+                        </article>
+                      </li>
+                    }
+                  </ol>
+
+                  <footer class="about-academic-path__closing">
+                    <span>{{ academicPath.closingLabel }}</span>
+                    <strong>{{ academicPath.closingQuote }}</strong>
+                  </footer>
+                </section>
+              }
             </div>
           </div>
         </section>

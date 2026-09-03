@@ -55,11 +55,18 @@ describe('AboutComponent', () => {
     expect(text).toContain('Between Osmancık and Tottenham');
     expect(text).toContain('The computer stopped being only a game machine');
     expect(text).toContain('A route outside the standard route');
+    expect(text).toContain('Starting again from the foundations');
+    expect(text).toContain('This remains a future goal, conditional on admission.');
     expect(text).toContain('Private servers became a practical education');
     expect(text).toContain('roughly one million company pages');
     expect(nativeElement.querySelectorAll('.about-history > li')).toHaveLength(4);
     expect(nativeElement.querySelectorAll('.about-system-card')).toHaveLength(4);
     expect(nativeElement.querySelectorAll('.about-principles > li')).toHaveLength(4);
+    expect(nativeElement.querySelectorAll('.about-academic-stage')).toHaveLength(7);
+    expect(nativeElement.querySelectorAll('.about-academic-stage--current')).toHaveLength(1);
+    expect(
+      nativeElement.querySelector('.about-academic-stage--current')?.getAttribute('aria-current'),
+    ).toBe('step');
     expect(factLabels).toEqual(['Born', 'Birthplace', 'Raised in', 'Primary work']);
     expect(factValues).toEqual([
       '22 February 1996',
@@ -86,6 +93,33 @@ describe('AboutComponent', () => {
     expect(portrait?.getAttribute('fetchpriority')).toBe('high');
   });
 
+  it('presents the academic path as current study followed by conditional targets', () => {
+    const fixture = TestBed.createComponent(AboutComponent);
+    fixture.detectChanges();
+
+    const nativeElement = fixture.nativeElement as HTMLElement;
+    const stages = Array.from(nativeElement.querySelectorAll<HTMLElement>('.about-academic-stage'));
+    const academicPath = nativeElement.querySelector('.about-academic-path');
+    const text = academicPath?.textContent?.replace(/\s+/g, ' ') ?? '';
+
+    expect(academicPath?.closest('#education')).not.toBeNull();
+    expect(stages.map((stage) => stage.dataset['state'])).toEqual([
+      'current',
+      'future',
+      'future',
+      'future',
+      'future',
+      'future',
+      'future',
+    ]);
+    expect(text).toContain('Each stage is a target, not an achievement recorded in advance.');
+    expect(text).toContain('IF ADMITTED');
+    expect(text).toContain('A slower route is acceptable');
+    expect(text).toContain('Started again: 3 September 2026, age 30.');
+    expect(text).not.toContain('Imperial student');
+    expect(text).not.toContain('will study at Imperial');
+  });
+
   it('keeps DevBest as brief historical context without publishing the former alias', () => {
     const allContent = JSON.stringify(aboutContent);
 
@@ -103,6 +137,8 @@ describe('AboutComponent', () => {
 
     expect(nativeElement.querySelector('.about-page')?.getAttribute('lang')).toBe('tr-TR');
     expect(nativeElement.textContent).toContain('Osmancık ile Tottenham arasında');
+    expect(nativeElement.textContent).toContain('Temellerden yeniden başlamak');
+    expect(nativeElement.textContent).toContain('KABUL EDİLİRSE');
     expect(nativeElement.textContent).toContain('Portreyi ve profili aç');
     expect(nativeElement.textContent).not.toContain('Between Osmancık and Tottenham');
   });
