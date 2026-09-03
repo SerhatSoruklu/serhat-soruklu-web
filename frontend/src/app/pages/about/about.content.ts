@@ -183,6 +183,7 @@ const aboutSchema = {
       calloutLabel: null,
       calloutMetric: null,
       callout: null,
+      academicPath: null,
     },
     {
       id: 'first-computer',
@@ -208,6 +209,7 @@ const aboutSchema = {
       calloutLabel: localized('THE ONE-DAY BITCOIN EXPERIMENT', 'BİR GÜNLÜK BITCOIN DENEYİ'),
       calloutMetric: localized('≈ 1 DAY', '≈ 1 GÜN'),
       callout: null,
+      academicPath: null,
     },
     {
       id: 'education',
@@ -215,14 +217,16 @@ const aboutSchema = {
       heading: localized('A route outside the standard route', 'Standart yolun dışında bir eğitim'),
       paragraphs: localized(
         [
-          'Serhat began nursery and reception in London, attended Lancasterian Primary School and started Northumberland Park Community School in 2007. He later attended Haringey Sixth Form Centre, now Haringey Sixth Form College.',
-          'His GCSE results were not strong. He later completed a BTEC qualification, but the technical education that shaped his career happened largely outside formal assessment.',
-          'Forums, documentation, source code, configuration files and error messages became the practical curriculum. Progress came through repetition: testing an idea, finding the failure, understanding the layer beneath it and trying again.',
+          'Serhat began nursery and reception in London, attended Lancasterian Primary School and started Northumberland Park Community School in 2007. He later attended Haringey Sixth Form Centre.',
+          'His GCSE results were not strong. He later completed a BTEC qualification, while much of the technical education that shaped his career happened outside formal assessment.',
+          'Forums, documentation, source code, configuration files and error messages became a practical curriculum. Progress came through repetition: testing an idea, finding the failure, understanding the layer beneath it and trying again.',
+          'In September 2026, at 30, he returned to formal study from the opposite direction: starting again with the foundations of mathematics. The long-term aim is not a career reset, but to add rigorous mathematics and computer science theory to years of practical systems work.',
         ],
         [
-          "Serhat, Londra'da anaokulu ve reception eğitimine başladı; Lancasterian Primary School'a devam etti ve 2007'de Northumberland Park Community School'a geçti. Daha sonra, bugün Haringey Sixth Form College adıyla devam eden Haringey Sixth Form Centre'a katıldı.",
-          'GCSE sonuçları güçlü değildi. Daha sonra bir BTEC yeterliliğini tamamladı; ancak mesleğini şekillendiren teknik eğitimin büyük bölümü resmî sınavların dışında gerçekleşti.',
-          'Forumlar, belgeler, kaynak kodu, yapılandırma dosyaları ve hata mesajları uygulamalı müfredatına dönüştü. İlerleme tekrar yoluyla geldi: bir fikri denemek, hatayı bulmak, altındaki katmanı anlamak ve yeniden denemek.',
+          "Serhat, Londra'da anaokulu ve reception eğitimine başladı; Lancasterian Primary School'a devam etti ve 2007'de Northumberland Park Community School'a geçti. Daha sonra Haringey Sixth Form Centre'a katıldı.",
+          'GCSE sonuçları güçlü değildi. Daha sonra bir BTEC yeterliliğini tamamladı; mesleğini şekillendiren teknik eğitimin büyük bölümü ise resmî değerlendirmelerin dışında gerçekleşti.',
+          'Forumlar, belgeler, kaynak kodu, yapılandırma dosyaları ve hata mesajları uygulamalı bir müfredata dönüştü. İlerleme tekrar yoluyla geldi: bir fikri denemek, hatayı bulmak, altındaki katmanı anlamak ve yeniden denemek.',
+          'Eylül 2026\'da, 30 yaşındayken, resmî eğitime ters yönden döndü: matematiğin temellerinden yeniden başladı. Uzun vadeli amacı kariyerini sıfırlamak değil; yıllara dayanan uygulamalı sistem çalışmalarına sağlam bir matematik ve bilgisayar bilimi kuramı eklemek.',
         ],
       ),
       calloutLabel: null,
@@ -231,6 +235,112 @@ const aboutSchema = {
         'The academic route was uneven. The learning did not stop.',
         'Akademik yol düzensizdi. Öğrenme durmadı.',
       ),
+      academicPath: {
+        eyebrow: localized('ACADEMIC PATH / STARTED 2026', 'AKADEMİK YOL / 2026’DA BAŞLADI'),
+        heading: localized(
+          'Starting again from the foundations',
+          'Temellerden yeniden başlamak',
+        ),
+        intro: localized(
+          'The plan is intentionally long-term. Each stage is a target, not an achievement recorded in advance.',
+          'Bu plan bilinçli olarak uzun vadelidir. Her aşama bir hedeftir; önceden kayda geçirilmiş bir başarı değildir.',
+        ),
+        timelineLabel: localized('Planned academic path', 'Planlanan akademik yol'),
+        stages: [
+          {
+            number: '01',
+            date: '2026–2027',
+            state: 'current',
+            stateLabel: localized('CURRENT', 'ŞİMDİ'),
+            title: localized('Foundations', 'Temeller'),
+            description: localized(
+              'Rebuild mathematics from basic arithmetic through GCSE Higher material. Develop consistent study and revision habits.',
+              'Matematiği temel aritmetikten GCSE Higher düzeyine kadar yeniden kurmak. Düzenli çalışma ve tekrar alışkanlıkları geliştirmek.',
+            ),
+            target: null,
+          },
+          {
+            number: '02',
+            date: '2027–2028',
+            state: 'future',
+            stateLabel: localized('PLANNED', 'PLANLANAN'),
+            title: 'GCSE',
+            description: localized(
+              'Formal GCSE Mathematics and English study.',
+              'Resmî GCSE Matematik ve İngilizce eğitimi.',
+            ),
+            target: localized(
+              'Target: Grade 9 Mathematics and strong English results.',
+              'Hedef: Matematikte 9 notu ve güçlü İngilizce sonuçları.',
+            ),
+          },
+          {
+            number: '03',
+            date: '2028–2030',
+            state: 'future',
+            stateLabel: localized('PLANNED', 'PLANLANAN'),
+            title: localized('A level', 'A level'),
+            description: localized(
+              'Mathematics, Further Mathematics and a suitable third A level.',
+              'Matematik, İleri Matematik ve uygun bir üçüncü A level dersi.',
+            ),
+            target: localized('Personal target: A* A* A*.', 'Kişisel hedef: A* A* A*.'),
+          },
+          {
+            number: '04',
+            date: '2029–2030',
+            state: 'future',
+            stateLabel: localized('CONDITIONAL', 'KOŞULLU'),
+            title: localized('Imperial application', 'Imperial başvurusu'),
+            description: localized(
+              'TMUA preparation and an application to Imperial College London Computing, assuming the required academic standard has been reached.',
+              'Gerekli akademik seviyeye ulaşılmış olması koşuluyla TMUA hazırlığı ve Imperial College London Computing programına başvuru.',
+            ),
+            target: null,
+          },
+          {
+            number: '05',
+            date: '~2030–2034',
+            state: 'future',
+            stateLabel: localized('IF ADMITTED', 'KABUL EDİLİRSE'),
+            title: localized('MEng Computing', 'MEng Computing'),
+            description: localized(
+              'Target: Imperial College London MEng Computing. This remains a future goal, conditional on admission.',
+              'Hedef: Imperial College London MEng Computing. Bu, kabul koşuluna bağlı gelecekteki bir hedef olarak kalır.',
+            ),
+            target: null,
+          },
+          {
+            number: '06',
+            date: localized('REALISTIC RANGE', 'GERÇEKÇİ ARALIK'),
+            state: 'future',
+            stateLabel: localized('BUFFER', 'ESNEKLİK'),
+            title: localized('A slower route is acceptable', 'Daha yavaş bir yol kabul edilebilir'),
+            description: localized(
+              'A grounded estimate is an Imperial start around 2030–2032 and MEng completion around 2034–2036, approximately age 38–40.',
+              'Gerçekçi bir tahmin, Imperial başlangıcının 2030–2032 ve MEng tamamlanmasının 2034–2036 civarında, yaklaşık 38–40 yaşlarında olmasıdır.',
+            ),
+            target: null,
+          },
+          {
+            number: '07',
+            date: localized('AFTER MENG', 'MENG SONRASI'),
+            state: 'future',
+            stateLabel: localized('OPTIONAL', 'İSTEĞE BAĞLI'),
+            title: 'PhD',
+            description: localized(
+              'Only pursue doctoral research if there is a specific research problem worth several additional years of study at that point. It is not part of the mandatory plan.',
+              'Doktora araştırmasını yalnızca o aşamada birkaç yıllık ek çalışmaya değecek belirli bir araştırma problemi varsa sürdürmek. Zorunlu planın bir parçası değildir.',
+            ),
+            target: null,
+          },
+        ],
+        closingLabel: localized(
+          'Started again: 3 September 2026, age 30.',
+          'Yeniden başlangıç: 3 Eylül 2026, 30 yaşında.',
+        ),
+        closingQuote: localized('All in good time.', 'Her şey zamanı gelince.'),
+      },
     },
     {
       id: 'private-servers',
@@ -257,6 +367,7 @@ const aboutSchema = {
         'The lesson was simple: the visible page is only the top layer.',
         'Ders basitti: görünen sayfa yalnızca en üst katmandır.',
       ),
+      academicPath: null,
     },
   ],
   coupyn: {
