@@ -85,10 +85,10 @@ describe('AboutComponent', () => {
       '/about#public-identity',
     ]);
     expect(portrait?.getAttribute('src')).toBe(
-      '/assets/about/serhat-soruklu-ceo-founder-of-coupyn.png',
+      '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png',
     );
-    expect(portrait?.width).toBe(1173);
-    expect(portrait?.height).toBe(1341);
+    expect(portrait?.width).toBe(825);
+    expect(portrait?.height).toBe(743);
     expect(portrait?.getAttribute('loading')).toBe('eager');
     expect(portrait?.getAttribute('fetchpriority')).toBe('high');
   });

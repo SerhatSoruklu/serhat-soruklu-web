@@ -305,8 +305,8 @@ describe('SeoService', () => {
         primaryImageOfPage: expect.objectContaining({
           '@type': 'ImageObject',
           url: `https://serhatsoruklu.com${seoConfig.defaultPersonImage}`,
-          width: 1173,
-          height: 1341,
+          width: 825,
+          height: 743,
           caption: 'Portrait of Serhat Soruklu, founder and CEO of Coupyn.',
         }),
       }),

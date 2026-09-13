@@ -5,16 +5,16 @@ export interface FounderPortrait {
   src: string;
 }
 
-export const FOUNDER_PORTRAIT_WIDTH = 1448;
-export const FOUNDER_PORTRAIT_HEIGHT = 1086;
+export const FOUNDER_PORTRAIT_WIDTH = 1973;
+export const FOUNDER_PORTRAIT_HEIGHT = 797;
 
 export const FOUNDER_PORTRAITS = {
   dark: {
-    src: '/assets/home/serhat-soruklu-founder-dark.png',
-    alt: 'Serhat Soruklu seated at his workstation in a dark office.',
+    src: '/assets/home/serhat-soruklu-workstation-dark.png',
+    alt: 'Serhat Soruklu, founder of Coupyn, seated at his workstation.',
   },
   light: {
-    src: '/assets/home/serhat-soruklu-founder-light.png',
-    alt: 'Serhat Soruklu seated at his workstation in a bright office.',
+    src: '/assets/home/serhat-soruklu-workstation-light.png',
+    alt: 'Serhat Soruklu, founder of Coupyn, seated at his workstation.',
   },
 } as const satisfies Record<ResolvedTheme, FounderPortrait>;

@@ -111,21 +111,21 @@ describe('PressComponent', () => {
 
     expect(images).toHaveLength(3);
     expect(imageSources).toEqual([
-      '/assets/about/serhat-soruklu-ceo-founder-of-coupyn.png',
-      '/assets/home/serhat-soruklu-founder-light.png',
-      '/assets/home/serhat-soruklu-founder-dark.png',
+      '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png',
+      '/assets/home/serhat-soruklu-workstation-light.png',
+      '/assets/home/serhat-soruklu-workstation-dark.png',
     ]);
     expect(
       images.map((image) => [image.getAttribute('width'), image.getAttribute('height')]),
     ).toEqual([
-      ['1173', '1341'],
-      ['1448', '1086'],
-      ['1448', '1086'],
+      ['825', '743'],
+      ['1973', '797'],
+      ['1973', '797'],
     ]);
     expect(downloadLinks.map((link) => link.getAttribute('download'))).toEqual([
-      'serhat-soruklu-ceo-founder-of-coupyn.png',
-      'serhat-soruklu-founder-light.png',
-      'serhat-soruklu-founder-dark.png',
+      'serhat-soruklu-coupyn-founder-natural-portrait.png',
+      'serhat-soruklu-workstation-light.png',
+      'serhat-soruklu-workstation-dark.png',
     ]);
     expect(fullResolutionLinks.map((link) => link.getAttribute('aria-label'))).toEqual([
       'Open full resolution ↗ — Portrait, opens in a new tab',

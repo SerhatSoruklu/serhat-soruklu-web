@@ -32,22 +32,22 @@ const seamViewports = [
 
 const pressAssets = [
   {
-    height: 1341,
-    path: '/assets/about/serhat-soruklu-ceo-founder-of-coupyn.png',
+    height: 743,
+    path: '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png',
     type: /^image\/png/,
-    width: 1173,
+    width: 825,
   },
   {
-    height: 1086,
-    path: '/assets/home/serhat-soruklu-founder-light.png',
+    height: 797,
+    path: '/assets/home/serhat-soruklu-workstation-light.png',
     type: /^image\/png/,
-    width: 1448,
+    width: 1973,
   },
   {
-    height: 1086,
-    path: '/assets/home/serhat-soruklu-founder-dark.png',
+    height: 797,
+    path: '/assets/home/serhat-soruklu-workstation-dark.png',
     type: /^image\/png/,
-    width: 1448,
+    width: 1973,
   },
   {
     height: 630,
@@ -59,16 +59,16 @@ const pressAssets = [
 
 const downloadableAssets = [
   {
-    fileName: 'serhat-soruklu-ceo-founder-of-coupyn.png',
-    path: '/assets/about/serhat-soruklu-ceo-founder-of-coupyn.png',
+    fileName: 'serhat-soruklu-coupyn-founder-natural-portrait.png',
+    path: '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png',
   },
   {
-    fileName: 'serhat-soruklu-founder-light.png',
-    path: '/assets/home/serhat-soruklu-founder-light.png',
+    fileName: 'serhat-soruklu-workstation-light.png',
+    path: '/assets/home/serhat-soruklu-workstation-light.png',
   },
   {
-    fileName: 'serhat-soruklu-founder-dark.png',
-    path: '/assets/home/serhat-soruklu-founder-dark.png',
+    fileName: 'serhat-soruklu-workstation-dark.png',
+    path: '/assets/home/serhat-soruklu-workstation-dark.png',
   },
   {
     fileName: 'serhat-soruklu-systems-coupyn-og.png',
@@ -313,11 +313,11 @@ test.describe('Press and media page', () => {
     ]);
     await expect(page.locator('.press-asset-card img').nth(1)).toHaveAttribute(
       'alt',
-      'AI-assisted edited photograph of Serhat Soruklu at his bright workstation.',
+      'AI-assisted image of Serhat Soruklu at his workstation, supplied for the light theme.',
     );
     await expect(page.locator('.press-asset-card img').nth(2)).toHaveAttribute(
       'alt',
-      'AI-assisted edited photograph of Serhat Soruklu at his dark workstation.',
+      'AI-assisted image of Serhat Soruklu at his workstation, supplied for the dark theme.',
     );
     await expect(page.locator('.press-permission-note')).toContainText(
       'The workstation images are AI-assisted edited images of Serhat Soruklu, created using supplied portrait and real-workspace photographic references. The images have been AI-generated or modified and should not be treated as unaltered photographs.',
@@ -921,7 +921,7 @@ test.describe('Press and media page', () => {
     await expectVisibleKeyboardFocus(firstAssetActions.nth(1), 'first asset download action');
     await expect(firstAssetActions.nth(1)).toHaveAttribute(
       'download',
-      'serhat-soruklu-ceo-founder-of-coupyn.png',
+      'serhat-soruklu-coupyn-founder-natural-portrait.png',
     );
 
     await page.locator('.press-system-card a').last().focus();

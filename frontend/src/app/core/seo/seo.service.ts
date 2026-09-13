@@ -532,8 +532,8 @@ export class SeoService {
           primaryImageOfPage: {
             '@type': 'ImageObject',
             url: portraitUrl,
-            width: 1173,
-            height: 1341,
+            width: 825,
+            height: 743,
             caption: portraitAlt,
           },
           breadcrumb: {

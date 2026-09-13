@@ -18,7 +18,7 @@ export class AboutProfileDialogComponent {
   private readonly identityLanguage = inject(IdentityLanguageService);
 
   readonly content = computed(() => aboutContent[this.identityLanguage.language()]);
-  readonly portraitPath = '/assets/about/serhat-soruklu-ceo-founder-of-coupyn.png';
+  readonly portraitPath = '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png';
   readonly iconPaths = {
     close: mdiClose,
     external: mdiArrowTopRight,

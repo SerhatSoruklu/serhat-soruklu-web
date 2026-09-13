@@ -66,13 +66,13 @@ describe('PortraitDialogComponent', () => {
     expect(
       fixture.nativeElement.querySelectorAll('[data-testid="portrait-dialog-portrait-image"]'),
     ).toHaveLength(1);
-    expect(darkImage.getAttribute('src')).toBe('/assets/home/serhat-soruklu-founder-dark.png');
+    expect(darkImage.getAttribute('src')).toBe('/assets/home/serhat-soruklu-workstation-dark.png');
     expect(darkImage.getAttribute('data-portrait-theme')).toBe('dark');
-    expect(darkImage.getAttribute('width')).toBe('1448');
-    expect(darkImage.getAttribute('height')).toBe('1086');
+    expect(darkImage.getAttribute('width')).toBe('1973');
+    expect(darkImage.getAttribute('height')).toBe('797');
     expect(darkImage.getAttribute('decoding')).toBe('async');
     expect(darkImage.getAttribute('loading')).toBe('eager');
-    expect(darkImage.alt).toBe('Serhat Soruklu seated at his workstation in a dark office.');
+    expect(darkImage.alt).toBe('Serhat Soruklu, founder of Coupyn, seated at his workstation.');
     expect(
       fixture.nativeElement.querySelector('.portrait-dialog__summary')?.textContent?.trim(),
     ).toBe('Founder and solo operator building production web systems with a focus on:');
@@ -88,9 +88,9 @@ describe('PortraitDialogComponent', () => {
     expect(component.isLightPortrait()).toBe(true);
     expect(fixture.nativeElement.querySelector('.portrait-dialog--light-portrait')).not.toBeNull();
     expect(lightImage).toBe(darkImage);
-    expect(lightImage.getAttribute('src')).toBe('/assets/home/serhat-soruklu-founder-light.png');
+    expect(lightImage.getAttribute('src')).toBe('/assets/home/serhat-soruklu-workstation-light.png');
     expect(lightImage.getAttribute('data-portrait-theme')).toBe('light');
-    expect(lightImage.alt).toBe('Serhat Soruklu seated at his workstation in a bright office.');
+    expect(lightImage.alt).toBe('Serhat Soruklu, founder of Coupyn, seated at his workstation.');
   });
 
   it('renders compile-time icon paths and closes through the dialog ref', () => {

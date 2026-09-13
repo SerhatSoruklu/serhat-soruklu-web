@@ -24,7 +24,7 @@ export type StructuredDataProfile =
 
 const canonicalBaseUrl = 'https://serhatsoruklu.com';
 const defaultOgImage = '/assets/social/serhat-soruklu-og.png';
-const defaultPersonImage = '/assets/about/serhat-soruklu-ceo-founder-of-coupyn.png';
+const defaultPersonImage = '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png';
 const rasterSocialImage = {
   ogImageHeight: 630,
   ogImageType: 'image/png',
@@ -48,7 +48,7 @@ export const pageSeoMetadata = {
     description:
       'Serhat Soruklu is a London-based software developer and founder of Coupyn. Read his journey from Osmancık and Tottenham to production-scale systems.',
     path: '/about',
-    ogImage: '/assets/social/serhat-soruklu-about-og.png',
+    ogImage: '/assets/social/serhat-soruklu-about-natural-portrait-og.png',
     ogImageAlt:
       'Portrait of Serhat Soruklu, founder and CEO of Coupyn, alongside his journey from Osmancık and Tottenham to building production systems.',
     ...rasterSocialImage,
@@ -61,7 +61,7 @@ export const pageSeoMetadata = {
     description:
       'Verified biographies, company facts, media assets and public reference links for coverage of Serhat Soruklu and Coupyn.',
     path: '/press',
-    ogImage: '/assets/social/serhat-soruklu-press-og.png',
+    ogImage: '/assets/social/serhat-soruklu-press-natural-portrait-og.png',
     ogImageAlt:
       'Serhat Soruklu press and media reference card with his portrait and Founder and CEO of Coupyn title.',
     ...rasterSocialImage,

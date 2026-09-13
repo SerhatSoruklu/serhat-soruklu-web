@@ -106,22 +106,22 @@ describe('page components', () => {
     expect(aboutLink?.getAttribute('href')).toBe('/about');
     expect(portraitTrigger?.getAttribute('aria-haspopup')).toBe('dialog');
     expect(portraitSources.map((source) => source.getAttribute('srcset'))).toEqual([
-      '/assets/home/serhat-soruklu-founder-light.png',
-      '/assets/home/serhat-soruklu-founder-dark.png',
+      '/assets/home/serhat-soruklu-workstation-light.png',
+      '/assets/home/serhat-soruklu-workstation-dark.png',
     ]);
     expect(portraitSources.map((source) => source.getAttribute('media'))).toEqual([
       'not all',
       'all',
     ]);
-    expect(portrait?.getAttribute('src')).toBe('/assets/home/serhat-soruklu-founder-dark.png');
+    expect(portrait?.getAttribute('src')).toBe('/assets/home/serhat-soruklu-workstation-dark.png');
     expect(portrait?.getAttribute('data-portrait-theme')).toBe('dark');
     expect(portrait?.getAttribute('data-portrait-ready-theme')).toBeNull();
-    expect(portrait?.getAttribute('width')).toBe('1448');
-    expect(portrait?.getAttribute('height')).toBe('1086');
+    expect(portrait?.getAttribute('width')).toBe('1973');
+    expect(portrait?.getAttribute('height')).toBe('797');
     expect(portrait?.getAttribute('decoding')).toBe('async');
     expect(portrait?.getAttribute('fetchpriority')).toBe('high');
     expect(portrait?.getAttribute('loading')).toBe('eager');
-    expect(portrait?.alt).toBe('Serhat Soruklu seated at his workstation in a dark office.');
+    expect(portrait?.alt).toBe('Serhat Soruklu, founder of Coupyn, seated at his workstation.');
 
     portrait?.dispatchEvent(new Event('load'));
     fixture.detectChanges();
@@ -132,10 +132,10 @@ describe('page components', () => {
     TestBed.flushEffects();
     fixture.detectChanges();
 
-    expect(portrait?.getAttribute('src')).toBe('/assets/home/serhat-soruklu-founder-light.png');
+    expect(portrait?.getAttribute('src')).toBe('/assets/home/serhat-soruklu-workstation-light.png');
     expect(portrait?.getAttribute('data-portrait-theme')).toBe('light');
     expect(portrait?.getAttribute('data-portrait-ready-theme')).toBe('dark');
-    expect(portrait?.alt).toBe('Serhat Soruklu seated at his workstation in a bright office.');
+    expect(portrait?.alt).toBe('Serhat Soruklu, founder of Coupyn, seated at his workstation.');
     expect(portraitSources.map((source) => source.getAttribute('media'))).toEqual([
       'all',
       'not all',
