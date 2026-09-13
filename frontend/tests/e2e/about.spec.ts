@@ -6,7 +6,7 @@ import { installConsoleErrorGuard } from './support/console-errors';
 
 const aboutPath = '/about';
 const themeStorageKey = 'serhatsoruklu-theme';
-const portraitPath = '/assets/about/serhat-soruklu-ceo-founder-of-coupyn.png';
+const portraitPath = '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png';
 const screenshotDirectory = 'test-results/about-review';
 const viewports = [
   { name: 'minimum-mobile', width: 320, height: 700 },
@@ -65,8 +65,8 @@ test.describe('About identity page', () => {
 
     const portrait = page.locator('.about-portrait__trigger img');
     await expect(portrait).toHaveAttribute('src', portraitPath);
-    await expect(portrait).toHaveAttribute('width', '1173');
-    await expect(portrait).toHaveAttribute('height', '1341');
+    await expect(portrait).toHaveAttribute('width', '825');
+    await expect(portrait).toHaveAttribute('height', '743');
     await expect(page.getByTestId('about-portrait-trigger')).toHaveAttribute(
       'aria-haspopup',
       'dialog',
@@ -326,11 +326,11 @@ test.describe('About identity page', () => {
       );
       expect(layout.portraitTop, `${viewport.name}: portrait visible`).toBeGreaterThan(0);
       expect(layout.imageComplete, `${viewport.name}: portrait loaded`).toBe(true);
-      expect(layout.imageNaturalWidth).toBe(1173);
-      expect(layout.imageNaturalHeight).toBe(1341);
+      expect(layout.imageNaturalWidth).toBe(825);
+      expect(layout.imageNaturalHeight).toBe(743);
       expect(layout.imageObjectFit).toBe('contain');
       expect(layout.imageRatio, `${viewport.name}: portrait aspect ratio`).toBeCloseTo(
-        1173 / 1341,
+        825 / 743,
         2,
       );
 
@@ -380,8 +380,8 @@ test.describe('About identity page', () => {
       ).toBeLessThanOrEqual(1);
       expect(dialogLayout.imageObjectFit).toBe('contain');
       expect(dialogLayout.imageObjectPosition).toBe('50% 50%');
-      await expect(dialogImage).toHaveAttribute('width', '1173');
-      await expect(dialogImage).toHaveAttribute('height', '1341');
+      await expect(dialogImage).toHaveAttribute('width', '825');
+      await expect(dialogImage).toHaveAttribute('height', '743');
 
       if (viewport.width < 1024) {
         expect(
@@ -562,7 +562,7 @@ test.describe('About identity page', () => {
       await expect(portrait).toBeVisible();
       await expect
         .poll(() => portrait.evaluate((image) => (image as HTMLImageElement).naturalWidth))
-        .toBe(1173);
+        .toBe(825);
       await page.screenshot({
         animations: 'disabled',
         fullPage: true,
@@ -588,7 +588,7 @@ test.describe('About identity page', () => {
           .getByTestId('about-profile-dialog-image')
           .evaluate((image) => (image as HTMLImageElement).naturalWidth),
       )
-      .toBe(1173);
+      .toBe(825);
     await page.screenshot({
       animations: 'disabled',
       path: `${screenshotDirectory}/about-dialog-390x844-light.png`,
@@ -605,7 +605,7 @@ test.describe('About identity page', () => {
           .getByTestId('about-profile-dialog-image')
           .evaluate((image) => (image as HTMLImageElement).naturalWidth),
       )
-      .toBe(1173);
+      .toBe(825);
     await page.screenshot({
       animations: 'disabled',
       path: `${screenshotDirectory}/about-dialog-1440x900-dark.png`,

@@ -112,7 +112,7 @@ try {
   );
   assert.match(
     homeHtml,
-    /\/assets\/home\/serhat-soruklu-founder-dark\.png/,
+    /\/assets\/home\/serhat-soruklu-workstation-dark\.png/,
     'The dark homepage portrait must be present in the default SSR response.',
   );
   assert.match(homeHtml, /"@id":"https:\/\/serhatsoruklu\.com\/#person"/);
@@ -173,14 +173,14 @@ try {
   );
   assert.match(
     aboutHtml,
-    /https:\/\/serhatsoruklu\.com\/assets\/social\/serhat-soruklu-about-og\.png/,
+    /https:\/\/serhatsoruklu\.com\/assets\/social\/serhat-soruklu-about-natural-portrait-og\.png/,
     'The About response must contain its absolute social-image URL.',
   );
   assert.match(aboutHtml, /"@type":"ProfilePage"/);
   assert.match(aboutHtml, /"@id":"https:\/\/serhatsoruklu\.com\/#person"/);
   assert.match(
     aboutHtml,
-    /https:\/\/serhatsoruklu\.com\/assets\/about\/serhat-soruklu-ceo-founder-of-coupyn\.png/,
+    /https:\/\/serhatsoruklu\.com\/assets\/about\/serhat-soruklu-coupyn-founder-natural-portrait\.png/,
     'The About structured data must contain the canonical portrait URL.',
   );
   assert.match(
@@ -252,7 +252,7 @@ try {
   assert.match(pressHtml, /<meta name="robots" content="index, follow">/);
   assert.match(
     pressHtml,
-    /https:\/\/serhatsoruklu\.com\/assets\/social\/serhat-soruklu-press-og\.png/,
+    /https:\/\/serhatsoruklu\.com\/assets\/social\/serhat-soruklu-press-natural-portrait-og\.png/,
     'Press must SSR its absolute social-image URL.',
   );
   assert.match(pressHtml, /<h1\b[^>]*>\s*Serhat Soruklu &amp; Coupyn\s*<\/h1>/i);

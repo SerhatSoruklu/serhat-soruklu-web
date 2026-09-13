@@ -52,25 +52,25 @@ const rasterFontCss = (
 
 const previews = [
   {
-    source: 'serhat-soruklu-about-og.svg',
-    target: 'serhat-soruklu-about-og.png',
+    source: 'serhat-soruklu-about-natural-portrait-og.svg',
+    target: 'serhat-soruklu-about-natural-portrait-og.png',
     validateWordmark: false,
     portrait: {
-      expectedHeight: 1341,
-      expectedWidth: 1173,
+      expectedHeight: 743,
+      expectedWidth: 825,
       selector: '#about-og-portrait',
-      sourcePath: '/assets/about/serhat-soruklu-ceo-founder-of-coupyn.png',
+      sourcePath: '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png',
     },
   },
   {
-    source: 'serhat-soruklu-press-og.svg',
-    target: 'serhat-soruklu-press-og.png',
+    source: 'serhat-soruklu-press-natural-portrait-og.svg',
+    target: 'serhat-soruklu-press-natural-portrait-og.png',
     validateWordmark: false,
     portrait: {
-      expectedHeight: 1341,
-      expectedWidth: 1173,
+      expectedHeight: 743,
+      expectedWidth: 825,
       selector: '#press-og-portrait',
-      sourcePath: '/assets/about/serhat-soruklu-ceo-founder-of-coupyn.png',
+      sourcePath: '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png',
     },
   },
   {

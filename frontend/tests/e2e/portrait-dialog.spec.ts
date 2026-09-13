@@ -6,12 +6,12 @@ import { installConsoleErrorGuard } from './support/console-errors';
 const themeStorageKey = 'serhatsoruklu-theme';
 const portraits = {
   dark: {
-    path: '/assets/home/serhat-soruklu-founder-dark.png',
-    alt: 'Serhat Soruklu seated at his workstation in a dark office.',
+    path: '/assets/home/serhat-soruklu-workstation-dark.png',
+    alt: 'Serhat Soruklu, founder of Coupyn, seated at his workstation.',
   },
   light: {
-    path: '/assets/home/serhat-soruklu-founder-light.png',
-    alt: 'Serhat Soruklu seated at his workstation in a bright office.',
+    path: '/assets/home/serhat-soruklu-workstation-light.png',
+    alt: 'Serhat Soruklu, founder of Coupyn, seated at his workstation.',
   },
 } as const;
 const dialogCases = [
@@ -51,16 +51,16 @@ async function waitForDialogPortrait(page: Page, theme: PortraitTheme): Promise<
   await expect(image).toHaveAttribute('data-portrait-theme', theme);
   await expect(image).toHaveAttribute('src', portraits[theme].path);
   await expect(image).toHaveAttribute('alt', portraits[theme].alt);
-  await expect(image).toHaveAttribute('width', '1448');
-  await expect(image).toHaveAttribute('height', '1086');
+  await expect(image).toHaveAttribute('width', '1973');
+  await expect(image).toHaveAttribute('height', '797');
   await expect(image).toHaveAttribute('decoding', 'async');
   await expect(image).toHaveAttribute('loading', 'eager');
   await expect
     .poll(() => image.evaluate((element) => (element as HTMLImageElement).naturalWidth))
-    .toBe(1448);
+    .toBe(1973);
   await expect
     .poll(() => image.evaluate((element) => (element as HTMLImageElement).naturalHeight))
-    .toBe(1086);
+    .toBe(797);
 }
 
 async function getDialogState(page: Page): Promise<{
@@ -232,7 +232,7 @@ test.describe('portrait dialog', () => {
       expect(state.panelGutters.bottom).toBeGreaterThanOrEqual(19);
 
       if (dialogCase.width < 1024) {
-        expect(state.mediaAspectRatio).toBeCloseTo(4 / 3, 2);
+        expect(state.mediaAspectRatio).toBeCloseTo(1973 / 797, 2);
       }
 
       await expectLastDialogContentReachable(page);

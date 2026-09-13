@@ -40,7 +40,7 @@ export class AboutComponent implements OnDestroy {
 
   readonly language = this.identityLanguage.language;
   readonly content = computed(() => aboutContent[this.language()]);
-  readonly portraitPath = '/assets/about/serhat-soruklu-ceo-founder-of-coupyn.png';
+  readonly portraitPath = '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png';
   readonly iconPaths = {
     arrow: mdiArrowRight,
     click: mdiCursorDefaultClickOutline,

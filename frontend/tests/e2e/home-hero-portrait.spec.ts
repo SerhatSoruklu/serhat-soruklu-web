@@ -9,12 +9,12 @@ const e2eBaseUrl =
   process.env['E2E_BASE_URL'] || `http://127.0.0.1:${process.env['E2E_PORT'] || '4201'}`;
 const portraits = {
   dark: {
-    path: '/assets/home/serhat-soruklu-founder-dark.png',
-    alt: 'Serhat Soruklu seated at his workstation in a dark office.',
+    path: '/assets/home/serhat-soruklu-workstation-dark.png',
+    alt: 'Serhat Soruklu, founder of Coupyn, seated at his workstation.',
   },
   light: {
-    path: '/assets/home/serhat-soruklu-founder-light.png',
-    alt: 'Serhat Soruklu seated at his workstation in a bright office.',
+    path: '/assets/home/serhat-soruklu-workstation-light.png',
+    alt: 'Serhat Soruklu, founder of Coupyn, seated at his workstation.',
   },
 } as const;
 const viewports = [
@@ -59,8 +59,8 @@ async function waitForPortrait(page: Page, theme: PortraitTheme): Promise<void> 
   await expect(image).toHaveAttribute('data-portrait-ready-theme', theme);
   await expect(image).toHaveAttribute('src', portraits[theme].path);
   await expect(image).toHaveAttribute('alt', portraits[theme].alt);
-  await expect(image).toHaveAttribute('width', '1448');
-  await expect(image).toHaveAttribute('height', '1086');
+  await expect(image).toHaveAttribute('width', '1973');
+  await expect(image).toHaveAttribute('height', '797');
   await expect(image).toHaveAttribute('decoding', 'async');
   await expect(image).toHaveAttribute('fetchpriority', 'high');
   await expect(image).toHaveAttribute('loading', 'eager');
@@ -71,10 +71,10 @@ async function waitForPortrait(page: Page, theme: PortraitTheme): Promise<void> 
     .toBe(portraits[theme].path);
   await expect
     .poll(() => image.evaluate((element) => (element as HTMLImageElement).naturalWidth))
-    .toBe(1448);
+    .toBe(1973);
   await expect
     .poll(() => image.evaluate((element) => (element as HTMLImageElement).naturalHeight))
-    .toBe(1086);
+    .toBe(797);
 }
 
 async function getHeroState(page: Page): Promise<{
@@ -202,7 +202,7 @@ test.describe('home hero founder photography', () => {
 
         expect(state.currentPath).toBe(portraits[theme].path);
         expect(state.imageObjectFit).toBe('cover');
-        expect(state.frame.width / state.frame.height).toBeCloseTo(4 / 3, 2);
+        expect(state.frame.width / state.frame.height).toBeCloseTo(1973 / 797, 2);
         expect(Math.abs(state.image.width - state.frame.width)).toBeLessThanOrEqual(2.1);
         expect(Math.abs(state.image.height - state.frame.height)).toBeLessThanOrEqual(2.1);
         expect(state.contentTop).toBeGreaterThanOrEqual(state.headerBottom - 1);
@@ -240,8 +240,8 @@ test.describe('home hero founder photography', () => {
     expect(response.status()).toBe(200);
     expect(html.match(/data-testid="home-hero-portrait-image"/g)).toHaveLength(1);
     expect(imageTag).toContain(`src="${portraits.dark.path}"`);
-    expect(imageTag).toContain('width="1448"');
-    expect(imageTag).toContain('height="1086"');
+    expect(imageTag).toContain('width="1973"');
+    expect(imageTag).toContain('height="797"');
     expect(html).toContain(`srcset="${portraits.light.path}" media="not all"`);
     expect(html).toContain(`srcset="${portraits.dark.path}" media="all"`);
     expect(html).toContain(

@@ -324,9 +324,9 @@ test.describe('seo metadata', () => {
     expect(profilePage?.['inLanguage']).toBe('en-GB');
     expect(profilePage?.['primaryImageOfPage']).toEqual({
       '@type': 'ImageObject',
-      url: `${canonicalBaseUrl}/assets/about/serhat-soruklu-ceo-founder-of-coupyn.png`,
-      width: 1173,
-      height: 1341,
+      url: `${canonicalBaseUrl}/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png`,
+      width: 825,
+      height: 743,
       caption: 'Portrait of Serhat Soruklu, founder and CEO of Coupyn.',
     });
     expect(person?.['@id']).toBe(`${canonicalBaseUrl}/#person`);

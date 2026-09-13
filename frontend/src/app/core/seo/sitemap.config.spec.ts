@@ -6,19 +6,19 @@ describe('SITEMAP_ROUTES', () => {
     expect(SITEMAP_ROUTES).toEqual([
       {
         path: '/',
-        lastModified: '2026-08-09',
+        lastModified: '2026-09-13',
         changeFrequency: 'weekly',
         priority: 1.0,
       },
       {
         path: '/about',
-        lastModified: '2026-08-09',
+        lastModified: '2026-09-13',
         changeFrequency: 'monthly',
         priority: 0.9,
       },
       {
         path: '/press',
-        lastModified: '2026-08-09',
+        lastModified: '2026-09-13',
         changeFrequency: 'monthly',
         priority: 0.6,
       },

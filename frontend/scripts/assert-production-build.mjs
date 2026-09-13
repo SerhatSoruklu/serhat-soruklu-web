@@ -11,29 +11,29 @@ const aboutPortraitAsset = join(
   browserDirectory,
   'assets',
   'about',
-  'serhat-soruklu-ceo-founder-of-coupyn.png',
+  'serhat-soruklu-coupyn-founder-natural-portrait.png',
 );
-const aboutSocialAsset = join(browserDirectory, 'assets', 'social', 'serhat-soruklu-about-og.png');
-const pressSocialAsset = join(browserDirectory, 'assets', 'social', 'serhat-soruklu-press-og.png');
+const aboutSocialAsset = join(browserDirectory, 'assets', 'social', 'serhat-soruklu-about-natural-portrait-og.png');
+const pressSocialAsset = join(browserDirectory, 'assets', 'social', 'serhat-soruklu-press-natural-portrait-og.png');
 const homeDarkPortraitAsset = join(
   browserDirectory,
   'assets',
   'home',
-  'serhat-soruklu-founder-dark.png',
+  'serhat-soruklu-workstation-dark.png',
 );
 const homeLightPortraitAsset = join(
   browserDirectory,
   'assets',
   'home',
-  'serhat-soruklu-founder-light.png',
+  'serhat-soruklu-workstation-light.png',
 );
 
 await assertDirectory(browserDirectory, 'Production browser output is missing.');
 await assertFile(serverEntry, 'Production SSR entry is missing.');
 await assertPngDimensions(
   aboutPortraitAsset,
-  1173,
-  1341,
+  825,
+  743,
   'The production About portrait is missing or has unexpected dimensions.',
 );
 await assertPngDimensions(
@@ -50,14 +50,14 @@ await assertPngDimensions(
 );
 await assertPngDimensions(
   homeDarkPortraitAsset,
-  1448,
-  1086,
+  1973,
+  797,
   'The production dark homepage portrait is missing or has unexpected dimensions.',
 );
 await assertPngDimensions(
   homeLightPortraitAsset,
-  1448,
-  1086,
+  1973,
+  797,
   'The production light homepage portrait is missing or has unexpected dimensions.',
 );
 
@@ -117,27 +117,27 @@ assert.match(
 );
 assert.match(
   compiledBrowserText,
-  /\/assets\/about\/serhat-soruklu-ceo-founder-of-coupyn\.png/i,
+  /\/assets\/about\/serhat-soruklu-coupyn-founder-natural-portrait\.png/i,
   'The About portrait URL is missing from the production browser output.',
 );
 assert.match(
   compiledBrowserText,
-  /\/assets\/social\/serhat-soruklu-about-og\.png/i,
+  /\/assets\/social\/serhat-soruklu-about-natural-portrait-og\.png/i,
   'The About social-image URL is missing from the production browser output.',
 );
 assert.match(
   compiledBrowserText,
-  /\/assets\/social\/serhat-soruklu-press-og\.png/i,
+  /\/assets\/social\/serhat-soruklu-press-natural-portrait-og\.png/i,
   'The Press social-image URL is missing from the production browser output.',
 );
 assert.match(
   compiledBrowserText,
-  /\/assets\/home\/serhat-soruklu-founder-dark\.png/i,
+  /\/assets\/home\/serhat-soruklu-workstation-dark\.png/i,
   'The dark homepage portrait URL is missing from the production browser output.',
 );
 assert.match(
   compiledBrowserText,
-  /\/assets\/home\/serhat-soruklu-founder-light\.png/i,
+  /\/assets\/home\/serhat-soruklu-workstation-light\.png/i,
   'The light homepage portrait URL is missing from the production browser output.',
 );
 
