@@ -465,7 +465,7 @@ const aboutSchema = {
         '/systems/codaris',
       ),
       {
-        index: '04',
+        index: '05',
         title: 'ZeroGlare Continuity System',
         description: localized(
           'A browser-native concept and visualisation laboratory used to explore continuity, scale and interface ideas.',

@@ -8,7 +8,7 @@
 }
 .codaris-hero {
   background:
-    radial-gradient(ellipse at 82% 20%, rgba(31, 174, 184, 0.13), transparent 36%), transparent;
+    radial-gradient(ellipse at 82% 20%, rgba(214, 168, 79, 0.12), transparent 36%), transparent;
 }
 .codaris-hero__inner {
   min-height: 590px;
@@ -105,7 +105,7 @@ h1 {
 }
 .codaris-steps {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 14px;
   padding: 0;
   margin: 34px 0 0;
@@ -124,7 +124,7 @@ h1 {
   background: #10141c;
 }
 .codaris-steps span {
-  color: #59e4eb;
+  color: #d6a84f;
   font:
     700 12px 'Space Mono',
     monospace;
@@ -139,7 +139,7 @@ h1 {
 }
 .codaris-platform__grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: 14px;
   margin-top: 28px;
 }
@@ -164,26 +164,71 @@ h1 {
 .codaris-source:hover {
   color: #fff;
 }
+@media (min-width: 768px) {
+  .codaris-steps,
+  .codaris-platform__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 @media (min-width: 1024px) {
   .codaris-hero__inner {
     grid-template-columns: minmax(0, 1fr) 360px;
   }
+  .codaris-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .codaris-platform__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 767px) {
-  .codaris-hero__inner {
-    min-height: auto;
-    padding-top: 118px;
-    padding-bottom: 54px;
-  }
-  .codaris-flow,
-  .codaris-platform {
-    padding: 48px 0;
-  }
-  .codaris-steps,
-  .codaris-platform__grid {
-    grid-template-columns: 1fr;
-  }
-  .codaris-steps li {
-    min-height: 110px;
-  }
+  .codaris-hero__inner { min-height: auto; padding-top: 118px; padding-bottom: 54px; }
+  .codaris-flow, .codaris-platform { padding: 48px 0; }
+  .codaris-steps li { min-height: 110px; }
+}
+
+:host-context(.theme-resolved-light) {
+  color: #111827;
+}
+
+:host-context(.theme-resolved-light) h1,
+:host-context(.theme-resolved-light) h2,
+:host-context(.theme-resolved-light) h3,
+:host-context(.theme-resolved-light) .codaris-a,
+:host-context(.theme-resolved-light) .codaris-mark strong {
+  color: #111827;
+}
+
+:host-context(.theme-resolved-light) .codaris-hero {
+  background: radial-gradient(ellipse at 82% 20%, rgba(184, 135, 47, 0.1), transparent 36%);
+}
+
+:host-context(.theme-resolved-light) .codaris-hero__name,
+:host-context(.theme-resolved-light) .codaris-hero__summary,
+:host-context(.theme-resolved-light) .codaris-intro,
+:host-context(.theme-resolved-light) .codaris-note,
+:host-context(.theme-resolved-light) .codaris-steps small,
+:host-context(.theme-resolved-light) .codaris-platform__grid p,
+:host-context(.theme-resolved-light) .codaris-mark span {
+  color: #5f6673;
+}
+
+:host-context(.theme-resolved-light) .codaris-mark,
+:host-context(.theme-resolved-light) .codaris-steps li,
+:host-context(.theme-resolved-light) .codaris-platform__grid article {
+  border-color: #e5e0d6;
+  background: #f8f7f3;
+}
+
+:host-context(.theme-resolved-light) .codaris-flow,
+:host-context(.theme-resolved-light) .codaris-platform {
+  border-top-color: #e5e0d6;
+}
+
+:host-context(.theme-resolved-light) .codaris-steps span {
+  color: #b8872f;
+}
+
+:host-context(.theme-resolved-light) .codaris-source {
+  color: #8a6425;
+}
+
+:host-context(.theme-resolved-light) .codaris-source:hover {
+  color: #111827;
 }

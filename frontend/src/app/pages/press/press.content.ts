@@ -75,7 +75,7 @@ export const pressContent = {
       { label: 'Scope', value: 'Serhat Soruklu + Coupyn + CODARIS' },
       { label: 'Source', value: 'First-party reference material' },
       { label: 'Language', value: 'English / United Kingdom' },
-      { label: 'Updated', value: '13 September 2026' },
+      { label: 'Updated', value: '28 September 2026' },
     ],
   },
   factSheets: [
