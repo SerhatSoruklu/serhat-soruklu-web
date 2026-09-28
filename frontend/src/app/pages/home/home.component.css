@@ -425,6 +425,18 @@ h1 span {
   gap: 18px;
 }
 
+.codaris-home-brand { display: inline-flex; align-items: center; gap: 10px; color: #f5f7fa; text-decoration: none; font: 700 24px/1 "Space Mono", monospace; letter-spacing: .06em; }
+.codaris-home-brand .codaris-a,.codaris-brand-a { color: #f5f7fa; }
+.codaris-home-brand:hover,.codaris-home-brand:focus-visible,.codaris-home-brand:active { color: #59e4eb; }
+.codaris-home-brand:hover .codaris-a,.codaris-home-brand:focus-visible .codaris-a,.codaris-home-brand:active .codaris-a { color: #59e4eb; }
+.codaris-home-brand img { width: 40px; height: 40px; }
+.codaris-home-diagram { display: flex; align-items: center; justify-content: center; gap: clamp(8px, 2vw, 24px); }
+.codaris-home-diagram div { display: grid; gap: 10px; min-width: 78px; padding: 18px 10px; border: 1px solid #252b36; border-radius: 10px; background: #10141c; text-align: center; }
+.codaris-home-diagram span { color: #59e4eb; font: 700 11px "Space Mono", monospace; }
+.codaris-home-diagram strong { font-size: 13px; }
+.codaris-home-diagram i { color: #59e4eb; font-size: 20px; font-style: normal; }
+@media (max-width: 520px) { .codaris-home-diagram { gap: 5px; } .codaris-home-diagram div { min-width: 0; padding: 13px 6px; } .codaris-home-diagram strong { font-size: 11px; } }
+
 .system-panel {
   position: relative;
   display: grid;

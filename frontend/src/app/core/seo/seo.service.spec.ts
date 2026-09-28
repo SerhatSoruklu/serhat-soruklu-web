@@ -381,6 +381,9 @@ describe('SeoService', () => {
     const person = entities.find((entity) => entity['@type'] === 'Person');
     const website = entities.find((entity) => entity['@type'] === 'WebSite');
     const organization = entities.find((entity) => entity['@type'] === 'Organization');
+    const codarisOrganization = entities.find(
+      (entity) => entity['@type'] === 'Organization' && entity['name'] === 'CODARIS',
+    );
     const entityIds = entities
       .map((entity) => entity['@id'])
       .filter((id): id is string => typeof id === 'string');
@@ -404,6 +407,7 @@ describe('SeoService', () => {
       'Person',
       'WebSite',
       'Organization',
+      'Organization',
     ]);
     expect(new Set(entityIds).size).toBe(entityIds.length);
     expect(webpage).toEqual({
@@ -413,7 +417,11 @@ describe('SeoService', () => {
       description: pageSeoMetadata.press.description,
       url: canonicalUrl,
       isPartOf: { '@id': websiteId },
-      about: [{ '@id': personId }, { '@id': organizationId }],
+      about: [
+        { '@id': personId },
+        { '@id': organizationId },
+        { '@id': 'https://serhatsoruklu.com/systems/codaris#organization' },
+      ],
       author: { '@id': personId },
       primaryImageOfPage: {
         '@type': 'ImageObject',
@@ -438,6 +446,13 @@ describe('SeoService', () => {
       expect.objectContaining({
         '@id': organizationId,
         founder: { '@id': personId },
+      }),
+    );
+    expect(codarisOrganization).toEqual(
+      expect.objectContaining({
+        '@id': 'https://serhatsoruklu.com/systems/codaris#organization',
+        name: 'CODARIS',
+        url: 'https://codaris.org/',
       }),
     );
     expect(entities.some((entity) => entity['@type'] === 'ProfilePage')).toBe(false);

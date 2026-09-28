@@ -876,6 +876,12 @@
 .mobile-nav-brand--chatpdm {
   gap: 7px;
 }
+.mobile-nav-brand--codaris { gap: 7px; color: #f5f7fa; font: 700 14px/1 "Space Mono", monospace; letter-spacing: .04em; }
+.mobile-nav-brand--codaris .codaris-brand-a { color: #f5f7fa; }
+.mobile-nav__quick-link:hover .mobile-nav-brand--codaris,.mobile-nav__quick-link:focus-visible .mobile-nav-brand--codaris,.mobile-nav__quick-link:active .mobile-nav-brand--codaris,.mobile-nav__system-child--codaris:hover,.mobile-nav__system-child--codaris:focus-visible,.mobile-nav__system-child--codaris.mobile-nav__system-child--active { color: #59e4eb; }
+.mobile-nav__quick-link:hover .mobile-nav-brand--codaris .codaris-brand-a,.mobile-nav__quick-link:focus-visible .mobile-nav-brand--codaris .codaris-brand-a,.mobile-nav__quick-link:active .mobile-nav-brand--codaris .codaris-brand-a { color: #59e4eb; }
+.mobile-nav__system-child--codaris:hover .codaris-brand-a,.mobile-nav__system-child--codaris:focus-visible .codaris-brand-a,.mobile-nav__system-child--codaris.mobile-nav__system-child--active .codaris-brand-a { color: #59e4eb; }
+.mobile-nav-brand--codaris img { display: block; width: 24px; height: 24px; }
 
 .mobile-nav-brand__chatpdm-mark {
   display: inline-flex;

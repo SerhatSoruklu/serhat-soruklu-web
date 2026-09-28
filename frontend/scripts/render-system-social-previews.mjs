@@ -85,6 +85,11 @@ const previews = [
     validateWordmark: true,
   },
   {
+    source: 'serhat-soruklu-systems-codaris-og.svg',
+    target: 'serhat-soruklu-systems-codaris-og.png',
+    validateWordmark: false,
+  },
+  {
     source: 'serhat-soruklu-writing-og.svg',
     target: 'serhat-soruklu-writing-og.png',
     validateWordmark: false,

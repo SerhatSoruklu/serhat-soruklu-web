@@ -68,14 +68,14 @@ export const pressContent = {
     title: 'Serhat Soruklu & Coupyn',
     lead: 'Reference facts, biographies, images and background material for journalists, researchers and media enquiries.',
     supporting:
-      'This page provides first-party reference material for coverage of Serhat Soruklu, Coupyn and related technical work. Public verification and reference links are included where available.',
+      'This page provides first-party reference material for coverage of Serhat Soruklu, Coupyn, CODARIS and related technical work. Public verification and reference links are included where available.',
     dossierLabel: 'REFERENCE DOSSIER',
     dossierId: 'PRESS / 001',
     dossierItems: [
-      { label: 'Scope', value: 'Serhat Soruklu + Coupyn' },
+      { label: 'Scope', value: 'Serhat Soruklu + Coupyn + CODARIS' },
       { label: 'Source', value: 'First-party reference material' },
       { label: 'Language', value: 'English / United Kingdom' },
-      { label: 'Updated', value: '13 September 2026' },
+      { label: 'Updated', value: '28 September 2026' },
     ],
   },
   factSheets: [
@@ -115,6 +115,18 @@ export const pressContent = {
         { label: 'Website', value: 'coupyn.com', url: 'https://coupyn.com/' },
       ],
     },
+    {
+      index: '03',
+      title: 'CODARIS',
+      facts: [
+        { label: 'Name', value: 'CODARIS' },
+        { label: 'Meaning', value: 'Coalition Of Developers Advancing Responsible Intelligent Systems' },
+        { label: 'Status', value: 'Independent developer coalition · early-stage Beta V1' },
+        { label: 'Focus', value: 'Practical work on responsible intelligent systems, security, safety, interoperability, and evidence' },
+        { label: 'Website', value: 'codaris.org', url: 'https://codaris.org/' },
+        { label: 'Public source', value: 'github.com/SerhatSoruklu/codaris', url: 'https://github.com/SerhatSoruklu/codaris' },
+      ],
+    },
   ] satisfies readonly PressFactSheet[],
   biographies: [
     {
@@ -123,7 +135,7 @@ export const pressContent = {
     },
     {
       label: '100-WORD BIO',
-      text: 'Serhat Soruklu is a London-based software developer, systems architect and entrepreneur. Born in Osmancık, Çorum, Turkey, he moved to London at the age of two and grew up in Tottenham. His technical background developed through years of self-directed work with computers, private game servers, web development and infrastructure. He began building Coupyn in 2023 and now operates the platform independently across frontend development, backend services, data, technical SEO, security and infrastructure. His public technical work also includes ChatPDM, Deterministic Boundary Firewall and Continuity Identity Model.',
+      text: 'Serhat Soruklu is a London-based software developer, systems architect and entrepreneur. Born in Osmancık, Çorum, Turkey, he moved to London at the age of two and grew up in Tottenham. His technical background developed through years of self-directed work with computers, private game servers, web development and infrastructure. He began building Coupyn in 2023 and now operates the platform independently across frontend development, backend services, data, technical SEO, security and infrastructure. His public technical work also includes CODARIS, ChatPDM, Deterministic Boundary Firewall and Continuity Identity Model.',
     },
   ] satisfies readonly PressBiography[],
   photography: [
@@ -193,6 +205,33 @@ export const pressContent = {
       },
     ] satisfies readonly PressMediaFormat[],
   },
+  codarisMedia: {
+    title: 'CODARIS system media graphic',
+    description:
+      'First-party artwork for the CODARIS developer coalition system page, available in raster and vector formats.',
+    previewSrc: '/assets/social/serhat-soruklu-systems-codaris-og.png',
+    previewAlt: 'CODARIS responsible systems coalition and BUILD, VERIFY, ADVANCE work cycle.',
+    formats: [
+      {
+        action: 'Open full-resolution PNG',
+        dimensions: '1200 × 630',
+        fileName: 'serhat-soruklu-systems-codaris-og.png',
+        fileSize: '175.5 KiB',
+        format: 'PNG',
+        openInNewTab: true,
+        path: '/assets/social/serhat-soruklu-systems-codaris-og.png',
+      },
+      {
+        action: 'Download SVG source',
+        dimensions: '1200 × 630',
+        fileName: 'serhat-soruklu-systems-codaris-og.svg',
+        fileSize: '3.7 KiB',
+        format: 'SVG',
+        openInNewTab: false,
+        path: '/assets/social/serhat-soruklu-systems-codaris-og.svg',
+      },
+    ] satisfies readonly PressMediaFormat[],
+  },
   coupyn: {
     description:
       'Coupyn is a coupon, referral and affiliate intelligence platform that organises offers and company information across a large public directory. Serhat Soruklu began building the platform in 2023 and continues to build and operate it independently.',
@@ -221,13 +260,20 @@ export const pressContent = {
     },
     {
       index: '03',
+      title: 'CODARIS',
+      description:
+        'An early-stage developer coalition and technical platform advancing practical work on responsible intelligent systems.',
+      path: '/systems/codaris',
+    },
+    {
+      index: '04',
       title: 'Deterministic Boundary Firewall',
       description:
         'A bounded pre-egress security experiment for inspecting requests before model or tool execution.',
       path: '/systems/deterministic-boundary-firewall',
     },
     {
-      index: '04',
+      index: '05',
       title: 'Continuity Identity Model',
       description:
         'A protocol workspace exploring identity, authority and responsibility across machine state changes.',
@@ -268,6 +314,13 @@ export const pressContent = {
       name: 'Coupyn',
       description: 'Public platform operated by Coupyn Ltd',
       url: 'https://coupyn.com/',
+      rel: 'noopener noreferrer',
+    },
+    {
+      sourceType: 'OFFICIAL PROJECT',
+      name: 'CODARIS',
+      description: 'Independent developer coalition and technical platform',
+      url: 'https://codaris.org/',
       rel: 'noopener noreferrer',
     },
     {

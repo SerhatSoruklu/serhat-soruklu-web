@@ -198,6 +198,7 @@
           @for (child of systemChildLinks; track child.path) {
             <a
               class="mobile-nav__system-child"
+              [class.mobile-nav__system-child--codaris]="child.label === 'CODARIS'"
               [routerLink]="child.path"
               routerLinkActive="mobile-nav__system-child--active"
               [routerLinkActiveOptions]="{ exact: true }"
@@ -205,7 +206,7 @@
               [attr.tabindex]="menuOpen() ? 0 : -1"
               (click)="topNavigation.handleLinkClick(child.path); closeMenu()"
             >
-              {{ child.label }}
+              @if (child.label === 'CODARIS') { <span>COD<span class="codaris-brand-a">A</span>RIS</span> } @else { {{ child.label }} }
             </a>
           }
         </div>
@@ -311,6 +312,11 @@
                     <span class="mobile-nav-brand__chatpdm-chat">Chat</span
                     ><span class="mobile-nav-brand__chatpdm-pdm">PDM</span>
                   </span>
+                </span>
+              } @else if (link.brand === 'codaris') {
+                <span class="mobile-nav-brand mobile-nav-brand--codaris" aria-hidden="true">
+                  <img src="/assets/projects/codaris/emblem.svg" width="24" height="24" alt="" />
+                  <span>COD<span class="codaris-brand-a">A</span>RIS</span>
                 </span>
               }
               <svg

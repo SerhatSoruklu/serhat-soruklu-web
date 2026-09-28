@@ -45,6 +45,7 @@ export class SiteFooterComponent {
   readonly systemLinks: FooterLink[] = [
     { label: 'Coupyn', path: '/systems/coupyn' },
     { label: 'ChatPDM', path: '/systems/chatpdm' },
+    { label: 'CODARIS', path: '/systems/codaris' },
     { label: 'DBF', path: '/systems/deterministic-boundary-firewall' },
     { label: 'CIM', path: '/systems/continuity-identity-model' },
   ];

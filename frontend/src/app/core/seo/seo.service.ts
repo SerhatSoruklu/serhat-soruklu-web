@@ -284,6 +284,11 @@ export class SeoService {
       return;
     }
 
+    if (routeSeo.structuredData === 'codaris') {
+      this.setJsonLd(this.createCodarisStructuredData(routeSeo));
+      return;
+    }
+
     if (routeSeo.structuredData === 'soruklu-order') {
       this.setJsonLd(this.createSorukluOrderStructuredData(routeSeo));
       return;
@@ -554,6 +559,7 @@ export class SeoService {
     const personId = `${homeUrl}#person`;
     const websiteId = `${homeUrl}#website`;
     const organizationId = 'https://coupyn.com/#organization';
+    const codarisOrganizationId = `${this.toAbsoluteUrl(pageSeoMetadata.codarisSystem.path)}#organization`;
     const webpageId = `${routeUrl}#webpage`;
     const breadcrumbId = `${routeUrl}#breadcrumb`;
     const socialImageUrl = this.toAbsoluteUrl(routeSeo.ogImage ?? seoConfig.defaultOgImage);
@@ -588,7 +594,7 @@ export class SeoService {
           isPartOf: {
             '@id': websiteId,
           },
-          about: [{ '@id': personId }, { '@id': organizationId }],
+          about: [{ '@id': personId }, { '@id': organizationId }, { '@id': codarisOrganizationId }],
           author: {
             '@id': personId,
           },
@@ -607,7 +613,66 @@ export class SeoService {
         this.createPersonStructuredData(),
         this.createWebsiteStructuredData(),
         this.createCoupynOrganizationStructuredData(),
+        this.createCodarisOrganizationStructuredData(),
       ],
+    };
+  }
+
+  private createCodarisStructuredData(routeSeo: RouteSeoMetadata): object {
+    const routeUrl = this.toAbsoluteUrl(routeSeo.path);
+    const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
+    const personId = `${homeUrl}#person`;
+    const websiteId = `${homeUrl}#website`;
+    const webpageId = `${routeUrl}#webpage`;
+    const coalitionId = `${routeUrl}#organization`;
+    const breadcrumbId = `${routeUrl}#breadcrumb`;
+    const socialImageUrl = this.toAbsoluteUrl(routeSeo.ogImage ?? seoConfig.defaultOgImage);
+
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'BreadcrumbList',
+          '@id': breadcrumbId,
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: pageSeoMetadata.home.label, item: homeUrl },
+            { '@type': 'ListItem', position: 2, name: pageSeoMetadata.systems.label, item: this.toAbsoluteUrl(pageSeoMetadata.systems.path) },
+            { '@type': 'ListItem', position: 3, name: routeSeo.label, item: routeUrl },
+          ],
+        },
+        {
+          '@type': 'WebPage',
+          '@id': webpageId,
+          name: routeSeo.title,
+          description: routeSeo.description,
+          url: routeUrl,
+          isPartOf: { '@id': websiteId },
+          about: { '@id': coalitionId },
+          mainEntity: { '@id': coalitionId },
+          author: { '@id': personId },
+          primaryImageOfPage: { '@type': 'ImageObject', url: socialImageUrl, width: 1200, height: 630, caption: routeSeo.ogImageAlt },
+          breadcrumb: { '@id': breadcrumbId },
+          inLanguage: 'en-GB',
+        },
+        { ...this.createCodarisOrganizationStructuredData(), mainEntityOfPage: { '@id': webpageId } },
+        this.createPersonStructuredData(),
+        this.createWebsiteStructuredData(),
+      ],
+    };
+  }
+
+  private createCodarisOrganizationStructuredData(): object {
+    const pageUrl = this.toAbsoluteUrl(pageSeoMetadata.codarisSystem.path);
+
+    return {
+      '@type': 'Organization',
+      '@id': `${pageUrl}#organization`,
+      name: 'CODARIS',
+      alternateName: 'Coalition Of Developers Advancing Responsible Intelligent Systems',
+      description: pageSeoMetadata.codarisSystem.description,
+      url: 'https://codaris.org/',
+      logo: this.toAbsoluteUrl('/assets/projects/codaris/emblem.svg'),
+      sameAs: ['https://github.com/SerhatSoruklu/codaris'],
     };
   }
 

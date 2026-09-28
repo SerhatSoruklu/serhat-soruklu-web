@@ -104,7 +104,7 @@
                 [routerLinkActiveOptions]="{ exact: true }"
                 (click)="topNavigation.handleLinkClick(link.path)"
               >
-                {{ link.label }}
+                @if (link.label === 'CODARIS') { <span>COD<span class="codaris-footer-a">A</span>RIS</span> } @else { {{ link.label }} }
               </a>
             </li>
           }
@@ -184,7 +184,7 @@
         {{ currentYear }} Serhat Soruklu. Built and maintained as an independent systems portfolio.
       </p>
       <p class="site-footer__notice">
-        Coupyn, ChatPDM, and related project names belong to their respective owners, developers,
+        Coupyn, ChatPDM, CODARIS, and related project names belong to their respective owners, developers,
         affiliates, or operating entities where applicable.
       </p>
     </div>

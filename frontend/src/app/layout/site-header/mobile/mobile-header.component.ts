@@ -103,10 +103,19 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
       ariaLabel: 'View ChatPDM system page',
       externalAriaLabel: 'Open ChatPDM.com in a new tab',
     },
+    {
+      brand: 'codaris',
+      label: 'CODARIS',
+      path: '/systems/codaris',
+      externalUrl: 'https://codaris.org',
+      ariaLabel: 'View CODARIS system page',
+      externalAriaLabel: 'Open CODARIS.org in a new tab',
+    },
   ];
   readonly systemChildLinks = [
     { label: 'Coupyn', path: '/systems/coupyn' },
     { label: 'ChatPDM', path: '/systems/chatpdm' },
+    { label: 'CODARIS', path: '/systems/codaris' },
     { label: 'DBF', path: '/systems/deterministic-boundary-firewall' },
     { label: 'CIM', path: '/systems/continuity-identity-model' },
   ];

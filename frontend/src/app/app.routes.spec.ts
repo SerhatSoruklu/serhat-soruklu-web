@@ -11,6 +11,7 @@ import { SorukluSurnameComponent } from './pages/soruklu-surname/soruklu-surname
 import { ChatpdmSystemComponent } from './pages/systems/chatpdm/chatpdm-system.component';
 import { ContinuityIdentityModelSystemComponent } from './pages/systems/continuity-identity-model/continuity-identity-model-system.component';
 import { CoupynSystemComponent } from './pages/systems/coupyn/coupyn-system.component';
+import { CodarisSystemComponent } from './pages/systems/codaris/codaris-system.component';
 import { DeterministicBoundaryFirewallSystemComponent } from './pages/systems/deterministic-boundary-firewall/deterministic-boundary-firewall-system.component';
 import { SystemsComponent } from './pages/systems/systems.component';
 import { WorkComponent } from './pages/work/work.component';
@@ -38,6 +39,7 @@ describe('routes', () => {
       'work',
       'systems/coupyn',
       'systems/chatpdm',
+      'systems/codaris',
       'systems/deterministic-boundary-firewall',
       'systems/continuity-identity-model',
       'systems',
@@ -55,6 +57,7 @@ describe('routes', () => {
       pageSeoMetadata.work,
       pageSeoMetadata.coupynSystem,
       pageSeoMetadata.chatpdmSystem,
+      pageSeoMetadata.codarisSystem,
       pageSeoMetadata.dbfSystem,
       pageSeoMetadata.cimSystem,
       pageSeoMetadata.systems,
@@ -84,6 +87,7 @@ describe('routes', () => {
     expect(componentByPath.get('work')).toBe(WorkComponent);
     expect(componentByPath.get('systems/coupyn')).toBe(CoupynSystemComponent);
     expect(componentByPath.get('systems/chatpdm')).toBe(ChatpdmSystemComponent);
+    expect(componentByPath.get('systems/codaris')).toBe(CodarisSystemComponent);
     expect(componentByPath.get('systems/deterministic-boundary-firewall')).toBe(
       DeterministicBoundaryFirewallSystemComponent,
     );

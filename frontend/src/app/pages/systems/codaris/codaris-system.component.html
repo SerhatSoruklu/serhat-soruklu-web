@@ -1,0 +1,100 @@
+<div class="codaris-page">
+  <section class="codaris-hero layout-section" aria-labelledby="codaris-title">
+    <div class="codaris-hero__inner layout-container--wide">
+      <div class="codaris-hero__copy">
+        <p class="codaris-eyebrow">DEVELOPER COALITION · BETA V1</p>
+        <h1 id="codaris-title">COD<span class="codaris-a">A</span>RIS</h1>
+        <p class="codaris-hero__name">
+          Coalition Of Developers Advancing Responsible Intelligent Systems
+        </p>
+        <p class="codaris-hero__summary">
+          An independent, developer-focused coalition creating practical work around responsible
+          intelligent systems: careful verification, security, safety, interoperability, and clear
+          evidence about what systems do.
+        </p>
+        <div class="codaris-actions">
+          <a
+            class="site-button site-button-primary"
+            [href]="codarisUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Visit CODARIS.org</a
+          >
+          <a
+            class="site-button site-button-secondary"
+            routerLink="/systems"
+            (click)="topNavigation.handleLinkClick('/systems')"
+            >Back to Systems</a
+          >
+        </div>
+      </div>
+      <aside class="codaris-mark" aria-label="CODARIS principle">
+        <img src="/assets/projects/codaris/emblem.svg" width="96" height="96" alt="" />
+        <strong>BUILD. VERIFY. ADVANCE.</strong>
+        <span>Trust is engineered.</span>
+      </aside>
+    </div>
+  </section>
+
+  <section class="codaris-flow layout-section" aria-labelledby="codaris-flow-title">
+    <div class="codaris-section layout-container--wide">
+      <p class="codaris-eyebrow">PURPOSE</p>
+      <h2 id="codaris-flow-title">From shared questions to useful engineering</h2>
+      <p class="codaris-intro">
+        CODARIS describes a direction for developer collaboration. Its structure should grow through
+        useful, reviewable work.
+      </p>
+      <ol class="codaris-steps" aria-label="CODARIS development direction">
+        <li><span>01</span><strong>Coalition</strong><small>Bring developers together</small></li>
+        <li>
+          <span>02</span><strong>Meaningful activity</strong><small>Find specific problems</small>
+        </li>
+        <li>
+          <span>03</span><strong>Technical work</strong><small>Build and verify mechanisms</small>
+        </li>
+        <li>
+          <span>04</span><strong>Earned structure</strong
+          ><small>Let governance follow the work</small>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="codaris-platform layout-section" aria-labelledby="codaris-platform-title">
+    <div class="codaris-section layout-container--wide">
+      <p class="codaris-eyebrow">PLATFORM</p>
+      <h2 id="codaris-platform-title">A technical platform with clear status</h2>
+      <div class="codaris-platform__grid">
+        <article>
+          <h3>Public site</h3>
+          <p>
+            Mission, ecosystem, global perspective, organizational participation plans, and legal
+            information.
+          </p>
+        </article>
+        <article>
+          <h3>Developer library</h3>
+          <p>
+            Member learning routes with research catalogues, source notes, technical chapters, and
+            exercises.
+          </p>
+        </article>
+        <article>
+          <h3>Platform engineering</h3>
+          <p>
+            C17 browser application compiled to WebAssembly, a native C API, PostgreSQL, and static
+            page generation.
+          </p>
+        </article>
+      </div>
+      <p class="codaris-note">
+        CODARIS is an early-stage Beta V1 project. Proposed governance, working groups,
+        organizational participation, and future research are not represented as active programs.
+        Repository features do not by themselves confirm live service availability.
+      </p>
+      <a class="codaris-source" href="https://codaris.org" target="_blank" rel="noopener noreferrer"
+        >Explore CODARIS <span aria-hidden="true">↗</span></a
+      >
+    </div>
+  </section>
+</div>

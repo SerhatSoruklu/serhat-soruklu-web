@@ -115,6 +115,7 @@ export class App {
       path === '/work' ||
       path === '/systems/coupyn' ||
       path === '/systems/chatpdm' ||
+      path === '/systems/codaris' ||
       path === '/systems/deterministic-boundary-firewall' ||
       path === '/systems/continuity-identity-model'
     );

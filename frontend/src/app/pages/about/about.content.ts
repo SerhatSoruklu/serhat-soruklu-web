@@ -24,6 +24,16 @@ function localized<const English, const Turkish>(
   return { __localized: true, en, tr };
 }
 
+function aboutSystemCard<const Description>(
+  index: string,
+  title: string,
+  description: Description,
+  path: string,
+  externalUrl: string | null = null,
+) {
+  return { index, title, description, path, externalUrl };
+}
+
 function isLocalizedValue(value: unknown): value is LocalizedValue<unknown, unknown> {
   return (
     typeof value === 'object' &&
@@ -445,8 +455,17 @@ const aboutSchema = {
         path: '/systems/continuity-identity-model',
         externalUrl: null,
       },
+      aboutSystemCard(
+        '04',
+        'CODARIS',
+        localized(
+          'An early-stage developer coalition and technical platform advancing practical, evidence-led work on responsible intelligent systems.',
+          'Sorumlu akıllı sistemler üzerine uygulamalı ve kanıta dayalı çalışmaları ilerleten erken aşamadaki bir geliştirici koalisyonu ve teknik platform.',
+        ),
+        '/systems/codaris',
+      ),
       {
-        index: '04',
+        index: '05',
         title: 'ZeroGlare Continuity System',
         description: localized(
           'A browser-native concept and visualisation laboratory used to explore continuity, scale and interface ideas.',

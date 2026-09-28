@@ -465,6 +465,12 @@ h1 {
   gap: 16px;
 }
 
+.codaris-brand { display: inline-flex; align-items: center; gap: 10px; color: #f5f7fa; text-decoration: none; font: 700 22px/1 "Space Mono", monospace; letter-spacing: .06em; }
+.codaris-brand-a { color: #f5f7fa; }
+.codaris-brand:hover,.codaris-brand:focus-visible,.codaris-brand:active { color: #59e4eb; }
+.codaris-brand:hover .codaris-brand-a,.codaris-brand:focus-visible .codaris-brand-a,.codaris-brand:active .codaris-brand-a { color: #59e4eb; }
+.codaris-brand img { width: 34px; height: 34px; }
+
 .system-card {
   display: flex;
   flex-direction: column;
@@ -1236,6 +1242,10 @@ h1 {
 }
 
 @media (min-width: 1280px) {
+  .systems-map__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .systems-hero__inner {
     width: calc(100% - 40px);
     max-width: 1320px;

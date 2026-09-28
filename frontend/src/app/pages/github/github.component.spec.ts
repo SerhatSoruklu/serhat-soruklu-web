@@ -51,6 +51,7 @@ describe('GitHubComponent', () => {
         'repository-zeroglare-continuity-system-link',
         'https://github.com/SerhatSoruklu/zeroglare-continuity-system',
       ],
+      ['repository-codaris-link', 'https://github.com/SerhatSoruklu/codaris'],
     ]);
 
     for (const [testId, expectedUrl] of expectedLinks) {
@@ -90,6 +91,7 @@ describe('GitHubComponent', () => {
       '/systems/chatpdm',
       '/systems/deterministic-boundary-firewall',
       '/systems/continuity-identity-model',
+      '/systems/codaris',
       '/systems/coupyn',
     ]);
   });

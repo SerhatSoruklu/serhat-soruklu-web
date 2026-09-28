@@ -59,7 +59,7 @@ test.describe('About identity page', () => {
       'href',
       '/about#origins',
     );
-    await expect(page.locator('.about-system-card')).toHaveCount(4);
+    await expect(page.locator('.about-system-card')).toHaveCount(5);
     await expect(page.locator('.about-principles > li')).toHaveCount(4);
     await expect(page.locator('.about-profiles a')).toHaveCount(7);
 

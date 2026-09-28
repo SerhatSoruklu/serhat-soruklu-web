@@ -47,6 +47,12 @@ describe('SITEMAP_ROUTES', () => {
         priority: 0.7,
       },
       {
+        path: '/systems/codaris',
+        lastModified: '2026-09-28',
+        changeFrequency: 'monthly',
+        priority: 0.7,
+      },
+      {
         path: '/systems/deterministic-boundary-firewall',
         lastModified: '2026-08-09',
         changeFrequency: 'monthly',

@@ -1,0 +1,11 @@
+# Workstation image edits
+
+Generated using the built-in image_gen tool.
+
+## Light
+
+Use case: identity-preserve. Edit target: image 1, the wide workstation cover. Image 2 is identity reference only. Create ONE LIGHT THEME version of image 1, same wide approximately 2.5:1 composition, ideally 1984x800. Preserve the man's exact face, expression, facial proportions, hair, skin texture, pose, hands, chair, desk, monitors, shelves, framed birds and workspace arrangement. Remove ALL floating graphic overlay text on the right: 'Serhat Soruklu', 'Founder • Coder', and 'Coupyn.com'. Seamlessly reconstruct the existing room behind those words. No replacement text or new overlay. Regenerate only the T-shirt into a clean well-fitting plain WHITE cotton crewneck T-shirt, realistic subtle folds and seams, no logos. Light atmosphere: natural softly bright daytime office light, warm shelf practical lights, realistic professional camera photograph, natural skin detail. Do not beautify, reshape or reconstruct his face. Do not change framing, camera, body or props. Keep actual content on monitors. Output a single finished photograph, no collage.
+
+## Dark
+
+Use case: lighting-weather and identity-preserve. Edit the supplied LIGHT workstation photo into its matching DARK THEME variant. Preserve precisely the same composition, dimensions (1973 x 797), camera angle, face and expression, hair, body, hands and pose, desk, monitors, chair, shelves, bird artwork, plants, whiteboard and all object positions. Change ONLY lighting atmosphere and T-shirt color. Replace white T-shirt with a plain BLACK cotton crewneck T-shirt, natural folds and seams, no logo. Atmosphere: realistic evening/night office, no sunlight or sun streaks, deep subdued navy/neutral ambient shadows, warm amber shelf and desk lamps plus subtle monitor illumination. Keep face clearly readable, natural skin texture, recognizable identical facial proportions, no beautification. Photograph should look intentionally lit by a professional camera shoot, not a uniform dark filter. Absolutely no overlaid name, Founder Coder text, floating Coupyn.com branding, captions, watermark or added graphics. Preserve existing physical room details and monitor content. Single finished photo with exact matching framing.
