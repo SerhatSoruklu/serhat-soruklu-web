@@ -43,6 +43,34 @@ interface SystemHubCard {
   secondaryUrl?: string;
 }
 
+function createSystemHubCard(
+  icon: string,
+  brand: NonNullable<SystemHubCard['brand']>,
+  category: string,
+  title: string,
+  description: string,
+  status: string,
+  chips: readonly string[],
+  primaryLabel: string,
+  primaryPath: string,
+  secondaryLabel: string,
+  secondaryUrl: string,
+): SystemHubCard {
+  return {
+    icon,
+    brand,
+    category,
+    title,
+    description,
+    status,
+    chips,
+    primaryLabel,
+    primaryPath,
+    secondaryLabel,
+    secondaryUrl,
+  };
+}
+
 interface PrincipleTile {
   title: string;
   description: string;
@@ -162,19 +190,19 @@ export class SystemsComponent {
       secondaryLabel: 'Open ChatPDM',
       secondaryUrl: 'https://chatpdm.com'
     },
-    {
-      icon: 'systems-card-codaris',
-      brand: 'codaris',
-      category: 'Developer Coalition',
-      title: 'CODARIS',
-      description: 'An independent developer coalition advancing practical, verifiable work around responsible intelligent systems.',
-      status: 'Early-stage Beta V1',
-      chips: ['Developer-led mission', 'C17 / WebAssembly platform', 'Research library'],
-      primaryLabel: 'View CODARIS System',
-      primaryPath: '/systems/codaris',
-      secondaryLabel: 'Open CODARIS',
-      secondaryUrl: 'https://codaris.org'
-    },
+    createSystemHubCard(
+      'systems-card-codaris',
+      'codaris',
+      'Developer Coalition',
+      'CODARIS',
+      'An independent developer coalition advancing practical, verifiable work around responsible intelligent systems.',
+      'Early-stage Beta V1',
+      ['Developer-led mission', 'C17 / WebAssembly platform', 'Research library'],
+      'View CODARIS System',
+      '/systems/codaris',
+      'Open CODARIS',
+      'https://codaris.org',
+    ),
     {
       icon: 'systems-card-dbf',
       category: 'Research System',
