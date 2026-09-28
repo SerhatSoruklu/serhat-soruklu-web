@@ -154,6 +154,16 @@ try {
   assert.match(workHtml, /<link rel="canonical" href="https:\/\/serhatsoruklu\.com\/work">/);
   assert.match(workHtml, /Built End-to-End/, 'The work response must include route content.');
 
+  const codarisResponse = await secureFetch('/systems/codaris');
+  const codarisHtml = await codarisResponse.text();
+  assert.equal(codarisResponse.status, 200, 'The CODARIS route must SSR with HTTP 200.');
+  assert.match(codarisHtml, /<title>CODARIS \| Responsible Intelligent Systems Coalition<\/title>/);
+  assert.match(codarisHtml, /<link rel="canonical" href="https:\/\/serhatsoruklu\.com\/systems\/codaris">/);
+  assert.match(codarisHtml, /<meta property="og:image" content="https:\/\/serhatsoruklu\.com\/assets\/social\/serhat-soruklu-systems-codaris-og\.png">/);
+  assert.match(codarisHtml, /<meta property="og:image:type" content="image\/png">/);
+  assert.match(codarisHtml, /Coalition Of Developers Advancing Responsible Intelligent Systems/);
+  assert.match(codarisHtml, /"@type":"Organization","@id":"https:\/\/serhatsoruklu\.com\/systems\/codaris#organization"/);
+
   const aboutResponse = await secureFetch('/about');
   const aboutHtml = await aboutResponse.text();
   assert.equal(aboutResponse.status, 200, 'The About route must SSR with HTTP 200.');
@@ -245,7 +255,7 @@ try {
   assert.match(pressHtml, /<title>Press &amp; Media \| Serhat Soruklu<\/title>/);
   assert.match(
     pressHtml,
-    /Verified biographies, company facts, media assets and public reference links for coverage of Serhat Soruklu and Coupyn\./,
+    /Verified biographies, company and project facts, media assets and public reference links for coverage of Serhat Soruklu, Coupyn and CODARIS\./,
     'Press must SSR its English metadata and reference copy.',
   );
   assert.match(pressHtml, /<link rel="canonical" href="https:\/\/serhatsoruklu\.com\/press">/);
@@ -267,6 +277,7 @@ try {
   assert.match(pressHtml, /"@id":"https:\/\/serhatsoruklu\.com\/press#webpage"/);
   assert.match(pressHtml, /"@id":"https:\/\/serhatsoruklu\.com\/#person"/);
   assert.match(pressHtml, /"@id":"https:\/\/coupyn\.com\/#organization"/);
+  assert.match(pressHtml, /"@id":"https:\/\/serhatsoruklu\.com\/systems\/codaris#organization"/);
   assert.match(pressHtml, /"inLanguage":"en-GB"/);
   assert.doesNotMatch(pressHtml, /"@type":"ProfilePage"/);
   assert.doesNotMatch(pressHtml, /\bSly\b|Press Coverage/i);

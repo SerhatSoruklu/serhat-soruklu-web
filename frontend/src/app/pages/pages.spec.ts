@@ -14,6 +14,7 @@ import { SorukluSurnameComponent } from './soruklu-surname/soruklu-surname.compo
 import { ChatpdmSystemComponent } from './systems/chatpdm/chatpdm-system.component';
 import { ContinuityIdentityModelSystemComponent } from './systems/continuity-identity-model/continuity-identity-model-system.component';
 import { CoupynSystemComponent } from './systems/coupyn/coupyn-system.component';
+import { CodarisSystemComponent } from './systems/codaris/codaris-system.component';
 import { DeterministicBoundaryFirewallSystemComponent } from './systems/deterministic-boundary-firewall/deterministic-boundary-firewall-system.component';
 import { SystemsComponent } from './systems/systems.component';
 import { WorkComponent } from './work/work.component';
@@ -26,6 +27,7 @@ const pages: readonly { component: Type<unknown>; heading: string }[] = [
   { component: SystemsComponent, heading: 'Systems' },
   { component: CoupynSystemComponent, heading: 'Coupyn' },
   { component: ChatpdmSystemComponent, heading: 'ChatPDM' },
+  { component: CodarisSystemComponent, heading: 'CODARIS' },
   {
     component: DeterministicBoundaryFirewallSystemComponent,
     heading: 'Deterministic Boundary Firewall',

@@ -14,6 +14,7 @@ const routes = [
     path: '/systems/chatpdm',
     heading: 'Deterministic interpretation inside defined constraints.',
   },
+  { path: '/systems/codaris', heading: 'CODARIS' },
   { path: '/systems/deterministic-boundary-firewall', heading: 'Deterministic Boundary Firewall' },
   { path: '/systems/continuity-identity-model', heading: 'Continuity Identity Model' },
   { path: '/writing', heading: 'Notes from building systems that have to stay standing.' },

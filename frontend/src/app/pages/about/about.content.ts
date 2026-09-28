@@ -447,6 +447,16 @@ const aboutSchema = {
       },
       {
         index: '04',
+        title: 'CODARIS',
+        description: localized(
+          'An early-stage developer coalition and technical platform advancing practical, evidence-led work on responsible intelligent systems.',
+          'Sorumlu akıllı sistemler üzerine uygulamalı ve kanıta dayalı çalışmaları ilerleten erken aşamadaki bir geliştirici koalisyonu ve teknik platform.',
+        ),
+        path: '/systems/codaris',
+        externalUrl: null,
+      },
+      {
+        index: '04',
         title: 'ZeroGlare Continuity System',
         description: localized(
           'A browser-native concept and visualisation laboratory used to explore continuity, scale and interface ideas.',

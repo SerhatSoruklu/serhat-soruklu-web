@@ -65,6 +65,7 @@ describe('SiteFooterComponent', () => {
       'GitHub',
       'Coupyn',
       'ChatPDM',
+      'CODARIS',
       'DBF',
       'CIM',
       'About',
@@ -91,6 +92,7 @@ describe('SiteFooterComponent', () => {
     expect(component.systemLinks.map((link) => link.path)).toEqual([
       '/systems/coupyn',
       '/systems/chatpdm',
+      '/systems/codaris',
       '/systems/deterministic-boundary-firewall',
       '/systems/continuity-identity-model',
     ]);

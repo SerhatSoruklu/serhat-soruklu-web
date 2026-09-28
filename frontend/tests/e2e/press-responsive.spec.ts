@@ -55,6 +55,12 @@ const pressAssets = [
     type: /^image\/png/,
     width: 1200,
   },
+  {
+    height: 630,
+    path: '/assets/social/serhat-soruklu-systems-codaris-og.png',
+    type: /^image\/png/,
+    width: 1200,
+  },
 ] as const;
 
 const downloadableAssets = [
@@ -78,6 +84,14 @@ const downloadableAssets = [
     fileName: 'serhat-soruklu-systems-coupyn-og.svg',
     path: '/assets/social/serhat-soruklu-systems-coupyn-og.svg',
   },
+  {
+    fileName: 'serhat-soruklu-systems-codaris-og.png',
+    path: '/assets/social/serhat-soruklu-systems-codaris-og.png',
+  },
+  {
+    fileName: 'serhat-soruklu-systems-codaris-og.svg',
+    path: '/assets/social/serhat-soruklu-systems-codaris-og.svg',
+  },
 ] as const;
 
 const internalRoutes = [
@@ -85,6 +99,7 @@ const internalRoutes = [
   '/contact',
   '/systems/coupyn',
   '/systems/chatpdm',
+  '/systems/codaris',
   '/systems/deterministic-boundary-firewall',
   '/systems/continuity-identity-model',
 ] as const;
@@ -113,6 +128,11 @@ const verificationLinks = [
   {
     href: 'https://coupyn.com/',
     name: 'Coupyn',
+    rel: 'noopener noreferrer',
+  },
+  {
+    href: 'https://codaris.org/',
+    name: 'CODARIS',
     rel: 'noopener noreferrer',
   },
   {
@@ -269,11 +289,11 @@ test.describe('Press and media page', () => {
     await expect(pressPage).toContainText('first-party reference material');
 
     await expect(page.getByRole('heading', { level: 2, name: 'Quick facts' })).toBeVisible();
-    await expect(page.locator('.press-fact-sheet')).toHaveCount(2);
+    await expect(page.locator('.press-fact-sheet')).toHaveCount(3);
     const factDefinitions = page.locator('.press-fact-sheet__facts > dl');
-    await expect(factDefinitions).toHaveCount(17);
-    await expect(factDefinitions.locator(':scope > dt')).toHaveCount(17);
-    await expect(factDefinitions.locator(':scope > dd')).toHaveCount(17);
+    await expect(factDefinitions).toHaveCount(23);
+    await expect(factDefinitions.locator(':scope > dt')).toHaveCount(23);
+    await expect(factDefinitions.locator(':scope > dd')).toHaveCount(23);
     await expect(page.locator('.press-fact-sheet').first()).toContainText(
       'Osmancık, Çorum, Turkey',
     );
@@ -281,6 +301,7 @@ test.describe('Press and media page', () => {
     await expect(page.locator('.press-fact-sheet').nth(1)).toContainText(
       'Roughly 1 million company pages',
     );
+    await expect(page.locator('.press-fact-sheet').nth(2)).toContainText('CODARIS');
 
     await expect(
       page.getByRole('heading', { level: 2, name: 'Approved biographies' }),
@@ -323,10 +344,10 @@ test.describe('Press and media page', () => {
       'The workstation images are AI-assisted edited images of Serhat Soruklu, created using supplied portrait and real-workspace photographic references. The images have been AI-generated or modified and should not be treated as unaltered photographs.',
     );
     await expect(
-      page.getByRole('heading', { level: 2, name: 'Coupyn media assets' }),
+      page.getByRole('heading', { level: 2, name: 'Coupyn and CODARIS media assets' }),
     ).toBeVisible();
-    await expect(page.locator('.press-coupyn-asset')).toHaveCount(1);
-    await expect(page.locator('.press-format-list > li')).toHaveCount(2);
+    await expect(page.locator('.press-coupyn-asset')).toHaveCount(2);
+    await expect(page.locator('.press-format-list > li')).toHaveCount(4);
     await waitForPressImages(page);
 
     const renderedImages = await page.locator('.press-page img').evaluateAll((images) =>
@@ -408,10 +429,11 @@ test.describe('Press and media page', () => {
     await expect(
       page.getByRole('heading', { level: 2, name: 'Selected technical work' }),
     ).toBeVisible();
-    await expect(page.locator('.press-system-card')).toHaveCount(4);
+    await expect(page.locator('.press-system-card')).toHaveCount(5);
     await expect(page.locator('.press-system-card h3')).toHaveText([
       'Coupyn',
       'ChatPDM',
+      'CODARIS',
       'Deterministic Boundary Firewall',
       'Continuity Identity Model',
     ]);
@@ -461,6 +483,7 @@ test.describe('Press and media page', () => {
     ).toEqual([
       '/systems/coupyn',
       '/systems/chatpdm',
+      '/systems/codaris',
       '/systems/deterministic-boundary-firewall',
       '/systems/continuity-identity-model',
     ]);

@@ -44,6 +44,16 @@ export const routes: Routes = [
     },
   },
   {
+    path: 'systems/codaris',
+    loadComponent: () =>
+      import('./pages/systems/codaris/codaris-system.component').then(
+        (component) => component.CodarisSystemComponent,
+      ),
+    data: {
+      seo: pageSeoMetadata.codarisSystem,
+    },
+  },
+  {
     path: 'systems/deterministic-boundary-firewall',
     loadComponent: () =>
       import('./pages/systems/deterministic-boundary-firewall/deterministic-boundary-firewall-system.component').then(

@@ -60,7 +60,7 @@ describe('AboutComponent', () => {
     expect(text).toContain('Private servers became a practical education');
     expect(text).toContain('roughly one million company pages');
     expect(nativeElement.querySelectorAll('.about-history > li')).toHaveLength(4);
-    expect(nativeElement.querySelectorAll('.about-system-card')).toHaveLength(4);
+    expect(nativeElement.querySelectorAll('.about-system-card')).toHaveLength(5);
     expect(nativeElement.querySelectorAll('.about-principles > li')).toHaveLength(4);
     expect(nativeElement.querySelectorAll('.about-academic-stage')).toHaveLength(7);
     expect(nativeElement.querySelectorAll('.about-academic-stage--current')).toHaveLength(1);

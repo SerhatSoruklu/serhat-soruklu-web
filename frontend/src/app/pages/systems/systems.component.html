@@ -41,9 +41,9 @@
     <div class="systems-section-frame layout-container--wide">
       <div class="systems-section-heading">
         <p class="systems-eyebrow">MAP</p>
-        <h2 id="systems-map-title">Production Systems And Research Systems</h2>
+        <h2 id="systems-map-title">Production, Coalition And Research Systems</h2>
         <p>
-          Coupyn and ChatPDM are product-facing surfaces. DBF and CIM define stricter models for boundaries, continuity, and controlled failure.
+          Coupyn and ChatPDM are product-facing systems; CODARIS is a developer coalition. DBF and CIM define models for boundaries, continuity, and controlled failure.
         </p>
       </div>
 
@@ -67,7 +67,7 @@
     <div class="systems-section-frame systems-section-frame--open layout-container--wide">
       <div class="systems-section-heading">
         <p class="systems-eyebrow">SYSTEMS</p>
-        <h2 id="system-cards-title">Four Public System Surfaces</h2>
+        <h2 id="system-cards-title">Five Public System Surfaces</h2>
       </div>
 
       <div class="systems-cards__grid">
@@ -114,6 +114,11 @@
                       <span class="work-production-brand__chatpdm-chat">Chat</span><span class="work-production-brand__chatpdm-pdm">PDM</span>
                     </span>
                   </span>
+                </a>
+              } @else if (card.brand === 'codaris') {
+                <a class="codaris-brand" href="https://codaris.org" target="_blank" rel="noopener noreferrer" aria-label="Open CODARIS.org in a new tab">
+                  <img src="/assets/projects/codaris/emblem.svg" width="34" height="34" alt="" />
+                  <span>COD<span class="codaris-brand-a">A</span>RIS</span>
                 </a>
               } @else {
                 {{ card.title }}

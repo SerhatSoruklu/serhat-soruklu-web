@@ -381,6 +381,9 @@ test.describe('seo metadata', () => {
     const website = findJsonLdEntity(entities, 'WebSite');
     const organization = findJsonLdEntity(entities, 'Organization');
     const canonicalUrl = `${canonicalBaseUrl}/press`;
+    const codarisOrganization = entities.find(
+      (entity) => entity['@type'] === 'Organization' && entity['name'] === 'CODARIS',
+    );
     const personId = `${canonicalBaseUrl}/#person`;
     const websiteId = `${canonicalBaseUrl}/#website`;
     const organizationId = 'https://coupyn.com/#organization';
@@ -400,6 +403,7 @@ test.describe('seo metadata', () => {
       'Person',
       'WebSite',
       'Organization',
+      'Organization',
     ]);
     expect(new Set(ids).size).toBe(ids.length);
     expect(webpage).toEqual({
@@ -409,7 +413,11 @@ test.describe('seo metadata', () => {
       description: pageSeoMetadata.press.description,
       url: canonicalUrl,
       isPartOf: { '@id': websiteId },
-      about: [{ '@id': personId }, { '@id': organizationId }],
+      about: [
+        { '@id': personId },
+        { '@id': organizationId },
+        { '@id': `${canonicalBaseUrl}/systems/codaris#organization` },
+      ],
       author: { '@id': personId },
       primaryImageOfPage: {
         '@type': 'ImageObject',
@@ -426,6 +434,13 @@ test.describe('seo metadata', () => {
         '@id': personId,
         mainEntityOfPage: { '@id': `${canonicalBaseUrl}/about#webpage` },
         worksFor: { '@id': organizationId },
+      }),
+    );
+    expect(codarisOrganization).toEqual(
+      expect.objectContaining({
+        '@id': `${canonicalBaseUrl}/systems/codaris#organization`,
+        name: 'CODARIS',
+        url: 'https://codaris.org/',
       }),
     );
     expect(website?.['@id']).toBe(websiteId);

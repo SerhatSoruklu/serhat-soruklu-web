@@ -257,7 +257,7 @@
         @for (system of content().systems.cards; track system.title) {
           <article class="about-system-card">
             <span class="about-system-card__index" aria-hidden="true">{{ system.index }}</span>
-            <h3>{{ system.title }}</h3>
+            <h3>@if (system.title === 'CODARIS') { COD<span class="about-codaris-a">A</span>RIS } @else { {{ system.title }} }</h3>
             <p>{{ system.description }}</p>
             @if (system.path) {
               <a [routerLink]="system.path">

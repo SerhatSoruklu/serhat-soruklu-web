@@ -161,6 +161,7 @@ playwright-report/
 blob-report/
 .playwright/
 output/playwright/
+.playwright-cli/
 .playwright-mcp/
 frontend/test-results/
 frontend/playwright-report/
@@ -168,4 +169,5 @@ frontend/blob-report/
 frontend/.playwright/
 
 # Lighthouse may derive a Windows-style profile path when run inside WSL.
+Lighthouse/
 *lighthouse.*/

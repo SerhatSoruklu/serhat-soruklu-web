@@ -250,6 +250,15 @@
               <span>Open Repository</span>
               <app-path-icon name="github-external" [path]="iconPaths['github-external']" aria-hidden="true"></app-path-icon>
             </a>
+            @if (repository.systemPath) {
+              <a
+                class="repository-action repository-action--internal"
+                [routerLink]="repository.systemPath"
+              >
+                <span>Explore System</span>
+                <app-path-icon name="github-arrow" [path]="iconPaths['github-arrow']" aria-hidden="true"></app-path-icon>
+              </a>
+            }
           </article>
         }
       </div>

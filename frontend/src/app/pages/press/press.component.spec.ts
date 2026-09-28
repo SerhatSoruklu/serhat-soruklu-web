@@ -62,11 +62,11 @@ describe('PressComponent', () => {
       (link) => link.getAttribute('href') === '/contact',
     );
 
-    expect(facts).toHaveLength(2);
+    expect(facts).toHaveLength(3);
     const factDefinitions = Array.from(
       nativeElement.querySelectorAll<HTMLDListElement>('.press-fact-sheet__facts > dl'),
     );
-    expect(factDefinitions).toHaveLength(17);
+    expect(factDefinitions).toHaveLength(23);
     expect(
       factDefinitions.every(
         (definition) =>
@@ -85,7 +85,7 @@ describe('PressComponent', () => {
     expect(contactLinks.length).toBeGreaterThanOrEqual(2);
   });
 
-  it('uses the canonical local photography and Coupyn media assets with explicit metadata', () => {
+  it('uses the canonical local photography and Coupyn and CODARIS media assets with explicit metadata', () => {
     const fixture = TestBed.createComponent(PressComponent);
     fixture.detectChanges();
 
@@ -104,6 +104,9 @@ describe('PressComponent', () => {
     );
     const coupynPreview = nativeElement.querySelector<HTMLImageElement>(
       '.press-coupyn-asset__preview img',
+    );
+    const codarisPreview = nativeElement.querySelector<HTMLImageElement>(
+      '.press-codaris-asset .press-coupyn-asset__preview img',
     );
     const formatLinks = Array.from(
       nativeElement.querySelectorAll<HTMLAnchorElement>('.press-format-list a'),
@@ -147,6 +150,9 @@ describe('PressComponent', () => {
     );
     expect(coupynPreview?.getAttribute('width')).toBe('1200');
     expect(coupynPreview?.getAttribute('height')).toBe('630');
+    expect(codarisPreview?.getAttribute('src')).toBe('/assets/social/serhat-soruklu-systems-codaris-og.png');
+    expect(codarisPreview?.getAttribute('width')).toBe('1200');
+    expect(codarisPreview?.getAttribute('height')).toBe('630');
     expect(formatLinks.some((link) => link.href.endsWith('.png'))).toBe(true);
     expect(formatLinks.some((link) => link.href.endsWith('.svg'))).toBe(true);
   });
@@ -167,13 +173,14 @@ describe('PressComponent', () => {
       (link) => link.querySelector('strong')?.textContent?.trim() === 'Companies House',
     );
 
-    expect(systems).toHaveLength(4);
+    expect(systems).toHaveLength(5);
     expect(sourceNames).toEqual([
       'Companies House',
       'GitHub',
       'ORCID',
       'LinkedIn',
       'Coupyn',
+      'CODARIS',
       'SerhatSoruklu.com',
     ]);
     expect(companiesHouse?.href).toBe(

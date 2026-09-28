@@ -15,6 +15,8 @@ const aboutPortraitAsset = join(
 );
 const aboutSocialAsset = join(browserDirectory, 'assets', 'social', 'serhat-soruklu-about-natural-portrait-og.png');
 const pressSocialAsset = join(browserDirectory, 'assets', 'social', 'serhat-soruklu-press-natural-portrait-og.png');
+const codarisSocialAsset = join(browserDirectory, 'assets', 'social', 'serhat-soruklu-systems-codaris-og.png');
+const codarisEmblemAsset = join(browserDirectory, 'assets', 'projects', 'codaris', 'emblem.svg');
 const homeDarkPortraitAsset = join(
   browserDirectory,
   'assets',
@@ -48,6 +50,13 @@ await assertPngDimensions(
   630,
   'The production Press social image is missing or has unexpected dimensions.',
 );
+await assertPngDimensions(
+  codarisSocialAsset,
+  1200,
+  630,
+  'The production CODARIS social image is missing or has unexpected dimensions.',
+);
+await assertFile(codarisEmblemAsset, 'The CODARIS emblem is missing from production output.');
 await assertPngDimensions(
   homeDarkPortraitAsset,
   1973,
@@ -132,6 +141,11 @@ assert.match(
 );
 assert.match(
   compiledBrowserText,
+  /\/assets\/social\/serhat-soruklu-systems-codaris-og\.png/i,
+  'The CODARIS social-image URL is missing from the production browser output.',
+);
+assert.match(
+  compiledBrowserText,
   /\/assets\/home\/serhat-soruklu-workstation-dark\.png/i,
   'The dark homepage portrait URL is missing from the production browser output.',
 );
@@ -142,7 +156,7 @@ assert.match(
 );
 
 console.log(
-  `[artifact] verified ${browserFileNames.length} browser files, hashed bundles, production API replacement, About, Press, and homepage image assets, SSR entry, and no source maps`,
+  `[artifact] verified ${browserFileNames.length} browser files, hashed bundles, production API replacement, CODARIS, About, Press, and homepage image assets, SSR entry, and no source maps`,
 );
 
 async function listFiles(directory) {

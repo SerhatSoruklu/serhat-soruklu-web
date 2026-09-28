@@ -206,8 +206,8 @@
     <div class="press-frame">
       <header class="press-heading press-heading--wide">
         <div>
-          <p class="press-eyebrow">05 / COUPYN MEDIA</p>
-          <h2 id="press-coupyn-media-title">Coupyn media assets</h2>
+          <p class="press-eyebrow">05 / SYSTEM MEDIA</p>
+          <h2 id="press-coupyn-media-title">Coupyn and CODARIS media assets</h2>
         </div>
         <p>Current public system artwork already maintained by this site.</p>
       </header>
@@ -259,6 +259,25 @@
                       <span aria-hidden="true">↓</span>
                     </a>
                   }
+                </li>
+              }
+            </ul>
+          </figcaption>
+        </figure>
+      </article>
+      <article class="press-coupyn-asset press-codaris-asset">
+        <figure>
+          <div class="press-coupyn-asset__preview"><img [src]="content.codarisMedia.previewSrc" [alt]="content.codarisMedia.previewAlt" width="1200" height="630" loading="lazy" decoding="async" fetchpriority="low" /></div>
+          <figcaption>
+            <p class="press-eyebrow">CODARIS FIRST-PARTY ARTWORK</p>
+            <h3>{{ content.codarisMedia.title }}</h3>
+            <p>{{ content.codarisMedia.description }}</p>
+            <ul class="press-format-list" aria-label="Available CODARIS media formats">
+              @for (format of content.codarisMedia.formats; track format.format) {
+                <li><div><strong>{{ format.format }}</strong><span>{{ format.dimensions }} · {{ format.fileSize }}</span></div>
+                  @if (format.openInNewTab) {
+                    <div class="press-format-list__actions"><a [href]="format.path" target="_blank" rel="noopener noreferrer"><span>{{ format.action }}</span><span aria-hidden="true">↗</span></a><a [href]="format.path" [attr.download]="format.fileName"><span>Download PNG</span><span aria-hidden="true">↓</span></a></div>
+                  } @else { <a [href]="format.path" [attr.download]="format.fileName"><span>{{ format.action }}</span><span aria-hidden="true">↓</span></a> }
                 </li>
               }
             </ul>
@@ -320,7 +339,7 @@
           <li>
             <article class="press-system-card">
               <span aria-hidden="true">{{ system.index }}</span>
-              <h3>{{ system.title }}</h3>
+              <h3>@if (system.title === 'CODARIS') { COD<span class="codaris-brand-a">A</span>RIS } @else { {{ system.title }} }</h3>
               <p>{{ system.description }}</p>
               <a [routerLink]="system.path">
                 <span>View {{ system.title }}</span>

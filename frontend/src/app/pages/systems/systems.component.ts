@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import {
   mdiArrowRight,
   mdiBriefcaseOutline,
+  mdiAccountGroupOutline,
   mdiClipboardCheckOutline,
   mdiDatabaseOutline,
   mdiEmailOutline,
@@ -29,7 +30,7 @@ interface SystemsMapColumn {
 
 interface SystemHubCard {
   icon: string;
-  brand?: 'coupyn' | 'chatpdm';
+  brand?: 'coupyn' | 'chatpdm' | 'codaris';
   category: string;
   title: string;
   description: string;
@@ -94,15 +95,22 @@ export class SystemsComponent {
       group: 'Runtime'
     },
     {
-      icon: 'systems-stack-boundary',
+      icon: 'systems-stack-codaris',
       index: '03',
+      label: 'CODARIS',
+      description: 'Responsible systems coalition',
+      group: 'Coalition'
+    },
+    {
+      icon: 'systems-stack-boundary',
+      index: '04',
       label: 'DBF',
       description: 'Boundary research',
       group: 'Research'
     },
     {
       icon: 'systems-stack-continuity',
-      index: '04',
+      index: '05',
       label: 'CIM',
       description: 'Continuity model',
       group: 'Model'
@@ -114,6 +122,11 @@ export class SystemsComponent {
       title: 'Production Work',
       description: 'Live or product-facing work with operational surfaces, discovery paths, and long-term maintenance responsibilities.',
       systems: ['Coupyn', 'ChatPDM']
+    },
+    {
+      title: 'Developer Coalition',
+      description: 'An early-stage independent coalition building a platform and direction for responsible intelligent systems.',
+      systems: ['CODARIS']
     },
     {
       title: 'Research / Architecture',
@@ -148,6 +161,19 @@ export class SystemsComponent {
       primaryPath: '/systems/chatpdm',
       secondaryLabel: 'Open ChatPDM',
       secondaryUrl: 'https://chatpdm.com'
+    },
+    {
+      icon: 'systems-card-codaris',
+      brand: 'codaris',
+      category: 'Developer Coalition',
+      title: 'CODARIS',
+      description: 'An independent developer coalition advancing practical, verifiable work around responsible intelligent systems.',
+      status: 'Early-stage Beta V1',
+      chips: ['Developer-led mission', 'C17 / WebAssembly platform', 'Research library'],
+      primaryLabel: 'View CODARIS System',
+      primaryPath: '/systems/codaris',
+      secondaryLabel: 'Open CODARIS',
+      secondaryUrl: 'https://codaris.org'
     },
     {
       icon: 'systems-card-dbf',
@@ -248,6 +274,7 @@ export class SystemsComponent {
   private registerIcons(): void {
     const icons = {
       'systems-card-chatpdm': mdiHubOutline,
+      'systems-card-codaris': mdiAccountGroupOutline,
       'systems-card-cim': mdiTransitConnectionVariant,
       'systems-card-coupyn': mdiSitemapOutline,
       'systems-card-dbf': mdiLockCheckOutline,
@@ -258,6 +285,7 @@ export class SystemsComponent {
       'systems-stack-boundary': mdiShieldCheckOutline,
       'systems-stack-continuity': mdiTimelineCheckOutline,
       'systems-stack-governance': mdiClipboardCheckOutline,
+      'systems-stack-codaris': mdiAccountGroupOutline,
       'systems-stack-production': mdiDatabaseOutline
     };
 

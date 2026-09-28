@@ -16,6 +16,7 @@ export type RobotsDirective = 'index, follow' | 'noindex, nofollow' | 'noindex, 
 export type StructuredDataProfile =
   | 'about'
   | 'breadcrumb'
+  | 'codaris'
   | 'press'
   | 'soruklu-surname'
   | 'soruklu-order'
@@ -59,7 +60,7 @@ export const pageSeoMetadata = {
     label: 'Press / Media',
     title: 'Press & Media | Serhat Soruklu',
     description:
-      'Verified biographies, company facts, media assets and public reference links for coverage of Serhat Soruklu and Coupyn.',
+      'Verified biographies, company and project facts, media assets and public reference links for coverage of Serhat Soruklu, Coupyn and CODARIS.',
     path: '/press',
     ogImage: '/assets/social/serhat-soruklu-press-natural-portrait-og.png',
     ogImageAlt:
@@ -82,7 +83,7 @@ export const pageSeoMetadata = {
     label: 'Systems',
     title: 'Systems | Serhat Soruklu',
     description:
-      "Explore Serhat Soruklu's systems map across Coupyn, ChatPDM, DBF, CIM, production platforms, research, and architecture models.",
+      "Explore Serhat Soruklu's systems map across Coupyn, ChatPDM, CODARIS, DBF, CIM, production platforms, research, and architecture models.",
     path: '/systems',
     ogImage: '/assets/social/serhat-soruklu-systems-og.png',
     ogImageAlt: 'Serhat Soruklu systems architecture map in deep navy and gold.',
@@ -107,6 +108,17 @@ export const pageSeoMetadata = {
     ogImage: '/assets/social/serhat-soruklu-systems-chatpdm-og.png',
     ogImageAlt: 'ChatPDM deterministic governance system by Serhat Soruklu.',
     ...rasterSocialImage,
+  },
+  codarisSystem: {
+    label: 'CODARIS',
+    title: 'CODARIS | Responsible Intelligent Systems Coalition',
+    description:
+      'CODARIS is an independent developer coalition advancing work on responsible intelligent systems, safety, security, interoperability, and evidence.',
+    path: '/systems/codaris',
+    ogImage: '/assets/social/serhat-soruklu-systems-codaris-og.png',
+    ogImageAlt: 'CODARIS developer coalition system overview by Serhat Soruklu.',
+    ...rasterSocialImage,
+    structuredData: 'codaris',
   },
   dbfSystem: {
     label: 'Deterministic Boundary Firewall',

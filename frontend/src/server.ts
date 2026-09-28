@@ -389,6 +389,9 @@ function sendKnownRouteRedirect(
     case '/systems/chatpdm':
       location = `${origin}/systems/chatpdm`;
       break;
+    case '/systems/codaris':
+      location = `${origin}/systems/codaris`;
+      break;
     case '/systems/continuity-identity-model':
       location = `${origin}/systems/continuity-identity-model`;
       break;

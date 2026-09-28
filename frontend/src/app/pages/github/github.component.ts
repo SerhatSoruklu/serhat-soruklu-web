@@ -96,5 +96,15 @@ export class GitHubComponent {
       technologies: ['JavaScript', 'Continuity', 'System model'],
       githubUrl: 'https://github.com/SerhatSoruklu/zeroglare-continuity-system',
     },
+    {
+      slug: 'codaris',
+      category: 'Developer coalition / platform',
+      title: 'CODARIS',
+      description:
+        'An early-stage developer coalition and C17/WebAssembly platform advancing careful, evidence-led work on responsible intelligent systems.',
+      technologies: ['C17', 'WebAssembly', 'PostgreSQL'],
+      githubUrl: 'https://github.com/SerhatSoruklu/codaris',
+      systemPath: '/systems/codaris',
+    },
   ];
 }
