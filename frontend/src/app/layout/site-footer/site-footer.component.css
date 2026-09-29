@@ -3,9 +3,7 @@
   background: transparent;
   color: #f5f7fa;
 }
-.codaris-footer-a { color: #f5f7fa; }
-.site-footer__link:hover:has(.codaris-footer-a),.site-footer__link:focus-visible:has(.codaris-footer-a),.site-footer__link--active:has(.codaris-footer-a) { color: #59e4eb; }
-.site-footer__link:hover .codaris-footer-a,.site-footer__link:focus-visible .codaris-footer-a,.site-footer__link--active .codaris-footer-a { color: #59e4eb; }
+.codaris-footer-a { color: inherit; }
 
 .site-footer::before {
   position: absolute;
