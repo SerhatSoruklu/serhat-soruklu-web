@@ -282,6 +282,79 @@
   white-space: nowrap;
 }
 
+.site-footer__social {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-footer__social-link {
+  position: relative;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgba(168, 176, 189, 0.2);
+  border-radius: 10px;
+  color: #a8b0bd;
+  opacity: 0.72;
+  transition:
+    border-color 160ms ease,
+    color 160ms ease,
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.site-footer__social-link svg {
+  display: block;
+  width: 19px;
+  height: 19px;
+  fill: currentColor;
+}
+
+.site-footer__social-link:hover,
+.site-footer__social-link:focus-visible {
+  border-color: rgba(214, 168, 79, 0.5);
+  color: #f0d58c;
+  opacity: 1;
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.site-footer__social-link:focus-visible {
+  outline: 2px solid rgba(240, 213, 140, 0.72);
+  outline-offset: 4px;
+}
+
+.site-footer__social-link::after {
+  position: absolute;
+  bottom: calc(100% + 9px);
+  left: 50%;
+  z-index: 2;
+  padding: 6px 8px;
+  border: 1px solid #252b36;
+  border-radius: 6px;
+  background: #10141c;
+  color: #f5f7fa;
+  content: attr(data-tooltip);
+  font: 600 10px/1.2 'Space Mono', 'IBM Plex Mono', monospace;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 3px);
+  transition:
+    opacity 140ms ease,
+    transform 140ms ease;
+  white-space: nowrap;
+}
+
+.site-footer__social-link:hover::after,
+.site-footer__social-link:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
 .site-footer__language-copy span {
   color: #a8b0bd;
   font:
@@ -510,6 +583,23 @@
   color: #111827;
 }
 
+:host-context(.theme-resolved-light) .site-footer__social-link {
+  border-color: rgba(95, 102, 115, 0.2);
+  color: #5f6673;
+}
+
+:host-context(.theme-resolved-light) .site-footer__social-link:hover,
+:host-context(.theme-resolved-light) .site-footer__social-link:focus-visible {
+  border-color: rgba(184, 135, 47, 0.5);
+  color: #8b641d;
+}
+
+:host-context(.theme-resolved-light) .site-footer__social-link::after {
+  border-color: #e5e0d6;
+  background: #ffffff;
+  color: #111827;
+}
+
 :host-context(.theme-resolved-light) .site-footer__link:hover,
 :host-context(.theme-resolved-light) .site-footer__link:active,
 :host-context(.theme-resolved-light) .site-footer__link:focus-visible,
@@ -688,6 +778,11 @@
   }
 
   .site-footer__language {
+    transition: none;
+  }
+
+  .site-footer__social-link,
+  .site-footer__social-link::after {
     transition: none;
   }
 }

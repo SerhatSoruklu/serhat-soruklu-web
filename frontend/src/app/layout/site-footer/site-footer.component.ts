@@ -2,11 +2,15 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
   mdiEmailOutline,
+  mdiFacebook,
+  mdiInstagram,
+  mdiLinkedin,
   mdiNavigationVariantOutline,
   mdiShieldOutline,
   mdiSitemapOutline,
   mdiTranslate,
 } from '@mdi/js';
+import { siX } from 'simple-icons';
 
 import { TopNavigationService } from '../../core/navigation/top-navigation.service';
 import { LanguageDialogService } from '../../shared/dialogs/language-dialog/language-dialog.service';
@@ -14,6 +18,12 @@ import { LanguageDialogService } from '../../shared/dialogs/language-dialog/lang
 interface FooterLink {
   label: string;
   path: string;
+}
+
+interface SocialLink {
+  label: string;
+  path: string;
+  iconPath: string;
 }
 
 @Component({
@@ -33,6 +43,28 @@ export class SiteFooterComponent {
     reach: mdiEmailOutline,
     systems: mdiSitemapOutline,
   };
+  readonly socialLinks: readonly SocialLink[] = [
+    {
+      label: 'LinkedIn',
+      path: 'https://www.linkedin.com/in/serhatsoruklu/',
+      iconPath: mdiLinkedin,
+    },
+    {
+      label: 'X',
+      path: 'https://x.com/SerhatSoruklu',
+      iconPath: siX.path,
+    },
+    {
+      label: 'Facebook',
+      path: 'https://www.facebook.com/SerhatSoruklu',
+      iconPath: mdiFacebook,
+    },
+    {
+      label: 'Instagram',
+      path: 'https://www.instagram.com/Serhsoru/',
+      iconPath: mdiInstagram,
+    },
+  ];
 
   readonly navLinks: FooterLink[] = [
     { label: 'Home', path: '/' },

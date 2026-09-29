@@ -49,6 +49,23 @@
           <strong>40+ languages coming soon</strong>
         </span>
       </button>
+
+      <nav class="site-footer__social" aria-label="Social media">
+        @for (social of socialLinks; track social.label) {
+          <a
+            class="site-footer__social-link"
+            [href]="social.path"
+            target="_blank"
+            rel="noopener noreferrer"
+            [attr.aria-label]="social.label + ' (opens in a new tab)'"
+            [attr.data-tooltip]="social.label"
+          >
+            <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+              <path [attr.d]="social.iconPath"></path>
+            </svg>
+          </a>
+        }
+      </nav>
     </div>
 
     <nav class="site-footer__nav" aria-label="Footer navigation">
