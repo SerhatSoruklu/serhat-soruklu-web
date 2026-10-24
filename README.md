@@ -18,6 +18,7 @@ From the project root:
 
 ```bash
 cd ~/code/serhatsoruklu
+nvm use
 npm ci --ignore-scripts
 npm run install:projects
 npm run dev
@@ -32,6 +33,15 @@ Default local URLs:
 
 - Frontend: `http://localhost:4200`
 - Backend health check: `http://localhost:3000/api/health`
+
+After changing installed dependencies, restart the existing local dev session so
+its TypeScript and SSR module caches use the new versions. Validation must not
+stop the developer's running session. The launcher does not delete the shared
+Angular cache; alternate-port validation disables Vite dependency prebundling
+to avoid rewriting a running developer server's optimized modules.
+
+The checked-in `.nvmrc` selects Node 22. Use the supported Node/npm versions
+listed below when installing dependencies and restarting the watcher.
 
 ## Build
 
@@ -167,11 +177,26 @@ Codex workflow for this repository:
 ## CI
 
 The release-candidate workflow uses locked installs and gates lint, no-emit type
-and syntax checks, frontend and backend unit tests, production dependency
-audits, Playwright, the final production build, compiled-output assertions, and
+and syntax checks, frontend, backend and dependency-inventory tests, full dependency
+audits (including development dependencies and low-severity findings), Playwright,
+the final production build, compiled-output assertions, and
 a production SSR smoke test. The final build is the last gate that writes to
 `frontend/dist/frontend`, and the workflow uploads an artifact named for the
 Git commit SHA.
+
+`npm run smoke:production:browser` also checks the minified countdown in a real
+browser: active per-digit animations, opacity fades, full-height edge masks,
+both themes, responsive widths and reduced-motion behavior.
+
+`npm run audit` requires zero reported vulnerabilities across the root, frontend
+and backend dependency trees. `npm run audit:production` remains available for
+the isolated production installer, which only installs runtime dependencies.
+
+After a successful `main` CI run, `Refresh dependency graph` submits the three
+verified npm lockfiles to GitHub's dependency graph. The inventory includes
+development dependencies, preserves distinct package versions and does not
+dismiss security alerts. Its write permission is confined to the submission job;
+pull requests cannot trigger a submission with write access.
 
 Local equivalents:
 

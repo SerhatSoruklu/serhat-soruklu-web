@@ -450,6 +450,11 @@ try {
   assert.equal(healthResponse.headers.get('cache-control'), 'no-store');
   assert.deepEqual(await healthResponse.json(), { status: 'ok', service: 'frontend-ssr' });
 
+  if (process.argv.includes('--browser')) {
+    const { verifyCountdownMotion } = await import('./verify-countdown-motion.mjs');
+    await verifyCountdownMotion(baseUrl);
+  }
+
   console.log(
     '[smoke] production SSR status, redirects, errors, CSP nonces, compression, and caching passed',
   );

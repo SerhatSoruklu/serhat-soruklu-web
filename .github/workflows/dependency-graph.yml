@@ -1,0 +1,47 @@
+name: Refresh dependency graph
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+
+permissions:
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  submit:
+    name: Publish verified dependency inventory
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      (github.event.workflow_run.event == 'push' ||
+       github.event.workflow_run.event == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout verified commit
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22.20.0
+
+      - name: Submit all npm lockfiles to the dependency graph
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SNAPSHOT_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          node scripts/dependency-snapshot.mjs "$RUNNER_TEMP/npm-dependencies.json"
+          gh api --method POST \
+            "repos/$GITHUB_REPOSITORY/dependency-graph/snapshots" \
+            --input "$RUNNER_TEMP/npm-dependencies.json"
