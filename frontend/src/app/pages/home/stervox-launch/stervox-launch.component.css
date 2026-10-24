@@ -28,8 +28,10 @@
   opacity: 0.13;
   pointer-events: none;
 }
-.launch-atmosphere g {
-  animation: launchCurrent 20s ease-in-out infinite alternate;
+@media (prefers-reduced-motion: no-preference) {
+  .launch-atmosphere g {
+    animation: launchCurrent 20s ease-in-out infinite alternate;
+  }
 }
 .launch-copy,
 .launch-countdown {
@@ -192,17 +194,19 @@ h2 {
 }
 /* Stervox's money odometer: independent glyph columns, a one-em journey,
    soft opacity and the original one-second easing. No split planes or centre rule. */
-.clock-digit--changed.clock-digit--even .clock-value {
-  animation: digitInEven 1000ms cubic-bezier(0.2, 0.65, 0.3, 1) both;
-}
-.clock-digit--changed.clock-digit--odd .clock-value {
-  animation: digitInOdd 1000ms cubic-bezier(0.2, 0.65, 0.3, 1) both;
-}
-.clock-digit--changed.clock-digit--even .clock-previous {
-  animation: digitOutEven 1000ms cubic-bezier(0.2, 0.65, 0.3, 1) both;
-}
-.clock-digit--changed.clock-digit--odd .clock-previous {
-  animation: digitOutOdd 1000ms cubic-bezier(0.2, 0.65, 0.3, 1) both;
+@media (prefers-reduced-motion: no-preference) {
+  .clock-digit--changed.clock-digit--even .clock-value {
+    animation: digitInEven 1000ms cubic-bezier(0.2, 0.65, 0.3, 1) both;
+  }
+  .clock-digit--changed.clock-digit--odd .clock-value {
+    animation: digitInOdd 1000ms cubic-bezier(0.2, 0.65, 0.3, 1) both;
+  }
+  .clock-digit--changed.clock-digit--even .clock-previous {
+    animation: digitOutEven 1000ms cubic-bezier(0.2, 0.65, 0.3, 1) both;
+  }
+  .clock-digit--changed.clock-digit--odd .clock-previous {
+    animation: digitOutOdd 1000ms cubic-bezier(0.2, 0.65, 0.3, 1) both;
+  }
 }
 .clock-label {
   display: block;
@@ -339,14 +343,5 @@ h2 {
     transform: translateY(1em);
     opacity: 0;
     visibility: visible;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .launch-atmosphere g,
-  .clock-digit > span {
-    animation: none !important;
-  }
-  .clock-previous {
-    display: none !important;
   }
 }

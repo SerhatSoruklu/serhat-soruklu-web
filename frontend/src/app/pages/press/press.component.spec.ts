@@ -94,7 +94,7 @@ describe('PressComponent', () => {
     const fields = Array.from(card.querySelectorAll('dt')).map(field => field.textContent?.trim());
     expect(card.querySelector('h3')?.textContent).toBe('STERVOX');
     expect(fields).toEqual(['Name', 'Legal entity', 'Company number', 'Incorporated', 'Country', 'Founder', 'Status', 'Focus', 'Website']);
-    expect(fields.length).toBe((fixture.nativeElement as HTMLElement).querySelectorAll('.press-fact-sheet')[1].querySelectorAll('dt').length);
+    expect(fields).toHaveLength((fixture.nativeElement as HTMLElement).querySelectorAll('.press-fact-sheet')[1].querySelectorAll('dt').length);
     for (const value of ['STERVOX LIMITED', '17514320', '12 October 2026', 'Serhat Soruklu', 'Pre launch · Architecture and foundation development', 'Financial technology, open finance and financial infrastructure']) {
       expect(text).toContain(value);
     }

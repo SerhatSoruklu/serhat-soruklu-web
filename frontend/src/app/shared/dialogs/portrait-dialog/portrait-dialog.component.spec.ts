@@ -45,7 +45,7 @@ describe('PortraitDialogComponent', () => {
       fixture.nativeElement.querySelectorAll('.portrait-dialog__system-chip'),
     ) as HTMLAnchorElement[];
 
-    expect(links.length).toBe(4);
+    expect(links).toHaveLength(4);
     expect(links.map((link) => link.querySelector('.portrait-dialog__project-name')?.textContent?.trim())).toEqual(['Coupyn.com', 'Stervox.com', 'ChatPDM.com', 'Codaris.org']);
     expect(links.map((link) => link.getAttribute('href'))).toEqual(['https://coupyn.com', 'https://stervox.com', 'https://chatpdm.com', 'https://codaris.org']);
     expect(links.every((link) => link.target === '_blank')).toBe(true);

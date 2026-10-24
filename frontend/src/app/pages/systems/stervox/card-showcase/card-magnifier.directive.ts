@@ -194,28 +194,28 @@ export class CardMagnifierDirective implements AfterViewInit, OnChanges, OnDestr
       event.preventDefault();
       this.point = { x: 0.5, y: 0.5 };
       this.activate('keyboard');
-    } else if (this.active === 'keyboard') {
-      if (event.key === 'Escape' || event.key === '-') {
-        event.preventDefault();
-        this.reset();
-      } else if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
-        event.preventDefault();
-        this.point = {
-          x: this.clamp(
-            this.point.x +
-              (event.key === 'ArrowRight' ? 0.08 : event.key === 'ArrowLeft' ? -0.08 : 0),
-            0,
-            1,
-          ),
-          y: this.clamp(
-            this.point.y + (event.key === 'ArrowDown' ? 0.08 : event.key === 'ArrowUp' ? -0.08 : 0),
-            0,
-            1,
-          ),
-        };
-        this.schedule();
-      }
+      return;
     }
+    if (this.active !== 'keyboard') return;
+    if (event.key === 'Escape' || event.key === '-') {
+      event.preventDefault();
+      this.reset();
+      return;
+    }
+    const directions: Record<string, { x: number; y: number }> = {
+      ArrowLeft: { x: -0.08, y: 0 },
+      ArrowRight: { x: 0.08, y: 0 },
+      ArrowUp: { x: 0, y: -0.08 },
+      ArrowDown: { x: 0, y: 0.08 },
+    };
+    const direction = directions[event.key];
+    if (!direction) return;
+    event.preventDefault();
+    this.point = {
+      x: this.clamp(this.point.x + direction.x, 0, 1),
+      y: this.clamp(this.point.y + direction.y, 0, 1),
+    };
+    this.schedule();
   }
 
   private setPoint(event: PointerEvent): void {
@@ -283,8 +283,8 @@ export class CardMagnifierDirective implements AfterViewInit, OnChanges, OnDestr
     // Paint one background layer: nested oversized images can disappear in a 3D rotor.
     const imageStyles: Record<string, string> = {
       'background-image': `url("${this.appCardMagnifier}")`,
-      'background-size': `${parseFloat(sourceStyle.width) * 2.5}px auto`,
-      'background-position': `${(size - 4) / 2 - (x - parseFloat(sourceStyle.left)) * 2.5}px ${(size - 4) / 2 - (y - parseFloat(sourceStyle.top)) * 2.5}px`,
+      'background-size': `${Number.parseFloat(sourceStyle.width) * 2.5}px auto`,
+      'background-position': `${(size - 4) / 2 - (x - Number.parseFloat(sourceStyle.left)) * 2.5}px ${(size - 4) / 2 - (y - Number.parseFloat(sourceStyle.top)) * 2.5}px`,
     };
     for (const [property, value] of Object.entries(imageStyles))
       this.renderer.setStyle(this.lens, property, value);

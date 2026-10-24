@@ -16,7 +16,7 @@
     <router-outlet />
   </div>
   @if (usesStervoxAtmosphere()) {
-    <picture class="site-stervox-landscape" aria-hidden="true">
+    <picture class="site-stervox-landscape">
       <source
         type="image/avif"
         srcset="
@@ -43,7 +43,7 @@
     </picture>
   }
   @if (isHomeRoute()) {
-    <picture class="site-home-landscape" aria-hidden="true">
+    <picture class="site-home-landscape">
       <source type="image/avif"
         srcset="/assets/home/landscape/home-foundations-960.avif 960w, /assets/home/landscape/home-foundations-1600.avif 1600w, /assets/home/landscape/home-foundations-2172.avif 2172w"
         sizes="(max-width: 767px) 1980px, 2172px" />

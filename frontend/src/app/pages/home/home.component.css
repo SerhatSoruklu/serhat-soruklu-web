@@ -446,6 +446,7 @@ h1 span {
 }
 
 .codaris-home-diagram {
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2340,10 +2341,9 @@ a.system-panel__button--quiet:hover {
 .stervox-home-summary { max-width: 580px; color: #a8b0bd; font-size: 16px; line-height: 1.7; }
 .system-panel--stervox app-stervox-brand { width: 100%; max-width: 100%; }
 
-.stervox-home-diagram { min-width: 0; }
+.stervox-home-diagram { min-width: 0; pointer-events: auto; }
 :host-context(.theme-resolved-light) .stervox-home-summary { color: #5f6673; }
 
 .system-panel--stervox .stervox-home-brand { width: clamp(180px, 26vw, 260px); max-width: 100%; }
-.stervox-home-diagram { pointer-events: auto; }
 .stervox-home-diagram app-stervox-architecture { width: min(100%, 680px); }
 .system-panel--stervox .system-panel__button { min-height: 44px; }

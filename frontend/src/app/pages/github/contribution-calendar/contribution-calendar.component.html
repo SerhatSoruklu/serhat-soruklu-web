@@ -21,7 +21,8 @@
       <span>{{ activeDays() }} active days</span>
     </div>
     <p class="activity__day" aria-live="polite" aria-atomic="true">{{ dayDescription() }}</p>
-    <div class="activity__scroll" tabindex="0" role="group" aria-label="Daily contribution calendar; scroll horizontally on smaller screens. Arrow keys move between focused days.">
+    <fieldset class="activity__scroll">
+      <legend class="visually-hidden">Daily contribution calendar; scroll horizontally on smaller screens. Arrow keys move between focused days.</legend>
       <div class="activity__months" aria-hidden="true">
         @for (month of calendar().months; track month.label) { <span [style.grid-column]="month.column">{{ month.label }}</span> }
       </div>
@@ -31,7 +32,7 @@
           <button type="button" class="activity__cell" [class]="'activity__cell activity__cell--' + day.level" [attr.data-date]="day.date" [attr.aria-label]="day.label" [attr.tabindex]="focusedDate() === day.date ? 0 : -1" [appTooltip]="day.label" appTooltipPlacement="top" (mouseenter)="selectedDate.set(day.date)" (focus)="selectedDate.set(day.date)" (click)="selectedDate.set(day.date)" (keydown)="navigateDay($event, day.date)"></button>
         }
       </div>
-    </div>
+    </fieldset>
     <div class="activity__legend" aria-label="Darker to brighter green indicates fewer to more contributions">
       <span>Less</span><i class="activity__cell--0"></i><i class="activity__cell--1"></i><i class="activity__cell--2"></i><i class="activity__cell--3"></i><i class="activity__cell--4"></i><span>More</span>
     </div>

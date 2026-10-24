@@ -308,7 +308,7 @@ function getCspNonce(res: express.Response): string {
 async function writeAngularResponse(response: Response, res: express.Response): Promise<void> {
   const contentType = response.headers.get('content-type') ?? '';
   if (!contentType.toLowerCase().includes('text/html')) {
-    writeResponseToNodeResponse(response, res);
+    await writeResponseToNodeResponse(response, res);
     return;
   }
 
