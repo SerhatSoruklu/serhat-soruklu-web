@@ -160,7 +160,7 @@ try {
   assert.match(stervoxHtml, /<main\b[^>]*class="[^"]*site-main--stervox-atmosphere/, 'Stervox must SSR its own continuous page atmosphere.');
   assert.doesNotMatch(stervoxHtml, /<app-home\b/, 'The Stervox route must never SSR the homepage.');
   assert.ok(stervoxHtml.includes('stervox-mountains-2172.avif'), 'Stervox must include its responsive mountain backdrop.');
-  assert.ok(stervoxHtml.includes('https://serhatsoruklu.com/systems/stervox'), 'Stervox canonical URL must be present.');
+  assert.match(stervoxHtml, /<link rel="canonical" href="https:\/\/serhatsoruklu\.com\/systems\/stervox">/, 'Stervox must expose its exact canonical link.');
   assert.ok(stervoxHtml.includes('serhat-soruklu-systems-stervox-og.png'), 'Stervox social metadata must be server-rendered.');
   assert.ok(stervoxHtml.includes('Coming soon'), 'Stervox must retain its development status.');
   assert.ok(stervoxHtml.includes('5 January 2027'), 'Stervox must show its planned launch date.');
