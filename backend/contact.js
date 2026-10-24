@@ -12,6 +12,7 @@ const CONTACT_TOPICS = [
   'Product engineering',
   'Infrastructure / deployment',
   'Coupyn',
+  'Stervox',
   'ChatPDM',
   'Collaboration',
   'Press / media enquiry',

@@ -3,6 +3,7 @@ import {
   FOUNDER_PORTRAIT_HEIGHT,
   FOUNDER_PORTRAIT_WIDTH,
 } from '../../shared/portraits/founder-portrait.config';
+import { ORIGINAL_PORTRAIT } from '../../shared/portraits/original-portrait.config';
 
 export interface PressFact {
   readonly label: string;
@@ -24,6 +25,14 @@ export interface PressBiography {
 export interface PressPhotographyAsset {
   readonly alt: string;
   readonly assetLabel: string;
+  readonly previewSrc: string;
+  readonly avifSrcset: string;
+  readonly webpSrcset: string;
+  readonly export8k: {
+    readonly src: string;
+    readonly fileName: string;
+    readonly fileSize: string;
+  } | null;
   readonly fileName: string;
   readonly fileSize: string;
   readonly format: 'PNG';
@@ -60,7 +69,7 @@ export interface PressVerificationLink {
 }
 
 const founderWorkstationProvenance =
-  'AI-assisted edited image of Serhat Soruklu, created using supplied portrait and real-workspace photographic references. The image has been AI-generated or modified and should not be treated as an unaltered photograph.';
+  'AI-assisted office composite, created on 24 October 2026 with OpenAI image generation using Serhat’s original selfie and real workspace. Native output: 1846 × 852; not an unaltered photograph.';
 
 export const pressContent = {
   hero: {
@@ -68,14 +77,14 @@ export const pressContent = {
     title: 'Serhat Soruklu & Coupyn',
     lead: 'Reference facts, biographies, images and background material for journalists, researchers and media enquiries.',
     supporting:
-      'This page provides first-party reference material for coverage of Serhat Soruklu, Coupyn, CODARIS and related technical work. Public verification and reference links are included where available.',
+      'This page provides first-party reference material for coverage of Serhat Soruklu, Coupyn, Stervox, CODARIS and related technical work. Public verification and reference links are included where available.',
     dossierLabel: 'REFERENCE DOSSIER',
     dossierId: 'PRESS / 001',
     dossierItems: [
-      { label: 'Scope', value: 'Serhat Soruklu + Coupyn + CODARIS' },
+      { label: 'Scope', value: 'Serhat Soruklu + Coupyn + Stervox + CODARIS' },
       { label: 'Source', value: 'First-party reference material' },
       { label: 'Language', value: 'English / United Kingdom' },
-      { label: 'Updated', value: '28 September 2026' },
+      { label: 'Updated', value: '24 October 2026' },
     ],
   },
   factSheets: [
@@ -117,6 +126,21 @@ export const pressContent = {
     },
     {
       index: '03',
+      title: 'STERVOX',
+      facts: [
+        { label: 'Name', value: 'STERVOX' },
+        { label: 'Legal entity', value: 'STERVOX LIMITED' },
+        { label: 'Company number', value: '17514320' },
+        { label: 'Incorporated', value: '12 October 2026' },
+        { label: 'Country', value: 'United Kingdom' },
+        { label: 'Founder', value: 'Serhat Soruklu' },
+        { label: 'Status', value: 'Pre launch · Architecture and foundation development' },
+        { label: 'Focus', value: 'Financial technology, open finance and financial infrastructure' },
+        { label: 'Website', value: 'stervox.com', url: 'https://stervox.com' },
+      ],
+    },
+    {
+      index: '04',
       title: 'CODARIS',
       facts: [
         { label: 'Name', value: 'CODARIS' },
@@ -135,44 +159,65 @@ export const pressContent = {
     },
     {
       label: '100-WORD BIO',
-      text: 'Serhat Soruklu is a London-based software developer, systems architect and entrepreneur. Born in Osmancık, Çorum, Turkey, he moved to London at the age of two and grew up in Tottenham. His technical background developed through years of self-directed work with computers, private game servers, web development and infrastructure. He began building Coupyn in 2023 and now operates the platform independently across frontend development, backend services, data, technical SEO, security and infrastructure. His public technical work also includes CODARIS, ChatPDM, Deterministic Boundary Firewall and Continuity Identity Model.',
+      text: 'Serhat Soruklu is a London-based software developer, systems architect and entrepreneur. Born in Osmancık, Turkey, and raised in Tottenham, he began building Coupyn in 2023 and independently operates its frontend, backend, data, technical SEO and infrastructure. He is also building Stervox, an ambitious financial platform with an in-house VOXCORE foundation, a planned launch on 5 January 2027 and a roadmap through 2036. Stervox remains in architecture and foundation development; its production financial core is not implemented. His other technical work includes CODARIS, ChatPDM, Deterministic Boundary Firewall and Continuity Identity Model, exploring responsible systems, explicit boundaries and continuity under operational pressure.',
     },
   ] satisfies readonly PressBiography[],
   photography: [
     {
-      title: 'Portrait',
-      src: '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png',
-      alt: 'Portrait of Serhat Soruklu, founder and CEO of Coupyn.',
-      assetLabel: 'PORTRAIT',
-      width: 825,
-      height: 743,
+      title: 'Original selfie',
+      src: ORIGINAL_PORTRAIT.original,
+      previewSrc: ORIGINAL_PORTRAIT.src,
+      avifSrcset: ORIGINAL_PORTRAIT.avifSrcset,
+      webpSrcset: ORIGINAL_PORTRAIT.webpSrcset,
+      alt: 'Original selfie of Serhat Soruklu, founder and CEO of Coupyn.',
+      assetLabel: 'ORIGINAL PHOTOGRAPH',
+      width: ORIGINAL_PORTRAIT.width,
+      height: ORIGINAL_PORTRAIT.height,
       format: 'PNG',
-      fileSize: '1015.5 KiB',
-      fileName: 'serhat-soruklu-coupyn-founder-natural-portrait.png',
+      fileSize: '2.68 MiB',
+      fileName: 'serhat-soruklu-real-selfie.png',
+      provenance: 'The supplied original selfie, preserved unchanged. The download is the original PNG; previews are optimised display copies.',
+      export8k: null,
     },
     {
       title: 'Founder workstation visual — light',
-      src: FOUNDER_PORTRAITS.light.src,
+      src: FOUNDER_PORTRAITS.light.nativeSrc,
+      previewSrc: FOUNDER_PORTRAITS.light.src,
+      avifSrcset: FOUNDER_PORTRAITS.light.avifSrcSet,
+      webpSrcset: FOUNDER_PORTRAITS.light.srcSet,
       alt: 'AI-assisted image of Serhat Soruklu at his workstation, supplied for the light theme.',
       assetLabel: 'AI-ASSISTED PHOTOGRAPH',
       width: FOUNDER_PORTRAIT_WIDTH,
       height: FOUNDER_PORTRAIT_HEIGHT,
       format: 'PNG',
-      fileSize: '1.90 MiB',
-      fileName: 'serhat-soruklu-workstation-light.png',
+      fileSize: '2.00 MiB',
+      fileName: 'serhat-soruklu-office-light-native.png',
       provenance: founderWorkstationProvenance,
+      export8k: {
+        src: FOUNDER_PORTRAITS.light.export8kSrc,
+        fileName: 'serhat-soruklu-office-light-8k.png',
+        fileSize: '12.79 MiB',
+      },
     },
     {
       title: 'Founder workstation visual — dark',
-      src: FOUNDER_PORTRAITS.dark.src,
+      src: FOUNDER_PORTRAITS.dark.nativeSrc,
+      previewSrc: FOUNDER_PORTRAITS.dark.src,
+      avifSrcset: FOUNDER_PORTRAITS.dark.avifSrcSet,
+      webpSrcset: FOUNDER_PORTRAITS.dark.srcSet,
       alt: 'AI-assisted image of Serhat Soruklu at his workstation, supplied for the dark theme.',
       assetLabel: 'AI-ASSISTED PHOTOGRAPH',
       width: FOUNDER_PORTRAIT_WIDTH,
       height: FOUNDER_PORTRAIT_HEIGHT,
       format: 'PNG',
-      fileSize: '1.67 MiB',
-      fileName: 'serhat-soruklu-workstation-dark.png',
+      fileSize: '1.88 MiB',
+      fileName: 'serhat-soruklu-office-dark-native.png',
       provenance: founderWorkstationProvenance,
+      export8k: {
+        src: FOUNDER_PORTRAITS.dark.export8kSrc,
+        fileName: 'serhat-soruklu-office-dark-8k.png',
+        fileSize: '11.45 MiB',
+      },
     },
   ] satisfies readonly PressPhotographyAsset[],
   coupynMedia: {
@@ -189,7 +234,7 @@ export const pressContent = {
         action: 'Open full-resolution PNG',
         dimensions: '1200 × 630',
         fileName: 'serhat-soruklu-systems-coupyn-og.png',
-        fileSize: '189.3 KiB',
+        fileSize: '68.6 KiB',
         format: 'PNG',
         openInNewTab: true,
         path: '/assets/social/serhat-soruklu-systems-coupyn-og.png',
@@ -198,10 +243,28 @@ export const pressContent = {
         action: 'Download SVG source',
         dimensions: '1200 × 630',
         fileName: 'serhat-soruklu-systems-coupyn-og.svg',
-        fileSize: '9.3 KiB',
+        fileSize: '13.0 KiB',
         format: 'SVG',
         openInNewTab: false,
         path: '/assets/social/serhat-soruklu-systems-coupyn-og.svg',
+      },
+    ] satisfies readonly PressMediaFormat[],
+  },
+  stervoxMedia: {
+    title: 'Stervox system media graphic',
+    description: 'First-party Stervox artwork with the official outlined wordmark and planned launch status.',
+    previewSrc: '/assets/social/serhat-soruklu-systems-stervox-og.png',
+    previewAlt: 'STERVOX by Serhat Soruklu. Make the bricks. Build the future. Coming soon, planned launch 5 January 2027.',
+    formats: [
+      {
+        action: 'Open full-resolution PNG', dimensions: '1200 × 630',
+        fileName: 'serhat-soruklu-systems-stervox-og.png', fileSize: '67.1 KiB',
+        format: 'PNG', openInNewTab: true, path: '/assets/social/serhat-soruklu-systems-stervox-og.png',
+      },
+      {
+        action: 'Download SVG source', dimensions: '1200 × 630',
+        fileName: 'serhat-soruklu-systems-stervox-og.svg', fileSize: '103.4 KiB',
+        format: 'SVG', openInNewTab: false, path: '/assets/social/serhat-soruklu-systems-stervox-og.svg',
       },
     ] satisfies readonly PressMediaFormat[],
   },
@@ -216,7 +279,7 @@ export const pressContent = {
         action: 'Open full-resolution PNG',
         dimensions: '1200 × 630',
         fileName: 'serhat-soruklu-systems-codaris-og.png',
-        fileSize: '175.5 KiB',
+        fileSize: '58.9 KiB',
         format: 'PNG',
         openInNewTab: true,
         path: '/assets/social/serhat-soruklu-systems-codaris-og.png',
@@ -225,7 +288,7 @@ export const pressContent = {
         action: 'Download SVG source',
         dimensions: '1200 × 630',
         fileName: 'serhat-soruklu-systems-codaris-og.svg',
-        fileSize: '3.7 KiB',
+        fileSize: '4.9 KiB',
         format: 'SVG',
         openInNewTab: false,
         path: '/assets/social/serhat-soruklu-systems-codaris-og.svg',
@@ -244,6 +307,11 @@ export const pressContent = {
       'Self-managed infrastructure',
     ],
   },
+  stervox: {
+    description:
+      'Stervox is a pre-launch financial technology company founded by Serhat Soruklu, focused on open finance and financial infrastructure. STERVOX is the master brand, VOXFINANCE the customer-facing product, and VOXCORE the underlying financial systems architecture. Architecture and foundations are in development; cards, balances and payments are planned capabilities rather than live services.',
+    technicalContext: ['C17', 'libevent', 'libpq', 'PostgreSQL', 'OpenAPI', 'JSON Schema'],
+  },
   systems: [
     {
       index: '01',
@@ -252,28 +320,33 @@ export const pressContent = {
       path: '/systems/coupyn',
     },
     {
-      index: '02',
+      index: '02', title: 'Stervox',
+      description: 'Financial platform and VOXCORE foundations in development. Planned launch: 5 January 2027; roadmap through 2036.',
+      path: '/systems/stervox',
+    },
+    {
+      index: '03',
       title: 'ChatPDM',
       description:
         'A deterministic concept system for authored, versioned meaning and bounded resolution.',
       path: '/systems/chatpdm',
     },
     {
-      index: '03',
+      index: '04',
       title: 'CODARIS',
       description:
         'An early-stage developer coalition and technical platform advancing practical work on responsible intelligent systems.',
       path: '/systems/codaris',
     },
     {
-      index: '04',
+      index: '05',
       title: 'Deterministic Boundary Firewall',
       description:
         'A bounded pre-egress security experiment for inspecting requests before model or tool execution.',
       path: '/systems/deterministic-boundary-firewall',
     },
     {
-      index: '05',
+      index: '06',
       title: 'Continuity Identity Model',
       description:
         'A protocol workspace exploring identity, authority and responsibility across machine state changes.',
@@ -286,6 +359,13 @@ export const pressContent = {
       name: 'Companies House',
       description: 'Coupyn Ltd · Company 16939840',
       url: 'https://find-and-update.company-information.service.gov.uk/company/16939840',
+      rel: 'noopener noreferrer',
+    },
+    {
+      sourceType: 'OFFICIAL COMPANY RECORD',
+      name: 'Companies House',
+      description: 'STERVOX LIMITED · Company 17514320',
+      url: 'https://find-and-update.company-information.service.gov.uk/company/17514320',
       rel: 'noopener noreferrer',
     },
     {
@@ -318,6 +398,13 @@ export const pressContent = {
     },
     {
       sourceType: 'OFFICIAL PROJECT',
+      name: 'Stervox',
+      description: 'Pre-launch financial technology company · Architecture and foundation development',
+      url: 'https://stervox.com/',
+      rel: 'noopener noreferrer',
+    },
+    {
+      sourceType: 'OFFICIAL PROJECT',
       name: 'CODARIS',
       description: 'Independent developer coalition and technical platform',
       url: 'https://codaris.org/',
@@ -332,3 +419,27 @@ export const pressContent = {
     },
   ] satisfies readonly PressVerificationLink[],
 } as const;
+
+function lightArtwork<T extends { previewSrc: string; formats: readonly PressMediaFormat[] }>(
+  media: T,
+  fileSizes: Record<PressMediaFormat['format'], string>,
+) {
+  const lightPath = (path: string) => path.replace(/\.(png|svg)$/, '-light.$1');
+
+  return {
+    ...media,
+    previewSrc: lightPath(media.previewSrc),
+    formats: media.formats.map(format => ({
+      ...format,
+      path: lightPath(format.path),
+      fileName: lightPath(format.fileName),
+      fileSize: fileSizes[format.format],
+    })),
+  };
+}
+
+export const pressLightMedia = {
+  coupynMedia: lightArtwork(pressContent.coupynMedia, { PNG: '69.5 KiB', SVG: '13.2 KiB' }),
+  stervoxMedia: lightArtwork(pressContent.stervoxMedia, { PNG: '67.8 KiB', SVG: '103.1 KiB' }),
+  codarisMedia: lightArtwork(pressContent.codarisMedia, { PNG: '59.3 KiB', SVG: '5.2 KiB' }),
+};

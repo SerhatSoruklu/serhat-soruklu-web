@@ -226,10 +226,10 @@ test.describe('GitHub page', () => {
 
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/github');
-    const flagshipTop = await page
-      .locator('#repositories')
+    const activityTop = await page
+      .getByTestId('github-activity')
       .evaluate((element) => element.getBoundingClientRect().top);
-    expect(flagshipTop).toBeLessThan(900);
+    expect(activityTop).toBeLessThan(900);
     assertNoConsoleErrors();
   });
 
@@ -278,4 +278,23 @@ test.describe('GitHub page', () => {
       .toBe(lightSurface);
     assertNoConsoleErrors();
   });
+});
+
+
+test('GitHub activity exposes real dated counts and supports mobile year selection and keyboard navigation', async ({ page }) => {
+  await page.setViewportSize({ width: 427, height: 952 });
+  await page.goto('/github');
+  const activity = page.getByTestId('github-activity');
+  await activity.getByRole('button', { name: /^2023 / }).click();
+  await expect(activity.locator('[data-date]')).toHaveCount(365);
+  const firstDay = activity.locator('[data-date="2023-01-01"]');
+  await firstDay.focus();
+  await firstDay.press('ArrowRight');
+  await expect(activity.locator('[data-date="2023-01-08"]')).toBeFocused();
+  await expect(activity.locator('.activity__day')).toContainText('8 January 2023');
+  await activity.getByRole('button', { name: /^2024 / }).click();
+  await expect(activity.locator('[data-date]')).toHaveCount(366);
+  await expect(activity.locator('[data-date="2024-02-29"]')).toHaveAttribute('aria-label', /29 February 2024/);
+  await expect(page.getByTestId('stervox-private-section')).toContainText('financial core is not live');
+  await expect(page.getByTestId('stervox-private-section').getByRole('link', { name: 'Open Stervox' })).toHaveAttribute('href', 'https://stervox.com');
 });

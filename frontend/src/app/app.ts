@@ -1,4 +1,4 @@
-import { DOCUMENT, isPlatformBrowser, ViewportScroller } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser, Location, ViewportScroller } from '@angular/common';
 import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -16,6 +16,7 @@ import { SiteHeaderComponent } from './layout/site-header/site-header.component'
 })
 export class App {
   private readonly document = inject(DOCUMENT);
+  private readonly location = inject(Location);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly router = inject(Router);
   private readonly themeService = inject(ThemeService);
@@ -27,6 +28,14 @@ export class App {
       startWith(this.isHomeUrl(this.currentLocationPath())),
     ),
     { initialValue: this.isHomeUrl(this.currentLocationPath()) },
+  );
+  readonly usesStervoxAtmosphere = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event) => this.isStervoxAtmosphereUrl(event.urlAfterRedirects)),
+      startWith(this.isStervoxAtmosphereUrl(this.currentLocationPath())),
+    ),
+    { initialValue: this.isStervoxAtmosphereUrl(this.currentLocationPath()) },
   );
   readonly usesDetailAtmosphere = toSignal(
     this.router.events.pipe(
@@ -105,7 +114,10 @@ export class App {
   }
 
   private currentLocationPath(): string {
-    return this.document.location?.pathname ?? this.router.url;
+    // The router is authoritative after initial navigation, including SSR and hydration.
+    return this.router.navigated || this.router.url !== '/'
+      ? this.router.url
+      : this.location.path(true) || '/';
   }
 
   private isDetailAtmosphereUrl(url: string): boolean {
@@ -119,6 +131,10 @@ export class App {
       path === '/systems/deterministic-boundary-firewall' ||
       path === '/systems/continuity-identity-model'
     );
+  }
+
+  private isStervoxAtmosphereUrl(url: string): boolean {
+    return url.split(/[?#]/)[0] === '/systems/stervox';
   }
 
   private isSystemsAtmosphereUrl(url: string): boolean {

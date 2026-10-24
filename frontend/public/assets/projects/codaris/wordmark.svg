@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="410" height="82" viewBox="0 0 205 41" role="img" aria-label="CODARIS">
+  <!-- Brand lockup from codaris/web/partials/header.html and web/styles.css .brand: emblem 34px, gap 11px, Arial 22px/800, letter spacing 2.4px. -->
+  <svg x="0" y="0" width="34" height="34" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="M20 2 36 11v18L20 38 4 29V11Z" fill="none" stroke="#59e4eb" stroke-width="2"/><path d="m26 12-6-3-10 6v11l10 6 6-3v-5l-6 3-5-3v-6l5-3 6 3Z" fill="#59e4eb"/><path d="m29 11 3 2v14l-3 2" fill="none" stroke="#59e4eb"/></svg>
+  <text x="45" y="17" dominant-baseline="central" fill="#edf3f7" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="800" letter-spacing="2.4">CODARIS</text>
+</svg>

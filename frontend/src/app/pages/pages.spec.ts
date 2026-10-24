@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 import { ThemeService } from '../core/theme/theme.service';
+import { FOUNDER_PORTRAITS } from '../shared/portraits/founder-portrait.config';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { GitHubComponent } from './github/github.component';
@@ -14,6 +15,7 @@ import { SorukluSurnameComponent } from './soruklu-surname/soruklu-surname.compo
 import { ChatpdmSystemComponent } from './systems/chatpdm/chatpdm-system.component';
 import { ContinuityIdentityModelSystemComponent } from './systems/continuity-identity-model/continuity-identity-model-system.component';
 import { CoupynSystemComponent } from './systems/coupyn/coupyn-system.component';
+import { StervoxSystemComponent } from './systems/stervox/stervox-system.component';
 import { CodarisSystemComponent } from './systems/codaris/codaris-system.component';
 import { DeterministicBoundaryFirewallSystemComponent } from './systems/deterministic-boundary-firewall/deterministic-boundary-firewall-system.component';
 import { SystemsComponent } from './systems/systems.component';
@@ -26,6 +28,7 @@ const pages: readonly { component: Type<unknown>; heading: string }[] = [
   { component: WorkComponent, heading: 'Work' },
   { component: SystemsComponent, heading: 'Systems' },
   { component: CoupynSystemComponent, heading: 'Coupyn' },
+  { component: StervoxSystemComponent, heading: 'Stervox' },
   { component: ChatpdmSystemComponent, heading: 'ChatPDM' },
   { component: CodarisSystemComponent, heading: 'CODARIS' },
   {
@@ -108,22 +111,26 @@ describe('page components', () => {
     expect(aboutLink?.getAttribute('href')).toBe('/about');
     expect(portraitTrigger?.getAttribute('aria-haspopup')).toBe('dialog');
     expect(portraitSources.map((source) => source.getAttribute('srcset'))).toEqual([
-      '/assets/home/serhat-soruklu-workstation-light.png',
-      '/assets/home/serhat-soruklu-workstation-dark.png',
+      FOUNDER_PORTRAITS.light.avifSrcSet,
+      FOUNDER_PORTRAITS.dark.avifSrcSet,
+      FOUNDER_PORTRAITS.light.srcSet,
+      FOUNDER_PORTRAITS.dark.srcSet,
     ]);
     expect(portraitSources.map((source) => source.getAttribute('media'))).toEqual([
       'not all',
       'all',
+      'not all',
+      'all',
     ]);
-    expect(portrait?.getAttribute('src')).toBe('/assets/home/serhat-soruklu-workstation-dark.png');
+    expect(portrait?.getAttribute('src')).toBe('/assets/portraits/serhat-soruklu-office-dark-1846.webp');
     expect(portrait?.getAttribute('data-portrait-theme')).toBe('dark');
     expect(portrait?.getAttribute('data-portrait-ready-theme')).toBeNull();
-    expect(portrait?.getAttribute('width')).toBe('1973');
-    expect(portrait?.getAttribute('height')).toBe('797');
+    expect(portrait?.getAttribute('width')).toBe('1846');
+    expect(portrait?.getAttribute('height')).toBe('852');
     expect(portrait?.getAttribute('decoding')).toBe('async');
     expect(portrait?.getAttribute('fetchpriority')).toBe('high');
     expect(portrait?.getAttribute('loading')).toBe('eager');
-    expect(portrait?.alt).toBe('Serhat Soruklu, founder of Coupyn, seated at his workstation.');
+    expect(portrait?.alt).toBe('AI-assisted portrait of Serhat Soruklu seated in his real office, based on his original selfie.');
 
     portrait?.dispatchEvent(new Event('load'));
     fixture.detectChanges();
@@ -134,11 +141,13 @@ describe('page components', () => {
     TestBed.flushEffects();
     fixture.detectChanges();
 
-    expect(portrait?.getAttribute('src')).toBe('/assets/home/serhat-soruklu-workstation-light.png');
+    expect(portrait?.getAttribute('src')).toBe('/assets/portraits/serhat-soruklu-office-light-1846.webp');
     expect(portrait?.getAttribute('data-portrait-theme')).toBe('light');
     expect(portrait?.getAttribute('data-portrait-ready-theme')).toBe('dark');
-    expect(portrait?.alt).toBe('Serhat Soruklu, founder of Coupyn, seated at his workstation.');
+    expect(portrait?.alt).toBe('AI-assisted portrait of Serhat Soruklu seated in his real office, based on his original selfie.');
     expect(portraitSources.map((source) => source.getAttribute('media'))).toEqual([
+      'all',
+      'not all',
       'all',
       'not all',
     ]);

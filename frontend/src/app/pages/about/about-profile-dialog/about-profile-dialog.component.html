@@ -13,14 +13,26 @@
   </button>
 
   <div class="about-profile-dialog__media">
-    <img
-      [src]="portraitPath"
-      [alt]="content().dialog.imageAlt"
-      width="825"
-      height="743"
-      decoding="async"
-      data-testid="about-profile-dialog-image"
-    />
+    <picture>
+      <source
+        type="image/avif"
+        [srcset]="portrait.avifSrcset"
+        sizes="(min-width: 1024px) 640px, (min-width: 768px) 600px, calc(100vw - 40px)"
+      />
+      <source
+        type="image/webp"
+        [srcset]="portrait.webpSrcset"
+        sizes="(min-width: 1024px) 640px, (min-width: 768px) 600px, calc(100vw - 40px)"
+      />
+      <img
+        [src]="portraitPath"
+        [alt]="content().dialog.imageAlt"
+        [width]="portrait.width"
+        [height]="portrait.height"
+        decoding="async"
+        data-testid="about-profile-dialog-image"
+      />
+    </picture>
   </div>
 
   <div class="about-profile-dialog__content">

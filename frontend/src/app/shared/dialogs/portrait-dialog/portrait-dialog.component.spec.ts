@@ -45,11 +45,28 @@ describe('PortraitDialogComponent', () => {
       fixture.nativeElement.querySelectorAll('.portrait-dialog__system-chip'),
     ) as HTMLAnchorElement[];
 
-    expect(links.length).toBe(2);
-    expect(links.map((link) => link.textContent?.trim())).toEqual(['Coupyn.com', 'ChatPDM.com']);
-    expect(links.map((link) => link.href)).toEqual(['https://coupyn.com/', 'https://chatpdm.com/']);
+    expect(links).toHaveLength(4);
+    expect(links.map((link) => link.querySelector('.portrait-dialog__project-name')?.textContent?.trim())).toEqual(['Coupyn.com', 'Stervox.com', 'ChatPDM.com', 'Codaris.org']);
+    expect(links.map((link) => link.getAttribute('href'))).toEqual(['https://coupyn.com', 'https://stervox.com', 'https://chatpdm.com', 'https://codaris.org']);
     expect(links.every((link) => link.target === '_blank')).toBe(true);
     expect(links.every((link) => link.rel === 'noopener noreferrer')).toBe(true);
+    expect(links[1].getAttribute('aria-label')).toBe('Open Stervox.com in a new tab');
+    expect(links.map(link => link.querySelector('.portrait-dialog__project-url')?.textContent?.trim())).toEqual(['https://coupyn.com', 'https://stervox.com', 'https://chatpdm.com', 'https://codaris.org']);
+  });
+
+  it('distinguishes private commercial ventures from MIT open-source projects without calling Stervox live', () => {
+    const fixture = TestBed.createComponent(PortraitDialogComponent);
+    fixture.detectChanges();
+    const native = fixture.nativeElement as HTMLElement;
+    const groups = native.querySelectorAll('.portrait-dialog__project-group');
+    expect(groups).toHaveLength(2);
+    expect(groups[0].querySelector('h3')?.textContent).toContain('Private commercial ventures');
+    expect(Array.from(groups[0].querySelectorAll('a')).map(link => link.querySelector('.portrait-dialog__project-name')?.textContent?.trim())).toEqual(['Coupyn.com', 'Stervox.com']);
+    expect(groups[0].textContent).toContain('Coupyn is live; Stervox is pre-launch');
+    expect(groups[1].querySelector('h3')?.textContent).toContain('Open source · MIT');
+    expect(native.textContent).toContain('Technologies across these projects');
+    expect(Array.from(native.querySelectorAll('.portrait-dialog__tool-chip')).map(chip => chip.textContent?.trim())).toEqual(['Pure C (C17)', 'TypeScript', 'Angular', 'Node.js', 'PostgreSQL', 'MongoDB', 'OVH', 'SSR', 'SEO']);
+    expect(Array.from(groups[1].querySelectorAll('a')).map(link => link.querySelector('.portrait-dialog__project-name')?.textContent?.trim())).toEqual(['ChatPDM.com', 'Codaris.org']);
   });
 
   it('renders one intrinsic portrait and updates the same image for the resolved theme', () => {
@@ -66,13 +83,13 @@ describe('PortraitDialogComponent', () => {
     expect(
       fixture.nativeElement.querySelectorAll('[data-testid="portrait-dialog-portrait-image"]'),
     ).toHaveLength(1);
-    expect(darkImage.getAttribute('src')).toBe('/assets/home/serhat-soruklu-workstation-dark.png');
+    expect(darkImage.getAttribute('src')).toBe('/assets/portraits/serhat-soruklu-office-dark-1846.webp');
     expect(darkImage.getAttribute('data-portrait-theme')).toBe('dark');
-    expect(darkImage.getAttribute('width')).toBe('1973');
-    expect(darkImage.getAttribute('height')).toBe('797');
+    expect(darkImage.getAttribute('width')).toBe('1846');
+    expect(darkImage.getAttribute('height')).toBe('852');
     expect(darkImage.getAttribute('decoding')).toBe('async');
     expect(darkImage.getAttribute('loading')).toBe('eager');
-    expect(darkImage.alt).toBe('Serhat Soruklu, founder of Coupyn, seated at his workstation.');
+    expect(darkImage.alt).toBe('AI-assisted portrait of Serhat Soruklu seated in his real office, based on his original selfie.');
     expect(
       fixture.nativeElement.querySelector('.portrait-dialog__summary')?.textContent?.trim(),
     ).toBe('Founder and solo operator building production web systems with a focus on:');
@@ -88,9 +105,9 @@ describe('PortraitDialogComponent', () => {
     expect(component.isLightPortrait()).toBe(true);
     expect(fixture.nativeElement.querySelector('.portrait-dialog--light-portrait')).not.toBeNull();
     expect(lightImage).toBe(darkImage);
-    expect(lightImage.getAttribute('src')).toBe('/assets/home/serhat-soruklu-workstation-light.png');
+    expect(lightImage.getAttribute('src')).toBe('/assets/portraits/serhat-soruklu-office-light-1846.webp');
     expect(lightImage.getAttribute('data-portrait-theme')).toBe('light');
-    expect(lightImage.alt).toBe('Serhat Soruklu, founder of Coupyn, seated at his workstation.');
+    expect(lightImage.alt).toBe('AI-assisted portrait of Serhat Soruklu seated in his real office, based on his original selfie.');
   });
 
   it('renders compile-time icon paths and closes through the dialog ref', () => {
@@ -102,7 +119,7 @@ describe('PortraitDialogComponent', () => {
       fixture.nativeElement.querySelectorAll('[data-mat-icon-name="portrait-domain"]'),
     ) as HTMLElement[];
 
-    expect(domainIcons).toHaveLength(2);
+    expect(domainIcons).toHaveLength(4);
     expect(
       domainIcons.every((icon) => icon.querySelector('path')?.getAttribute('d') === mdiWeb),
     ).toBe(true);

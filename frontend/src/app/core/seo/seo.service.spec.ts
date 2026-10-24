@@ -76,6 +76,23 @@ describe('SeoService', () => {
     ).toBe('index, follow, max-image-preview:large');
   });
 
+  it('describes Stervox as a project in development without advertising a live financial product', async () => {
+    const router = TestBed.inject(Router);
+    const service = TestBed.inject(SeoService);
+    await router.navigateByUrl('/systems/stervox');
+    service.applyRouteMetadata(router.routerState.snapshot.root);
+
+    const graph = JSON.parse(globalThis.document.querySelector('script[type="application/ld+json"]')?.textContent ?? '{}')['@graph'];
+    expect(graph).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        '@type': 'CreativeWork',
+        name: 'Stervox',
+        creativeWorkStatus: 'In development. Planned launch: 5 January 2027.',
+      }),
+    ]));
+    expect(graph.some((entity: Record<string, unknown>) => entity['@type'] === 'FinancialProduct' || entity['offers'])).toBe(false);
+  });
+
   it('keeps public SEO titles and descriptions within search result length targets', () => {
     for (const pageMetadata of Object.values(pageSeoMetadata)) {
       expect(pageMetadata.title.length).toBeLessThanOrEqual(55);
@@ -305,8 +322,8 @@ describe('SeoService', () => {
         primaryImageOfPage: expect.objectContaining({
           '@type': 'ImageObject',
           url: `https://serhatsoruklu.com${seoConfig.defaultPersonImage}`,
-          width: 825,
-          height: 743,
+          width: 1022,
+          height: 1533,
           caption: 'Portrait of Serhat Soruklu, founder and CEO of Coupyn.',
         }),
       }),
@@ -408,6 +425,7 @@ describe('SeoService', () => {
       'WebSite',
       'Organization',
       'Organization',
+      'CreativeWork',
     ]);
     expect(new Set(entityIds).size).toBe(entityIds.length);
     expect(webpage).toEqual({
@@ -420,6 +438,7 @@ describe('SeoService', () => {
       about: [
         { '@id': personId },
         { '@id': organizationId },
+        { '@id': 'https://serhatsoruklu.com/systems/stervox#project' },
         { '@id': 'https://serhatsoruklu.com/systems/codaris#organization' },
       ],
       author: { '@id': personId },

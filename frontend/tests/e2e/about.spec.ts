@@ -6,7 +6,7 @@ import { installConsoleErrorGuard } from './support/console-errors';
 
 const aboutPath = '/about';
 const themeStorageKey = 'serhatsoruklu-theme';
-const portraitPath = '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png';
+const portraitPath = '/assets/portraits/serhat-soruklu-real-selfie-1022.webp';
 const screenshotDirectory = 'test-results/about-review';
 const viewports = [
   { name: 'minimum-mobile', width: 320, height: 700 },
@@ -28,6 +28,9 @@ async function openProfileDialog(page: Page): Promise<void> {
   await trigger.scrollIntoViewIfNeeded();
   await trigger.click();
   await expect(page.getByTestId('about-profile-dialog')).toBeVisible();
+  await page.locator('.serhat-about-profile-dialog-panel').evaluate((element) =>
+    Promise.all(element.getAnimations({ subtree: true }).map((animation) => animation.finished)),
+  );
 }
 
 test.describe('About identity page', () => {
@@ -59,14 +62,14 @@ test.describe('About identity page', () => {
       'href',
       '/about#origins',
     );
-    await expect(page.locator('.about-system-card')).toHaveCount(5);
+    await expect(page.locator('.about-system-card')).toHaveCount(7);
     await expect(page.locator('.about-principles > li')).toHaveCount(4);
     await expect(page.locator('.about-profiles a')).toHaveCount(7);
 
     const portrait = page.locator('.about-portrait__trigger img');
     await expect(portrait).toHaveAttribute('src', portraitPath);
-    await expect(portrait).toHaveAttribute('width', '825');
-    await expect(portrait).toHaveAttribute('height', '743');
+    await expect(portrait).toHaveAttribute('width', '1022');
+    await expect(portrait).toHaveAttribute('height', '1533');
     await expect(page.getByTestId('about-portrait-trigger')).toHaveAttribute(
       'aria-haspopup',
       'dialog',
@@ -304,6 +307,7 @@ test.describe('About identity page', () => {
           imageComplete: image?.complete ?? false,
           imageNaturalHeight: image?.naturalHeight ?? 0,
           imageNaturalWidth: image?.naturalWidth ?? 0,
+          imageCurrentSrc: image?.currentSrc ?? '',
           imageObjectFit: image ? getComputedStyle(image).objectFit : '',
           imageRatio: imageBox && imageBox.height > 0 ? imageBox.width / imageBox.height : 0,
           portraitTop: portrait?.top ?? -1,
@@ -326,18 +330,20 @@ test.describe('About identity page', () => {
       );
       expect(layout.portraitTop, `${viewport.name}: portrait visible`).toBeGreaterThan(0);
       expect(layout.imageComplete, `${viewport.name}: portrait loaded`).toBe(true);
-      expect(layout.imageNaturalWidth).toBe(825);
-      expect(layout.imageNaturalHeight).toBe(743);
+      expect(layout.imageNaturalWidth).toBeGreaterThan(0);
+      expect(layout.imageNaturalWidth / layout.imageNaturalHeight).toBeCloseTo(2 / 3, 2);
+      expect(layout.imageCurrentSrc).toMatch(/serhat-soruklu-real-selfie-(480|800|1022)\.(avif|webp)$/);
       expect(layout.imageObjectFit).toBe('contain');
       expect(layout.imageRatio, `${viewport.name}: portrait aspect ratio`).toBeCloseTo(
-        825 / 743,
+        1022 / 1533,
         2,
       );
 
       if (viewport.width >= 1024) {
-        const portraitShare = layout.portraitWidth / layout.frameWidth;
-        expect(portraitShare, `${viewport.name}: portrait prominence`).toBeGreaterThanOrEqual(0.39);
-        expect(portraitShare, `${viewport.name}: portrait prominence`).toBeLessThanOrEqual(0.49);
+        expect(layout.portraitWidth, `${viewport.name}: portrait prominence`)
+          .toBeGreaterThanOrEqual(Math.min(420, layout.frameWidth * 0.39));
+        expect(layout.portraitWidth, `${viewport.name}: reading space beside tall portrait`)
+          .toBeLessThanOrEqual(481);
       }
 
       await openProfileDialog(page);
@@ -359,6 +365,9 @@ test.describe('About identity page', () => {
             document.documentElement.scrollWidth - document.documentElement.clientWidth,
           imageObjectFit: image ? getComputedStyle(image).objectFit : '',
           imageObjectPosition: image ? getComputedStyle(image).objectPosition : '',
+          imageHeight: image?.getBoundingClientRect().height ?? 0,
+          mediaHeight: dialogElement
+            ?.querySelector('.about-profile-dialog__media')?.getBoundingClientRect().height ?? 0,
           left: panel?.left ?? -1,
           right: panel ? document.documentElement.clientWidth - panel.right : -1,
           top: panel?.top ?? -1,
@@ -380,8 +389,10 @@ test.describe('About identity page', () => {
       ).toBeLessThanOrEqual(1);
       expect(dialogLayout.imageObjectFit).toBe('contain');
       expect(dialogLayout.imageObjectPosition).toBe('50% 50%');
-      await expect(dialogImage).toHaveAttribute('width', '825');
-      await expect(dialogImage).toHaveAttribute('height', '743');
+      expect(dialogLayout.imageHeight, `${viewport.name}: complete portrait within its frame`)
+        .toBeLessThanOrEqual(dialogLayout.mediaHeight + 1);
+      await expect(dialogImage).toHaveAttribute('width', '1022');
+      await expect(dialogImage).toHaveAttribute('height', '1533');
 
       if (viewport.width < 1024) {
         expect(
@@ -562,7 +573,7 @@ test.describe('About identity page', () => {
       await expect(portrait).toBeVisible();
       await expect
         .poll(() => portrait.evaluate((image) => (image as HTMLImageElement).naturalWidth))
-        .toBe(825);
+        .toBeGreaterThan(0);
       await page.screenshot({
         animations: 'disabled',
         fullPage: true,
@@ -588,7 +599,7 @@ test.describe('About identity page', () => {
           .getByTestId('about-profile-dialog-image')
           .evaluate((image) => (image as HTMLImageElement).naturalWidth),
       )
-      .toBe(825);
+      .toBeGreaterThan(0);
     await page.screenshot({
       animations: 'disabled',
       path: `${screenshotDirectory}/about-dialog-390x844-light.png`,
@@ -605,7 +616,7 @@ test.describe('About identity page', () => {
           .getByTestId('about-profile-dialog-image')
           .evaluate((image) => (image as HTMLImageElement).naturalWidth),
       )
-      .toBe(825);
+      .toBeGreaterThan(0);
     await page.screenshot({
       animations: 'disabled',
       path: `${screenshotDirectory}/about-dialog-1440x900-dark.png`,

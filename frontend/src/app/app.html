@@ -2,6 +2,7 @@
 <main
   class="site-main"
   [class.site-main--home]="isHomeRoute()"
+  [class.site-main--stervox-atmosphere]="usesStervoxAtmosphere()"
   [class.site-main--detail-atmosphere]="usesDetailAtmosphere()"
   [class.site-main--systems-atmosphere]="usesSystemsAtmosphere()"
   [class.site-main--about-atmosphere]="usesAboutAtmosphere()"
@@ -14,5 +15,43 @@
   <div class="site-route-frame">
     <router-outlet />
   </div>
+  @if (usesStervoxAtmosphere()) {
+    <picture class="site-stervox-landscape">
+      <source
+        type="image/avif"
+        srcset="
+          /assets/projects/stervox/mountains/stervox-mountains-960.avif   960w,
+          /assets/projects/stervox/mountains/stervox-mountains-1600.avif 1600w,
+          /assets/projects/stervox/mountains/stervox-mountains-2172.avif 2172w
+        "
+        sizes="(max-width: 767px) 1980px, 2172px"
+      />
+      <img
+        src="/assets/projects/stervox/mountains/stervox-mountains-960.webp"
+        srcset="
+          /assets/projects/stervox/mountains/stervox-mountains-960.webp   960w,
+          /assets/projects/stervox/mountains/stervox-mountains-1600.webp 1600w,
+          /assets/projects/stervox/mountains/stervox-mountains-2172.webp 2172w
+        "
+        sizes="(max-width: 767px) 1980px, 2172px"
+        width="2172"
+        height="724"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
+  }
+  @if (isHomeRoute()) {
+    <picture class="site-home-landscape">
+      <source type="image/avif"
+        srcset="/assets/home/landscape/home-foundations-960.avif 960w, /assets/home/landscape/home-foundations-1600.avif 1600w, /assets/home/landscape/home-foundations-2172.avif 2172w"
+        sizes="(max-width: 767px) 1980px, 2172px" />
+      <img src="/assets/home/landscape/home-foundations-960.webp"
+        srcset="/assets/home/landscape/home-foundations-960.webp 960w, /assets/home/landscape/home-foundations-1600.webp 1600w, /assets/home/landscape/home-foundations-2172.webp 2172w"
+        sizes="(max-width: 767px) 1980px, 2172px"
+        width="2172" height="724" alt="" loading="lazy" decoding="async" />
+    </picture>
+  }
   <app-site-footer />
 </main>

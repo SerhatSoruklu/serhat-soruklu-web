@@ -17,12 +17,13 @@ import {
   mdiWeb
 } from '@mdi/js';
 
+import { StervoxBrandComponent } from '../../shared/stervox-brand/stervox-brand.component';
 import { TopNavigationService } from '../../core/navigation/top-navigation.service';
 import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
 
 @Component({
   selector: 'app-work',
-  imports: [MatIconModule, RouterLink, TooltipDirective],
+  imports: [StervoxBrandComponent, MatIconModule, RouterLink, TooltipDirective],
   templateUrl: './work.component.html',
   styleUrl: './work.component.css'
 })

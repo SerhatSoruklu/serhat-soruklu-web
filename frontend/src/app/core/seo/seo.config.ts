@@ -17,6 +17,7 @@ export type StructuredDataProfile =
   | 'about'
   | 'breadcrumb'
   | 'codaris'
+  | 'stervox'
   | 'press'
   | 'soruklu-surname'
   | 'soruklu-order'
@@ -25,7 +26,7 @@ export type StructuredDataProfile =
 
 const canonicalBaseUrl = 'https://serhatsoruklu.com';
 const defaultOgImage = '/assets/social/serhat-soruklu-og.png';
-const defaultPersonImage = '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png';
+const defaultPersonImage = '/assets/portraits/serhat-soruklu-real-selfie.png';
 const rasterSocialImage = {
   ogImageHeight: 630,
   ogImageType: 'image/png',
@@ -60,7 +61,7 @@ export const pageSeoMetadata = {
     label: 'Press / Media',
     title: 'Press & Media | Serhat Soruklu',
     description:
-      'Verified biographies, company and project facts, media assets and public reference links for coverage of Serhat Soruklu, Coupyn and CODARIS.',
+      'Verified biographies, company and project facts, media assets and public reference links for coverage of Serhat Soruklu, Coupyn, Stervox and CODARIS.',
     path: '/press',
     ogImage: '/assets/social/serhat-soruklu-press-natural-portrait-og.png',
     ogImageAlt:
@@ -83,7 +84,7 @@ export const pageSeoMetadata = {
     label: 'Systems',
     title: 'Systems | Serhat Soruklu',
     description:
-      "Explore Serhat Soruklu's systems map across Coupyn, ChatPDM, CODARIS, DBF, CIM, production platforms, research, and architecture models.",
+      "Explore Serhat Soruklu's systems map across Coupyn, Stervox, ChatPDM, CODARIS, DBF, CIM, production platforms, research, and architecture models.",
     path: '/systems',
     ogImage: '/assets/social/serhat-soruklu-systems-og.png',
     ogImageAlt: 'Serhat Soruklu systems architecture map in deep navy and gold.',
@@ -98,6 +99,17 @@ export const pageSeoMetadata = {
     ogImage: '/assets/social/serhat-soruklu-systems-coupyn-og.png',
     ogImageAlt: 'Coupyn system architecture by Serhat Soruklu.',
     ...rasterSocialImage,
+  },
+  stervoxSystem: {
+    label: 'Stervox',
+    title: 'Stervox | Financial Infrastructure by Serhat Soruklu',
+    description:
+      'Meet Stervox: Serhat Soruklu’s ambitious financial platform and in-house VOXCORE foundation. In development; planned launch 5 January 2027.',
+    path: '/systems/stervox',
+    ogImage: '/assets/social/serhat-soruklu-systems-stervox-og.png',
+    ogImageAlt: 'STERVOX by Serhat Soruklu. Make the bricks. Build the future. Planned VOXCORE, VOXFINANCE and PostgreSQL architecture. Coming soon, planned launch 5 January 2027.',
+    ...rasterSocialImage,
+    structuredData: 'stervox',
   },
   chatpdmSystem: {
     label: 'ChatPDM',

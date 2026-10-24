@@ -18,12 +18,17 @@ import {
   FOUNDER_PORTRAIT_HEIGHT,
   FOUNDER_PORTRAITS,
   FOUNDER_PORTRAIT_WIDTH,
+  founderPortraitThemeForSource,
 } from '../../shared/portraits/founder-portrait.config';
 import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
 
+import { StervoxArchitectureComponent } from '../../shared/stervox-architecture/stervox-architecture.component';
+import { StervoxBrandComponent } from '../../shared/stervox-brand/stervox-brand.component';
+import { StervoxLaunchComponent } from './stervox-launch/stervox-launch.component';
+
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, TooltipDirective],
+  imports: [StervoxArchitectureComponent, StervoxBrandComponent, StervoxLaunchComponent, RouterLink, TooltipDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -58,6 +63,7 @@ export class HomeComponent {
     } as const;
   });
   readonly portraitSources = FOUNDER_PORTRAITS;
+  readonly portraitSizes = '(min-width: 1728px) 740px, (min-width: 1440px) 620px, (min-width: 1024px) 48vw, calc(100vw - 40px)';
   readonly portraitReadyTheme = signal<ResolvedTheme | null>(this.initiallyRenderedPortraitTheme);
   readonly resolvedTheme = this.themeService.resolvedTheme;
   readonly portraitHeight = FOUNDER_PORTRAIT_HEIGHT;
@@ -109,18 +115,13 @@ export class HomeComponent {
   private handleLoadedPortrait(image: HTMLImageElement): void {
     const loadedUrl = image.currentSrc || image.getAttribute('src');
     const activeSource = loadedUrl ? new URL(loadedUrl, this.document.baseURI).pathname : null;
-    const loadedTheme =
-      activeSource === FOUNDER_PORTRAITS.dark.src
-        ? 'dark'
-        : activeSource === FOUNDER_PORTRAITS.light.src
-          ? 'light'
-          : null;
+    const loadedTheme = activeSource ? founderPortraitThemeForSource(activeSource) : null;
 
     if (!activeSource || !loadedTheme) {
       return;
     }
 
-    this.loadedPortraitSources.add(activeSource);
+    this.loadedPortraitSources.add(loadedTheme);
     this.portraitReadyTheme.set(loadedTheme);
     this.scheduleAlternatePortraitPreload(activeSource);
   }
@@ -142,13 +143,14 @@ export class HomeComponent {
       return;
     }
 
-    const alternateSource = Object.values(FOUNDER_PORTRAITS).find(
-      ({ src }) => src !== activeSource,
-    )?.src;
+    const activeTheme = founderPortraitThemeForSource(activeSource);
+    const alternateTheme = activeTheme === 'dark' ? 'light' : 'dark';
+    const alternatePortrait = FOUNDER_PORTRAITS[alternateTheme];
+    const alternateSource = alternatePortrait.src;
 
     if (
       !alternateSource ||
-      this.loadedPortraitSources.has(alternateSource) ||
+      this.loadedPortraitSources.has(alternateTheme) ||
       this.pendingPortraitPreload?.getAttribute('src') === alternateSource
     ) {
       return;
@@ -165,7 +167,7 @@ export class HomeComponent {
       preloader.addEventListener(
         'load',
         () => {
-          this.loadedPortraitSources.add(alternateSource);
+          this.loadedPortraitSources.add(alternateTheme);
           this.pendingPortraitPreload = null;
         },
         { once: true },
@@ -178,6 +180,8 @@ export class HomeComponent {
         { once: true },
       );
       this.pendingPortraitPreload = preloader;
+      preloader.sizes = this.portraitSizes;
+      preloader.srcset = alternatePortrait.avifSrcSet;
       preloader.src = alternateSource;
     };
 

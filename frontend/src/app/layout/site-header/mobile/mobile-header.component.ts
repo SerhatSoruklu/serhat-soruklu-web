@@ -32,9 +32,12 @@ import {
 const SCROLLED_ENABLE_THRESHOLD = 20;
 const SCROLLED_DISABLE_THRESHOLD = 2;
 
+import { StervoxBrandComponent } from '../../../shared/stervox-brand/stervox-brand.component';
+
 @Component({
   selector: 'app-mobile-header',
   imports: [
+    StervoxBrandComponent,
     IdentityLanguageSelectorComponent,
     NgClass,
     RouterLink,
@@ -96,6 +99,14 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
       externalAriaLabel: 'Open Coupyn.com in a new tab',
     },
     {
+      brand: 'stervox',
+      label: 'Stervox · Coming soon',
+      path: '/systems/stervox',
+      externalUrl: 'https://stervox.com',
+      ariaLabel: 'View Stervox, coming soon',
+      externalAriaLabel: 'Open Stervox.com in a new tab',
+    },
+    {
       brand: 'chatpdm',
       label: 'ChatPDM',
       path: '/systems/chatpdm',
@@ -114,6 +125,7 @@ export class MobileHeaderComponent implements AfterViewInit, OnDestroy {
   ];
   readonly systemChildLinks = [
     { label: 'Coupyn', path: '/systems/coupyn' },
+    { label: 'Stervox · Coming soon', path: '/systems/stervox' },
     { label: 'ChatPDM', path: '/systems/chatpdm' },
     { label: 'CODARIS', path: '/systems/codaris' },
     { label: 'DBF', path: '/systems/deterministic-boundary-firewall' },

@@ -408,6 +408,24 @@ const aboutSchema = {
     scaleValue: '≈ 1M',
     scaleDetail: localized('company pages', 'şirket sayfası'),
   },
+  stervox: {
+    kicker: 'STERVOX / 2026–2036',
+    heading: localized('The next chapter goes deeper', 'Bir sonraki adım daha derine iniyor'),
+    paragraphs: localized(
+      [
+        'Stervox is my most ambitious project yet: a financial platform designed to give people a clearer view of their money. I’m building the foundations through VOXCORE, with an in-house ledger and identity-checking workflows as part of the design.',
+        'I think of it as making the bricks from clay before building the house. I want to understand and own the core, while using specialist providers through connections that can change as the business grows.',
+        'It will not be easy. I’ve mapped a ten-year direction through 2036, with rollout phases, dependencies and release gates. Stervox is in architecture and foundation development; its production financial core is not implemented. The planned launch is 5 January 2027.',
+      ],
+      [
+        'Stervox, şimdiye kadarki en iddialı projem: insanların parasını daha net görmesini amaçlayan bir finans platformu. Temellerini VOXCORE ile kuruyorum; kendi hesap defterimiz ve kimlik kontrolü süreçlerimiz tasarımın parçası.',
+        'Bunu, evi inşa etmeden önce tuğlaları kilden yapmak gibi düşünüyorum. İş büyüdükçe değiştirilebilen bağlantılar üzerinden uzman sağlayıcılardan yararlanırken, çekirdeği anlamak ve sahiplenmek istiyorum.',
+        'Kolay olmayacak. Aşamalı geçişler, bağımlılıklar ve yayın kapılarıyla 2036’ya uzanan on yıllık bir yön belirledim. Stervox, mimari ve temel geliştirme aşamasında; üretim finans çekirdeği henüz uygulanmadı. Planlanan açılış 5 Ocak 2027.',
+      ],
+    ),
+    status: localized('Coming soon · In development', 'Yakında · Geliştirme aşamasında'),
+    action: localized('Explore Stervox', 'Stervox’u incele'),
+  },
   systems: {
     kicker: localized('06 / SELECTED SYSTEMS', '06 / SEÇİLMİŞ SİSTEMLER'),
     heading: localized(
@@ -415,8 +433,8 @@ const aboutSchema = {
       'Aynı ilkeler açık sistemlere taşındı',
     ),
     introduction: localized(
-      'Beyond Coupyn, Serhat publishes systems and experiments concerned with deterministic behaviour, explicit boundaries, continuity and inspectable failure.',
-      "Serhat, Coupyn'in dışında deterministik davranış, açık sınırlar, süreklilik ve incelenebilir hata durumları üzerine sistemler ve deneyler yayımlıyor.",
+      'Commercial platforms and public research share the same discipline: own the foundations, make boundaries explicit, and build for the long term.',
+      'Ticari platformlar ve açık araştırmalar aynı disiplini paylaşır: temelleri sahiplenmek, sınırları açıkça belirlemek ve uzun vadeli düşünmek.',
     ),
     openAction: localized('Explore system', 'Sistemi incele'),
     externalAction: localized('Open repository', 'Depoyu aç'),
@@ -424,9 +442,28 @@ const aboutSchema = {
       'Open repository — ZeroGlare Continuity System on GitHub, opens in a new tab',
       'Depoyu aç — GitHub üzerindeki ZeroGlare Continuity System deposu yeni sekmede açılır',
     ),
+    commercialLabel: localized('Independent commercial ventures', 'Bağımsız ticari girişimler'),
+    productionLabel: localized('Coupyn · Live platform', 'Coupyn · Kullanıma açık platform'),
+    developmentLabel: localized('Stervox · Coming soon', 'Stervox · Yakında'),
     cards: [
+      aboutSystemCard(
+        '01', 'Coupyn',
+        localized(
+          'A live commerce platform built for lasting discovery: company pages, coupon and referral listings, and infrastructure I own and operate. A commercial business built with a long horizon.',
+          'Kalıcı keşif için geliştirilen, kullanıma açık bir ticaret platformu: şirket sayfaları, kupon ve referans listeleri ve kendi yönettiğim altyapı. Uzun vadeli düşünülerek kurulan ticari bir iş.',
+        ),
+        '/systems/coupyn',
+      ),
+      aboutSystemCard(
+        '02', 'Stervox',
+        localized(
+          'My next commercial venture: a clearer financial life built on an in-house core. VOXCORE and identity workflows are in development, with a planned launch on 5 January 2027 and a phased direction through 2036.',
+          'Bir sonraki ticari girişimim: kendi geliştirdiğim bir çekirdekle daha anlaşılır bir finansal hayat. VOXCORE ve kimlik iş akışları geliştirme aşamasında; hedeflenen çıkış tarihi 5 Ocak 2027, aşamalı yol haritası ise 2036’ya uzanıyor.',
+        ),
+        '/systems/stervox',
+      ),
       {
-        index: '01',
+        index: '03',
         title: 'ChatPDM',
         description: localized(
           'A deterministic concept system that resolves authored, versioned meanings and refuses unsupported composition rather than guessing.',
@@ -436,7 +473,7 @@ const aboutSchema = {
         externalUrl: null,
       },
       {
-        index: '02',
+        index: '04',
         title: 'Deterministic Boundary Firewall',
         description: localized(
           'A bounded pre-egress firewall experiment for inspecting requests before model or tool execution.',
@@ -446,7 +483,7 @@ const aboutSchema = {
         externalUrl: null,
       },
       {
-        index: '03',
+        index: '05',
         title: 'Continuity Identity Model',
         description: localized(
           'A protocol workspace exploring whether identity, authority and responsibility remain valid when a machine actor changes state.',
@@ -456,7 +493,7 @@ const aboutSchema = {
         externalUrl: null,
       },
       aboutSystemCard(
-        '04',
+        '06',
         'CODARIS',
         localized(
           'An early-stage developer coalition and technical platform advancing practical, evidence-led work on responsible intelligent systems.',
@@ -465,7 +502,7 @@ const aboutSchema = {
         '/systems/codaris',
       ),
       {
-        index: '05',
+        index: '07',
         title: 'ZeroGlare Continuity System',
         description: localized(
           'A browser-native concept and visualisation laboratory used to explore continuity, scale and interface ideas.',

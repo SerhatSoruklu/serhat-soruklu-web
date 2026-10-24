@@ -20,8 +20,9 @@ test.describe('home system architecture diagrams', () => {
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.goto('/');
 
-      await expect(page.getByRole('heading', { name: 'Built Systems, Not Concepts' })).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'Live Systems. Ambitious Foundations.' })).toBeVisible();
       await expect(page.getByTestId('coupyn-architecture-diagram')).toBeVisible();
+      await expect(page.getByTestId('stervox-architecture-diagram')).toBeVisible();
       await expect(page.getByTestId('chatpdm-architecture-diagram')).toBeVisible();
 
       const hasHorizontalOverflow = await page.evaluate(() => {
@@ -32,7 +33,7 @@ test.describe('home system architecture diagrams', () => {
 
       expect(hasHorizontalOverflow).toBe(false);
 
-      for (const testId of ['coupyn-architecture-diagram', 'chatpdm-architecture-diagram']) {
+      for (const testId of ['coupyn-architecture-diagram', 'stervox-architecture-diagram', 'chatpdm-architecture-diagram']) {
         const diagram = page.getByTestId(testId);
         const box = await diagram.boundingBox();
         const fitsPanel = await diagram.evaluate((element) => {
@@ -68,6 +69,24 @@ test.describe('home system architecture diagrams', () => {
     await expect(page.locator('html')).toHaveClass(/theme-resolved-light/);
     await expect(page.getByTestId('coupyn-architecture-diagram')).toBeVisible();
     await expect(page.getByTestId('chatpdm-architecture-diagram')).toBeVisible();
+    await expect(page.getByTestId('codaris-architecture-diagram')).toBeVisible();
+
+    const codarisContrast = await page.getByTestId('codaris-architecture-diagram').evaluate(diagram => {
+      const luminance = (color: string) => {
+        const channels = color.match(/[\d.]+/g)!.slice(0, 3).map(value => {
+          const channel = Number(value) / 255;
+          return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+        });
+        return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+      };
+      return Array.from(diagram.querySelectorAll('strong')).map(label => {
+        const text = luminance(getComputedStyle(label).color);
+        const background = luminance(getComputedStyle(label.parentElement!).backgroundColor);
+        return (Math.max(text, background) + 0.05) / (Math.min(text, background) + 0.05);
+      });
+    });
+    expect(codarisContrast).toHaveLength(3);
+    expect(Math.min(...codarisContrast)).toBeGreaterThanOrEqual(4.5);
 
     const hasHorizontalOverflow = await page.evaluate(() => {
       const root = document.documentElement;
@@ -198,4 +217,28 @@ test.describe('home system architecture diagrams', () => {
     });
     assertNoConsoleErrors();
   });
+});
+
+
+test('Stervox Explore opens the detail route and its engineering action scrolls to the evidence', async ({ page }) => {
+  await page.setViewportSize({ width: 427, height: 952 });
+  await page.goto('/');
+  await page.getByTestId('stervox-explore-link').click();
+  await expect(page).toHaveURL('/systems/stervox');
+  await expect(page.locator('app-home')).toHaveCount(0);
+  await expect(page.locator('main')).toHaveClass(/site-main--stervox-atmosphere/);
+  const action = page.getByRole('link', { name: 'Explore the engineering ↓' });
+  await action.focus();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL('/systems/stervox#engineering');
+  await expect.poll(() => page.locator('#engineering').evaluate(element => element.getBoundingClientRect().top)).toBeGreaterThanOrEqual(90);
+  await expect.poll(() => page.locator('#engineering').evaluate(element => element.getBoundingClientRect().top)).toBeLessThan(170);
+  await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+  await action.click();
+  await expect.poll(() => page.locator('#engineering').evaluate(element => element.getBoundingClientRect().top)).toBeLessThan(170);
+  const openLinks = page.getByRole('link', { name: 'Open Stervox ↗', exact: true });
+  await expect(openLinks).toHaveCount(2);
+  for (const link of await openLinks.all()) {
+    await expect(link).toHaveAttribute('href', 'https://stervox.com');
+  }
 });

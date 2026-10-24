@@ -9,7 +9,7 @@
 }
 
 .cdk-overlay-pane.serhat-portrait-dialog-panel {
-  width: min(1040px, calc(100vw - 40px));
+  width: min(1280px, calc(100vw - 40px));
   max-width: calc(100vw - 40px) !important;
   max-height: calc(100dvh - 40px);
 }
@@ -27,8 +27,7 @@
 
 .portrait-dialog {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(420px, 0.95fr) minmax(360px, 1fr);
+  display: block;
   max-height: calc(100dvh - 40px);
   overflow: hidden;
   border: 1px solid rgba(214, 168, 79, 0.2);
@@ -44,14 +43,24 @@
   animation: portraitDialogIn 180ms ease-out;
 }
 
+.portrait-dialog__scroll {
+  max-height: calc(100dvh - 42px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #252b36 #10141c;
+}
+
+.theme-resolved-light .portrait-dialog__scroll { scrollbar-color: #e5e0d6 #f8f7f3; }
+
 .portrait-dialog__close {
   position: absolute;
   top: 14px;
   right: 14px;
   z-index: 3;
   display: inline-flex;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   align-items: center;
   justify-content: center;
   padding: 0;
@@ -85,12 +94,11 @@
 
 .portrait-dialog__media {
   position: relative;
-  min-height: 600px;
+  width: 100%;
+  aspect-ratio: 1846 / 852;
   isolation: isolate;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   background:
     radial-gradient(ellipse at 50% 20%, rgba(214, 168, 79, 0.12), transparent 44%), #020306;
 }
@@ -100,7 +108,7 @@
   inset: 0;
   pointer-events: none;
   content: '';
-  background: linear-gradient(90deg, transparent 78%, rgba(7, 9, 13, 0.4));
+  background: linear-gradient(180deg, transparent 88%, rgba(7, 9, 13, 0.4));
 }
 
 .portrait-dialog__portrait-image {
@@ -108,7 +116,8 @@
   z-index: 1;
   display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 1846 / 852;
   object-fit: contain;
   object-position: center;
 }
@@ -116,9 +125,10 @@
 .portrait-dialog__content {
   position: relative;
   z-index: 1;
+  display: grid;
+  gap: 28px;
   min-width: 0;
-  overflow: auto;
-  padding: 58px 48px 44px;
+  padding: 28px 20px 32px;
 }
 
 .portrait-dialog__eyebrow,
@@ -152,7 +162,7 @@
   margin: 0;
   color: #f5f7fa;
   font-family: 'Sora', Inter, ui-sans-serif, system-ui, sans-serif;
-  font-size: clamp(34px, 4vw, 46px);
+  font-size: clamp(32px, 4vw, 46px);
   font-weight: 700;
   letter-spacing: 0;
   line-height: 1;
@@ -203,18 +213,30 @@
 }
 
 .portrait-dialog__systems {
-  margin-top: 28px;
+  display: grid;
+  gap: 20px;
+  margin-top: 0;
 }
 
 .portrait-dialog__systems-label {
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  margin-bottom: 12px;
+  margin: 0 0 10px;
   color: #a8b0bd;
   font-size: 11px;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
 }
+
+.portrait-dialog__project-group { min-width: 0; }
+.portrait-dialog__project-description {
+  margin: 9px 0 0;
+  color: #a8b0bd;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.theme-resolved-light .portrait-dialog__project-description { color: #5f6673; }
 
 .portrait-dialog__chip-row {
   display: flex;
@@ -239,6 +261,8 @@
 }
 
 .portrait-dialog__system-chip {
+  padding-right: 10px;
+  padding-left: 10px;
   cursor: pointer;
   transition:
     border-color 160ms ease,
@@ -246,6 +270,14 @@
     color 160ms ease,
     box-shadow 160ms ease;
 }
+
+.portrait-dialog__project-text { display: grid; gap: 3px; min-width: 0; }
+.portrait-dialog__project-url {
+  color: #a8b0bd;
+  font: 9px/1.5 'Space Mono', 'IBM Plex Mono', monospace;
+  overflow-wrap: anywhere;
+}
+.theme-resolved-light .portrait-dialog__project-url { color: #5f6673; }
 
 .portrait-dialog__system-chip:hover,
 .portrait-dialog__system-chip:focus-visible {
@@ -264,8 +296,17 @@
   color: #d6a84f;
 }
 
+.portrait-dialog__technology-label {
+  margin: 20px 0 10px;
+  color: #a8b0bd;
+  font: 700 10px/1.6 'Space Mono', 'IBM Plex Mono', monospace;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.theme-resolved-light .portrait-dialog__technology-label { color: #5f6673; }
+
 .portrait-dialog__chip-row--tools {
-  margin-top: 20px;
+  margin-top: 0;
 }
 
 .portrait-dialog__tool-chip {
@@ -290,7 +331,7 @@
 }
 
 .theme-resolved-light .portrait-dialog__media::after {
-  background: linear-gradient(90deg, transparent 78%, rgba(248, 247, 243, 0.5));
+  background: linear-gradient(180deg, transparent 88%, rgba(248, 247, 243, 0.5));
 }
 
 .theme-resolved-light .portrait-dialog__close {
@@ -348,79 +389,21 @@
   color: #b8872f;
 }
 
-@media (max-width: 1023px) {
-  .cdk-overlay-pane.serhat-portrait-dialog-panel {
-    width: min(760px, calc(100vw - 40px));
-  }
+.portrait-dialog__identity,
+.portrait-dialog__details { min-width: 0; }
 
-  .portrait-dialog {
-    display: block;
-    grid-template-columns: 1fr;
-  }
-
-  .portrait-dialog__media {
-    min-height: 0;
-    height: auto;
-    aspect-ratio: 1973 / 797;
-    max-height: 48dvh;
-  }
-
-  .portrait-dialog__media::after {
-    background: linear-gradient(180deg, transparent 76%, rgba(7, 9, 13, 0.42));
-  }
-
-  .theme-resolved-light .portrait-dialog__media::after {
-    background: linear-gradient(180deg, transparent 76%, rgba(248, 247, 243, 0.5));
-  }
-
+@media (min-width: 768px) {
   .portrait-dialog__content {
-    padding: 34px 34px 36px;
+    grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+    gap: 32px;
+    padding: 32px;
   }
 }
 
-@media (max-width: 767px) {
-  .cdk-overlay-pane.serhat-portrait-dialog-panel {
-    width: calc(100vw - 40px);
-    max-width: calc(100vw - 40px) !important;
-    max-height: calc(100dvh - 40px);
-  }
-
-  .portrait-dialog {
-    max-height: calc(100dvh - 40px);
-    overflow: auto;
-    border-radius: 12px;
-  }
-
-  .serhat-portrait-dialog-panel .mat-mdc-dialog-container,
-  .serhat-portrait-dialog-panel .mat-mdc-dialog-surface {
-    border-radius: 12px;
-  }
-
-  .portrait-dialog__media {
-    min-height: 0;
-    height: auto;
-    aspect-ratio: 1973 / 797;
-    max-height: none;
-  }
-
+@media (min-width: 1024px) {
   .portrait-dialog__content {
-    overflow: visible;
-    padding: 30px 22px 28px;
-  }
-
-  .portrait-dialog__title {
-    font-size: 32px;
-  }
-
-  .portrait-dialog__summary {
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 389px) {
-  .portrait-dialog__content {
-    padding-right: 18px;
-    padding-left: 18px;
+    gap: 48px;
+    padding: 40px;
   }
 }
 

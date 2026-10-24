@@ -324,9 +324,9 @@ test.describe('seo metadata', () => {
     expect(profilePage?.['inLanguage']).toBe('en-GB');
     expect(profilePage?.['primaryImageOfPage']).toEqual({
       '@type': 'ImageObject',
-      url: `${canonicalBaseUrl}/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png`,
-      width: 825,
-      height: 743,
+      url: `${canonicalBaseUrl}/assets/portraits/serhat-soruklu-real-selfie.png`,
+      width: 1022,
+      height: 1533,
       caption: 'Portrait of Serhat Soruklu, founder and CEO of Coupyn.',
     });
     expect(person?.['@id']).toBe(`${canonicalBaseUrl}/#person`);
@@ -404,6 +404,7 @@ test.describe('seo metadata', () => {
       'WebSite',
       'Organization',
       'Organization',
+      'CreativeWork',
     ]);
     expect(new Set(ids).size).toBe(ids.length);
     expect(webpage).toEqual({
@@ -416,6 +417,7 @@ test.describe('seo metadata', () => {
       about: [
         { '@id': personId },
         { '@id': organizationId },
+        { '@id': `${canonicalBaseUrl}/systems/stervox#project` },
         { '@id': `${canonicalBaseUrl}/systems/codaris#organization` },
       ],
       author: { '@id': personId },

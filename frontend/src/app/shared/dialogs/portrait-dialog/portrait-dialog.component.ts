@@ -7,7 +7,7 @@ import {
   mdiCodeTags,
   mdiDatabaseOutline,
   mdiMagnifyScan,
-  mdiRocketLaunchOutline,
+  mdiLockOutline,
   mdiServerNetwork,
   mdiShieldCheckOutline,
   mdiSitemapOutline,
@@ -43,7 +43,6 @@ export class PortraitDialogComponent {
     architecture: mdiSitemapOutline,
     briefcase: mdiBriefcaseOutline,
     close: mdiClose,
-    rocket: mdiRocketLaunchOutline,
   } as const;
   readonly focusPoints: PortraitDialogFocusPoint[] = [
     {
@@ -68,23 +67,34 @@ export class PortraitDialogComponent {
       iconPath: mdiShieldCheckOutline,
     },
   ];
-  readonly currentSystems: PortraitDialogChip[] = [
+  readonly projectGroups = [
     {
-      label: 'Coupyn.com',
-      href: 'https://coupyn.com',
-      iconName: 'portrait-domain',
-      iconPath: mdiWeb,
+      title: 'Private commercial ventures',
+      iconName: 'portrait-private',
+      iconPath: mdiLockOutline,
+      description: 'Products built for revenue and long-term ownership. Coupyn is live; Stervox is pre-launch.',
+      projects: [
+        { label: 'Coupyn.com', href: 'https://coupyn.com', iconName: 'portrait-domain', iconPath: mdiWeb },
+        { label: 'Stervox.com', href: 'https://stervox.com', iconName: 'portrait-domain', iconPath: mdiWeb },
+      ],
     },
     {
-      label: 'ChatPDM.com',
-      href: 'https://chatpdm.com',
-      iconName: 'portrait-domain',
-      iconPath: mdiWeb,
+      title: 'Open source · MIT',
+      iconName: 'portrait-open-source',
+      iconPath: mdiCodeTags,
+      description: 'Public projects for building, learning and contributing.',
+      projects: [
+        { label: 'ChatPDM.com', href: 'https://chatpdm.com', iconName: 'portrait-domain', iconPath: mdiWeb },
+        { label: 'Codaris.org', href: 'https://codaris.org', iconName: 'portrait-domain', iconPath: mdiWeb },
+      ],
     },
-  ];
+  ] as const;
   readonly chips: PortraitDialogChip[] = [
+    { label: 'Pure C (C17)', iconName: 'portrait-code', iconPath: mdiCodeTags },
+    { label: 'TypeScript', iconName: 'portrait-code', iconPath: mdiCodeTags },
     { label: 'Angular', iconName: 'portrait-code', iconPath: mdiCodeTags },
     { label: 'Node.js', iconName: 'portrait-code', iconPath: mdiCodeTags },
+    { label: 'PostgreSQL', iconName: 'portrait-database', iconPath: mdiDatabaseOutline },
     { label: 'MongoDB', iconName: 'portrait-database', iconPath: mdiDatabaseOutline },
     { label: 'OVH', iconName: 'portrait-server', iconPath: mdiServerNetwork },
     { label: 'SSR', iconName: 'portrait-platforms', iconPath: mdiTransitConnectionVariant },

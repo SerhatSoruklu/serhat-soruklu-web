@@ -60,7 +60,9 @@ describe('AboutComponent', () => {
     expect(text).toContain('Private servers became a practical education');
     expect(text).toContain('roughly one million company pages');
     expect(nativeElement.querySelectorAll('.about-history > li')).toHaveLength(4);
-    expect(nativeElement.querySelectorAll('.about-system-card')).toHaveLength(5);
+    expect(nativeElement.querySelectorAll('.about-system-card')).toHaveLength(7);
+    expect(nativeElement.querySelectorAll('.about-system-card--commercial')).toHaveLength(2);
+    expect(nativeElement.querySelector('.about-system-card--stervox')?.textContent).toContain('5 January 2027');
     expect(nativeElement.querySelectorAll('.about-principles > li')).toHaveLength(4);
     expect(nativeElement.querySelectorAll('.about-academic-stage')).toHaveLength(7);
     expect(nativeElement.querySelectorAll('.about-academic-stage--current')).toHaveLength(1);
@@ -85,10 +87,10 @@ describe('AboutComponent', () => {
       '/about#public-identity',
     ]);
     expect(portrait?.getAttribute('src')).toBe(
-      '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png',
+      '/assets/portraits/serhat-soruklu-real-selfie-1022.webp',
     );
-    expect(portrait?.width).toBe(825);
-    expect(portrait?.height).toBe(743);
+    expect(portrait?.width).toBe(1022);
+    expect(portrait?.height).toBe(1533);
     expect(portrait?.getAttribute('loading')).toBe('eager');
     expect(portrait?.getAttribute('fetchpriority')).toBe('high');
   });
@@ -154,6 +156,8 @@ describe('AboutComponent', () => {
     const nativeElement = fixture.nativeElement as HTMLElement;
     expect(nativeElement.querySelector('.about-page')?.getAttribute('lang')).toBe('tr-TR');
     expect(nativeElement.textContent).toContain('Aynı ilkeler açık sistemlere taşındı');
+    expect(nativeElement.querySelector('.about-system-card--stervox')?.textContent).toContain('5 Ocak 2027');
+    expect(nativeElement.querySelector('.about-system-card--stervox')?.textContent).toContain('Bağımsız ticari girişimler');
     expect(nativeElement.textContent).not.toContain(
       'The same principles moved into public systems',
     );

@@ -308,7 +308,7 @@ function getCspNonce(res: express.Response): string {
 async function writeAngularResponse(response: Response, res: express.Response): Promise<void> {
   const contentType = response.headers.get('content-type') ?? '';
   if (!contentType.toLowerCase().includes('text/html')) {
-    writeResponseToNodeResponse(response, res);
+    await writeResponseToNodeResponse(response, res);
     return;
   }
 
@@ -385,6 +385,9 @@ function sendKnownRouteRedirect(
       break;
     case '/systems':
       location = `${origin}/systems`;
+      break;
+    case '/systems/stervox':
+      location = `${origin}/systems/stervox`;
       break;
     case '/systems/chatpdm':
       location = `${origin}/systems/chatpdm`;

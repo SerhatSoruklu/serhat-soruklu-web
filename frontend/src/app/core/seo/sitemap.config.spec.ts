@@ -6,31 +6,31 @@ describe('SITEMAP_ROUTES', () => {
     expect(SITEMAP_ROUTES).toEqual([
       {
         path: '/',
-        lastModified: '2026-09-13',
+        lastModified: '2026-10-24',
         changeFrequency: 'weekly',
         priority: 1.0,
       },
       {
         path: '/about',
-        lastModified: '2026-09-13',
+        lastModified: '2026-10-24',
         changeFrequency: 'monthly',
         priority: 0.9,
       },
       {
         path: '/press',
-        lastModified: '2026-09-13',
+        lastModified: '2026-10-24',
         changeFrequency: 'monthly',
         priority: 0.6,
       },
       {
         path: '/work',
-        lastModified: '2026-05-15',
+        lastModified: '2026-10-24',
         changeFrequency: 'monthly',
         priority: 0.8,
       },
       {
         path: '/systems',
-        lastModified: '2026-08-09',
+        lastModified: '2026-10-24',
         changeFrequency: 'monthly',
         priority: 0.8,
       },
@@ -39,6 +39,12 @@ describe('SITEMAP_ROUTES', () => {
         lastModified: '2026-05-10',
         changeFrequency: 'monthly',
         priority: 0.7,
+      },
+      {
+        path: '/systems/stervox',
+        lastModified: '2026-10-24',
+        changeFrequency: 'monthly',
+        priority: 0.8,
       },
       {
         path: '/systems/chatpdm',

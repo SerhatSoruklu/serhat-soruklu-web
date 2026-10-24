@@ -278,7 +278,7 @@ h1 span {
   position: relative;
   z-index: 1;
   display: block;
-  aspect-ratio: 1973 / 797;
+  aspect-ratio: 1846 / 852;
   overflow: hidden;
   border: 1px solid rgba(214, 168, 79, 0.22);
   border-radius: 28px;
@@ -425,17 +425,116 @@ h1 span {
   gap: 18px;
 }
 
-.codaris-home-brand { display: inline-flex; align-items: center; gap: 10px; color: #f5f7fa; text-decoration: none; font: 700 24px/1 "Space Mono", monospace; letter-spacing: .06em; }
-.codaris-home-brand .codaris-a,.codaris-brand-a { color: #f5f7fa; }
-.codaris-home-brand:hover,.codaris-home-brand:focus-visible,.codaris-home-brand:active { color: #59e4eb; }
-.codaris-home-brand:hover .codaris-a,.codaris-home-brand:focus-visible .codaris-a,.codaris-home-brand:active .codaris-a { color: #59e4eb; }
-.codaris-home-brand img { width: 40px; height: 40px; }
-.codaris-home-diagram { display: flex; align-items: center; justify-content: center; gap: clamp(8px, 2vw, 24px); }
-.codaris-home-diagram div { display: grid; gap: 10px; min-width: 78px; padding: 18px 10px; border: 1px solid #252b36; border-radius: 10px; background: #10141c; text-align: center; }
-.codaris-home-diagram span { color: #59e4eb; font: 700 11px "Space Mono", monospace; }
-.codaris-home-diagram strong { font-size: 13px; }
-.codaris-home-diagram i { color: #59e4eb; font-size: 20px; font-style: normal; }
-@media (max-width: 520px) { .codaris-home-diagram { gap: 5px; } .codaris-home-diagram div { min-width: 0; padding: 13px 6px; } .codaris-home-diagram strong { font-size: 11px; } }
+.codaris-home-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  max-width: 100%;
+  color: #f5f7fa;
+  text-decoration: none;
+  font: 800 clamp(28px, 4vw, 42px)/1 Arial, Helvetica, sans-serif;
+  letter-spacing: 0.109em;
+  white-space: nowrap;
+}
+
+.codaris-home-brand__emblem {
+  display: block;
+  flex: 0 0 auto;
+  width: 1.545em;
+  height: 1.545em;
+  color: #59e4eb;
+}
+
+.codaris-home-diagram {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.codaris-home-diagram div {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 13px 6px;
+  border: 1px solid #252b36;
+  border-radius: 10px;
+  background: #10141c;
+  text-align: center;
+  animation: codarisStepPulse 7.2s ease-in-out infinite;
+}
+
+.codaris-home-diagram div::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 1px solid #59e4eb;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at 50% 0, rgba(89, 228, 235, 0.16), transparent 75%);
+  opacity: 0.12;
+  content: '';
+  pointer-events: none;
+  animation: codarisStepGlow 7.2s ease-in-out infinite;
+  animation-delay: inherit;
+}
+
+.codaris-home-diagram div:nth-of-type(2) {
+  animation-delay: 2.4s;
+}
+
+.codaris-home-diagram div:nth-of-type(3) {
+  animation-delay: 4.8s;
+}
+
+.codaris-home-diagram span {
+  color: #59e4eb;
+  font: 700 11px 'Space Mono', monospace;
+}
+
+.codaris-home-diagram strong {
+  color: #59e4eb;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.015em;
+}
+
+.codaris-home-diagram i {
+  display: inline-block;
+  color: #59e4eb;
+  font-size: 20px;
+  font-style: normal;
+  opacity: 0.55;
+  animation: codarisConnectionFlow 7.2s ease-in-out infinite;
+  animation-delay: 1.2s;
+}
+
+.codaris-home-diagram i:nth-of-type(2) {
+  animation-delay: 3.6s;
+}
+
+@keyframes codarisStepPulse {
+  0%, 32%, 100% { transform: translateY(0); }
+  10%, 22% { transform: translateY(-4px); }
+}
+
+@keyframes codarisStepGlow {
+  0%, 32%, 100% { opacity: 0.12; }
+  10%, 22% { opacity: 0.85; }
+}
+
+@keyframes codarisConnectionFlow {
+  0%, 32%, 100% { transform: translateX(0); opacity: 0.55; }
+  10%, 22% { transform: translateX(3px); opacity: 1; }
+}
+
+@media (min-width: 768px) {
+  .codaris-home-diagram { gap: clamp(8px, 2vw, 24px); }
+  .codaris-home-diagram div { min-width: 78px; padding: 18px 10px; }
+  .codaris-home-diagram strong { font-size: 13px; }
+}
 
 .system-panel {
   position: relative;
@@ -1403,6 +1502,10 @@ a.system-panel__button--quiet:hover {
   color: var(--pdm-logo-pdm);
 }
 
+:host-context(.theme-resolved-light) .codaris-home-brand {
+  color: #111827;
+}
+
 :host-context(.theme-resolved-light) .home-systems__header p:last-child {
   color: #5f6673;
 }
@@ -2195,6 +2298,13 @@ a.system-panel__button--quiet:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .codaris-home-diagram div,
+  .codaris-home-diagram div::before,
+  .codaris-home-diagram i {
+    animation: none;
+    transform: none;
+  }
+
   .home-hero__grid,
   .home-hero__signal,
   .home-hero__portrait-frame,
@@ -2227,3 +2337,13 @@ a.system-panel__button--quiet:hover {
     transform: none;
   }
 }
+
+.stervox-home-summary { max-width: 580px; color: #a8b0bd; font-size: 16px; line-height: 1.7; }
+.system-panel--stervox app-stervox-brand { width: 100%; max-width: 100%; }
+
+.stervox-home-diagram { min-width: 0; pointer-events: auto; }
+:host-context(.theme-resolved-light) .stervox-home-summary { color: #5f6673; }
+
+.system-panel--stervox .stervox-home-brand { width: clamp(180px, 26vw, 260px); max-width: 100%; }
+.stervox-home-diagram app-stervox-architecture { width: min(100%, 680px); }
+.system-panel--stervox .system-panel__button { min-height: 44px; }

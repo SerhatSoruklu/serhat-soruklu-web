@@ -67,7 +67,12 @@
                 <dl>
                   <dt>{{ fact.label }}</dt>
                   <dd>
-                    @if (fact.url) {
+                    @if (fact.url?.startsWith('/')) {
+                      <a [routerLink]="fact.url">
+                        {{ fact.value }}
+                        <span aria-hidden="true">→</span>
+                      </a>
+                    } @else if (fact.url) {
                       <a
                         [href]="fact.url"
                         target="_blank"
@@ -131,8 +136,8 @@
           <h2 id="press-photography-title">Founder photography</h2>
         </div>
         <p>
-          A high-resolution portrait and clearly labelled AI-assisted founder photographs for
-          reference and media enquiries.
+          The original selfie and clearly labelled AI-assisted office portraits, with native PNG
+          downloads and optional 8K exports.
         </p>
       </header>
 
@@ -145,15 +150,24 @@
                   class="press-asset-card__preview"
                   [class.press-asset-card__preview--portrait]="asset.height > asset.width"
                 >
-                  <img
-                    [src]="asset.src"
-                    [alt]="asset.alt"
-                    [attr.width]="asset.width"
-                    [attr.height]="asset.height"
-                    loading="lazy"
-                    decoding="async"
-                    fetchpriority="low"
-                  />
+                  <picture>
+                    <source
+                      type="image/avif"
+                      [srcset]="asset.avifSrcset"
+                      sizes="(min-width: 1280px) 420px, (min-width: 768px) 50vw, calc(100vw - 40px)"
+                    />
+                    <img
+                      [src]="asset.previewSrc"
+                      [srcset]="asset.webpSrcset"
+                      sizes="(min-width: 1280px) 420px, (min-width: 768px) 50vw, calc(100vw - 40px)"
+                      [alt]="asset.alt"
+                      [attr.width]="asset.width"
+                      [attr.height]="asset.height"
+                      loading="lazy"
+                      decoding="async"
+                      fetchpriority="low"
+                    />
+                  </picture>
                   <span>{{ asset.assetLabel }}</span>
                 </div>
                 <figcaption>
@@ -164,6 +178,9 @@
                   </p>
                   @if (asset.provenance) {
                     <p class="press-asset-card__provenance">{{ asset.provenance }}</p>
+                  }
+                  @if (asset.export8k; as export8k) {
+                    <p>8K upscale · 7680 × 3545 · PNG · {{ export8k.fileSize }}</p>
                   }
                 </figcaption>
               </figure>
@@ -180,9 +197,19 @@
                   <span aria-hidden="true">↗</span>
                 </a>
                 <a [href]="asset.src" [attr.download]="asset.fileName">
-                  <span>Download image</span>
+                  <span>Download native PNG</span>
                   <span aria-hidden="true">↓</span>
                 </a>
+                @if (asset.export8k; as export8k) {
+                  <a
+                    [href]="export8k.src"
+                    [attr.download]="export8k.fileName"
+                    [attr.aria-label]="'Download 8K upscale — ' + asset.title + ', 7680 by 3545 pixels, ' + export8k.fileSize"
+                  >
+                    <span>Download 8K upscale</span>
+                    <span aria-hidden="true">↓</span>
+                  </a>
+                }
               </div>
             </article>
           </li>
@@ -190,11 +217,11 @@
       </ul>
 
       <p class="press-permission-note">
-        The workstation images are AI-assisted edited images of Serhat Soruklu, created using
-        supplied portrait and real-workspace photographic references. The images have been
-        AI-generated or modified and should not be treated as unaltered photographs. Both files
-        retain embedded Content Credentials identifying trained algorithmic media created with
-        gpt-image 2.0. For publication or media-use permissions, contact Serhat.
+        The original selfie is an unedited photograph. The office portraits were created with
+        OpenAI’s built-in image generation using the supplied selfie and real office background;
+        they are AI-assisted composites. Native PNGs retain the generated output. The 8K files
+        are enlarged exports and add no native detail. For publication or media-use permissions,
+        contact Serhat.
       </p>
     </div>
   </section>
@@ -207,7 +234,7 @@
       <header class="press-heading press-heading--wide">
         <div>
           <p class="press-eyebrow">05 / SYSTEM MEDIA</p>
-          <h2 id="press-coupyn-media-title">Coupyn and CODARIS media assets</h2>
+          <h2 id="press-coupyn-media-title">Coupyn, Stervox and CODARIS media assets</h2>
         </div>
         <p>Current public system artwork already maintained by this site.</p>
       </header>
@@ -216,10 +243,10 @@
         <figure>
           <div class="press-coupyn-asset__preview">
             <img
-              [src]="content.coupynMedia.previewSrc"
-              [alt]="content.coupynMedia.previewAlt"
-              [attr.width]="content.coupynMedia.previewWidth"
-              [attr.height]="content.coupynMedia.previewHeight"
+              [src]="systemMedia().coupynMedia.previewSrc"
+              [alt]="systemMedia().coupynMedia.previewAlt"
+              [attr.width]="systemMedia().coupynMedia.previewWidth"
+              [attr.height]="systemMedia().coupynMedia.previewHeight"
               loading="lazy"
               decoding="async"
               fetchpriority="low"
@@ -227,11 +254,11 @@
           </div>
           <figcaption>
             <p class="press-eyebrow">CURRENT FIRST-PARTY ARTWORK</p>
-            <h3>{{ content.coupynMedia.title }}</h3>
-            <p>{{ content.coupynMedia.description }}</p>
+            <h3>{{ systemMedia().coupynMedia.title }}</h3>
+            <p>{{ systemMedia().coupynMedia.description }}</p>
 
             <ul class="press-format-list" aria-label="Available Coupyn media formats">
-              @for (format of content.coupynMedia.formats; track format.format) {
+              @for (format of systemMedia().coupynMedia.formats; track format.format) {
                 <li>
                   <div>
                     <strong>{{ format.format }}</strong>
@@ -265,15 +292,34 @@
           </figcaption>
         </figure>
       </article>
+      <article class="press-coupyn-asset press-stervox-asset">
+        <figure>
+          <div class="press-coupyn-asset__preview"><img [src]="systemMedia().stervoxMedia.previewSrc" [alt]="systemMedia().stervoxMedia.previewAlt" width="1200" height="630" loading="lazy" decoding="async" fetchpriority="low" /></div>
+          <figcaption>
+            <p class="press-eyebrow">STERVOX FIRST-PARTY ARTWORK</p>
+            <h3>{{ systemMedia().stervoxMedia.title }}</h3>
+            <p>{{ systemMedia().stervoxMedia.description }}</p>
+            <ul class="press-format-list" aria-label="Available STERVOX media formats">
+              @for (format of systemMedia().stervoxMedia.formats; track format.format) {
+                <li><div><strong>{{ format.format }}</strong><span>{{ format.dimensions }} · {{ format.fileSize }}</span></div>
+                  @if (format.openInNewTab) {
+                    <div class="press-format-list__actions"><a [href]="format.path" target="_blank" rel="noopener noreferrer"><span>{{ format.action }}</span><span aria-hidden="true">↗</span></a><a [href]="format.path" [attr.download]="format.fileName"><span>Download PNG</span><span aria-hidden="true">↓</span></a></div>
+                  } @else { <a [href]="format.path" [attr.download]="format.fileName"><span>{{ format.action }}</span><span aria-hidden="true">↓</span></a> }
+                </li>
+              }
+            </ul>
+          </figcaption>
+        </figure>
+      </article>
       <article class="press-coupyn-asset press-codaris-asset">
         <figure>
-          <div class="press-coupyn-asset__preview"><img [src]="content.codarisMedia.previewSrc" [alt]="content.codarisMedia.previewAlt" width="1200" height="630" loading="lazy" decoding="async" fetchpriority="low" /></div>
+          <div class="press-coupyn-asset__preview"><img [src]="systemMedia().codarisMedia.previewSrc" [alt]="systemMedia().codarisMedia.previewAlt" width="1200" height="630" loading="lazy" decoding="async" fetchpriority="low" /></div>
           <figcaption>
             <p class="press-eyebrow">CODARIS FIRST-PARTY ARTWORK</p>
-            <h3>{{ content.codarisMedia.title }}</h3>
-            <p>{{ content.codarisMedia.description }}</p>
+            <h3>{{ systemMedia().codarisMedia.title }}</h3>
+            <p>{{ systemMedia().codarisMedia.description }}</p>
             <ul class="press-format-list" aria-label="Available CODARIS media formats">
-              @for (format of content.codarisMedia.formats; track format.format) {
+              @for (format of systemMedia().codarisMedia.formats; track format.format) {
                 <li><div><strong>{{ format.format }}</strong><span>{{ format.dimensions }} · {{ format.fileSize }}</span></div>
                   @if (format.openInNewTab) {
                     <div class="press-format-list__actions"><a [href]="format.path" target="_blank" rel="noopener noreferrer"><span>{{ format.action }}</span><span aria-hidden="true">↗</span></a><a [href]="format.path" [attr.download]="format.fileName"><span>Download PNG</span><span aria-hidden="true">↓</span></a></div>
@@ -291,13 +337,13 @@
     class="press-section press-coupyn-overview layout-section"
     aria-labelledby="press-coupyn-title"
   >
-    <div class="press-frame press-coupyn-overview__inner">
+    <div class="press-frame press-platform-overview__inner">
       <header class="press-heading">
         <p class="press-eyebrow">06 / PLATFORM</p>
         <h2 id="press-coupyn-title">What Coupyn is</h2>
       </header>
 
-      <div class="press-coupyn-overview__content">
+      <div class="press-platform-overview__content">
         <p>{{ content.coupyn.description }}</p>
         <ul class="press-technology-list" aria-label="Coupyn technical context">
           @for (technology of content.coupyn.technicalContext; track technology) {
@@ -324,11 +370,39 @@
     </div>
   </section>
 
+  <section
+    class="press-section press-stervox-overview layout-section"
+    aria-labelledby="press-stervox-title"
+  >
+    <div class="press-frame press-platform-overview__inner">
+      <header class="press-heading">
+        <p class="press-eyebrow">07 / FINANCIAL TECHNOLOGY</p>
+        <h2 id="press-stervox-title">What Stervox is</h2>
+      </header>
+      <div class="press-platform-overview__content">
+        <p>{{ content.stervox.description }}</p>
+        <ul class="press-technology-list" aria-label="Stervox technical context">
+          @for (technology of content.stervox.technicalContext; track technology) {
+            <li>{{ technology }}</li>
+          }
+        </ul>
+        <div class="press-actions">
+          <a class="press-action press-action--primary" routerLink="/systems/stervox">
+            <span>Explore Stervox system</span><span aria-hidden="true">→</span>
+          </a>
+          <a class="press-action" href="https://stervox.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Stervox in a new tab">
+            <span>Open Stervox</span><span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="press-section press-systems layout-section" aria-labelledby="press-systems-title">
     <div class="press-frame">
       <header class="press-heading press-heading--wide">
         <div>
-          <p class="press-eyebrow">07 / SELECTED SYSTEMS</p>
+          <p class="press-eyebrow">08 / SELECTED SYSTEMS</p>
           <h2 id="press-systems-title">Selected technical work</h2>
         </div>
         <p>A concise reference index of production systems and public technical experiments.</p>
@@ -359,7 +433,7 @@
     <div class="press-frame">
       <header class="press-heading press-heading--wide">
         <div>
-          <p class="press-eyebrow">08 / PUBLIC REFERENCES</p>
+          <p class="press-eyebrow">09 / PUBLIC REFERENCES</p>
           <h2 id="press-verification-title">Public reference links</h2>
         </div>
         <p>

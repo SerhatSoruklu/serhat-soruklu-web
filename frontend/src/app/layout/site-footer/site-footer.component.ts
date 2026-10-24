@@ -76,6 +76,7 @@ export class SiteFooterComponent {
 
   readonly systemLinks: FooterLink[] = [
     { label: 'Coupyn', path: '/systems/coupyn' },
+    { label: 'Stervox · Coming soon', path: '/systems/stervox' },
     { label: 'ChatPDM', path: '/systems/chatpdm' },
     { label: 'CODARIS', path: '/systems/codaris' },
     { label: 'DBF', path: '/systems/deterministic-boundary-firewall' },

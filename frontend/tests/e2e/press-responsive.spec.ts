@@ -32,32 +32,44 @@ const seamViewports = [
 
 const pressAssets = [
   {
-    height: 743,
-    path: '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png',
+    height: 1533,
+    path: '/assets/portraits/serhat-soruklu-real-selfie.png',
+    previewPath: '/assets/portraits/serhat-soruklu-real-selfie-1022.webp',
     type: /^image\/png/,
-    width: 825,
+    width: 1022,
   },
   {
-    height: 797,
-    path: '/assets/home/serhat-soruklu-workstation-light.png',
+    height: 852,
+    path: '/assets/portraits/serhat-soruklu-office-light-native.png',
+    previewPath: '/assets/portraits/serhat-soruklu-office-light-1846.webp',
     type: /^image\/png/,
-    width: 1973,
+    width: 1846,
   },
   {
-    height: 797,
-    path: '/assets/home/serhat-soruklu-workstation-dark.png',
+    height: 852,
+    path: '/assets/portraits/serhat-soruklu-office-dark-native.png',
+    previewPath: '/assets/portraits/serhat-soruklu-office-dark-1846.webp',
     type: /^image\/png/,
-    width: 1973,
+    width: 1846,
   },
   {
     height: 630,
     path: '/assets/social/serhat-soruklu-systems-coupyn-og.png',
+    previewPath: '/assets/social/serhat-soruklu-systems-coupyn-og.png',
+    type: /^image\/png/,
+    width: 1200,
+  },
+  {
+    height: 630,
+    path: '/assets/social/serhat-soruklu-systems-stervox-og.png',
+    previewPath: '/assets/social/serhat-soruklu-systems-stervox-og.png',
     type: /^image\/png/,
     width: 1200,
   },
   {
     height: 630,
     path: '/assets/social/serhat-soruklu-systems-codaris-og.png',
+    previewPath: '/assets/social/serhat-soruklu-systems-codaris-og.png',
     type: /^image\/png/,
     width: 1200,
   },
@@ -65,16 +77,24 @@ const pressAssets = [
 
 const downloadableAssets = [
   {
-    fileName: 'serhat-soruklu-coupyn-founder-natural-portrait.png',
-    path: '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png',
+    fileName: 'serhat-soruklu-real-selfie.png',
+    path: '/assets/portraits/serhat-soruklu-real-selfie.png',
   },
   {
-    fileName: 'serhat-soruklu-workstation-light.png',
-    path: '/assets/home/serhat-soruklu-workstation-light.png',
+    fileName: 'serhat-soruklu-office-light-native.png',
+    path: '/assets/portraits/serhat-soruklu-office-light-native.png',
   },
   {
-    fileName: 'serhat-soruklu-workstation-dark.png',
-    path: '/assets/home/serhat-soruklu-workstation-dark.png',
+    fileName: 'serhat-soruklu-office-light-8k.png',
+    path: '/assets/portraits/serhat-soruklu-office-light-8k.png',
+  },
+  {
+    fileName: 'serhat-soruklu-office-dark-native.png',
+    path: '/assets/portraits/serhat-soruklu-office-dark-native.png',
+  },
+  {
+    fileName: 'serhat-soruklu-office-dark-8k.png',
+    path: '/assets/portraits/serhat-soruklu-office-dark-8k.png',
   },
   {
     fileName: 'serhat-soruklu-systems-coupyn-og.png',
@@ -83,6 +103,14 @@ const downloadableAssets = [
   {
     fileName: 'serhat-soruklu-systems-coupyn-og.svg',
     path: '/assets/social/serhat-soruklu-systems-coupyn-og.svg',
+  },
+  {
+    fileName: 'serhat-soruklu-systems-stervox-og.png',
+    path: '/assets/social/serhat-soruklu-systems-stervox-og.png',
+  },
+  {
+    fileName: 'serhat-soruklu-systems-stervox-og.svg',
+    path: '/assets/social/serhat-soruklu-systems-stervox-og.svg',
   },
   {
     fileName: 'serhat-soruklu-systems-codaris-og.png',
@@ -98,6 +126,7 @@ const internalRoutes = [
   '/about',
   '/contact',
   '/systems/coupyn',
+  '/systems/stervox',
   '/systems/chatpdm',
   '/systems/codaris',
   '/systems/deterministic-boundary-firewall',
@@ -107,6 +136,11 @@ const internalRoutes = [
 const verificationLinks = [
   {
     href: 'https://find-and-update.company-information.service.gov.uk/company/16939840',
+    name: 'Companies House',
+    rel: 'noopener noreferrer',
+  },
+  {
+    href: 'https://find-and-update.company-information.service.gov.uk/company/17514320',
     name: 'Companies House',
     rel: 'noopener noreferrer',
   },
@@ -128,6 +162,11 @@ const verificationLinks = [
   {
     href: 'https://coupyn.com/',
     name: 'Coupyn',
+    rel: 'noopener noreferrer',
+  },
+  {
+    href: 'https://stervox.com/',
+    name: 'Stervox',
     rel: 'noopener noreferrer',
   },
   {
@@ -289,11 +328,11 @@ test.describe('Press and media page', () => {
     await expect(pressPage).toContainText('first-party reference material');
 
     await expect(page.getByRole('heading', { level: 2, name: 'Quick facts' })).toBeVisible();
-    await expect(page.locator('.press-fact-sheet')).toHaveCount(3);
+    await expect(page.locator('.press-fact-sheet')).toHaveCount(4);
     const factDefinitions = page.locator('.press-fact-sheet__facts > dl');
-    await expect(factDefinitions).toHaveCount(23);
-    await expect(factDefinitions.locator(':scope > dt')).toHaveCount(23);
-    await expect(factDefinitions.locator(':scope > dd')).toHaveCount(23);
+    await expect(factDefinitions).toHaveCount(32);
+    await expect(factDefinitions.locator(':scope > dt')).toHaveCount(32);
+    await expect(factDefinitions.locator(':scope > dd')).toHaveCount(32);
     await expect(page.locator('.press-fact-sheet').first()).toContainText(
       'Osmancık, Çorum, Turkey',
     );
@@ -301,7 +340,7 @@ test.describe('Press and media page', () => {
     await expect(page.locator('.press-fact-sheet').nth(1)).toContainText(
       'Roughly 1 million company pages',
     );
-    await expect(page.locator('.press-fact-sheet').nth(2)).toContainText('CODARIS');
+    await expect(page.locator('.press-fact-sheet').nth(2)).toContainText('STERVOX');
 
     await expect(
       page.getByRole('heading', { level: 2, name: 'Approved biographies' }),
@@ -319,18 +358,19 @@ test.describe('Press and media page', () => {
     ).toBeVisible();
     await expect(page.locator('.press-asset-card')).toHaveCount(3);
     await expect(page.locator('.press-asset-card h3')).toHaveText([
-      'Portrait',
+      'Original selfie',
       'Founder workstation visual — light',
       'Founder workstation visual — dark',
     ]);
     await expect(page.locator('.press-asset-card__preview > span')).toHaveText([
-      'PORTRAIT',
+      'ORIGINAL PHOTOGRAPH',
       'AI-ASSISTED PHOTOGRAPH',
       'AI-ASSISTED PHOTOGRAPH',
     ]);
     await expect(page.locator('.press-asset-card__provenance')).toHaveText([
-      'AI-assisted edited image of Serhat Soruklu, created using supplied portrait and real-workspace photographic references. The image has been AI-generated or modified and should not be treated as an unaltered photograph.',
-      'AI-assisted edited image of Serhat Soruklu, created using supplied portrait and real-workspace photographic references. The image has been AI-generated or modified and should not be treated as an unaltered photograph.',
+      'The supplied original selfie, preserved unchanged. The download is the original PNG; previews are optimised display copies.',
+      'AI-assisted office composite, created on 24 October 2026 with OpenAI image generation using Serhat’s original selfie and real workspace. Native output: 1846 × 852; not an unaltered photograph.',
+      'AI-assisted office composite, created on 24 October 2026 with OpenAI image generation using Serhat’s original selfie and real workspace. Native output: 1846 × 852; not an unaltered photograph.',
     ]);
     await expect(page.locator('.press-asset-card img').nth(1)).toHaveAttribute(
       'alt',
@@ -341,13 +381,13 @@ test.describe('Press and media page', () => {
       'AI-assisted image of Serhat Soruklu at his workstation, supplied for the dark theme.',
     );
     await expect(page.locator('.press-permission-note')).toContainText(
-      'The workstation images are AI-assisted edited images of Serhat Soruklu, created using supplied portrait and real-workspace photographic references. The images have been AI-generated or modified and should not be treated as unaltered photographs.',
+      'The original selfie is an unedited photograph. The office portraits were created with OpenAI’s built-in image generation using the supplied selfie and real office background; they are AI-assisted composites.',
     );
     await expect(
-      page.getByRole('heading', { level: 2, name: 'Coupyn and CODARIS media assets' }),
+      page.getByRole('heading', { level: 2, name: 'Coupyn, Stervox and CODARIS media assets' }),
     ).toBeVisible();
-    await expect(page.locator('.press-coupyn-asset')).toHaveCount(2);
-    await expect(page.locator('.press-format-list > li')).toHaveCount(4);
+    await expect(page.locator('.press-coupyn-asset')).toHaveCount(3);
+    await expect(page.locator('.press-format-list > li')).toHaveCount(6);
     await waitForPressImages(page);
 
     const renderedImages = await page.locator('.press-page img').evaluateAll((images) =>
@@ -372,11 +412,12 @@ test.describe('Press and media page', () => {
     );
 
     for (const asset of pressAssets) {
-      const image = renderedImages.find(({ path }) => path === asset.path);
+      const image = renderedImages.find(({ path }) => path === asset.previewPath);
 
       expect(image, asset.path).toBeDefined();
-      expect(image?.naturalWidth).toBe(asset.width);
-      expect(image?.naturalHeight).toBe(asset.height);
+      expect(image?.naturalWidth).toBeGreaterThan(0);
+      expect(image?.naturalHeight).toBeGreaterThan(0);
+      expect(Math.abs((image?.naturalWidth ?? 0) / (image?.naturalHeight ?? 1) - asset.width / asset.height)).toBeLessThan(0.02);
       expect(image?.width).toBe(String(asset.width));
       expect(image?.height).toBe(String(asset.height));
       expect(image?.loading).toBe('lazy');
@@ -414,10 +455,13 @@ test.describe('Press and media page', () => {
     }
 
     await expect(page.getByRole('heading', { level: 2, name: 'What Coupyn is' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: 'What Stervox is' })).toBeVisible();
+    await expect(page.locator('.press-stervox-overview').getByRole('link', { name: 'Explore Stervox system' })).toHaveAttribute('href', '/systems/stervox');
+    await expect(page.locator('.press-stervox-overview').getByRole('link', { name: 'Open Stervox in a new tab' })).toHaveAttribute('href', 'https://stervox.com/');
     await expect(page.locator('.press-coupyn-overview')).toContainText(
       'Coupyn is a coupon, referral and affiliate intelligence platform',
     );
-    await expect(page.locator('.press-technology-list > li')).toHaveText([
+    await expect(page.locator('.press-coupyn-overview .press-technology-list > li')).toHaveText([
       'Angular',
       'Node.js',
       'Express',
@@ -429,9 +473,10 @@ test.describe('Press and media page', () => {
     await expect(
       page.getByRole('heading', { level: 2, name: 'Selected technical work' }),
     ).toBeVisible();
-    await expect(page.locator('.press-system-card')).toHaveCount(5);
+    await expect(page.locator('.press-system-card')).toHaveCount(6);
     await expect(page.locator('.press-system-card h3')).toHaveText([
       'Coupyn',
+      'Stervox',
       'ChatPDM',
       'CODARIS',
       'Deterministic Boundary Firewall',
@@ -482,6 +527,7 @@ test.describe('Press and media page', () => {
         .evaluateAll((links) => links.map((link) => link.getAttribute('href'))),
     ).toEqual([
       '/systems/coupyn',
+      '/systems/stervox',
       '/systems/chatpdm',
       '/systems/codaris',
       '/systems/deterministic-boundary-firewall',
@@ -650,7 +696,7 @@ test.describe('Press and media page', () => {
           card.scrollHeight,
           `${viewport.name}: asset card ${cardIndex + 1} vertical content`,
         ).toBeLessThanOrEqual(card.clientHeight + 1);
-        expect(card.actions).toHaveLength(2);
+        expect(card.actions).toHaveLength(cardIndex === 0 ? 2 : 3);
         for (const [actionIndex, action] of card.actions.entries()) {
           expect(
             action.top,
@@ -679,7 +725,7 @@ test.describe('Press and media page', () => {
       }
 
       await expect(page.locator('.press-fact-sheet dt')).not.toHaveCount(0);
-      await expect(page.locator('.press-asset-card__actions a')).toHaveCount(6);
+      await expect(page.locator('.press-asset-card__actions a')).toHaveCount(8);
       await expect(page.locator('.press-verification-list a')).toHaveCount(
         verificationLinks.length,
       );
@@ -944,7 +990,7 @@ test.describe('Press and media page', () => {
     await expectVisibleKeyboardFocus(firstAssetActions.nth(1), 'first asset download action');
     await expect(firstAssetActions.nth(1)).toHaveAttribute(
       'download',
-      'serhat-soruklu-coupyn-founder-natural-portrait.png',
+      'serhat-soruklu-real-selfie.png',
     );
 
     await page.locator('.press-system-card a').last().focus();
@@ -1047,7 +1093,7 @@ test.describe('Press and media page', () => {
           card.scrollHeight,
           `${viewport.name}: 200% asset card ${cardIndex + 1} vertical content`,
         ).toBeLessThanOrEqual(card.clientHeight + 1);
-        expect(card.actions).toHaveLength(2);
+        expect(card.actions).toHaveLength(cardIndex === 0 ? 2 : 3);
         for (const [actionIndex, action] of card.actions.entries()) {
           expect(
             action.top,

@@ -1,0 +1,44 @@
+<section class="activity" aria-labelledby="github-activity-title" data-testid="github-activity">
+  <header class="activity__heading">
+    <div>
+      <p class="activity__eyebrow">THE WORK, DAY BY DAY / 2023–{{ years.at(-1)!.year }}</p>
+      <h2 id="github-activity-title">Small steps. A lasting body of work.</h2>
+      <p>Real GitHub activity across public work and private builds. Each square is a day of contributions: commits, pull requests, issues and reviews. The history shows the rhythm; the repositories explain the substance.</p>
+    </div>
+    <a [href]="snapshot.source" target="_blank" rel="noopener noreferrer">Verify on GitHub ↗</a>
+  </header>
+  <div class="activity__years" aria-label="Select contribution year">
+    @for (year of years; track year.year) {
+      <button type="button" [attr.aria-pressed]="selectedYear() === year.year" aria-controls="contribution-chart" (click)="chooseYear(year.year)">
+        <span class="activity__year-top"><strong>{{ year.year }}</strong><span>{{ year.total | number }} contributions</span></span>
+        <span class="activity__bar" aria-hidden="true"><span [style.width.%]="year.total / maxTotal * 100"></span></span>
+      </button>
+    }
+  </div>
+  <div id="contribution-chart" class="activity__chart">
+    <div class="activity__summary">
+      <h3>{{ current().total | number }} contributions in {{ current().year }}</h3>
+      <span>{{ activeDays() }} active days</span>
+    </div>
+    <p class="activity__day" aria-live="polite" aria-atomic="true">{{ dayDescription() }}</p>
+    <fieldset class="activity__scroll">
+      <legend class="visually-hidden">Daily contribution calendar; scroll horizontally on smaller screens. Arrow keys move between focused days.</legend>
+      <div class="activity__months" aria-hidden="true">
+        @for (month of calendar().months; track month.label) { <span [style.grid-column]="month.column">{{ month.label }}</span> }
+      </div>
+      <div class="activity__grid">
+        @for (padding of calendar().padding; track padding) { <span aria-hidden="true"></span> }
+        @for (day of calendar().days; track day.date) {
+          <button type="button" class="activity__cell" [class]="'activity__cell activity__cell--' + day.level" [attr.data-date]="day.date" [attr.aria-label]="day.label" [attr.tabindex]="focusedDate() === day.date ? 0 : -1" [appTooltip]="day.label" appTooltipPlacement="top" (mouseenter)="selectedDate.set(day.date)" (focus)="selectedDate.set(day.date)" (click)="selectedDate.set(day.date)" (keydown)="navigateDay($event, day.date)"></button>
+        }
+      </div>
+    </fieldset>
+    <div class="activity__legend" aria-label="Darker to brighter green indicates fewer to more contributions">
+      <span>Less</span><i class="activity__cell--0"></i><i class="activity__cell--1"></i><i class="activity__cell--2"></i><i class="activity__cell--3"></i><i class="activity__cell--4"></i><span>More</span>
+    </div>
+  </div>
+  <footer class="activity__note">
+    <p>Verified snapshot · {{ snapshot.fetchedAt | date:'d MMMM y':'UTC' }}. Private contributions appear only as aggregate activity; source code stays private. Counts reflect GitHub’s contribution rules, rather than every commit ever made.</p>
+    <p>{{ current().commitContributions | number }} commit contributions reported separately · {{ current().privateContributions | number }} private contributions in {{ current().year }}. The private total is not broken down by contribution type.</p>
+  </footer>
+</section>

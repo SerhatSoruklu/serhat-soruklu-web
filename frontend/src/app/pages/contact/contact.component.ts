@@ -10,7 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
@@ -189,6 +189,13 @@ export class ContactComponent {
       icon: 'contact-topic-shield'
     },
     {
+      label: 'Stervox',
+      note: 'The financial platform, VOXCORE, partnerships and investment conversations.',
+      messageHint: '20 to 2000 characters. Include your interest, relevant experience and a useful next step.',
+      messagePlaceholder: 'Tell me about your interest in Stervox, a potential collaboration or an investment conversation.',
+      icon: 'contact-topic-shield'
+    },
+    {
       label: 'ChatPDM',
       note: 'Deterministic governance, bounded language, and concept control.',
       messageHint: '20 to 2000 characters. Mention the concept boundary, refusal behavior, or drift risk.',
@@ -228,6 +235,10 @@ export class ContactComponent {
   });
 
   constructor() {
+    const initialTopic = inject(ActivatedRoute).snapshot.queryParamMap.get('topic');
+    if (this.topics.some((topic) => topic.label === initialTopic)) {
+      this.contactForm.controls.topic.setValue(initialTopic ?? '');
+    }
     this.registerIcons();
     this.clearServerErrorsOnEdit();
   }

@@ -1,0 +1,347 @@
+:host {
+  display: block;
+}
+.launch-section {
+  padding: 36px 0 56px;
+}
+.launch-panel {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  gap: 36px;
+  padding: 24px 20px;
+  overflow: hidden;
+  border: 1px solid #252b36;
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse at 85% 15%, rgba(34, 199, 240, 0.075), transparent 52%),
+    linear-gradient(130deg, #10141c, #07090d 76%);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
+}
+.launch-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  color: #22c7f0;
+  opacity: 0.13;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .launch-atmosphere g {
+    animation: launchCurrent 20s ease-in-out infinite alternate;
+  }
+}
+.launch-copy,
+.launch-countdown {
+  min-width: 0;
+}
+.launch-eyebrow,
+.launch-countdown__label,
+.clock-label {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+}
+.launch-eyebrow {
+  margin: 0 0 24px;
+  color: #d6a84f;
+  font-size: 10px;
+  line-height: 1.7;
+}
+.launch-brand {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+}
+h2 {
+  margin: 28px 0 0;
+  color: #f5f7fa;
+  font:
+    600 clamp(30px, 4vw, 44px)/1.15 'Sora',
+    Inter,
+    sans-serif;
+  letter-spacing: -0.04em;
+}
+.launch-intro {
+  max-width: 470px;
+  margin: 20px 0 0;
+  color: #a8b0bd;
+  font-size: 16px;
+  line-height: 1.8;
+}
+.launch-region {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 450px;
+  margin: 24px 0 0;
+  color: #a8b0bd;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.launch-region img {
+  flex: 0 0 auto;
+  border-radius: 3px;
+  border: 1px solid #252b36;
+}
+.launch-region strong {
+  color: #f5f7fa;
+}
+.launch-explore {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 44px;
+  margin-top: 24px;
+  color: #f0d58c;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+.launch-explore:hover {
+  color: #d6a84f;
+}
+.launch-explore:focus-visible {
+  outline: 2px solid #d6a84f;
+  outline-offset: 5px;
+  border-radius: 4px;
+}
+.launch-countdown {
+  align-self: center;
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+}
+.launch-app-icon {
+  position: relative;
+  isolation: isolate;
+  width: 112px;
+  height: 112px;
+  margin: 0 auto 24px;
+}
+.launch-app-icon img {
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(34, 199, 240, 0.2);
+  border-radius: 25px;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.24);
+}
+.launch-app-orbit {
+  position: absolute;
+  inset: -12px;
+  z-index: -1;
+  border: 1px solid rgba(34, 199, 240, 0.12);
+  border-radius: 36px;
+  transform: rotate(12deg);
+}
+.launch-countdown__label {
+  margin: 0;
+  color: #a8b0bd;
+  font-size: 10px;
+  line-height: 1.7;
+}
+.launch-date {
+  margin: 8px 0 20px;
+  color: #f5f7fa;
+  font-size: 18px;
+  font-weight: 600;
+}
+.launch-clock {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+.clock-unit {
+  min-width: 0;
+}
+.clock-face {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: clamp(68px, 9vw, 110px);
+  overflow: hidden;
+  border: 1px solid #252b36;
+  border-radius: 9px;
+  background: #10141c;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+.clock-digit {
+  position: relative;
+  flex: 0 0 0.62em;
+  height: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
+  color: #f5f7fa;
+  font:
+    700 clamp(32px, 5vw, 52px)/1 'Space Mono',
+    monospace;
+  font-variant-numeric: tabular-nums;
+}
+.clock-digit > span {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  inset: 0;
+}
+.clock-previous {
+  visibility: hidden;
+}
+/* Stervox's money odometer: independent glyph columns, a one-em journey,
+   soft opacity and the original one-second easing. No split planes or centre rule. */
+@media (prefers-reduced-motion: no-preference) {
+  .clock-digit--changed.clock-digit--even .clock-value {
+    animation: digitInEven 1000ms cubic-bezier(0.2, 0.65, 0.3, 1) both;
+  }
+  .clock-digit--changed.clock-digit--odd .clock-value {
+    animation: digitInOdd 1000ms cubic-bezier(0.2, 0.65, 0.3, 1) both;
+  }
+  .clock-digit--changed.clock-digit--even .clock-previous {
+    animation: digitOutEven 1000ms cubic-bezier(0.2, 0.65, 0.3, 1) both;
+  }
+  .clock-digit--changed.clock-digit--odd .clock-previous {
+    animation: digitOutOdd 1000ms cubic-bezier(0.2, 0.65, 0.3, 1) both;
+  }
+}
+.clock-label {
+  display: block;
+  margin-top: 10px;
+  color: #a8b0bd;
+  font-size: 8px;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+.launch-milestone {
+  margin: 18px 0 0;
+  color: #a8b0bd;
+  font-size: 11px;
+  line-height: 1.7;
+}
+.launch-stores {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  max-width: 376px;
+  margin: 24px auto 0;
+}
+.launch-stores img {
+  width: 100%;
+  height: auto;
+}
+.launch-app-date {
+  margin: 12px 0 0;
+  color: #a8b0bd;
+  font-size: 12px;
+  line-height: 1.7;
+}
+@media (min-width: 768px) {
+  .launch-section {
+    padding: 48px 0 64px;
+  }
+  .launch-panel {
+    gap: 48px;
+    padding: 40px;
+  }
+  .launch-clock {
+    gap: 10px;
+  }
+  .clock-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+}
+@media (min-width: 1024px) {
+  .launch-panel {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    padding: 48px;
+  }
+}
+:host-context(.theme-resolved-light) .launch-panel {
+  border-color: #e5e0d6;
+  background:
+    radial-gradient(ellipse at 85% 15%, rgba(34, 199, 240, 0.07), transparent 52%),
+    linear-gradient(130deg, #ffffff, #f8f7f3);
+  box-shadow: 0 20px 54px rgba(17, 24, 39, 0.06);
+}
+:host-context(.theme-resolved-light) :is(h2, .launch-region strong, .launch-date, .clock-digit) {
+  color: #111827;
+}
+:host-context(.theme-resolved-light)
+  :is(
+    .launch-intro,
+    .launch-region,
+    .launch-countdown__label,
+    .clock-label,
+    .launch-milestone,
+    .launch-app-date
+  ) {
+  color: #5f6673;
+}
+:host-context(.theme-resolved-light) :is(.launch-eyebrow, .launch-explore) {
+  color: #b8872f;
+}
+:host-context(.theme-resolved-light) :is(.clock-face, .launch-region img) {
+  border-color: #e5e0d6;
+}
+:host-context(.theme-resolved-light) .clock-face {
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(17, 24, 39, 0.06);
+}
+@keyframes launchCurrent {
+  from {
+    transform: translateY(-8px);
+  }
+  to {
+    transform: translateY(8px);
+  }
+}
+@keyframes digitInEven {
+  from {
+    transform: translateY(-1em);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes digitInOdd {
+  from {
+    transform: translateY(-1em);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes digitOutEven {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    transform: translateY(1em);
+    opacity: 0;
+    visibility: visible;
+  }
+}
+@keyframes digitOutOdd {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    transform: translateY(1em);
+    opacity: 0;
+    visibility: visible;
+  }
+}

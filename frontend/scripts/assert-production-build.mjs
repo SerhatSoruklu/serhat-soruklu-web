@@ -10,8 +10,8 @@ const serverEntry = join(distDirectory, 'server', 'server.mjs');
 const aboutPortraitAsset = join(
   browserDirectory,
   'assets',
-  'about',
-  'serhat-soruklu-coupyn-founder-natural-portrait.png',
+  'portraits',
+  'serhat-soruklu-real-selfie.png',
 );
 const aboutSocialAsset = join(browserDirectory, 'assets', 'social', 'serhat-soruklu-about-natural-portrait-og.png');
 const pressSocialAsset = join(browserDirectory, 'assets', 'social', 'serhat-soruklu-press-natural-portrait-og.png');
@@ -20,22 +20,22 @@ const codarisEmblemAsset = join(browserDirectory, 'assets', 'projects', 'codaris
 const homeDarkPortraitAsset = join(
   browserDirectory,
   'assets',
-  'home',
-  'serhat-soruklu-workstation-dark.png',
+  'portraits',
+  'serhat-soruklu-office-dark-native.png',
 );
 const homeLightPortraitAsset = join(
   browserDirectory,
   'assets',
-  'home',
-  'serhat-soruklu-workstation-light.png',
+  'portraits',
+  'serhat-soruklu-office-light-native.png',
 );
 
 await assertDirectory(browserDirectory, 'Production browser output is missing.');
 await assertFile(serverEntry, 'Production SSR entry is missing.');
 await assertPngDimensions(
   aboutPortraitAsset,
-  825,
-  743,
+  1022,
+  1533,
   'The production About portrait is missing or has unexpected dimensions.',
 );
 await assertPngDimensions(
@@ -56,19 +56,39 @@ await assertPngDimensions(
   630,
   'The production CODARIS social image is missing or has unexpected dimensions.',
 );
+await assertPngDimensions(
+  join(browserDirectory, 'assets', 'social', 'serhat-soruklu-systems-stervox-og.png'),
+  1200,
+  630,
+  'The production Stervox social image is missing or has unexpected dimensions.',
+);
+await assertFile(join(browserDirectory, 'assets', 'projects', 'stervox', 'wordmark-dark.svg'), 'The Stervox dark wordmark is missing.');
+await assertFile(join(browserDirectory, 'assets', 'projects', 'stervox', 'wordmark-light.svg'), 'The Stervox light wordmark is missing.');
 await assertFile(codarisEmblemAsset, 'The CODARIS emblem is missing from production output.');
 await assertPngDimensions(
   homeDarkPortraitAsset,
-  1973,
-  797,
+  1846,
+  852,
   'The production dark homepage portrait is missing or has unexpected dimensions.',
 );
 await assertPngDimensions(
   homeLightPortraitAsset,
-  1973,
-  797,
+  1846,
+  852,
   'The production light homepage portrait is missing or has unexpected dimensions.',
 );
+
+for (const theme of ['dark', 'light']) {
+  const prefix = join(browserDirectory, 'assets', 'portraits', `serhat-soruklu-office-${theme}`);
+  await assertPngDimensions(`${prefix}-8k.png`, 7680, 3545, `The ${theme} 8K upscale export is missing or has unexpected dimensions.`);
+  for (const width of [640, 960, 1440, 1846]) {
+    for (const format of ['avif', 'webp']) {
+      const path = `${prefix}-${width}.${format}`;
+      await assertFile(path, `The responsive ${theme} portrait ${width}.${format} is missing.`);
+      assert.ok((await stat(path)).size < 512 * 1024, `The responsive ${theme} portrait exceeds its 512 KiB display budget.`);
+    }
+  }
+}
 
 const browserFiles = await listFiles(browserDirectory);
 const browserFileNames = browserFiles.map((filePath) => relative(browserDirectory, filePath));
@@ -126,7 +146,7 @@ assert.match(
 );
 assert.match(
   compiledBrowserText,
-  /\/assets\/about\/serhat-soruklu-coupyn-founder-natural-portrait\.png/i,
+  /\/assets\/portraits\/serhat-soruklu-real-selfie\.png/i,
   'The About portrait URL is missing from the production browser output.',
 );
 assert.match(
@@ -146,13 +166,8 @@ assert.match(
 );
 assert.match(
   compiledBrowserText,
-  /\/assets\/home\/serhat-soruklu-workstation-dark\.png/i,
-  'The dark homepage portrait URL is missing from the production browser output.',
-);
-assert.match(
-  compiledBrowserText,
-  /\/assets\/home\/serhat-soruklu-workstation-light\.png/i,
-  'The light homepage portrait URL is missing from the production browser output.',
+  /\/assets\/portraits\/serhat-soruklu-office-/i,
+  'The responsive office portrait URL prefix is missing from the production browser output.',
 );
 
 console.log(

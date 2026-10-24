@@ -9,12 +9,12 @@ const e2eBaseUrl =
   process.env['E2E_BASE_URL'] || `http://127.0.0.1:${process.env['E2E_PORT'] || '4201'}`;
 const portraits = {
   dark: {
-    path: '/assets/home/serhat-soruklu-workstation-dark.png',
-    alt: 'Serhat Soruklu, founder of Coupyn, seated at his workstation.',
+    path: '/assets/portraits/serhat-soruklu-office-dark-1846.webp',
+    alt: 'AI-assisted portrait of Serhat Soruklu seated in his real office, based on his original selfie.',
   },
   light: {
-    path: '/assets/home/serhat-soruklu-workstation-light.png',
-    alt: 'Serhat Soruklu, founder of Coupyn, seated at his workstation.',
+    path: '/assets/portraits/serhat-soruklu-office-light-1846.webp',
+    alt: 'AI-assisted portrait of Serhat Soruklu seated in his real office, based on his original selfie.',
   },
 } as const;
 const viewports = [
@@ -33,6 +33,10 @@ const explicitThemes = ['dark', 'light'] as const;
 
 type PortraitTheme = keyof typeof portraits;
 type ThemeSetting = PortraitTheme | 'system';
+
+function portraitPathMatches(path: string, theme: PortraitTheme): boolean {
+  return new RegExp(`/assets/portraits/serhat-soruklu-office-${theme}-\\d+\\.(?:avif|webp)$`).test(path);
+}
 
 async function setInitialTheme(
   page: Page,
@@ -59,8 +63,8 @@ async function waitForPortrait(page: Page, theme: PortraitTheme): Promise<void> 
   await expect(image).toHaveAttribute('data-portrait-ready-theme', theme);
   await expect(image).toHaveAttribute('src', portraits[theme].path);
   await expect(image).toHaveAttribute('alt', portraits[theme].alt);
-  await expect(image).toHaveAttribute('width', '1973');
-  await expect(image).toHaveAttribute('height', '797');
+  await expect(image).toHaveAttribute('width', '1846');
+  await expect(image).toHaveAttribute('height', '852');
   await expect(image).toHaveAttribute('decoding', 'async');
   await expect(image).toHaveAttribute('fetchpriority', 'high');
   await expect(image).toHaveAttribute('loading', 'eager');
@@ -68,13 +72,18 @@ async function waitForPortrait(page: Page, theme: PortraitTheme): Promise<void> 
     .poll(() =>
       image.evaluate((element) => new URL((element as HTMLImageElement).currentSrc).pathname),
     )
-    .toBe(portraits[theme].path);
+    .toMatch(new RegExp(`/assets/portraits/serhat-soruklu-office-${theme}-\\d+\\.(?:avif|webp)$`));
   await expect
     .poll(() => image.evaluate((element) => (element as HTMLImageElement).naturalWidth))
-    .toBe(1973);
+    .toBeGreaterThan(0);
   await expect
-    .poll(() => image.evaluate((element) => (element as HTMLImageElement).naturalHeight))
-    .toBe(797);
+    .poll(() => image.evaluate((element) => {
+      const image = element as HTMLImageElement;
+      // Responsive image density correction rounds intrinsic dimensions to
+      // whole CSS pixels; allow that rounding while checking the full frame.
+      return Math.abs(image.naturalHeight - image.naturalWidth * 852 / 1846);
+    }))
+    .toBeLessThanOrEqual(1.5);
 }
 
 async function getHeroState(page: Page): Promise<{
@@ -150,8 +159,9 @@ function trackPortraitRequests(page: Page): string[] {
   page.on('request', (request) => {
     const path = new URL(request.url()).pathname;
 
-    if (Object.values(portraits).some((portrait) => portrait.path === path)) {
-      requests.push(path);
+    const theme = explicitThemes.find(theme => portraitPathMatches(path, theme));
+    if (theme) {
+      requests.push(portraits[theme].path);
     }
   });
 
@@ -200,9 +210,11 @@ test.describe('home hero founder photography', () => {
 
         const state = await getHeroState(page);
 
-        expect(state.currentPath).toBe(portraits[theme].path);
+        expect(portraitPathMatches(state.currentPath, theme)).toBe(true);
+        expect(await page.evaluate(() => performance.getEntriesByType('resource')
+          .filter(entry => /serhat-soruklu-office-.*-(native|8k)\.png/.test(entry.name)))).toEqual([]);
         expect(state.imageObjectFit).toBe('cover');
-        expect(state.frame.width / state.frame.height).toBeCloseTo(1973 / 797, 2);
+        expect(state.frame.width / state.frame.height).toBeCloseTo(1846 / 852, 2);
         expect(Math.abs(state.image.width - state.frame.width)).toBeLessThanOrEqual(2.1);
         expect(Math.abs(state.image.height - state.frame.height)).toBeLessThanOrEqual(2.1);
         expect(state.contentTop).toBeGreaterThanOrEqual(state.headerBottom - 1);
@@ -240,10 +252,10 @@ test.describe('home hero founder photography', () => {
     expect(response.status()).toBe(200);
     expect(html.match(/data-testid="home-hero-portrait-image"/g)).toHaveLength(1);
     expect(imageTag).toContain(`src="${portraits.dark.path}"`);
-    expect(imageTag).toContain('width="1973"');
-    expect(imageTag).toContain('height="797"');
-    expect(html).toContain(`srcset="${portraits.light.path}" media="not all"`);
-    expect(html).toContain(`srcset="${portraits.dark.path}" media="all"`);
+    expect(imageTag).toContain('width="1846"');
+    expect(imageTag).toContain('height="852"');
+    expect(html).toMatch(/<source[^>]*srcset="\/assets\/portraits\/serhat-soruklu-office-light-[^"]+"[^>]*media="not all"/);
+    expect(html).toMatch(/<source[^>]*srcset="\/assets\/portraits\/serhat-soruklu-office-dark-[^"]+"[^>]*media="all"/);
     expect(html).toContain(
       'Founder &amp; CEO of Coupyn. Systems architect and solo full-stack developer building production platforms, deterministic systems and self-managed infrastructure.',
     );
@@ -263,8 +275,8 @@ test.describe('home hero founder photography', () => {
     expect(html.match(/data-testid="home-hero-portrait-image"/g)).toHaveLength(1);
     expect(imageTag).toContain(`src="${portraits.light.path}"`);
     expect(html).toContain('data-portrait-theme="light"');
-    expect(html).toContain(`srcset="${portraits.light.path}" media="all"`);
-    expect(html).toContain(`srcset="${portraits.dark.path}" media="not all"`);
+    expect(html).toMatch(/<source[^>]*srcset="\/assets\/portraits\/serhat-soruklu-office-light-[^"]+"[^>]*media="all"/);
+    expect(html).toMatch(/<source[^>]*srcset="\/assets\/portraits\/serhat-soruklu-office-dark-[^"]+"[^>]*media="not all"/);
   });
 
   test('hides the legacy SSR portrait during the first localStorage-only theme migration', async ({
@@ -273,7 +285,7 @@ test.describe('home hero founder photography', () => {
     const assertNoConsoleErrors = installConsoleErrorGuard(page, testInfo);
 
     await page.addInitScript(
-      ({ storageKey, darkPath }) => {
+      ({ storageKey }) => {
         globalThis.window.localStorage.setItem(storageKey, 'light');
 
         const audit = { wrongPortraitWasVisible: false };
@@ -301,7 +313,7 @@ test.describe('home hero founder photography', () => {
 
             if (
               visible &&
-              (image.getAttribute('data-portrait-theme') !== 'light' || currentPath === darkPath)
+              (image.getAttribute('data-portrait-theme') !== 'light' || currentPath.includes('/serhat-soruklu-office-dark-'))
             ) {
               audit.wrongPortraitWasVisible = true;
             }
@@ -312,7 +324,7 @@ test.describe('home hero founder photography', () => {
 
         globalThis.window.requestAnimationFrame(inspectPortrait);
       },
-      { storageKey: themeStorageKey, darkPath: portraits.dark.path },
+      { storageKey: themeStorageKey },
     );
 
     const response = await page.goto('/');
@@ -356,7 +368,7 @@ test.describe('home hero founder photography', () => {
 
     await page.emulateMedia({ colorScheme: 'light' });
     await setInitialTheme(page, 'system', 'dark');
-    await page.route(`**${portraits.light.path}`, async (route) => {
+    await page.route(/\/assets\/portraits\/serhat-soruklu-office-light-\d+\.(?:avif|webp)$/, async (route) => {
       activePortraitRequestBlocked = true;
       await activePortraitGate;
       await route.continue();
@@ -387,7 +399,7 @@ test.describe('home hero founder photography', () => {
       releaseActivePortraitRequest = resolve;
     });
 
-    await page.route(`**${portraits.dark.path}`, async (route) => {
+    await page.route(/\/assets\/portraits\/serhat-soruklu-office-dark-\d+\.(?:avif|webp)$/, async (route) => {
       activePortraitRequestBlocked = true;
       await activePortraitGate;
       await route.continue();
@@ -414,13 +426,12 @@ test.describe('home hero founder photography', () => {
       .toBe(1);
     await expect
       .poll(() =>
-        page.evaluate((path) => {
-          const url = new URL(path, globalThis.window.location.origin).href;
-
+        page.evaluate(() => {
           return performance
-            .getEntriesByName(url)
+            .getEntriesByType('resource')
+            .filter(entry => /\/assets\/portraits\/serhat-soruklu-office-light-\d+\.(?:avif|webp)$/.test(new URL(entry.name).pathname))
             .some((entry) => (entry as PerformanceResourceTiming).responseEnd > 0);
-        }, portraits.light.path),
+        }),
       )
       .toBe(true);
 

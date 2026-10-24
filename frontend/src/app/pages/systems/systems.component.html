@@ -41,9 +41,9 @@
     <div class="systems-section-frame layout-container--wide">
       <div class="systems-section-heading">
         <p class="systems-eyebrow">MAP</p>
-        <h2 id="systems-map-title">Production, Coalition And Research Systems</h2>
+        <h2 id="systems-map-title">Production, Foundations And Research</h2>
         <p>
-          Coupyn and ChatPDM are product-facing systems; CODARIS is a developer coalition. DBF and CIM define models for boundaries, continuity, and controlled failure.
+          Coupyn and ChatPDM are product-facing systems; Stervox is building financial foundations; CODARIS is a developer coalition. DBF and CIM define models for boundaries, continuity, and controlled failure.
         </p>
       </div>
 
@@ -67,12 +67,12 @@
     <div class="systems-section-frame systems-section-frame--open layout-container--wide">
       <div class="systems-section-heading">
         <p class="systems-eyebrow">SYSTEMS</p>
-        <h2 id="system-cards-title">Five Public System Surfaces</h2>
+        <h2 id="system-cards-title">Six Systems, Different Stages</h2>
       </div>
 
       <div class="systems-cards__grid">
         @for (card of systemCards; track card.primaryPath) {
-          <article class="system-card">
+          <article class="system-card" [class.system-card--stervox]="card.brand === 'stervox'">
             <div class="system-card__topline">
               <span class="system-card__icon-chip">
                 <mat-icon class="system-card__icon" [svgIcon]="card.icon" aria-hidden="true"></mat-icon>
@@ -95,6 +95,8 @@
                     <span class="work-production-brand__coupyn-script">.com</span>
                   </span>
                 </a>
+              } @else if (card.brand === 'stervox') {
+                <app-stervox-brand [linked]="true" />
               } @else if (card.brand === 'chatpdm') {
                 <a
                   class="work-production-brand-link"

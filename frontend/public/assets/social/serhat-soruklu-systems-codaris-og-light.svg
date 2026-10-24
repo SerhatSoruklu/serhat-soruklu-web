@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">CODARIS — Responsible intelligent systems by Serhat Soruklu</title>
+  <desc id="desc">Coalition of Developers Advancing Responsible Intelligent Systems. An early-stage developer coalition focused on practical, verified work.</desc>
+  <defs>
+    <linearGradient id="surface" x1="72" x2="1128" y1="72" y2="558" gradientUnits="userSpaceOnUse"><stop stop-color="#f8f7f3"/><stop offset=".62" stop-color="#f8f7f3"/><stop offset="1" stop-color="#f8f7f3"/></linearGradient>
+    <radialGradient id="cyan-glow" cx="0" cy="0" r="1" gradientTransform="matrix(300 0 0 250 914 318)" gradientUnits="userSpaceOnUse"><stop stop-color="#087f89" stop-opacity=".2"/><stop offset="1" stop-color="#087f89" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <path d="M64 64H1136" stroke="#e5e0d6"/>
+  <text x="64" y="46" fill="#5f6673" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">SERHAT SORUKLU / FOUNDER &amp; BUILDER</text>
+  <rect data-brand-plate="main" x="54.800" y="97.400" width="351.809" height="93.200" rx="12" fill="#10141c"></rect>
+<svg id="codaris-brand-wordmark" x="64" y="110" xmlns="http://www.w3.org/2000/svg" width="410" height="82" viewBox="0 0 205 41" role="img" aria-label="CODARIS">
+  <!-- Brand lockup from codaris/web/partials/header.html and web/styles.css .brand: emblem 34px, gap 11px, Arial 22px/800, letter spacing 2.4px. -->
+  <svg x="0" y="0" width="34" height="34" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="M20 2 36 11v18L20 38 4 29V11Z" fill="none" stroke="#59e4eb" stroke-width="2"/><path d="m26 12-6-3-10 6v11l10 6 6-3v-5l-6 3-5-3v-6l5-3 6 3Z" fill="#59e4eb"/><path d="m29 11 3 2v14l-3 2" fill="none" stroke="#59e4eb"/></svg>
+  <text x="45" y="17" dominant-baseline="central" fill="#edf3f7" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="800" letter-spacing="2.4">CODARIS</text>
+</svg>
+  <text x="64" y="280" fill="#111827" font-family="Arial, sans-serif" font-size="54" font-weight="700" letter-spacing="-1.5">Build. Verify.</text>
+  <text x="64" y="344" fill="#111827" font-family="Arial, sans-serif" font-size="54" font-weight="700" letter-spacing="-1.5">Advance.</text>
+  <text x="64" y="398" fill="#5f6673" font-family="Arial, sans-serif" font-size="20">An independent coalition for responsible intelligent systems.</text>
+  <rect x="64" y="452" width="154" height="32" rx="16" fill="#f8f7f3" stroke="#e5e0d6"/>
+  <text x="141" y="473" text-anchor="middle" fill="#b8872f" font-family="Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1">BETA V1</text>
+  <text x="64" y="518" fill="#5f6673" font-family="Arial, sans-serif" font-size="17">Practical, evidence-led work · Early-stage Beta V1</text>
+  <rect x="744" y="112" width="392" height="408" rx="12" fill="#f8f7f3" stroke="#e5e0d6"/>
+  <text x="776" y="152" fill="#b8872f" font-family="Arial, sans-serif" font-size="12" letter-spacing="1.5">RESPONSIBLE SYSTEMS / COALITION</text>
+  <g id="codaris-og-visual" transform="translate(784 194)">
+    <rect width="312" height="258" rx="30" fill="#ffffff" stroke="#e5e0d6" stroke-width="3"/>
+    <rect x="22" y="22" width="268" height="214" rx="22" fill="none" stroke="#e5e0d6" stroke-width="2"/>
+    <text x="40" y="48" fill="#087f89" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" letter-spacing="1.8">BUILD · VERIFY · ADVANCE</text>
+    <rect data-brand-plate="detail" x="133.600" y="61.300" width="52.800" height="57.400" rx="10" fill="#10141c"></rect><g transform="translate(137 67) scale(1.15)"><path d="M20 2 36 11v18L20 38 4 29V11Z" fill="none" stroke="#59e4eb" stroke-width="2"/><path d="m26 12-6-3-10 6v11l10 6 6-3v-5l-6 3-5-3v-6l5-3 6 3Z" fill="#59e4eb"/><path d="m29 11 3 2v14l-3 2" fill="none" stroke="#59e4eb" stroke-width="2"/></g>
+    <path d="M74 168h164" fill="none" stroke="#5f6673" stroke-width="2"/><path d="m115 161 9 7-9 7m57-14 9 7-9 7" fill="none" stroke="#087f89" stroke-width="2"/>
+    <circle cx="74" cy="168" r="22" fill="#f8f7f3" stroke="#087f89" stroke-width="2"/><circle cx="156" cy="168" r="22" fill="#f8f7f3" stroke="#b8872f" stroke-width="2"/><circle cx="238" cy="168" r="22" fill="#f8f7f3" stroke="#087f89" stroke-width="2"/>
+    <text x="74" y="211" text-anchor="middle" fill="#5f6673" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700">BUILD</text><text x="156" y="211" text-anchor="middle" fill="#b8872f" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700">VERIFY</text><text x="238" y="211" text-anchor="middle" fill="#5f6673" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700">ADVANCE</text>
+  </g>
+  <text x="940" y="486" text-anchor="middle" fill="#5f6673" font-family="Arial, sans-serif" font-size="13">C17 · WebAssembly · PostgreSQL</text>
+  <path d="M64 566H1136" stroke="#e5e0d6"/>
+  <text x="64" y="602" fill="#5f6673" font-family="Arial, sans-serif" font-size="14">serhatsoruklu.com/systems/codaris</text>
+  <text x="1136" y="602" text-anchor="end" fill="#b8872f" font-family="Arial, sans-serif" font-size="14">BUILD · VERIFY · ADVANCE</text>
+</svg>
