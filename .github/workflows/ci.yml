@@ -54,8 +54,8 @@ jobs:
       - name: Frontend and backend unit tests
         run: npm test
 
-      - name: Production dependency audit policy
-        run: npm run audit:production
+      - name: Full dependency audit policy (production and development)
+        run: npm run audit
 
       - name: Browser end-to-end tests
         run: npm run e2e
@@ -69,8 +69,8 @@ jobs:
       - name: Assert final production artifact
         run: npm run assert:production
 
-      - name: Smoke-test production SSR artifact
-        run: npm run smoke:production
+      - name: Smoke-test production SSR and real countdown motion
+        run: npm run smoke:production:browser
 
       - name: Upload immutable release candidate
         uses: actions/upload-artifact@v4

@@ -10,6 +10,8 @@ import helmet from 'helmet';
 import { randomBytes } from 'node:crypto';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { basename, join } from 'node:path';
+import process from 'node:process';
+import { clearTimeout, setTimeout } from 'node:timers';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 const cspNoncePlaceholder = '__CSP_NONCE__';
@@ -230,7 +232,7 @@ if (isMainModule(import.meta.url) || process.env['SSR_START'] === 'true' || proc
   });
 
   let isShuttingDown = false;
-  const shutdown = (signal: NodeJS.Signals) => {
+  const shutdown = (signal: 'SIGTERM' | 'SIGINT') => {
     if (isShuttingDown) {
       return;
     }
@@ -256,8 +258,8 @@ if (isMainModule(import.meta.url) || process.env['SSR_START'] === 'true' || proc
     });
   };
 
-  process.once('SIGTERM', shutdown);
-  process.once('SIGINT', shutdown);
+  process.once('SIGTERM', () => shutdown('SIGTERM'));
+  process.once('SIGINT', () => shutdown('SIGINT'));
 }
 
 /**

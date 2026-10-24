@@ -16,6 +16,11 @@ its edges, without a hard crop or centre divider. Reduced motion keeps the numer
 while continuing to update the values. The timer does not announce every second
 to screen readers.
 
+Keep motion declarations and their keyframes inside the same reduced-motion
+media rule. This avoids the keyframe-name mismatch reproduced in Angular 21's
+minified component styles. The production browser smoke test checks real
+animations, transforms and opacity rather than only declared animation names.
+
 January is the planned platform milestone, subject to readiness. Mobile apps
 are separately described as planned for around May 2027. Store badges are
 preview artwork, not links to unannounced listings.

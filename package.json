@@ -14,14 +14,14 @@
     "build": "npm run build:production",
     "build:production": "npm run build:frontend && npm run check:backend",
     "build:frontend": "npm --prefix frontend run build:production",
-    "check": "npm run check:frontend && npm run check:backend",
+    "check": "npm run check:frontend && npm run check:backend && npm run check:security",
     "check:frontend": "npm --prefix frontend run typecheck",
     "check:backend": "npm --prefix backend run check",
     "lint": "npm run lint:frontend && npm run lint:backend",
     "lint:frontend": "npm --prefix frontend run lint",
     "lint:backend": "npm --prefix backend run lint",
     "lint:fix": "npm --prefix frontend run lint -- --fix && npm --prefix backend run lint:fix",
-    "test": "npm run test:frontend && npm run test:backend",
+    "test": "npm run test:frontend && npm run test:backend && npm run test:security",
     "test:frontend": "npm --prefix frontend test -- --watch=false",
     "test:backend": "npm --prefix backend test",
     "e2e": "npm --prefix frontend run e2e",
@@ -29,17 +29,21 @@
     "audit:production": "npm audit --omit=dev --audit-level=high && npm --prefix frontend audit --omit=dev --audit-level=high && npm --prefix backend audit --omit=dev --audit-level=high",
     "assert:production": "npm --prefix frontend run verify:artifact",
     "smoke:production": "npm --prefix frontend run smoke:production",
-    "validate:release": "npm run lint && npm run check && npm test && npm run e2e && npm run e2e:smoke:cross-browser && npm run audit:production && npm run build:production && npm run assert:production && npm run smoke:production",
+    "validate:release": "npm run lint && npm run check && npm test && npm run e2e && npm run e2e:smoke:cross-browser && npm run audit && npm run build:production && npm run assert:production && npm run smoke:production:browser",
     "start": "npm run start:backend",
     "start:frontend": "npm --prefix frontend run start:production",
     "start:backend": "npm --prefix backend run start:production",
     "publish:production-env": "bash ops/deploy/publish-backend-environment.sh",
-    "deploy": "bash scripts/deploy.sh"
+    "deploy": "bash scripts/deploy.sh",
+    "audit": "npm audit --audit-level=info && npm --prefix frontend audit --audit-level=info && npm --prefix backend audit --audit-level=info",
+    "test:security": "node --test scripts/dependency-snapshot.test.mjs",
+    "check:security": "node --check scripts/dependency-snapshot.mjs && node --check scripts/dependency-snapshot.test.mjs && node --check frontend/scripts/dev-ssr.mjs && node --check frontend/scripts/verify-countdown-motion.mjs",
+    "smoke:production:browser": "npm --prefix frontend run smoke:production -- --browser"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^10.0.4"
+    "concurrently": "^10.0.6"
   }
 }
