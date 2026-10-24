@@ -1,0 +1,263 @@
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.orbit {
+  stroke: #252b36;
+  stroke-width: 1;
+}
+.orbit--outer {
+  stroke-dasharray: 2 10;
+  transform-origin: 280px 220px;
+  animation: orbit-turn 90s linear infinite;
+}
+.orbit--inner {
+  stroke-dasharray: 80 24 3 24;
+  opacity: 0.65;
+  transform-origin: 280px 220px;
+  animation: orbit-turn 65s linear infinite reverse;
+}
+.orbit-axis,
+.connection {
+  fill: none;
+  stroke: #a8b0bd;
+  stroke-width: 1;
+  opacity: 0.4;
+}
+.connection--gold {
+  stroke: #d6a84f;
+  opacity: 0.65;
+}
+.connection--flow {
+  stroke-dasharray: 5 8;
+  animation: signal-flow 9s linear infinite;
+}
+.core-halo {
+  fill: none;
+  stroke: #252b36;
+  stroke-dasharray: 2 7;
+}
+.core-shell {
+  fill: #10141c;
+  stroke: #252b36;
+}
+.core-accent {
+  fill: none;
+  stroke: #d6a84f;
+  stroke-width: 2;
+  stroke-linecap: round;
+  transform-box: view-box;
+  transform-origin: 280px 220px;
+  animation: core-circulate 10s linear infinite;
+}
+text {
+  font-family: 'Space Mono', monospace;
+  text-anchor: middle;
+}
+.core-eyebrow {
+  fill: #a8b0bd;
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+.core-name {
+  fill: #f5f7fa;
+  font-family: 'Sora', sans-serif;
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.core-caption {
+  fill: #a8b0bd;
+  font-size: 8px;
+}
+.core-light {
+  fill: #d6a84f;
+  animation: core-pulse 4s ease-in-out infinite;
+}
+.station {
+  transition: transform 220ms ease;
+}
+.station rect {
+  fill: #10141c;
+  stroke: #252b36;
+  transition:
+    fill 220ms ease,
+    stroke 220ms ease;
+}
+.station:hover {
+  transform: translateY(-4px);
+}
+.station:hover rect {
+  fill: #10141c;
+  stroke: #a8b0bd;
+}
+.station--evidence:hover rect {
+  stroke: #d6a84f;
+}
+.station-icon {
+  color: #a8b0bd;
+}
+.station-icon path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.station--evidence .station-icon {
+  color: #d6a84f;
+}
+.station-name {
+  fill: #f5f7fa;
+  font:
+    600 14px 'Sora',
+    sans-serif;
+}
+.station-name--small {
+  font-size: 12px;
+}
+.station-caption {
+  fill: #a8b0bd;
+  font-size: 7px;
+  letter-spacing: 0.1px;
+}
+.station--product .station-name {
+  font-size: 13px;
+}
+.station--product .station-caption {
+  font-size: 6px;
+}
+.diagram-caption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  color: #a8b0bd;
+  font:
+    10px/1.6 'Space Mono',
+    monospace;
+  text-align: center;
+}
+.diagram-caption span {
+  width: 5px;
+  height: 5px;
+  flex: 0 0 5px;
+  border-radius: 50%;
+  background: #d6a84f;
+}
+@keyframes orbit-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes signal-flow {
+  to {
+    stroke-dashoffset: -104;
+  }
+}
+@keyframes core-pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+@keyframes core-circulate {
+  from {
+    transform: rotate(0deg);
+    stroke: #d6a84f;
+  }
+  50% {
+    transform: rotate(180deg);
+    stroke: #f0d58c;
+  }
+  to {
+    transform: rotate(360deg);
+    stroke: #d6a84f;
+  }
+}
+@keyframes core-circulate-light {
+  from {
+    transform: rotate(0deg);
+    stroke: #b8872f;
+  }
+  50% {
+    transform: rotate(180deg);
+    stroke: #e7c46f;
+  }
+  to {
+    transform: rotate(360deg);
+    stroke: #b8872f;
+  }
+}
+:host-context(.theme-resolved-light) .orbit,
+:host-context(.theme-resolved-light) .core-halo {
+  stroke: #e5e0d6;
+}
+:host-context(.theme-resolved-light) :is(.core-shell, .station rect) {
+  fill: #f8f7f3;
+  stroke: #e5e0d6;
+}
+:host-context(.theme-resolved-light) :is(.core-name, .station-name) {
+  fill: #111827;
+}
+:host-context(.theme-resolved-light) :is(.core-eyebrow, .core-caption, .station-caption) {
+  fill: #5f6673;
+}
+:host-context(.theme-resolved-light) :is(.connection, .orbit-axis) {
+  stroke: #5f6673;
+}
+:host-context(.theme-resolved-light) .connection--gold,
+:host-context(.theme-resolved-light) .core-accent {
+  stroke: #b8872f;
+}
+:host-context(.theme-resolved-light) .core-light {
+  fill: #b8872f;
+}
+:host-context(.theme-resolved-light) .core-accent {
+  animation-name: core-circulate-light;
+}
+:host-context(.theme-resolved-light) .diagram-caption {
+  color: #5f6673;
+}
+:host-context(.theme-resolved-light) .diagram-caption span {
+  background: #b8872f;
+}
+:host-context(.theme-resolved-light) .station-icon {
+  color: #5f6673;
+}
+:host-context(.theme-resolved-light) .station--evidence .station-icon {
+  color: #b8872f;
+}
+:host-context(.theme-resolved-light) .station:hover rect {
+  stroke: #b8872f;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .station:hover {
+    transform: none;
+  }
+}
+
+:host(.stervox-architecture--quiet) .station:hover {
+  transform: none;
+}
+:host(.stervox-architecture--quiet) .station:hover rect {
+  fill: #10141c;
+  stroke: #252b36;
+}
+:host-context(.theme-resolved-light):host(.stervox-architecture--quiet) .station:hover rect {
+  fill: #f8f7f3;
+  stroke: #e5e0d6;
+}

@@ -11,6 +11,8 @@ import {
   mdiWeb,
 } from '@mdi/js';
 
+import { ContributionCalendarComponent } from './contribution-calendar/contribution-calendar.component';
+
 import { PathIconComponent } from '../../shared/icons/path-icon.component';
 
 interface PublicRepository {
@@ -25,7 +27,7 @@ interface PublicRepository {
 
 @Component({
   selector: 'app-github-page',
-  imports: [PathIconComponent, RouterLink],
+  imports: [ContributionCalendarComponent, PathIconComponent, RouterLink],
   templateUrl: './github.component.html',
   styleUrl: './github.component.css',
 })

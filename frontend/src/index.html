@@ -110,10 +110,14 @@
 
           portraitPreload.rel = 'preload';
           portraitPreload.as = 'image';
-          portraitPreload.href =
-            resolvedTheme === 'light'
-              ? '/assets/home/serhat-soruklu-workstation-light.png'
-              : '/assets/home/serhat-soruklu-workstation-dark.png';
+          var portraitPrefix = '/assets/portraits/serhat-soruklu-office-' + resolvedTheme;
+
+          portraitPreload.type = 'image/avif';
+          portraitPreload.href = portraitPrefix + '-1846.avif';
+          portraitPreload.setAttribute('imagesrcset', [640, 960, 1440, 1846].map(function (width) {
+            return portraitPrefix + '-' + width + '.avif ' + width + 'w';
+          }).join(', '));
+          portraitPreload.setAttribute('imagesizes', '(min-width: 1728px) 740px, (min-width: 1440px) 620px, (min-width: 1024px) 48vw, calc(100vw - 40px)');
           portraitPreload.setAttribute('fetchpriority', 'high');
           document.head.appendChild(portraitPreload);
         }

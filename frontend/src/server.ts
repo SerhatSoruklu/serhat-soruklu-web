@@ -386,6 +386,9 @@ function sendKnownRouteRedirect(
     case '/systems':
       location = `${origin}/systems`;
       break;
+    case '/systems/stervox':
+      location = `${origin}/systems/stervox`;
+      break;
     case '/systems/chatpdm':
       location = `${origin}/systems/chatpdm`;
       break;

@@ -19,6 +19,7 @@ import {
   mdiTransitConnectionVariant
 } from '@mdi/js';
 
+import { StervoxBrandComponent } from '../../shared/stervox-brand/stervox-brand.component';
 import { TopNavigationService } from '../../core/navigation/top-navigation.service';
 import { TooltipDirective } from '../../shared/tooltip/tooltip.directive';
 
@@ -30,7 +31,7 @@ interface SystemsMapColumn {
 
 interface SystemHubCard {
   icon: string;
-  brand?: 'coupyn' | 'chatpdm' | 'codaris';
+  brand?: 'coupyn' | 'stervox' | 'chatpdm' | 'codaris';
   category: string;
   title: string;
   description: string;
@@ -93,7 +94,7 @@ interface ArchitectureNode {
 
 @Component({
   selector: 'app-systems',
-  imports: [MatIconModule, RouterLink, TooltipDirective],
+  imports: [StervoxBrandComponent, MatIconModule, RouterLink, TooltipDirective],
   templateUrl: './systems.component.html',
   styleUrl: './systems.component.css'
 })
@@ -116,29 +117,36 @@ export class SystemsComponent {
       group: 'Production'
     },
     {
-      icon: 'systems-stack-governance',
+      icon: 'systems-stack-production',
       index: '02',
+      label: 'Stervox',
+      description: 'Financial foundations · coming soon',
+      group: 'In development'
+    },
+    {
+      icon: 'systems-stack-governance',
+      index: '03',
       label: 'ChatPDM',
       description: 'Deterministic governance runtime',
       group: 'Runtime'
     },
     {
       icon: 'systems-stack-codaris',
-      index: '03',
+      index: '04',
       label: 'CODARIS',
       description: 'Responsible systems coalition',
       group: 'Coalition'
     },
     {
       icon: 'systems-stack-boundary',
-      index: '04',
+      index: '05',
       label: 'DBF',
       description: 'Boundary research',
       group: 'Research'
     },
     {
       icon: 'systems-stack-continuity',
-      index: '05',
+      index: '06',
       label: 'CIM',
       description: 'Continuity model',
       group: 'Model'
@@ -150,6 +158,11 @@ export class SystemsComponent {
       title: 'Production Work',
       description: 'Live or product-facing work with operational surfaces, discovery paths, and long-term maintenance responsibilities.',
       systems: ['Coupyn', 'ChatPDM']
+    },
+    {
+      title: 'Financial Foundations',
+      description: 'An ambitious in-house core and financial product in development, with a planned launch on 5 January 2027.',
+      systems: ['Stervox / VOXCORE']
     },
     {
       title: 'Developer Coalition',
@@ -176,6 +189,19 @@ export class SystemsComponent {
       primaryPath: '/systems/coupyn',
       secondaryLabel: 'Open Coupyn',
       secondaryUrl: 'https://coupyn.com'
+    },
+    {
+      icon: 'systems-stack-production',
+      brand: 'stervox',
+      category: 'Financial Infrastructure',
+      title: 'Stervox',
+      description: 'A clearer financial life, built on an owned core. In-house ledger and identity workflows are the ambition behind a ten-year roadmap.',
+      status: 'Coming soon · In development · Planned 5 Jan 2027',
+      chips: ['VOXCORE foundations', 'C / TypeScript / PostgreSQL', '2026–2036 roadmap'],
+      primaryLabel: 'Explore Stervox',
+      primaryPath: '/systems/stervox',
+      secondaryLabel: 'Open Stervox',
+      secondaryUrl: 'https://stervox.com'
     },
     {
       icon: 'systems-card-chatpdm',

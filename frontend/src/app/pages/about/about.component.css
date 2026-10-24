@@ -313,6 +313,8 @@ h3 {
 .about-portrait {
   position: relative;
   width: 100%;
+  max-width: 440px;
+  justify-self: center;
   margin: 0;
   animation: about-hero-portrait-enter 640ms 70ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
   transition: transform 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -371,11 +373,15 @@ h3 {
   transition: transform 640ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
+.about-portrait__trigger picture {
+  display: block;
+}
+
 .about-portrait__trigger img {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 825 / 743;
+  aspect-ratio: 1022 / 1533;
   object-fit: contain;
   object-position: 50% 50%;
   transition: transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -1501,7 +1507,7 @@ h3 {
 
   .about-portrait {
     justify-self: end;
-    max-width: 650px;
+    max-width: 480px;
   }
 
   .about-chapters .about-frame {
@@ -1887,3 +1893,26 @@ h3 {
     transition: none;
   }
 }
+
+.about-stervox-brand { display: block; max-width: 240px; margin-bottom: 24px; }
+
+.about-system-card--commercial {
+  background: linear-gradient(135deg, rgba(214, 168, 79, .065), transparent 70%), #10141c;
+}
+.about-system-card--stervox::after { border-radius: 12px; transform: rotate(45deg); }
+.about-system-card .about-system-card__venture {
+  margin: 0 0 20px;
+  color: #f0d58c;
+  font: 700 .62rem/1.6 'Space Mono', monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.about-system-card__status {
+  display: block;
+  margin-bottom: 12px;
+  color: #f0d58c;
+  font-size: .75rem;
+}
+:host-context(.theme-resolved-light) .about-system-card--commercial { background: #f8f7f3; }
+:host-context(.theme-resolved-light) .about-system-card__status,
+:host-context(.theme-resolved-light) .about-system-card .about-system-card__venture { color: #b8872f; }

@@ -284,6 +284,11 @@ export class SeoService {
       return;
     }
 
+    if (routeSeo.structuredData === 'stervox') {
+      this.setJsonLd(this.createStervoxStructuredData(routeSeo));
+      return;
+    }
+
     if (routeSeo.structuredData === 'codaris') {
       this.setJsonLd(this.createCodarisStructuredData(routeSeo));
       return;
@@ -537,8 +542,8 @@ export class SeoService {
           primaryImageOfPage: {
             '@type': 'ImageObject',
             url: portraitUrl,
-            width: 825,
-            height: 743,
+            width: 1022,
+            height: 1533,
             caption: portraitAlt,
           },
           breadcrumb: {
@@ -594,7 +599,7 @@ export class SeoService {
           isPartOf: {
             '@id': websiteId,
           },
-          about: [{ '@id': personId }, { '@id': organizationId }, { '@id': codarisOrganizationId }],
+          about: [{ '@id': personId }, { '@id': organizationId }, { '@id': `${this.toAbsoluteUrl(pageSeoMetadata.stervoxSystem.path)}#project` }, { '@id': codarisOrganizationId }],
           author: {
             '@id': personId,
           },
@@ -614,7 +619,48 @@ export class SeoService {
         this.createWebsiteStructuredData(),
         this.createCoupynOrganizationStructuredData(),
         this.createCodarisOrganizationStructuredData(),
+        this.createStervoxProjectStructuredData(),
       ],
+    };
+  }
+
+  private createStervoxStructuredData(routeSeo: RouteSeoMetadata): object {
+    const routeUrl = this.toAbsoluteUrl(routeSeo.path);
+    const homeUrl = this.toAbsoluteUrl('/');
+    const base = this.createBreadcrumbStructuredData(routeSeo) as { '@graph': object[] };
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        ...base['@graph'],
+        {
+          '@type': 'WebPage',
+          '@id': `${routeUrl}#webpage`,
+          url: routeUrl,
+          name: routeSeo.title,
+          description: routeSeo.description,
+          inLanguage: 'en-GB',
+          isPartOf: { '@id': `${homeUrl}#website` },
+          breadcrumb: { '@id': `${routeUrl}#breadcrumb` },
+          mainEntity: { '@id': `${routeUrl}#project` },
+          primaryImageOfPage: { '@type': 'ImageObject', url: this.toAbsoluteUrl(pageSeoMetadata.stervoxSystem.ogImage), width: 1200, height: 630 },
+        },
+        this.createStervoxProjectStructuredData(),
+      ],
+    };
+  }
+
+  private createStervoxProjectStructuredData(): object {
+    const routeUrl = this.toAbsoluteUrl(pageSeoMetadata.stervoxSystem.path);
+    return {
+      '@type': 'CreativeWork',
+      '@id': `${routeUrl}#project`,
+      name: 'Stervox',
+      alternateName: 'STERVOX / VOXCORE',
+      url: routeUrl,
+      description: pageSeoMetadata.stervoxSystem.description,
+      creativeWorkStatus: 'In development. Planned launch: 5 January 2027.',
+      creator: { '@id': `${this.toAbsoluteUrl('/')}#person` },
+      image: this.toAbsoluteUrl(pageSeoMetadata.stervoxSystem.ogImage),
     };
   }
 

@@ -1,6 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
+import { ContributionCalendarComponent } from './contribution-calendar/contribution-calendar.component';
+import { githubActivitySnapshot } from './github-activity.data';
+
 import { GitHubComponent } from './github.component';
 
 describe('GitHubComponent', () => {
@@ -23,10 +26,12 @@ describe('GitHubComponent', () => {
     expect(compiled.querySelector('.page-placeholder')).toBeNull();
     expect(sectionHeadings).toEqual([
       'GitHub',
+      'Small steps. A lasting body of work.',
       'The system at the centre of the public work.',
       'Boundaries first. Continuity second.',
       'Smaller surfaces, specific purposes.',
       'Coupyn production code remains private.',
+      'Stervox is being built in private.',
       'Follow the repositories, not a scoreboard.',
     ]);
   });
@@ -93,6 +98,7 @@ describe('GitHubComponent', () => {
       '/systems/continuity-identity-model',
       '/systems/codaris',
       '/systems/coupyn',
+      '/systems/stervox',
     ]);
   });
 
@@ -133,4 +139,45 @@ describe('GitHubComponent', () => {
       'https://coupyn.com',
     ]);
   });
+  it('keeps Stervox private and accurately describes its development status', () => {
+    const fixture = TestBed.createComponent(GitHubComponent);
+    fixture.detectChanges();
+    const section = (fixture.nativeElement as HTMLElement).querySelector('[data-testid="stervox-private-section"]')!;
+    expect(section.textContent).toContain('financial core is not live');
+    expect(section.querySelector('a[href="/systems/stervox"]')).not.toBeNull();
+    expect(section.querySelector('a[href="https://stervox.com"]')).not.toBeNull();
+    expect(section.querySelector('a[href^="https://github.com/"]')).toBeNull();
+  });
+
+  it('renders verified daily totals including leap day and changes year without inventing activity', () => {
+    const fixture = TestBed.createComponent(ContributionCalendarComponent);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+    for (const year of githubActivitySnapshot.years) {
+      component.chooseYear(year.year);
+      fixture.detectChanges();
+      expect(component.calendar().days.reduce((sum, day) => sum + day.count, 0)).toBe(year.total);
+      expect((fixture.nativeElement as HTMLElement).querySelectorAll('[data-date]')).toHaveLength(year.days.length);
+      expect(component.calendar().days[0].date).toBe(`${year.year}-01-01`);
+    }
+    component.chooseYear(2024);
+    fixture.detectChanges();
+    expect((fixture.nativeElement as HTMLElement).querySelector('[data-date="2024-02-29"]')).not.toBeNull();
+    expect(component.calendar().days).toHaveLength(366);
+  });
+
+  it('provides dated accessible descriptions and arrow-key navigation', () => {
+    const fixture = TestBed.createComponent(ContributionCalendarComponent);
+    fixture.componentInstance.chooseYear(2023);
+    fixture.detectChanges();
+    const native = fixture.nativeElement as HTMLElement;
+    const first = native.querySelector<HTMLButtonElement>('[data-date="2023-01-01"]')!;
+    expect(first.getAttribute('aria-label')).toContain('Sunday, 1 January 2023');
+    first.focus();
+    first.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    fixture.detectChanges();
+    expect(fixture.componentInstance.selectedDate()).toBe('2023-01-08');
+    expect(native.querySelector('[data-date="2023-01-08"]')?.getAttribute('tabindex')).toBe('0');
+  });
+
 });

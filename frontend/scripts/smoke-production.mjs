@@ -112,7 +112,7 @@ try {
   );
   assert.match(
     homeHtml,
-    /\/assets\/home\/serhat-soruklu-workstation-dark\.png/,
+    /\/assets\/portraits\/serhat-soruklu-office-dark-1846\.webp/,
     'The dark homepage portrait must be present in the default SSR response.',
   );
   assert.match(homeHtml, /"@id":"https:\/\/serhatsoruklu\.com\/#person"/);
@@ -154,6 +154,24 @@ try {
   assert.match(workHtml, /<link rel="canonical" href="https:\/\/serhatsoruklu\.com\/work">/);
   assert.match(workHtml, /Built End-to-End/, 'The work response must include route content.');
 
+  const stervoxResponse = await secureFetch('/systems/stervox');
+  const stervoxHtml = await stervoxResponse.text();
+  assert.equal(stervoxResponse.status, 200, 'Stervox must SSR with HTTP 200.');
+  assert.match(stervoxHtml, /<main\b[^>]*class="[^"]*site-main--stervox-atmosphere/, 'Stervox must SSR its own continuous page atmosphere.');
+  assert.doesNotMatch(stervoxHtml, /<app-home\b/, 'The Stervox route must never SSR the homepage.');
+  assert.ok(stervoxHtml.includes('stervox-mountains-2172.avif'), 'Stervox must include its responsive mountain backdrop.');
+  assert.ok(stervoxHtml.includes('https://serhatsoruklu.com/systems/stervox'), 'Stervox canonical URL must be present.');
+  assert.ok(stervoxHtml.includes('serhat-soruklu-systems-stervox-og.png'), 'Stervox social metadata must be server-rendered.');
+  assert.ok(stervoxHtml.includes('Coming soon'), 'Stervox must retain its development status.');
+  assert.ok(stervoxHtml.includes('5 January 2027'), 'Stervox must show its planned launch date.');
+  const stervoxTrailingSlashResponse = await secureFetch('/systems/stervox/?campaign=release-smoke', { redirect: 'manual' });
+  assert.equal(stervoxTrailingSlashResponse.status, 308);
+  assert.equal(stervoxTrailingSlashResponse.headers.get('location'), '/systems/stervox');
+  const stervoxHttpResponse = await fetch(`${baseUrl}/systems/stervox`, { redirect: 'manual' });
+  assert.equal(stervoxHttpResponse.status, 308);
+  assert.equal(stervoxHttpResponse.headers.get('location'), 'https://serhatsoruklu.com/systems/stervox');
+  assert.ok(stervoxHtml.includes('"creativeWorkStatus":"In development.'), 'Stervox schema must describe development status.');
+
   const codarisResponse = await secureFetch('/systems/codaris');
   const codarisHtml = await codarisResponse.text();
   assert.equal(codarisResponse.status, 200, 'The CODARIS route must SSR with HTTP 200.');
@@ -190,7 +208,7 @@ try {
   assert.match(aboutHtml, /"@id":"https:\/\/serhatsoruklu\.com\/#person"/);
   assert.match(
     aboutHtml,
-    /https:\/\/serhatsoruklu\.com\/assets\/about\/serhat-soruklu-coupyn-founder-natural-portrait\.png/,
+    /https:\/\/serhatsoruklu\.com\/assets\/portraits\/serhat-soruklu-real-selfie\.png/,
     'The About structured data must contain the canonical portrait URL.',
   );
   assert.match(
@@ -255,7 +273,7 @@ try {
   assert.match(pressHtml, /<title>Press &amp; Media \| Serhat Soruklu<\/title>/);
   assert.match(
     pressHtml,
-    /Verified biographies, company and project facts, media assets and public reference links for coverage of Serhat Soruklu, Coupyn and CODARIS\./,
+    /Verified biographies, company and project facts, media assets and public reference links for coverage of Serhat Soruklu, Coupyn, Stervox and CODARIS\./,
     'Press must SSR its English metadata and reference copy.',
   );
   assert.match(pressHtml, /<link rel="canonical" href="https:\/\/serhatsoruklu\.com\/press">/);

@@ -28,6 +28,24 @@ describe('App', () => {
     expect(setOffsetSpy).toHaveBeenCalledWith([0, 120]);
   });
 
+  it('initialises Stervox as a detail page after initial navigation and restores Home on return', async () => {
+    const router = TestBed.inject(Router);
+    await router.navigateByUrl('/systems/stervox');
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.isHomeRoute()).toBe(false);
+    expect(fixture.componentInstance.usesStervoxAtmosphere()).toBe(true);
+    expect((fixture.nativeElement as HTMLElement).querySelector('app-stervox-system')).toBeTruthy();
+    expect((fixture.nativeElement as HTMLElement).querySelector('app-home')).toBeNull();
+
+    await router.navigateByUrl('/');
+    fixture.detectChanges();
+    expect(fixture.componentInstance.isHomeRoute()).toBe(true);
+    expect(fixture.componentInstance.usesStervoxAtmosphere()).toBe(false);
+    expect((fixture.nativeElement as HTMLElement).querySelector('.site-stervox-landscape')).toBeNull();
+  });
+
   it('tracks home and detail atmosphere route state', async () => {
     const fixture = TestBed.createComponent(App);
     const app = fixture.componentInstance;

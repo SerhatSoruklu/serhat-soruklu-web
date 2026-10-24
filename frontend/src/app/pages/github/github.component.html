@@ -67,6 +67,10 @@
     </div>
   </section>
 
+  <div class="github-activity layout-section">
+    <div class="layout-container--wide"><app-contribution-calendar /></div>
+  </div>
+
   <section
     id="repositories"
     class="github-flagship layout-section"
@@ -299,6 +303,24 @@
             <span>Open Coupyn</span>
             <app-path-icon name="github-external" [path]="iconPaths['github-external']" aria-hidden="true"></app-path-icon>
           </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="github-private layout-section" aria-labelledby="github-stervox-private-title" data-testid="stervox-private-section">
+    <div class="github-section-frame layout-container--wide">
+      <article class="private-production-card private-production-card--stervox">
+        <div class="private-production-card__icon"><app-path-icon name="github-private" [path]="iconPaths['github-private']" aria-hidden="true" /></div>
+        <div class="private-production-card__copy">
+          <p class="github-section-kicker">Private financial infrastructure · In development</p>
+          <h2 id="github-stervox-private-title">Stervox is being built in private.</h2>
+          <p>The product has a public direction and a private implementation. Stervox’s core code, financial designs and identity workflows remain proprietary while I build and validate the foundations. The public architecture explains the ambition and its current limits; the financial core is not live.</p>
+          <p>Planned launch: 5 January 2027 · A phased direction through 2036.</p>
+        </div>
+        <div class="private-production-card__actions">
+          <a class="repository-action repository-action--internal" routerLink="/systems/stervox"><span>Explore Stervox Architecture</span><app-path-icon name="github-arrow" [path]="iconPaths['github-arrow']" aria-hidden="true" /></a>
+          <a class="repository-action repository-action--external" href="https://stervox.com" target="_blank" rel="noopener noreferrer"><span>Open Stervox</span><app-path-icon name="github-external" [path]="iconPaths['github-external']" aria-hidden="true" /></a>
         </div>
       </article>
     </div>

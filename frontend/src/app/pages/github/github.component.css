@@ -1232,3 +1232,9 @@ h3 {
     transform: none;
   }
 }
+
+.github-activity { position: relative; z-index: 1; padding-top: 48px; }
+.private-production-card--stervox { background: radial-gradient(ellipse at 100% 0, rgba(168,176,189,.06), transparent 65%), #10141c; }
+.private-production-card--stervox::before { display: none; }
+.private-production-card--stervox .private-production-card__icon { border-radius: 50%; }
+:host-context(.theme-resolved-light) .private-production-card--stervox { background: #f8f7f3; }

@@ -378,6 +378,13 @@ test('validateContactPayload accepts the dedicated press and media enquiry topic
   assert.equal(result.data.topic, topic);
 });
 
+test('validateContactPayload accepts Stervox project enquiries', () => {
+  const result = validateContactPayload(validContactPayload({ topic: 'Stervox' }));
+
+  assert.equal(result.errors, null);
+  assert.equal(result.data.topic, 'Stervox');
+});
+
 test('single-mailbox validation rejects wrappers, recipient lists, CRLF, and malformed domains', () => {
   const invalidAddresses = [
     'victim@example.com,other@example.com',

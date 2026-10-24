@@ -4,6 +4,7 @@ import { mdiArrowTopRight, mdiClose } from '@mdi/js';
 
 import { IdentityLanguageService } from '../../../core/identity/identity-language.service';
 import { PathIconComponent } from '../../../shared/icons/path-icon.component';
+import { ORIGINAL_PORTRAIT } from '../../../shared/portraits/original-portrait.config';
 import { aboutContent } from '../about.content';
 
 @Component({
@@ -18,7 +19,8 @@ export class AboutProfileDialogComponent {
   private readonly identityLanguage = inject(IdentityLanguageService);
 
   readonly content = computed(() => aboutContent[this.identityLanguage.language()]);
-  readonly portraitPath = '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png';
+  readonly portrait = ORIGINAL_PORTRAIT;
+  readonly portraitPath = ORIGINAL_PORTRAIT.src;
   readonly iconPaths = {
     close: mdiClose,
     external: mdiArrowTopRight,

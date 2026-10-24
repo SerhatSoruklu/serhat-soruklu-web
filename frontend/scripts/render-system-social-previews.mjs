@@ -56,10 +56,10 @@ const previews = [
     target: 'serhat-soruklu-about-natural-portrait-og.png',
     validateWordmark: false,
     portrait: {
-      expectedHeight: 743,
-      expectedWidth: 825,
+      expectedHeight: 1533,
+      expectedWidth: 1022,
       selector: '#about-og-portrait',
-      sourcePath: '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png',
+      sourcePath: '/assets/portraits/serhat-soruklu-real-selfie.png',
     },
   },
   {
@@ -67,10 +67,10 @@ const previews = [
     target: 'serhat-soruklu-press-natural-portrait-og.png',
     validateWordmark: false,
     portrait: {
-      expectedHeight: 743,
-      expectedWidth: 825,
+      expectedHeight: 1533,
+      expectedWidth: 1022,
       selector: '#press-og-portrait',
-      sourcePath: '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png',
+      sourcePath: '/assets/portraits/serhat-soruklu-real-selfie.png',
     },
   },
   {
@@ -85,10 +85,26 @@ const previews = [
     validateWordmark: true,
   },
   {
+    source: 'serhat-soruklu-systems-stervox-og.svg',
+    target: 'serhat-soruklu-systems-stervox-og.png',
+    validateWordmark: false,
+  },
+  {
     source: 'serhat-soruklu-systems-codaris-og.svg',
     target: 'serhat-soruklu-systems-codaris-og.png',
     validateWordmark: false,
   },
+  ...['coupyn', 'stervox', 'codaris'].map(project => ({
+    source: `serhat-soruklu-systems-${project}-og-light.svg`,
+    target: `serhat-soruklu-systems-${project}-og-light.png`,
+    validateWordmark: project === 'coupyn',
+    validateSignalFlow: project === 'coupyn',
+    lightBrandLogos: project === 'coupyn'
+      ? ['#coupyn-brand-wordmark', '#coupyn-og-logo']
+      : project === 'codaris'
+        ? ['#codaris-brand-wordmark', '#codaris-og-visual > g']
+        : ['svg[x="64"][y="112"]'],
+  })),
   {
     source: 'serhat-soruklu-writing-og.svg',
     target: 'serhat-soruklu-writing-og.png',
@@ -274,6 +290,33 @@ try {
       }
     }
 
+    if (preview.lightBrandLogos) {
+      const plates = await page.evaluate(selectors => selectors.map((selector, index) => {
+        const name = index === 0 ? 'main' : 'detail';
+        const plate = document.querySelector(`[data-brand-plate="${name}"]`);
+        const logo = document.querySelector(selector);
+        const bounds = logo.getBoundingClientRect();
+        const inverse = plate.parentElement.getScreenCTM().inverse();
+        const start = new DOMPoint(bounds.left, bounds.top).matrixTransform(inverse);
+        const end = new DOMPoint(bounds.right, bounds.bottom).matrixTransform(inverse);
+        const padding = index === 0 ? 16 : 8;
+        for (const [attribute, value] of Object.entries({
+          x: start.x - padding, y: start.y - padding,
+          width: end.x - start.x + padding * 2, height: end.y - start.y + padding * 2,
+        })) plate.setAttribute(attribute, value.toFixed(3));
+        const final = plate.getBoundingClientRect();
+        if (Math.abs(final.left + final.width / 2 - bounds.left - bounds.width / 2) > .1 ||
+            Math.abs(final.top + final.height / 2 - bounds.top - bounds.height / 2) > .1) {
+          throw new Error(`Logo is not centered within ${name} backplate`);
+        }
+        return { name, markup: plate.outerHTML };
+      }), preview.lightBrandLogos);
+      for (const { name, markup } of plates) {
+        svg = svg.replace(new RegExp(`<rect data-brand-plate="${name}"[^>]*\\/?>(?:<\\/rect>)?`), markup);
+      }
+      await writeFile(sourceUrl, svg, 'utf8');
+    }
+
     if (preview.validateWordmark) {
       const wordmarkGap = await page.locator('[id$="-og-logo"]').evaluate((logo) => {
         const words = Array.from(logo.querySelectorAll(':scope > text'));
@@ -306,7 +349,7 @@ try {
     if (preview.validateSignalFlow) {
       const signalFlow = await page.locator('#coupyn-og-visual').evaluate((visual) => {
         const directFrames = visual.querySelectorAll(':scope > #coupyn-og-visual-box');
-        const competingFrames = visual.querySelectorAll(':scope > rect:not(#coupyn-og-visual-box)');
+        const competingFrames = visual.querySelectorAll(':scope > rect:not(#coupyn-og-visual-box):not([data-brand-plate])');
         const nodes = Array.from(visual.querySelectorAll('[data-signal-node]')).map((node) =>
           node.getAttribute('data-signal-node'),
         );
@@ -350,7 +393,7 @@ try {
       }
     }
 
-    const artwork = page.locator('svg');
+    const artwork = page.locator('body > svg');
     const dimensions = await artwork.evaluate((element) => ({
       height: element.clientHeight,
       width: element.clientWidth,

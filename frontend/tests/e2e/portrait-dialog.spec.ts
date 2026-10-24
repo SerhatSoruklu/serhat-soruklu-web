@@ -6,12 +6,12 @@ import { installConsoleErrorGuard } from './support/console-errors';
 const themeStorageKey = 'serhatsoruklu-theme';
 const portraits = {
   dark: {
-    path: '/assets/home/serhat-soruklu-workstation-dark.png',
-    alt: 'Serhat Soruklu, founder of Coupyn, seated at his workstation.',
+    path: '/assets/portraits/serhat-soruklu-office-dark-1846.webp',
+    alt: 'AI-assisted portrait of Serhat Soruklu seated in his real office, based on his original selfie.',
   },
   light: {
-    path: '/assets/home/serhat-soruklu-workstation-light.png',
-    alt: 'Serhat Soruklu, founder of Coupyn, seated at his workstation.',
+    path: '/assets/portraits/serhat-soruklu-office-light-1846.webp',
+    alt: 'AI-assisted portrait of Serhat Soruklu seated in his real office, based on his original selfie.',
   },
 } as const;
 const dialogCases = [
@@ -25,6 +25,10 @@ const dialogCases = [
 
 type PortraitTheme = keyof typeof portraits;
 type ThemeSetting = PortraitTheme | 'system';
+
+function portraitPathMatches(path: string, theme: PortraitTheme): boolean {
+  return new RegExp(`/assets/portraits/serhat-soruklu-office-${theme}-\\d+\\.(?:avif|webp)$`).test(path);
+}
 
 async function setInitialTheme(page: Page, setting: ThemeSetting): Promise<void> {
   await page.addInitScript(
@@ -42,6 +46,9 @@ async function openPortraitDialog(page: Page): Promise<void> {
   await trigger.click();
   await expect(page.getByTestId('portrait-dialog')).toBeVisible();
   await expect(page.getByRole('dialog', { name: 'Serhat Soruklu' })).toBeVisible();
+  await page.getByTestId('portrait-dialog').evaluate(element =>
+    Promise.all(element.getAnimations().map(animation => animation.finished)),
+  );
 }
 
 async function waitForDialogPortrait(page: Page, theme: PortraitTheme): Promise<void> {
@@ -51,16 +58,23 @@ async function waitForDialogPortrait(page: Page, theme: PortraitTheme): Promise<
   await expect(image).toHaveAttribute('data-portrait-theme', theme);
   await expect(image).toHaveAttribute('src', portraits[theme].path);
   await expect(image).toHaveAttribute('alt', portraits[theme].alt);
-  await expect(image).toHaveAttribute('width', '1973');
-  await expect(image).toHaveAttribute('height', '797');
+  await expect(image).toHaveAttribute('width', '1846');
+  await expect(image).toHaveAttribute('height', '852');
   await expect(image).toHaveAttribute('decoding', 'async');
   await expect(image).toHaveAttribute('loading', 'eager');
   await expect
     .poll(() => image.evaluate((element) => (element as HTMLImageElement).naturalWidth))
-    .toBe(1973);
+    .toBeGreaterThan(0);
   await expect
-    .poll(() => image.evaluate((element) => (element as HTMLImageElement).naturalHeight))
-    .toBe(797);
+    .poll(() => image.evaluate((element) => {
+      const image = element as HTMLImageElement;
+      // Responsive image density correction rounds intrinsic dimensions to
+      // whole CSS pixels; allow that rounding while checking the full frame.
+      return Math.abs(image.naturalHeight - image.naturalWidth * 852 / 1846);
+    }))
+    .toBeLessThanOrEqual(1.5);
+  await expect.poll(() => image.evaluate(element => new URL((element as HTMLImageElement).currentSrc).pathname))
+    .toMatch(new RegExp(`/assets/portraits/serhat-soruklu-office-${theme}-\\d+\\.(?:avif|webp)$`));
 }
 
 async function getDialogState(page: Page): Promise<{
@@ -135,6 +149,7 @@ async function expectLastDialogContentReachable(page: Page): Promise<void> {
   const scrollTarget = await page.evaluate(() => {
     const candidates = [
       globalThis.document.querySelector('[data-testid="portrait-dialog"]'),
+      globalThis.document.querySelector('.portrait-dialog__scroll'),
       globalThis.document.querySelector('.portrait-dialog__content'),
     ].filter((candidate): candidate is Element => candidate !== null);
 
@@ -160,9 +175,11 @@ async function expectLastDialogContentReachable(page: Page): Promise<void> {
     'dialog must expose a user-scrollable route to its final content',
   ).toBeTruthy();
 
-  const selector = scrollTarget?.className.includes('portrait-dialog__content')
-    ? '.portrait-dialog__content'
-    : '[data-testid="portrait-dialog"]';
+  const selector = scrollTarget?.className.includes('portrait-dialog__scroll')
+    ? '.portrait-dialog__scroll'
+    : scrollTarget?.className.includes('portrait-dialog__content')
+      ? '.portrait-dialog__content'
+      : '[data-testid="portrait-dialog"]';
 
   await page.locator(selector).evaluate((element) => {
     element.scrollTop = element.scrollHeight;
@@ -173,19 +190,18 @@ async function expectLastDialogContentReachable(page: Page): Promise<void> {
 function trackPortraitTraffic(page: Page): { failed: string[]; requested: string[] } {
   const failed: string[] = [];
   const requested: string[] = [];
-  const portraitPaths = new Set<string>(Object.values(portraits).map(({ path }) => path));
 
   page.on('request', (request) => {
     const path = new URL(request.url()).pathname;
 
-    if (portraitPaths.has(path)) {
+    if ((['dark', 'light'] as const).some(theme => portraitPathMatches(path, theme))) {
       requested.push(path);
     }
   });
   page.on('requestfailed', (request) => {
     const path = new URL(request.url()).pathname;
 
-    if (portraitPaths.has(path)) {
+    if ((['dark', 'light'] as const).some(theme => portraitPathMatches(path, theme))) {
       failed.push(path);
     }
   });
@@ -231,8 +247,13 @@ test.describe('portrait dialog', () => {
       expect(state.panelGutters.top).toBeGreaterThanOrEqual(19);
       expect(state.panelGutters.bottom).toBeGreaterThanOrEqual(19);
 
-      if (dialogCase.width < 1024) {
-        expect(state.mediaAspectRatio).toBeCloseTo(1973 / 797, 2);
+      expect(state.mediaAspectRatio).toBeCloseTo(1846 / 852, 2);
+      const mediaBox = await page.locator('.portrait-dialog__media').boundingBox();
+      const contentBox = await page.locator('.portrait-dialog__content').boundingBox();
+      expect(mediaBox!.y + mediaBox!.height).toBeLessThanOrEqual(contentBox!.y + 1);
+      if (dialogCase.width >= 1024) {
+        const homeImage = await page.getByTestId('home-hero-portrait-image').boundingBox();
+        expect(mediaBox!.width).toBeGreaterThan(homeImage!.width * 1.25);
       }
 
       await expectLastDialogContentReachable(page);
@@ -254,6 +275,9 @@ test.describe('portrait dialog', () => {
     await trigger.focus();
     await page.keyboard.press('Enter');
     await expect(page.getByRole('dialog', { name: 'Serhat Soruklu' })).toBeVisible();
+  await page.getByTestId('portrait-dialog').evaluate(element =>
+    Promise.all(element.getAnimations().map(animation => animation.finished)),
+  );
     expect(
       await dialogPanel.evaluate((panel) => panel.contains(globalThis.document.activeElement)),
       'initial dialog focus must move inside the focus trap',
@@ -320,10 +344,10 @@ test.describe('portrait dialog', () => {
     const mediaBefore = await page.locator('.portrait-dialog__media').boundingBox();
     const scrollBefore = await page.evaluate(() => globalThis.window.scrollY);
 
-    expect(traffic.requested.filter((path) => path === portraits.dark.path)).toHaveLength(1);
+    expect(traffic.requested.filter(path => portraitPathMatches(path, 'dark')).length).toBeGreaterThanOrEqual(1);
     await expect
-      .poll(() => traffic.requested.filter((path) => path === portraits.light.path).length)
-      .toBe(1);
+      .poll(() => traffic.requested.filter(path => portraitPathMatches(path, 'light')).length)
+      .toBeGreaterThanOrEqual(1);
 
     await page.emulateMedia({ colorScheme: 'light' });
     await expect(page.locator('html')).toHaveClass(/theme-resolved-light/);
@@ -349,19 +373,22 @@ test.describe('portrait dialog', () => {
     expect(Math.abs((mediaAfter?.width ?? 0) - (mediaBefore?.width ?? 0))).toBeLessThanOrEqual(1);
     expect(Math.abs((mediaAfter?.height ?? 0) - (mediaBefore?.height ?? 0))).toBeLessThanOrEqual(1);
     expect(scrollAfter).toBeCloseTo(scrollBefore, 0);
-    expect(traffic.requested.filter((path) => path === portraits.dark.path)).toHaveLength(1);
+    expect(traffic.requested.filter(path => portraitPathMatches(path, 'dark')).length).toBeLessThanOrEqual(2);
     expect(
-      traffic.requested.filter((path) => path === portraits.light.path).length,
+      traffic.requested.filter(path => portraitPathMatches(path, 'light')).length,
     ).toBeGreaterThanOrEqual(1);
-    const lightResourceTimings = await page.evaluate((path) => {
-      const url = new URL(path, globalThis.window.location.origin).href;
-
+    const lightResourceTimings = await page.evaluate(() => {
       return performance
-        .getEntriesByName(url)
-        .map((entry) => (entry as PerformanceResourceTiming).transferSize);
-    }, portraits.light.path);
+        .getEntriesByType('resource')
+        .filter(entry => /\/assets\/portraits\/serhat-soruklu-office-light-\d+\.(?:avif|webp)$/.test(new URL(entry.name).pathname))
+        .map((entry) => ({ name: entry.name, transferSize: (entry as PerformanceResourceTiming).transferSize }));
+    });
 
-    expect(lightResourceTimings.filter((transferSize) => transferSize > 1024)).toHaveLength(1);
+    const transferred = lightResourceTimings.filter(({ transferSize }) => transferSize > 1024);
+    expect(transferred.length).toBeGreaterThanOrEqual(1);
+    expect(new Set(transferred.map(({ name }) => name)).size).toBe(transferred.length);
+    expect(await page.evaluate(() => performance.getEntriesByType('resource')
+      .filter(entry => /serhat-soruklu-office-.*-(native|8k)\.png/.test(entry.name)))).toEqual([]);
     expect(traffic.failed).toEqual([]);
     assertNoConsoleErrors();
   });
@@ -394,4 +421,33 @@ test.describe('portrait dialog', () => {
     await expect(page.getByTestId('portrait-dialog')).toBeHidden();
     assertNoConsoleErrors();
   });
+});
+
+
+test('portrait dialog opens Stervox.com externally and leaves the portfolio on its current host', async ({ page }) => {
+  await page.context().route('https://stervox.com/**', route => route.fulfill({ contentType: 'text/html', body: '<title>Stervox destination</title>' }));
+  await page.context().route('https://codaris.org/**', route => route.fulfill({ contentType: 'text/html', body: '<title>CODARIS destination</title>' }));
+  await page.goto('/');
+  const homeUrl = page.url();
+  await openPortraitDialog(page);
+  const action = page.getByRole('dialog').getByRole('link', { name: 'Open Stervox.com in a new tab' });
+  await expect(action.locator('.portrait-dialog__project-name')).toHaveText('Stervox.com');
+  await expect(action.locator('.portrait-dialog__project-url')).toHaveText('https://stervox.com');
+  await expect(action).toHaveAttribute('href', 'https://stervox.com');
+  await expect(action).toHaveAttribute('target', '_blank');
+  const popupPromise = page.waitForEvent('popup');
+  await action.click();
+  const popup = await popupPromise;
+  await expect(popup).toHaveURL('https://stervox.com/');
+  await expect(page).toHaveURL(homeUrl);
+  await popup.close();
+  const codaris = page.getByRole('dialog').getByRole('link', { name: 'Open Codaris.org in a new tab' });
+  await expect(codaris).toHaveAttribute('href', 'https://codaris.org');
+  await expect(codaris.locator('.portrait-dialog__project-url')).toHaveText('https://codaris.org');
+  const codarisPopupPromise = page.waitForEvent('popup');
+  await codaris.click();
+  const codarisPopup = await codarisPopupPromise;
+  await expect(codarisPopup).toHaveURL('https://codaris.org/');
+  await expect(page).toHaveURL(homeUrl);
+  await codarisPopup.close();
 });

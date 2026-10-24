@@ -1,0 +1,402 @@
+<div class="stervox-page" data-testid="stervox-page">
+  <section class="stervox-hero layout-section" aria-labelledby="stervox-title">
+    <div class="stervox-hero__inner layout-container--wide">
+      <div>
+        <p class="stervox-eyebrow">THE NEXT CHAPTER · FINANCIAL INFRASTRUCTURE</p>
+        <h1 id="stervox-title" aria-label="Stervox"><app-stervox-brand [linked]="true" /></h1>
+        <p class="stervox-headline">A clearer view of money.<br />A deeper kind of ownership.</p>
+        <p class="stervox-intro">
+          I’m building Stervox to help people understand their financial lives: what they have,
+          where it goes, and what comes next. Underneath that simple experience is my most ambitious
+          engineering project yet.
+        </p>
+        <p class="stervox-status">
+          <span>Coming soon · In development</span><br />Planned launch:
+          <time datetime="2027-01-05">5 January 2027</time>
+        </p>
+        <div class="stervox-actions">
+          <a
+            class="site-button site-button-primary"
+            href="https://stervox.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Open Stervox ↗</a
+          >
+          <a class="site-button site-button-secondary" routerLink="/systems/stervox" fragment="engineering" (click)="scrollToEngineering($event)"
+            >Explore the engineering ↓</a
+          >
+        </div>
+      </div>
+      <aside class="stervox-blueprint" aria-labelledby="blueprint-title">
+        <p class="stervox-eyebrow">THE ARCHITECTURE · PLANNED</p>
+        <h2 id="blueprint-title">Simple on the surface.<br />Deliberate underneath.</h2>
+        <app-stervox-architecture class="stervox-architecture" />
+
+        <p class="stervox-caption">
+          Own the product and its decisions. Keep each external institution’s records traceable to
+          their source.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="stervox-section layout-section" aria-labelledby="ownership-title">
+    <div class="layout-container--wide stervox-story">
+      <div>
+        <p class="stervox-eyebrow">THE CONVICTION</p>
+        <h2 id="ownership-title">Make the bricks.<br />Then build the house.</h2>
+      </div>
+      <div class="stervox-prose">
+        <p>
+          There is a familiar pitch in software: “This is too hard to build yourself. Pay us and
+          we’ll handle it.” Sometimes that is the right choice. With Stervox, I want to understand
+          and own the parts that define the business.
+        </p>
+        <p>
+          My analogy is making the bricks from clay. The ambition goes beneath the app: an in-house
+          ledger to account for money, our own identity and customer-checking workflows, and a core
+          that keeps control over how decisions are made.
+        </p>
+        <p>
+          Specialist providers still have a role. The design keeps their services behind clear
+          connections, so the product can evolve without handing its entire foundation to one
+          supplier.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="stervox-section layout-section" aria-labelledby="layers-title">
+    <div class="layout-container--wide">
+      <p class="stervox-eyebrow">THE ENGINE. THE INTELLIGENCE.</p>
+      <h2 id="layers-title">One experience. Two deliberate layers.</h2>
+      <p class="stervox-intro">
+        Stervox is the product people see. VOXCORE and VOXFINANCE describe the foundations being
+        designed underneath it: a dependable record of what happened, and a clearer understanding of
+        what it means.
+      </p>
+      <div class="stervox-layers">
+        <article aria-labelledby="voxcore-title">
+          <h3 id="voxcore-title" aria-label="VOXCORE">
+            <img
+              class="stervox-layer-logo stervox-layer-logo--dark"
+              src="/brand/voxcore.svg"
+              width="292"
+              height="100"
+              alt="VOXCORE"
+            /><img
+              class="stervox-layer-logo stervox-layer-logo--light"
+              src="/brand/voxcore-light.svg"
+              width="292"
+              height="100"
+              alt="VOXCORE"
+            />
+          </h3>
+          <p class="stervox-layer-role">The engine of record.</p>
+          <p>
+            The planned core for identity, permissions and financial state. Its ledger design is
+            built around balanced entries, traceable corrections and clear responsibility for every
+            operation.
+          </p>
+          <p class="stervox-caption">
+            In development: money primitives and controlled foundations exist; the production
+            financial core remains to be built.
+          </p>
+        </article>
+        <article aria-labelledby="voxfinance-title">
+          <h3 id="voxfinance-title" aria-label="VOXFINANCE">
+            <img
+              class="stervox-layer-logo stervox-layer-logo--dark"
+              src="/brand/voxfinance.svg"
+              width="358"
+              height="100"
+              alt="VOXFINANCE"
+            /><img
+              class="stervox-layer-logo stervox-layer-logo--light"
+              src="/brand/voxfinance-light.svg"
+              width="358"
+              height="100"
+              alt="VOXFINANCE"
+            />
+          </h3>
+          <p class="stervox-layer-role">The intelligence behind the picture.</p>
+          <p>
+            The planned layer for turning connected financial information into useful insight:
+            spending patterns, recurring commitments and scenarios for what comes next. Every
+            insight should be explainable through its sources and assumptions.
+          </p>
+          <p class="stervox-caption">
+            Design-stage: an intelligence layer, not a live financial adviser. Its outputs do not
+            independently move money or grant product access.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="stervox-section layout-section" aria-labelledby="experience-title">
+    <div class="layout-container--wide">
+      <p class="stervox-eyebrow">WHAT PEOPLE SHOULD FEEL</p>
+      <h2 id="experience-title">Less financial noise.<br />More room to move forward.</h2>
+      <div class="stervox-grid">
+        <article>
+          <span class="stervox-number">01 / CLARITY</span>
+          <h3>See the whole picture</h3>
+          <p>
+            The initial direction brings connected account information, rewards and optional credit
+            insights into a clearer daily experience.
+          </p>
+        </article>
+        <article>
+          <span class="stervox-number">02 / CONTROL</span>
+          <h3>Know what you’re trusting</h3>
+          <p>
+            Permission, freshness and the source of information belong in the experience. A missing
+            balance should never quietly become zero.
+          </p>
+        </article>
+        <article>
+          <span class="stervox-number">03 / LONGEVITY</span>
+          <h3>Build beyond a launch</h3>
+          <p>
+            The roadmap reaches to 2036. Accounts, cards and broader financial products sit in
+            later, conditional phases, with their own readiness gates.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="stervox-section layout-section" aria-labelledby="card-concepts-title">
+    <div class="layout-container--wide">
+      <app-stervox-card-showcase />
+    </div>
+  </section>
+
+  <section class="stervox-section layout-section" aria-labelledby="stack-title">
+    <div class="layout-container--wide stervox-story">
+      <div>
+        <p class="stervox-eyebrow">C17 · LIBEVENT · LIBPQ · POSTGRESQL</p>
+        <h2 id="stack-title">An unusual stack.<br />A deliberate choice.</h2>
+      </div>
+      <div class="stervox-prose">
+        <p>
+          VOXCORE takes a C-first approach: explicit control over memory, resources and failure
+          paths. C17 is the stable baseline; libevent supports event-driven networking, and libpq
+          connects the core to PostgreSQL, the chosen home for durable state.
+        </p>
+        <p>
+          The aim is a small, understandable core with predictable decisions and fewer hidden
+          runtime behaviours. C gives us direct control without a garbage-collected backend runtime;
+          memory safety, bounded work and recovery become deliberate engineering responsibilities.
+        </p>
+        <p>
+          TypeScript handles the web experience. The architecture keeps pure decisions separate from
+          external effects, so the same inputs can be checked against the same rules. Reliability is
+          earned through evidence, not a language choice.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section
+    #engineeringSection
+    id="engineering"
+    class="stervox-section layout-section"
+    aria-labelledby="engineering-title"
+  >
+    <div class="layout-container--wide">
+      <p class="stervox-eyebrow">FOR THE CURIOUS · INSIDE VOXCORE</p>
+      <h2 id="engineering-title">Trust should leave evidence.</h2>
+      <p class="stervox-intro">
+        The foundations use C and TypeScript, with PostgreSQL selected for durable state. Here is
+        what the source already shows, and what the financial-core design is working towards.
+      </p>
+      <div class="stervox-evidence">
+        <details open>
+          <summary><span>01</span> Money counted precisely <small>In code</small></summary>
+          <div>
+            <p>
+              £100 becomes 10,000 pence, stored as a whole number with its currency. The C money
+              primitive checks for overflow and rejects addition across different currencies. The
+              web money type uses <code>bigint</code>.
+            </p>
+            <pre
+              aria-label="Excerpt from the TypeScript Money interface"
+            ><code>export interface Money &#123;
+  minor: bigint;
+  currency: string;
+  exponent: number;
+&#125;</code></pre>
+            <p class="stervox-caption">
+              Source: <code>client/src/core/money.ts</code>,
+              <code>server/src/core/money.c</code> and <code>server/tests/test_money.c</code>. These
+              are money primitives, not a live banking ledger.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>
+            <span>02</span> A history you correct, never quietly erase <small>Ledger design</small>
+          </summary>
+          <div>
+            <p>
+              The ledger specification proposes balanced double-entry records. Each journal must
+              balance within its currency: money cannot simply appear because a screen says it
+              should. Corrections are new, linked entries that preserve the original history.
+            </p>
+            <pre
+              aria-label="Illustrative ledger design invariant"
+            ><code>sum(postings_in_one_currency) == 0
+correction → linked compensating entry</code></pre>
+            <p class="stervox-caption">
+              Illustrative design, not running ledger code. Source:
+              <cite>VOXCORE Ledger Master v0.1</cite>, corrected R1 edition, accounting invariants
+              and journal lifecycle. The production ledger remains to be implemented.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>
+            <span>03</span> A retry must not become a second charge
+            <small>Deduplication design</small>
+          </summary>
+          <div>
+            <p>
+              A timeout is uncertainty, not permission to move money again. The planned approach
+              uses operation keys and request fingerprints to recognise retries, reject conflicting
+              reuse and reconcile uncertain external results before attempting another effect.
+            </p>
+            <pre
+              aria-label="Illustrative retry design"
+            ><code>same key + same request → original outcome
+same key + changed request → conflict
+unknown external outcome → reconcile first</code></pre>
+            <p class="stervox-caption">
+              Source: <cite>VOXCORE Ledger Master v0.1</cite>, idempotency and concurrency;
+              <cite>STERVOX 2036 Master Execution Map</cite>, VOXCORE architecture. These safeguards
+              are requirements, not deployed guarantees.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>
+            <span>04</span> Own the customer-checking decisions <small>KYC design</small>
+          </summary>
+          <div>
+            <p>
+              KYC means checking who a customer is. Stervox’s design separates evidence from
+              specialist providers, policy assessments and human decisions. A provider’s “pass” is
+              evidence to review, rather than automatic permission for every product.
+            </p>
+            <p>
+              The aim is a decision trail that can explain which evidence, policy version and
+              authority applied at the time.
+            </p>
+            <p class="stervox-caption">
+              Source: <code>server/src/modules/onboarding/kyc/README.md</code>. This module is a
+              design scaffold; customer due diligence and production verification are not
+              implemented.
+            </p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="stervox-section layout-section" aria-labelledby="roadmap-title">
+    <div class="layout-container--wide">
+      <p class="stervox-eyebrow">A TEN-YEAR HORIZON · 2026–2036</p>
+      <h2 id="roadmap-title">Earn the next phase.</h2>
+      <p class="stervox-intro">
+        The launch target is 5 January 2027. The sequence below summarises the direction; each
+        release depends on evidence, operating readiness and the permissions and partnerships its
+        scope requires.
+      </p>
+      <ol class="stervox-roadmap">
+        <li>
+          <span>NOW</span>
+          <div>
+            <h3>Build the foundations</h3>
+            <p>
+              Product experience, money primitives, architecture and controlled test slices. This is
+              the current development stage.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span>PLANNED LAUNCH</span>
+          <div>
+            <h3>Start with financial clarity</h3>
+            <p>
+              An initial UK direction around account information, rewards and opt-in credit
+              insights. Confirm the available scope through release gates.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span>AFTER VALIDATION</span>
+          <div>
+            <h3>Prove reliability, then expand</h3>
+            <p>
+              Validate connections, reconciliation, recovery and customer usefulness before widening
+              coverage or product scope.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span>LATER · CONDITIONAL</span>
+          <div>
+            <h3>Accounts, cards and a broader platform</h3>
+            <p>
+              Partner accounts and cards belong to later product Phase 6. Each needs separate
+              commercial, financial and operational acceptance.
+            </p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="stervox-section layout-section" aria-labelledby="founder-title">
+    <div class="layout-container--wide stervox-story">
+      <div>
+        <p class="stervox-eyebrow">A NOTE FROM ME</p>
+        <h2 id="founder-title">Ambitious by design.<br />Patient in execution.</h2>
+      </div>
+      <div class="stervox-prose">
+        <blockquote>
+          “This is an ambitious project. It will not be easy, and I’m not approaching it as a quick
+          launch. I’ve mapped a ten-year direction because I want to build something worth owning
+          for the long term.”
+        </blockquote>
+        <p class="stervox-signature">Serhat Soruklu · Founder &amp; builder</p>
+        <p>
+          For investors and potential collaborators, the thesis is ownership: a useful consumer
+          product supported by a core we can understand, inspect and develop. The roadmap ties
+          expansion to dependencies, risk reviews and release gates. Commercial traction and
+          production reliability still have to be earned.
+        </p>
+        <p class="stervox-caption">
+          Status: architecture, design and foundation development. The production financial core is
+          not implemented. The planned launch date is a target and does not announce a live
+          financial service.
+        </p>
+        <div class="stervox-actions">
+          <a
+            class="site-button site-button-primary"
+            href="https://stervox.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Open Stervox ↗</a
+          ><a
+            class="site-button site-button-secondary"
+            routerLink="/systems"
+            (click)="topNavigation.handleLinkClick('/systems')"
+            >Explore all systems</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

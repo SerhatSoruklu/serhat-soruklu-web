@@ -34,6 +34,14 @@ export const routes: Routes = [
     },
   },
   {
+    path: 'systems/stervox',
+    loadComponent: () =>
+      import('./pages/systems/stervox/stervox-system.component').then(
+        (component) => component.StervoxSystemComponent,
+      ),
+    data: { seo: pageSeoMetadata.stervoxSystem },
+  },
+  {
     path: 'systems/chatpdm',
     loadComponent: () =>
       import('./pages/systems/chatpdm/chatpdm-system.component').then(

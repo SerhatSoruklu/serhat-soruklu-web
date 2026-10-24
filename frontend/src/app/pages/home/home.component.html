@@ -128,16 +128,34 @@
             <span class="home-hero__portrait-frame">
               <picture class="home-hero__portrait-picture">
                 <source
-                  [srcset]="portraitSources.light.src"
+                  type="image/avif"
+                  [srcset]="portraitSources.light.avifSrcSet"
+                  [sizes]="portraitSizes"
                   [attr.media]="portraitSourceMedia().light"
                 />
                 <source
-                  [srcset]="portraitSources.dark.src"
+                  type="image/avif"
+                  [srcset]="portraitSources.dark.avifSrcSet"
+                  [sizes]="portraitSizes"
+                  [attr.media]="portraitSourceMedia().dark"
+                />
+                <source
+                  type="image/webp"
+                  [srcset]="portraitSources.light.srcSet"
+                  [sizes]="portraitSizes"
+                  [attr.media]="portraitSourceMedia().light"
+                />
+                <source
+                  type="image/webp"
+                  [srcset]="portraitSources.dark.srcSet"
+                  [sizes]="portraitSizes"
                   [attr.media]="portraitSourceMedia().dark"
                 />
                 <img
                   data-testid="home-hero-portrait-image"
                   [src]="portrait().src"
+                  [srcset]="portrait().srcSet"
+                  [sizes]="portraitSizes"
                   [alt]="portrait().alt"
                   [attr.data-portrait-theme]="resolvedTheme()"
                   [attr.data-portrait-ready-theme]="portraitReadyTheme()"
@@ -160,15 +178,17 @@
     </div>
   </section>
 
+  <app-stervox-launch />
+
   <section class="home-systems layout-section" aria-labelledby="selected-systems-title">
     <div class="home-section-frame">
       <div class="home-systems__inner">
         <div class="home-systems__header">
           <p class="home-section__phase">SELECTED SYSTEMS</p>
-          <h2 id="selected-systems-title">Built Systems, Not Concepts</h2>
+          <h2 id="selected-systems-title">Live Systems. Ambitious Foundations.</h2>
           <p>
-            A selection of production platforms and public systems built for clarity, control and
-            long-term operation.
+            Production platforms, public systems and the next chapter in financial infrastructure.
+            Different stages, the same commitment to long-term ownership.
           </p>
         </div>
 
@@ -492,6 +512,19 @@
                   </text>
                 </g>
               </svg>
+            </div>
+          </article>
+          <article class="system-panel system-panel--stervox" aria-labelledby="stervox-home-title">
+            <div class="system-panel__content">
+              <p class="system-panel__eyebrow">The next chapter · Coming soon</p>
+              <h3 id="stervox-home-title" class="system-panel__brand-title"><app-stervox-brand class="stervox-home-brand" [linked]="true" [tooltipPlacement]="projectTitleTooltipPlacement()" /></h3>
+              <p class="system-panel__statement">Make the bricks. Build the future.</p>
+              <p class="stervox-home-summary">My most ambitious build yet: a clearer financial life, powered by a core I’m building from the foundations up. Our own ledger. Our own identity workflows. A ten-year direction.</p>
+              <ul class="system-panel__signals" aria-label="Stervox development status"><li>In development · Planned launch 5 January 2027</li><li>VOXCORE: an in-house financial engine in development</li><li>A phased roadmap through 2036</li></ul>
+              <a class="site-button site-button-secondary system-panel__button system-panel__button--quiet" routerLink="/systems/stervox" (click)="topNavigation.handleLinkClick('/systems/stervox')" data-testid="stervox-explore-link">Explore Stervox →</a>
+            </div>
+            <div class="system-panel__diagram stervox-home-diagram" data-testid="stervox-architecture-diagram">
+              <app-stervox-architecture class="stervox-architecture--quiet" />
             </div>
           </article>
           <article
@@ -829,8 +862,21 @@
             <div class="system-panel__content">
               <p class="system-panel__eyebrow">Responsible Systems Coalition</p>
               <h3 id="codaris-home-title" class="system-panel__brand-title">
-                <a class="codaris-home-brand" href="https://codaris.org" target="_blank" rel="noopener noreferrer" aria-label="Open CODARIS.org in a new tab">
-                  <img src="/assets/projects/codaris/emblem.svg" width="40" height="40" alt="" /><span>COD<span class="codaris-a">A</span>RIS</span>
+                <a
+                  class="project-logo-link codaris-home-brand"
+                  href="https://codaris.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open CODARIS.org in a new tab"
+                  appTooltip="https://codaris.org"
+                  [appTooltipPlacement]="projectTitleTooltipPlacement()"
+                >
+                  <svg class="codaris-home-brand__emblem" width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+                    <path d="M20 2 36 11v18L20 38 4 29V11Z" fill="none" stroke="currentColor" stroke-width="2" />
+                    <path d="m26 12-6-3-10 6v11l10 6 6-3v-5l-6 3-5-3v-6l5-3 6 3Z" fill="currentColor" />
+                    <path d="m29 11 3 2v14l-3 2" fill="none" stroke="currentColor" />
+                  </svg>
+                  <span>CODARIS</span>
                 </a>
               </h3>
               <p class="system-panel__statement">An independent developer coalition advancing practical and verifiable work around responsible intelligent systems.</p>
@@ -842,7 +888,7 @@
               <div class="system-panel__stack" aria-label="CODARIS platform stack"><span>C17</span><span>WebAssembly</span><span>PostgreSQL</span></div>
               <a class="site-button site-button-secondary system-panel__button system-panel__button--quiet" routerLink="/systems/codaris" (click)="topNavigation.handleLinkClick('/systems/codaris')">Explore CODARIS System</a>
             </div>
-            <div class="system-panel__diagram codaris-home-diagram" role="img" aria-label="CODARIS work cycle: coalition, verify, advance">
+            <div class="system-panel__diagram codaris-home-diagram" data-testid="codaris-architecture-diagram" role="img" aria-label="CODARIS work cycle: coalition, verify, advance">
               <div><span>01</span><strong>Coalition</strong></div><i aria-hidden="true">→</i>
               <div><span>02</span><strong>Verify</strong></div><i aria-hidden="true">→</i>
               <div><span>03</span><strong>Advance</strong></div>

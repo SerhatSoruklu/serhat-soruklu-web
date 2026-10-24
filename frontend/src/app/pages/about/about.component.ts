@@ -13,9 +13,11 @@ import {
   mdiTextBoxOutline,
 } from '@mdi/js';
 
+import { StervoxBrandComponent } from '../../shared/stervox-brand/stervox-brand.component';
 import { IdentityLanguageService } from '../../core/identity/identity-language.service';
 import { SeoService } from '../../core/seo/seo.service';
 import { PathIconComponent } from '../../shared/icons/path-icon.component';
+import { ORIGINAL_PORTRAIT } from '../../shared/portraits/original-portrait.config';
 import { aboutContent } from './about.content';
 import { AboutProfileDialogService } from './about-profile-dialog/about-profile-dialog.service';
 
@@ -28,7 +30,7 @@ interface PublicProfile {
 
 @Component({
   selector: 'app-about',
-  imports: [PathIconComponent, RouterLink],
+  imports: [PathIconComponent, RouterLink, StervoxBrandComponent],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css',
 })
@@ -40,7 +42,8 @@ export class AboutComponent implements OnDestroy {
 
   readonly language = this.identityLanguage.language;
   readonly content = computed(() => aboutContent[this.language()]);
-  readonly portraitPath = '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png';
+  readonly portrait = ORIGINAL_PORTRAIT;
+  readonly portraitPath = ORIGINAL_PORTRAIT.src;
   readonly iconPaths = {
     arrow: mdiArrowRight,
     click: mdiCursorDefaultClickOutline,

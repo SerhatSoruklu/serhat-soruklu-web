@@ -41,10 +41,10 @@ describe('AboutProfileDialogComponent', () => {
     expect(nativeElement.textContent).toContain('Founder and CEO of Coupyn');
     expect(nativeElement.textContent).toContain('Osmancık, Çorum, Turkey');
     expect(image?.getAttribute('src')).toBe(
-      '/assets/about/serhat-soruklu-coupyn-founder-natural-portrait.png',
+      '/assets/portraits/serhat-soruklu-real-selfie-1022.webp',
     );
-    expect(image?.width).toBe(825);
-    expect(image?.height).toBe(743);
+    expect(image?.width).toBe(1022);
+    expect(image?.height).toBe(1533);
     expect(image?.alt).toBe('Portrait of Serhat Soruklu, founder and CEO of Coupyn.');
   });
 

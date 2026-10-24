@@ -10,6 +10,7 @@ const routes = [
     path: '/systems/coupyn',
     heading: 'A live public offer and referral intelligence platform.',
   },
+  { path: '/systems/stervox', heading: /^Stervox$/ },
   {
     path: '/systems/chatpdm',
     heading: 'Deterministic interpretation inside defined constraints.',

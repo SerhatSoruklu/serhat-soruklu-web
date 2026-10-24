@@ -78,15 +78,27 @@
           (click)="openProfileDialog()"
         >
           <span class="about-portrait__index" aria-hidden="true">SS / 1996</span>
-          <img
-            [src]="portraitPath"
-            [alt]="content().hero.portraitAlt"
-            width="825"
-            height="743"
-            loading="eager"
-            decoding="async"
-            fetchpriority="high"
-          />
+          <picture>
+            <source
+              type="image/avif"
+              [srcset]="portrait.avifSrcset"
+              sizes="(min-width: 1024px) 480px, (min-width: 768px) 440px, calc(100vw - 40px)"
+            />
+            <source
+              type="image/webp"
+              [srcset]="portrait.webpSrcset"
+              sizes="(min-width: 1024px) 480px, (min-width: 768px) 440px, calc(100vw - 40px)"
+            />
+            <img
+              [src]="portraitPath"
+              [alt]="content().hero.portraitAlt"
+              [width]="portrait.width"
+              [height]="portrait.height"
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
+            />
+          </picture>
           <span class="about-portrait__action">
             <span>{{ content().hero.portraitAction }}</span>
             <app-path-icon name="about-portrait-arrow" [path]="iconPaths.arrow" />
@@ -243,6 +255,20 @@
     </div>
   </section>
 
+  <section id="stervox" class="about-section layout-section" aria-labelledby="about-stervox-title">
+    <div class="about-frame">
+      <header class="about-section-heading">
+        <p class="about-eyebrow">{{ content().stervox.kicker }} · {{ content().stervox.status }}</p>
+        <app-stervox-brand class="about-stervox-brand" [linked]="true" />
+        <h2 id="about-stervox-title">{{ content().stervox.heading }}</h2>
+      </header>
+      <div class="about-prose">
+        @for (paragraph of content().stervox.paragraphs; track $index) { <p>{{ paragraph }}</p> }
+      </div>
+      <div class="about-actions"><a class="about-action about-action--primary" routerLink="/systems/stervox"><span>{{ content().stervox.action }}</span><app-path-icon name="about-stervox-arrow" [path]="iconPaths.arrow" /></a></div>
+    </div>
+  </section>
+
   <section id="systems" class="about-section layout-section" aria-labelledby="about-systems-title">
     <div class="about-frame">
       <header class="about-section-heading about-section-heading--wide">
@@ -255,9 +281,17 @@
 
       <div class="about-systems">
         @for (system of content().systems.cards; track system.title) {
-          <article class="about-system-card">
+          <article class="about-system-card"
+            [class.about-system-card--commercial]="system.title === 'Coupyn' || system.title === 'Stervox'"
+            [class.about-system-card--stervox]="system.title === 'Stervox'">
+            @if (system.title === 'Coupyn' || system.title === 'Stervox') {
+              <p class="about-system-card__venture">{{ content().systems.commercialLabel }}</p>
+            }
             <span class="about-system-card__index" aria-hidden="true">{{ system.index }}</span>
             <h3>@if (system.title === 'CODARIS') { COD<span class="about-codaris-a">A</span>RIS } @else { {{ system.title }} }</h3>
+            @if (system.title === 'Coupyn' || system.title === 'Stervox') {
+              <span class="about-system-card__status">{{ system.title === 'Coupyn' ? content().systems.productionLabel : content().systems.developmentLabel }}</span>
+            }
             <p>{{ system.description }}</p>
             @if (system.path) {
               <a [routerLink]="system.path">

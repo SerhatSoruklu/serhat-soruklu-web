@@ -1,0 +1,126 @@
+<section
+  class="launch-section layout-section"
+  aria-labelledby="stervox-launch-title"
+  data-testid="stervox-launch"
+>
+  <div class="layout-container--wide">
+    <div class="launch-panel">
+      <svg
+        class="launch-atmosphere"
+        viewBox="0 0 1200 600"
+        preserveAspectRatio="none"
+        fill="none"
+        aria-hidden="true"
+      >
+        <g stroke="currentColor" stroke-width="1">
+          <path d="M-40 540C200 140 340 560 680 190S1000 80 1240 0" />
+          <path d="M-40 560C200 160 340 580 680 210S1000 100 1240 20" />
+          <path d="M-40 580C200 180 340 600 680 230S1000 120 1240 40" />
+          <path d="M-40 600C200 200 340 620 680 250S1000 140 1240 60" />
+        </g>
+      </svg>
+
+      <div class="launch-copy">
+        <p class="launch-eyebrow">THE NEXT CHAPTER · COMING SOON</p>
+        <app-stervox-brand class="launch-brand" [linked]="true" tooltipPlacement="bottom" />
+        <h2 id="stervox-launch-title">British roots.<br />Global Ambition.</h2>
+        <p class="launch-intro">
+          A clearer financial life. An owned core. An ambition built from the foundations up.
+        </p>
+        <p class="launch-region">
+          <img
+            src="/assets/projects/stervox/launch/uk-flag.svg"
+            width="28"
+            height="21"
+            alt="United Kingdom"
+          />
+          <span><strong>UK first.</strong> Expanding into further countries in phases.</span>
+        </p>
+        <a class="launch-explore" routerLink="/systems/stervox"
+          >Explore Stervox <span aria-hidden="true">→</span></a
+        >
+      </div>
+
+      <div class="launch-countdown">
+        <div class="launch-app-icon">
+          <span class="launch-app-orbit" aria-hidden="true"></span>
+          <img
+            src="/assets/projects/stervox/launch/app-icon-384.webp"
+            srcset="
+              /assets/projects/stervox/launch/app-icon-384.webp 384w,
+              /assets/projects/stervox/launch/app-icon-768.webp 768w
+            "
+            sizes="112px"
+            width="1254"
+            height="1254"
+            alt="Stervox app icon"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <p class="launch-countdown__label">PLANNED PLATFORM RELEASE</p>
+        <p class="launch-date"><time datetime="2027-01-05T00:00:00Z">5 January 2027</time></p>
+        <div
+          class="launch-clock"
+          role="timer"
+          aria-live="off"
+          [attr.aria-label]="accessibleTime()"
+          data-testid="stervox-countdown"
+        >
+          @for (unit of units(); track unit.label) {
+            <div
+              class="clock-unit"
+              [attr.data-unit]="unit.label.toLowerCase()"
+              [attr.data-value]="unit.value"
+              aria-hidden="true"
+            >
+              <div class="clock-face">
+                @for (digit of unit.digits; track $index) {
+                  <span
+                    class="clock-digit"
+                    [class.clock-digit--changed]="digit.changed"
+                    [class.clock-digit--odd]="digit.odd"
+                    [class.clock-digit--even]="!digit.odd"
+                    [attr.data-digit]="digit.value"
+                  >
+                    <span class="clock-value">{{ digit.value }}</span>
+                    <span class="clock-previous">{{ digit.previous }}</span>
+                  </span>
+                }
+              </div>
+              <span class="clock-label">{{ unit.label }}</span>
+            </div>
+          }
+        </div>
+        @if (reachedTarget()) {
+          <p class="launch-milestone">
+            Target date reached. Visit Stervox for the latest release status.
+          </p>
+        } @else {
+          <p class="launch-milestone">
+            The foundations come first. Target date subject to readiness.
+          </p>
+        }
+        <div class="launch-stores" aria-label="Mobile apps coming soon">
+          <img
+            src="/assets/projects/stervox/launch/app-store-coming-soon.svg"
+            width="184"
+            height="60"
+            alt="Coming soon on the App Store"
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            src="/assets/projects/stervox/launch/google-play-coming-soon.svg"
+            width="184"
+            height="60"
+            alt="Coming soon on Google Play"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <p class="launch-app-date">Mobile apps planned for around May 2027.</p>
+      </div>
+    </div>
+  </div>
+</section>

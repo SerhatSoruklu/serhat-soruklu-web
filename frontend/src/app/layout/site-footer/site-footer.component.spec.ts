@@ -44,7 +44,7 @@ describe('SiteFooterComponent', () => {
     const nativeElement = fixture.nativeElement as HTMLElement;
     const links = Array.from(
       nativeElement.querySelectorAll<HTMLAnchorElement>('.site-footer__link'),
-    ).map((link) => link.textContent?.trim());
+    ).map((link) => link.getAttribute('aria-label'));
     const groupTitles = Array.from(
       nativeElement.querySelectorAll<HTMLElement>('.site-footer__group-title'),
     ).map((title) => title.textContent?.trim().replace(/\s+/g, ' '));
@@ -64,6 +64,7 @@ describe('SiteFooterComponent', () => {
       'Writing',
       'GitHub',
       'Coupyn',
+      'Stervox · Coming soon',
       'ChatPDM',
       'CODARIS',
       'DBF',
@@ -91,6 +92,7 @@ describe('SiteFooterComponent', () => {
     ]);
     expect(component.systemLinks.map((link) => link.path)).toEqual([
       '/systems/coupyn',
+      '/systems/stervox',
       '/systems/chatpdm',
       '/systems/codaris',
       '/systems/deterministic-boundary-firewall',
