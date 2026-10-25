@@ -3,6 +3,7 @@ import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
+import { ORIGINAL_PORTRAIT } from '../../shared/portraits/original-portrait.config';
 import { pageSeoMetadata, RobotsDirective, seoConfig, StructuredDataProfile } from './seo.config';
 
 export interface RouteSeoMetadata {
@@ -309,7 +310,7 @@ export class SeoService {
       return;
     }
 
-    this.setJsonLd(this.createBreadcrumbStructuredData(routeSeo));
+    this.setJsonLd(this.createPageStructuredData(routeSeo));
   }
 
   private canUseDocumentHead(): boolean {
@@ -347,7 +348,10 @@ export class SeoService {
     );
   }
 
-  private createBreadcrumbStructuredData(routeSeo: RouteSeoMetadata): object {
+  private createPageStructuredData(
+    routeSeo: RouteSeoMetadata,
+    mainEntityId?: string,
+  ): object {
     const items: Array<{
       '@type': 'ListItem';
       position: number;
@@ -394,8 +398,31 @@ export class SeoService {
     };
 
     const isHome = routeSeo.path === pageSeoMetadata.home.path;
+    const routeUrl = this.toAbsoluteUrl(routeSeo.path);
+    const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
     const graph = [
       ...(isHome ? [] : [breadcrumbNode]),
+      {
+        '@type': 'WebPage',
+        '@id': `${routeUrl}#webpage`,
+        url: routeUrl,
+        name: routeSeo.title,
+        description: routeSeo.description,
+        inLanguage: 'en-GB',
+        isPartOf: { '@id': `${homeUrl}#website` },
+        author: { '@id': `${homeUrl}#person` },
+        ...(isHome
+          ? { about: { '@id': `${homeUrl}#person` } }
+          : { breadcrumb: { '@id': breadcrumb['@id'] } }),
+        ...(mainEntityId ? { mainEntity: { '@id': mainEntityId } } : {}),
+        primaryImageOfPage: {
+          '@type': 'ImageObject',
+          url: this.toAbsoluteUrl(routeSeo.ogImage ?? seoConfig.defaultOgImage),
+          width: routeSeo.ogImageWidth ?? 1200,
+          height: routeSeo.ogImageHeight ?? 630,
+          caption: routeSeo.ogImageAlt,
+        },
+      },
       this.createWebsiteStructuredData(),
       this.createPersonStructuredData(),
       ...(isHome ? [this.createCoupynOrganizationStructuredData()] : []),
@@ -432,8 +459,10 @@ export class SeoService {
       '@type': 'Person',
       '@id': `${homeUrl}#person`,
       name: seoConfig.authorName,
+      givenName: 'Serhat',
+      familyName: 'Soruklu',
       url: homeUrl,
-      image: this.toAbsoluteUrl(seoConfig.defaultPersonImage),
+      image: this.createOriginalPortraitStructuredData(),
       mainEntityOfPage: {
         '@id': `${aboutUrl}#webpage`,
       },
@@ -474,6 +503,24 @@ export class SeoService {
     };
   }
 
+  private createOriginalPortraitStructuredData(
+    caption = 'Portrait of Serhat Soruklu, founder and CEO of Coupyn.',
+  ): object {
+    const portraitUrl = this.toAbsoluteUrl(seoConfig.defaultPersonImage);
+
+    return {
+      '@type': 'ImageObject',
+      '@id': `${portraitUrl}#image`,
+      url: portraitUrl,
+      contentUrl: portraitUrl,
+      encodingFormat: 'image/png',
+      width: ORIGINAL_PORTRAIT.width,
+      height: ORIGINAL_PORTRAIT.height,
+      caption,
+      about: { '@id': `${this.toAbsoluteUrl(pageSeoMetadata.home.path)}#person` },
+    };
+  }
+
   private createCoupynOrganizationStructuredData(): object {
     const homeUrl = this.toAbsoluteUrl(pageSeoMetadata.home.path);
 
@@ -501,7 +548,6 @@ export class SeoService {
     const websiteId = `${homeUrl}#website`;
     const webpageId = `${routeUrl}#webpage`;
     const breadcrumbId = `${routeUrl}#breadcrumb`;
-    const portraitUrl = this.toAbsoluteUrl(seoConfig.defaultPersonImage);
 
     return {
       '@context': 'https://schema.org',
@@ -539,13 +585,7 @@ export class SeoService {
           about: {
             '@id': personId,
           },
-          primaryImageOfPage: {
-            '@type': 'ImageObject',
-            url: portraitUrl,
-            width: 1022,
-            height: 1533,
-            caption: portraitAlt,
-          },
+          primaryImageOfPage: this.createOriginalPortraitStructuredData(portraitAlt),
           breadcrumb: {
             '@id': breadcrumbId,
           },
@@ -626,24 +666,13 @@ export class SeoService {
 
   private createStervoxStructuredData(routeSeo: RouteSeoMetadata): object {
     const routeUrl = this.toAbsoluteUrl(routeSeo.path);
-    const homeUrl = this.toAbsoluteUrl('/');
-    const base = this.createBreadcrumbStructuredData(routeSeo) as { '@graph': object[] };
+    const base = this.createPageStructuredData(routeSeo, `${routeUrl}#project`) as {
+      '@graph': object[];
+    };
     return {
       '@context': 'https://schema.org',
       '@graph': [
         ...base['@graph'],
-        {
-          '@type': 'WebPage',
-          '@id': `${routeUrl}#webpage`,
-          url: routeUrl,
-          name: routeSeo.title,
-          description: routeSeo.description,
-          inLanguage: 'en-GB',
-          isPartOf: { '@id': `${homeUrl}#website` },
-          breadcrumb: { '@id': `${routeUrl}#breadcrumb` },
-          mainEntity: { '@id': `${routeUrl}#project` },
-          primaryImageOfPage: { '@type': 'ImageObject', url: this.toAbsoluteUrl(pageSeoMetadata.stervoxSystem.ogImage), width: 1200, height: 630 },
-        },
         this.createStervoxProjectStructuredData(),
       ],
     };

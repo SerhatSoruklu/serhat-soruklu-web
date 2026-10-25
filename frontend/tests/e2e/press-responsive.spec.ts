@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import type { Locator, Page, Request, Response, TestInfo } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 
+import { PROFILE_PORTRAITS } from '../../src/app/shared/portraits/profile-portraits.config';
 import { installConsoleErrorGuard } from './support/console-errors';
 
 const pressPath = '/press';
@@ -52,6 +53,13 @@ const pressAssets = [
     type: /^image\/png/,
     width: 1846,
   },
+  ...PROFILE_PORTRAITS.map((asset) => ({
+    height: asset.height,
+    path: asset.src,
+    previewPath: asset.previewSrc,
+    type: /^image\/png/,
+    width: asset.width,
+  })),
   {
     height: 630,
     path: '/assets/social/serhat-soruklu-systems-coupyn-og.png',
@@ -96,6 +104,7 @@ const downloadableAssets = [
     fileName: 'serhat-soruklu-office-dark-8k.png',
     path: '/assets/portraits/serhat-soruklu-office-dark-8k.png',
   },
+  ...PROFILE_PORTRAITS.map((asset) => ({ fileName: asset.fileName, path: asset.src })),
   {
     fileName: 'serhat-soruklu-systems-coupyn-og.png',
     path: '/assets/social/serhat-soruklu-systems-coupyn-og.png',
@@ -356,21 +365,27 @@ test.describe('Press and media page', () => {
     await expect(
       page.getByRole('heading', { level: 2, name: 'Founder photography' }),
     ).toBeVisible();
-    await expect(page.locator('.press-asset-card')).toHaveCount(3);
+    await expect(page.locator('.press-asset-card')).toHaveCount(7);
     await expect(page.locator('.press-asset-card h3')).toHaveText([
       'Original selfie',
       'Founder workstation visual — light',
       'Founder workstation visual — dark',
+      'Charcoal suit — warm smile',
+      'Navy suit — neutral expression',
+      'Outdoor portrait — subtle smile',
+      'White shirt — relaxed expression',
     ]);
     await expect(page.locator('.press-asset-card__preview > span')).toHaveText([
       'ORIGINAL PHOTOGRAPH',
       'AI-ASSISTED PHOTOGRAPH',
       'AI-ASSISTED PHOTOGRAPH',
+      ...PROFILE_PORTRAITS.map((asset) => asset.assetLabel),
     ]);
     await expect(page.locator('.press-asset-card__provenance')).toHaveText([
       'The supplied original selfie, preserved unchanged. The download is the original PNG; previews are optimised display copies.',
       'AI-assisted office composite, created on 24 October 2026 with OpenAI image generation using Serhat’s original selfie and real workspace. Native output: 1846 × 852; not an unaltered photograph.',
       'AI-assisted office composite, created on 24 October 2026 with OpenAI image generation using Serhat’s original selfie and real workspace. Native output: 1846 × 852; not an unaltered photograph.',
+      ...PROFILE_PORTRAITS.map((asset) => asset.provenance),
     ]);
     await expect(page.locator('.press-asset-card img').nth(1)).toHaveAttribute(
       'alt',
@@ -445,6 +460,15 @@ test.describe('Press and media page', () => {
       expect(response.headers()['content-type'], asset.path).toMatch(
         asset.path.endsWith('.svg') ? /^image\/svg\+xml/ : /^image\/png/,
       );
+      const portrait = PROFILE_PORTRAITS.find((candidate) => candidate.src === asset.path);
+      if (portrait) {
+        const png = await response.body();
+        expect(png.subarray(0, 8).toString('hex')).toBe('89504e470d0a1a0a');
+        expect({ width: png.readUInt32BE(16), height: png.readUInt32BE(20) }).toEqual({
+          width: portrait.width,
+          height: portrait.height,
+        });
+      }
     }
 
     for (const asset of pressAssets) {
@@ -696,7 +720,7 @@ test.describe('Press and media page', () => {
           card.scrollHeight,
           `${viewport.name}: asset card ${cardIndex + 1} vertical content`,
         ).toBeLessThanOrEqual(card.clientHeight + 1);
-        expect(card.actions).toHaveLength(cardIndex === 0 ? 2 : 3);
+        expect(card.actions).toHaveLength(cardIndex === 1 || cardIndex === 2 ? 3 : 2);
         for (const [actionIndex, action] of card.actions.entries()) {
           expect(
             action.top,
@@ -725,7 +749,7 @@ test.describe('Press and media page', () => {
       }
 
       await expect(page.locator('.press-fact-sheet dt')).not.toHaveCount(0);
-      await expect(page.locator('.press-asset-card__actions a')).toHaveCount(8);
+      await expect(page.locator('.press-asset-card__actions a')).toHaveCount(16);
       await expect(page.locator('.press-verification-list a')).toHaveCount(
         verificationLinks.length,
       );
@@ -1093,7 +1117,7 @@ test.describe('Press and media page', () => {
           card.scrollHeight,
           `${viewport.name}: 200% asset card ${cardIndex + 1} vertical content`,
         ).toBeLessThanOrEqual(card.clientHeight + 1);
-        expect(card.actions).toHaveLength(cardIndex === 0 ? 2 : 3);
+        expect(card.actions).toHaveLength(cardIndex === 1 || cardIndex === 2 ? 3 : 2);
         for (const [actionIndex, action] of card.actions.entries()) {
           expect(
             action.top,

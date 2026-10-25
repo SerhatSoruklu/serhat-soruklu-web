@@ -38,6 +38,7 @@ interface SitemapEntry {
   lastmod: string | null;
   changefreq: string | null;
   priority: string | null;
+  images: string[];
 }
 
 function getTitle(html: string): string | null {
@@ -138,6 +139,7 @@ function getSitemapEntries(sitemap: string): SitemapEntry[] {
     lastmod: getXmlElementValue(match[1], 'lastmod'),
     changefreq: getXmlElementValue(match[1], 'changefreq'),
     priority: getXmlElementValue(match[1], 'priority'),
+    images: [...match[1].matchAll(/<image:loc>(.*?)<\/image:loc>/g)].map((image) => image[1]),
   }));
 }
 
@@ -209,6 +211,7 @@ test.describe('seo metadata', () => {
 
     expect(response.ok()).toBe(true);
     expect(entities.map((entity) => entity['@type'])).toEqual([
+      'WebPage',
       'WebSite',
       'Person',
       'Organization',
@@ -324,10 +327,14 @@ test.describe('seo metadata', () => {
     expect(profilePage?.['inLanguage']).toBe('en-GB');
     expect(profilePage?.['primaryImageOfPage']).toEqual({
       '@type': 'ImageObject',
+      '@id': `${canonicalBaseUrl}/assets/portraits/serhat-soruklu-real-selfie.png#image`,
       url: `${canonicalBaseUrl}/assets/portraits/serhat-soruklu-real-selfie.png`,
+      contentUrl: `${canonicalBaseUrl}/assets/portraits/serhat-soruklu-real-selfie.png`,
+      encodingFormat: 'image/png',
       width: 1022,
       height: 1533,
       caption: 'Portrait of Serhat Soruklu, founder and CEO of Coupyn.',
+      about: { '@id': `${canonicalBaseUrl}/#person` },
     });
     expect(person?.['@id']).toBe(`${canonicalBaseUrl}/#person`);
     expect(person?.['mainEntityOfPage']).toEqual({
@@ -495,7 +502,8 @@ test.describe('seo metadata', () => {
 
     expect(response.ok()).toBe(true);
     expect(sitemap).toMatch(/^<\?xml version="1\.0" encoding="UTF-8"\?>/);
-    expect(sitemap).toContain('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
+    expect(sitemap).toContain('xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"');
+    expect(sitemap).toContain('xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"');
     expect(sitemap.trim()).toMatch(/<\/urlset>$/);
     expect(sitemap).not.toContain('localhost');
     expect(new Set(urls).size).toBe(urls.length);
@@ -516,6 +524,9 @@ test.describe('seo metadata', () => {
         lastmod: route.lastModified,
         changefreq: route.changeFrequency,
         priority: formatSitemapPriority(route.priority),
+        images: 'images' in route
+          ? route.images.map((image) => new URL(image, canonicalBaseUrl).toString())
+          : [],
       });
     }
   });

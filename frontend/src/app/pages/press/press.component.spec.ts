@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 
 import { ThemeService } from '../../core/theme/theme.service';
 import { HEADER_IDENTITY_ITEMS, HEADER_NAV_ITEMS } from '../../layout/site-header/header-icons';
+import { PROFILE_PORTRAITS } from '../../shared/portraits/profile-portraits.config';
 import { PressComponent } from './press.component';
 
 describe('PressComponent', () => {
@@ -29,6 +30,7 @@ describe('PressComponent', () => {
       'Reference facts, biographies, images and background material for journalists, researchers and media enquiries.',
     );
     expect(text).toContain('first-party reference material');
+    expect(text).toContain('25 October 2026');
     expect(text).not.toMatch(/\bSly\b/i);
     expect(text).not.toContain('Press coverage');
     expect(nativeElement.querySelector('[data-testid="about-language-switch"]')).toBeNull();
@@ -147,11 +149,12 @@ describe('PressComponent', () => {
       nativeElement.querySelectorAll<HTMLAnchorElement>('.press-format-list a'),
     );
 
-    expect(images).toHaveLength(3);
+    expect(images).toHaveLength(7);
     expect(imageSources).toEqual([
       '/assets/portraits/serhat-soruklu-real-selfie-1022.webp',
       '/assets/portraits/serhat-soruklu-office-light-1846.webp',
       '/assets/portraits/serhat-soruklu-office-dark-1846.webp',
+      ...PROFILE_PORTRAITS.map((asset) => asset.previewSrc),
     ]);
     expect(
       images.map((image) => [image.getAttribute('width'), image.getAttribute('height')]),
@@ -159,6 +162,10 @@ describe('PressComponent', () => {
       ['1022', '1533'],
       ['1846', '852'],
       ['1846', '852'],
+      ['1254', '1254'],
+      ['1122', '1402'],
+      ['1448', '1086'],
+      ['1672', '941'],
     ]);
     expect(downloadLinks.map((link) => link.getAttribute('download'))).toEqual([
       'serhat-soruklu-real-selfie.png',
@@ -166,11 +173,15 @@ describe('PressComponent', () => {
       'serhat-soruklu-office-light-8k.png',
       'serhat-soruklu-office-dark-native.png',
       'serhat-soruklu-office-dark-8k.png',
+      ...PROFILE_PORTRAITS.map((asset) => asset.fileName),
     ]);
     expect(fullResolutionLinks.map((link) => link.getAttribute('aria-label'))).toEqual([
       'Open full resolution ↗ — Original selfie, opens in a new tab',
       'Open full resolution ↗ — Founder workstation visual — light, opens in a new tab',
       'Open full resolution ↗ — Founder workstation visual — dark, opens in a new tab',
+      ...PROFILE_PORTRAITS.map((asset) =>
+        `Open full resolution ↗ — ${asset.title}, opens in a new tab`,
+      ),
     ]);
     expect(nativeElement.textContent).toContain('AI-ASSISTED PHOTOGRAPH');
     expect(nativeElement.textContent).toContain(
@@ -184,11 +195,12 @@ describe('PressComponent', () => {
     expect(nativeElement.textContent?.replace(/\s+/g, ' ')).toContain(
       'are enlarged exports and add no native detail.',
     );
-    expect(nativeElement.querySelectorAll('.press-asset-card picture source[type="image/avif"]')).toHaveLength(3);
+    expect(nativeElement.querySelectorAll('.press-asset-card picture source[type="image/avif"]')).toHaveLength(7);
     expect(fullResolutionLinks.map((link) => link.getAttribute('href'))).toEqual([
       '/assets/portraits/serhat-soruklu-real-selfie.png',
       '/assets/portraits/serhat-soruklu-office-light-native.png',
       '/assets/portraits/serhat-soruklu-office-dark-native.png',
+      ...PROFILE_PORTRAITS.map((asset) => asset.src),
     ]);
     expect(coupynPreview?.getAttribute('src')).toBe(
       '/assets/social/serhat-soruklu-systems-coupyn-og.png',
@@ -200,6 +212,31 @@ describe('PressComponent', () => {
     expect(codarisPreview?.getAttribute('height')).toBe('630');
     expect(formatLinks.some((link) => link.href.endsWith('.png'))).toBe(true);
     expect(formatLinks.some((link) => link.href.endsWith('.svg'))).toBe(true);
+  });
+
+  it('labels all four profile variants as AI-assisted native images without enlarged exports', () => {
+    const fixture = TestBed.createComponent(PressComponent);
+    fixture.detectChanges();
+    const native = fixture.nativeElement as HTMLElement;
+    const profileCards = Array.from(native.querySelectorAll('.press-asset-card')).slice(3);
+
+    expect(profileCards.map((card) => card.querySelector('h3')?.textContent)).toEqual([
+      'Charcoal suit — warm smile',
+      'Navy suit — neutral expression',
+      'Outdoor portrait — subtle smile',
+      'White shirt — relaxed expression',
+    ]);
+    for (const card of profileCards) {
+      expect(card.querySelector('.press-asset-card__preview > span')?.textContent).toContain('AI-ASSISTED');
+      expect(card.querySelector('img')?.getAttribute('alt')).toContain('AI-assisted');
+      expect(card.querySelector('img')?.getAttribute('srcset')).toMatch(/480w, .*800w$/);
+      expect(card.querySelector('.press-asset-card__provenance')?.textContent).toContain('AI-assisted');
+      expect(card.querySelectorAll('.press-asset-card__actions a')).toHaveLength(2);
+      expect(card.textContent).not.toMatch(/4K|8K/);
+    }
+    expect(native.querySelector('.press-permission-note')?.textContent?.replace(/\s+/g, ' ')).toContain(
+      'The four profile portraits also use the original selfie as a reference, with AI-generated clothing, poses and settings.',
+    );
   });
 
   it('renders selected systems and safe, accurately classified verification links', () => {

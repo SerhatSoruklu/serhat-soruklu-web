@@ -135,6 +135,51 @@ describe('SeoService', () => {
     }
   });
 
+  it('connects every indexable page to one canonical page node and the original portrait', () => {
+    const service = TestBed.inject(SeoService);
+    const portraitUrl = `https://serhatsoruklu.com${seoConfig.defaultPersonImage}`;
+
+    for (const metadata of Object.values(pageSeoMetadata).filter(
+      (candidate) => candidate.path !== pageSeoMetadata.notFound.path,
+    )) {
+      service.applyRouteMetadata({
+        data: { seo: metadata },
+        firstChild: null,
+      } as unknown as ActivatedRouteSnapshot);
+
+      const graph = JSON.parse(
+        globalThis.document.getElementById('page-json-ld')?.textContent ?? '{}',
+      ) as { '@graph': Array<Record<string, unknown>> };
+      const pageUrl = `https://serhatsoruklu.com${metadata.path}`;
+      const pageNodes = graph['@graph'].filter((node) => node['@id'] === `${pageUrl}#webpage`);
+      const person = graph['@graph'].find((node) => node['@type'] === 'Person');
+
+      expect(pageNodes).toHaveLength(1);
+      expect(pageNodes[0]).toEqual(expect.objectContaining({
+        url: pageUrl,
+        name: metadata.title,
+        description: metadata.description,
+        isPartOf: { '@id': 'https://serhatsoruklu.com/#website' },
+      }));
+      expect(person).toEqual(expect.objectContaining({
+        '@id': 'https://serhatsoruklu.com/#person',
+        givenName: 'Serhat',
+        familyName: 'Soruklu',
+        image: {
+          '@type': 'ImageObject',
+          '@id': `${portraitUrl}#image`,
+          url: portraitUrl,
+          contentUrl: portraitUrl,
+          encodingFormat: 'image/png',
+          width: 1022,
+          height: 1533,
+          caption: 'Portrait of Serhat Soruklu, founder and CEO of Coupyn.',
+          about: { '@id': 'https://serhatsoruklu.com/#person' },
+        },
+      }));
+    }
+  });
+
   it('applies noindex metadata and removes structured data for not-found routes', async () => {
     const router = TestBed.inject(Router);
     const title = TestBed.inject(Title);
@@ -246,6 +291,7 @@ describe('SeoService', () => {
       'https://serhatsoruklu.com/',
     );
     expect(entities.map((entity) => entity['@type'])).toEqual([
+      'WebPage',
       'WebSite',
       'Person',
       'Organization',
@@ -332,7 +378,14 @@ describe('SeoService', () => {
       expect.objectContaining({
         '@id': personId,
         url: 'https://serhatsoruklu.com/',
-        image: `https://serhatsoruklu.com${seoConfig.defaultPersonImage}`,
+        image: expect.objectContaining({
+          '@type': 'ImageObject',
+          contentUrl: `https://serhatsoruklu.com${seoConfig.defaultPersonImage}`,
+          encodingFormat: 'image/png',
+          width: 1022,
+          height: 1533,
+          about: { '@id': personId },
+        }),
         mainEntityOfPage: { '@id': `${canonicalUrl}#webpage` },
         birthDate: '1996-02-22',
         birthPlace: {
@@ -456,7 +509,10 @@ describe('SeoService', () => {
       expect.objectContaining({
         '@id': personId,
         mainEntityOfPage: { '@id': 'https://serhatsoruklu.com/about#webpage' },
-        image: `https://serhatsoruklu.com${seoConfig.defaultPersonImage}`,
+        image: expect.objectContaining({
+          '@type': 'ImageObject',
+          contentUrl: `https://serhatsoruklu.com${seoConfig.defaultPersonImage}`,
+        }),
         worksFor: { '@id': organizationId },
       }),
     );
