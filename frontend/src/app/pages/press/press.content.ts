@@ -441,7 +441,7 @@ function lightArtwork<T extends { previewSrc: string; formats: readonly PressMed
 }
 
 export const pressLightMedia = {
-  coupynMedia: lightArtwork(pressContent.coupynMedia, { PNG: '69.5 KiB', SVG: '13.2 KiB' }),
+  coupynMedia: lightArtwork(pressContent.coupynMedia, { PNG: '69.6 KiB', SVG: '13.2 KiB' }),
   stervoxMedia: lightArtwork(pressContent.stervoxMedia, { PNG: '67.8 KiB', SVG: '103.1 KiB' }),
   codarisMedia: lightArtwork(pressContent.codarisMedia, { PNG: '59.3 KiB', SVG: '5.2 KiB' }),
 };
