@@ -46,3 +46,37 @@ widths and sizes. The expanded dialog selects a larger display variant. About
 and Press use responsive previews, with lazy loading away from the hero. The
 About and Press social SVGs embed the new original; their raster previews are
 rendered through `render-system-social-previews.mjs --sync-embedded-portraits`.
+
+## Profile variations · 25 October 2026
+
+Four additional AI-assisted portraits are saved under
+`public/assets/portraits/profile/` and linked from the existing Press photography
+section. The original real selfie remains the primary Person/ProfilePage image.
+All four use that original as their identity reference. At the user's request,
+the charcoal suit and outdoor portraits received expression edits: a warm smile
+and a subtle closed-mouth smile, respectively. The other two retain their more
+neutral expressions.
+
+| Native PNG suffix | Dimensions | Ratio |
+| --- | --- | --- |
+| `charcoal-suit-smile` | 1254 × 1254 | 1:1 |
+| `navy-suit` | 1122 × 1402 | approximately 4:5 |
+| `outdoor-casual-smile` | 1448 × 1086 | 4:3 |
+| `white-shirt` | 1672 × 941 | approximately 16:9 |
+
+Every filename starts with `serhat-soruklu-ai-assisted-`. Native PNGs are copied
+unchanged from the built-in image generation tool, including any source
+information it supplied. No camera metadata, photographic origin, or Content
+Credentials certification is invented. These outputs are not native 4K.
+
+AVIF and WebP delivery copies at 480 and 800 pixels wide preserve the composition
+and aspect ratio. Export settings match the existing delivery workflow: Pillow
+Lanczos downscaling, WebP quality 95/method 6, AVIF quality 90/speed 4 with 4:4:4
+chroma. Their XMP descriptions accurately identify AI assistance and use IPTC
+`trainedAlgorithmicMedia` as their digital source type. Native PNGs are available
+only through explicit open/download links; page previews are lazy-loaded.
+
+`profile/provenance.json` records native dimensions, SHA-256 hashes, the real
+source photo and the generation method. Prompts and expression-edit instructions
+are preserved in `profile-portrait-prompts.txt`. No generative changes were made
+to the original real selfie.

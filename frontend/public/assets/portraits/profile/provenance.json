@@ -1,0 +1,46 @@
+{
+  "created": "2026-10-25",
+  "method": "OpenAI built-in image generation using the original Serhat Soruklu selfie as identity reference. Charcoal suit and outdoor portraits received a further facial-expression edit.",
+  "sourcePhoto": "/assets/portraits/serhat-soruklu-real-selfie.png",
+  "sourcePhotoSha256": "991dee27d82e54bdceb578a0541bae402d4b8eee46189d155a139251f5fa992d",
+  "digitalSourceType": "https://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "nativePngs": "Unchanged tool outputs, including any available embedded provenance. Display copies are downscaled and encoded with truthful source-type XMP. No camera data or certification is invented.",
+  "portraits": [
+    {
+      "name": "serhat-soruklu-ai-assisted-charcoal-suit-smile",
+      "title": "Charcoal suit — warm smile",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2097460,
+      "sha256": "26ecb3e538ae247def3b196098d097c980384b9c145eee45664b0116f1a2f8ad",
+      "description": "AI-assisted portrait of Serhat Soruklu based on his original selfie; clothing, setting and expression generated or edited using OpenAI image generation."
+    },
+    {
+      "name": "serhat-soruklu-ai-assisted-navy-suit",
+      "title": "Navy suit — neutral expression",
+      "width": 1122,
+      "height": 1402,
+      "bytes": 2163161,
+      "sha256": "ec67f7d2741187933e1878f22010fd783f54277a8a9bdfbe6e65a99c9b7f0007",
+      "description": "AI-assisted portrait of Serhat Soruklu based on his original selfie; clothing, setting and expression generated or edited using OpenAI image generation."
+    },
+    {
+      "name": "serhat-soruklu-ai-assisted-outdoor-casual-smile",
+      "title": "Outdoor portrait — subtle smile",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 2196545,
+      "sha256": "2859ae3cdde358b32687aee2d3d7ebff4fcf007a698aa3ad2c21402ed813ec76",
+      "description": "AI-assisted portrait of Serhat Soruklu based on his original selfie; clothing, setting and expression generated or edited using OpenAI image generation."
+    },
+    {
+      "name": "serhat-soruklu-ai-assisted-white-shirt",
+      "title": "White shirt — relaxed expression",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1954399,
+      "sha256": "abd50a7be76683b3a2a1698168205528dc40f2ac45ffb9b97e3d8fceb85170f3",
+      "description": "AI-assisted portrait of Serhat Soruklu based on his original selfie; clothing, setting and expression generated or edited using OpenAI image generation."
+    }
+  ]
+}

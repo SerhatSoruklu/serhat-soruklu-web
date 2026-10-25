@@ -434,6 +434,9 @@ try {
   const robotsResponse = await secureFetch('/robots.txt');
   assert.equal(robotsResponse.status, 200);
   assert.equal(robotsResponse.headers.get('cache-control'), 'public, max-age=300, must-revalidate');
+  assert.match(await robotsResponse.text(), /Sitemap: https:\/\/serhatsoruklu\.com\/sitemap\.xml/);
+
+  await verifySitemapIndexability();
 
   const browserFiles = await readdir(browserDirectory);
   const hashedBundle = browserFiles.find((fileName) => /^main-[a-z0-9]{8}\.js$/i.test(fileName));
@@ -456,7 +459,7 @@ try {
   }
 
   console.log(
-    '[smoke] production SSR status, redirects, errors, CSP nonces, compression, and caching passed',
+    '[smoke] production SSR status, sitemap indexability, portrait discovery, redirects, errors, CSP nonces, compression, and caching passed',
   );
 } catch (error) {
   if (output) {
@@ -482,6 +485,69 @@ async function secureFetch(path, init = {}) {
       ...init.headers,
     },
   });
+}
+
+async function verifySitemapIndexability() {
+  const canonicalOrigin = 'https://serhatsoruklu.com';
+  const sitemapResponse = await secureFetch('/sitemap.xml', { redirect: 'manual' });
+  assert.equal(sitemapResponse.status, 200, 'The submitted sitemap must respond without redirecting.');
+  assert.match(sitemapResponse.headers.get('content-type') ?? '', /(?:application|text)\/xml/);
+  const sitemap = await sitemapResponse.text();
+  const entries = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((match) => match[1]);
+  assert.ok(entries.length > 0, 'The submitted sitemap must contain public pages.');
+
+  const pageUrls = new Set();
+  const imageUrls = new Set();
+  const titles = new Set();
+  for (const entry of entries) {
+    const location = entry.match(/<loc>([^<]+)<\/loc>/)?.[1];
+    assert.ok(location, 'Every sitemap entry must identify a page.');
+    const url = new URL(location);
+    assert.equal(url.origin, canonicalOrigin, 'Sitemap pages must use the canonical HTTPS origin.');
+    assert.equal(url.search, '', 'Sitemap pages must omit query variants.');
+    assert.equal(url.hash, '', 'Sitemap pages must omit fragments.');
+    assert.equal(pageUrls.has(location), false, `Duplicate sitemap page: ${location}`);
+    pageUrls.add(location);
+
+    const response = await secureFetch(url.pathname, { redirect: 'manual' });
+    assert.equal(response.status, 200, `${location} must be a final HTTP 200 page.`);
+    assert.doesNotMatch(response.headers.get('x-robots-tag') ?? '', /noindex/i);
+    const html = await response.text();
+    const canonicalLinks = (html.match(/<link\b[^>]*>/g) ?? []).filter((tag) => /\brel="canonical"/.test(tag));
+    assert.equal(canonicalLinks.length, 1, `${location} must emit one canonical link.`);
+    assert.equal(canonicalLinks[0].match(/\bhref="([^"]+)"/)?.[1], location, `${location} must canonicalize to itself.`);
+    const robots = (html.match(/<meta\b[^>]*>/g) ?? []).filter((tag) => /\bname="(?:robots|googlebot)"/.test(tag));
+    assert.ok(robots.some((tag) => /\bcontent="index,\s*follow/.test(tag)), `${location} must allow indexing.`);
+    assert.equal(robots.some((tag) => /\bnoindex\b/i.test(tag)), false, `${location} must not emit conflicting noindex directives.`);
+    assert.equal((html.match(/<h1\b/g) ?? []).length, 1, `${location} must SSR its main heading.`);
+    const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
+    assert.ok(title, `${location} must SSR a page title.`);
+    assert.equal(titles.has(title), false, `${location} must have a distinct page title.`);
+    titles.add(title);
+    assert.match(html, /<script\b[^>]*type="application\/ld\+json"/, `${location} must SSR structured data.`);
+
+    if (url.pathname !== '/') {
+      const trailingSlashResponse = await secureFetch(`${url.pathname}/?source=sitemap-smoke`, { redirect: 'manual' });
+      assert.equal(trailingSlashResponse.status, 308, `${location}/ must permanently redirect.`);
+      assert.equal(trailingSlashResponse.headers.get('location'), url.pathname, `${location}/ must redirect to its canonical path.`);
+    }
+
+    for (const image of entry.matchAll(/<image:loc>([^<]+)<\/image:loc>/g)) {
+      const imageUrl = new URL(image[1]);
+      assert.equal(imageUrl.origin, canonicalOrigin, 'Sitemap portraits must use the canonical origin.');
+      assert.ok(html.includes(imageUrl.pathname), `The image sitemap must reference a portrait present on ${location}.`);
+      imageUrls.add(image[1]);
+    }
+  }
+
+  assert.ok(imageUrls.size > 0, 'The image sitemap must expose the original identity portrait.');
+  for (const imageUrl of imageUrls) {
+    const response = await secureFetch(new URL(imageUrl).pathname, { redirect: 'manual' });
+    assert.equal(response.status, 200, `${imageUrl} must be directly crawlable.`);
+    assert.match(response.headers.get('content-type') ?? '', /^image\//);
+    assert.doesNotMatch(response.headers.get('x-robots-tag') ?? '', /noindex/i);
+    await response.arrayBuffer();
+  }
 }
 
 function getCspNonce(csp) {

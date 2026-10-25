@@ -12,15 +12,23 @@ describe('SITEMAP_ROUTES', () => {
       },
       {
         path: '/about',
-        lastModified: '2026-10-24',
+        lastModified: '2026-10-25',
         changeFrequency: 'monthly',
         priority: 0.9,
+        images: ['/assets/portraits/serhat-soruklu-real-selfie.png'],
       },
       {
         path: '/press',
-        lastModified: '2026-10-24',
+        lastModified: '2026-10-25',
         changeFrequency: 'monthly',
         priority: 0.6,
+        images: [
+          '/assets/portraits/serhat-soruklu-real-selfie.png',
+          '/assets/portraits/profile/serhat-soruklu-ai-assisted-charcoal-suit-smile.png',
+          '/assets/portraits/profile/serhat-soruklu-ai-assisted-navy-suit.png',
+          '/assets/portraits/profile/serhat-soruklu-ai-assisted-outdoor-casual-smile.png',
+          '/assets/portraits/profile/serhat-soruklu-ai-assisted-white-shirt.png',
+        ],
       },
       {
         path: '/work',

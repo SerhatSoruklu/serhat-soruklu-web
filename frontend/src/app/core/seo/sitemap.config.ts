@@ -1,3 +1,5 @@
+import { PROFILE_PORTRAITS } from '../../shared/portraits/profile-portraits.config';
+
 export type SitemapChangeFrequency = 'weekly' | 'monthly';
 
 export interface SitemapRoute {
@@ -5,6 +7,7 @@ export interface SitemapRoute {
   lastModified: string;
   changeFrequency: SitemapChangeFrequency;
   priority: number;
+  images?: readonly string[];
 }
 
 // Keep lastModified stable. Update it only for meaningful public content,
@@ -18,15 +21,20 @@ export const SITEMAP_ROUTES = [
   },
   {
     path: '/about',
-    lastModified: '2026-10-24',
+    lastModified: '2026-10-25',
     changeFrequency: 'monthly',
     priority: 0.9,
+    images: ['/assets/portraits/serhat-soruklu-real-selfie.png'],
   },
   {
     path: '/press',
-    lastModified: '2026-10-24',
+    lastModified: '2026-10-25',
     changeFrequency: 'monthly',
     priority: 0.6,
+    images: [
+      '/assets/portraits/serhat-soruklu-real-selfie.png',
+      ...PROFILE_PORTRAITS.map((portrait) => portrait.src),
+    ],
   },
   {
     path: '/work',

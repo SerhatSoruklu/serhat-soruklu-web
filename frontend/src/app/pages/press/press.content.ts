@@ -4,6 +4,7 @@ import {
   FOUNDER_PORTRAIT_WIDTH,
 } from '../../shared/portraits/founder-portrait.config';
 import { ORIGINAL_PORTRAIT } from '../../shared/portraits/original-portrait.config';
+import { PROFILE_PORTRAITS } from '../../shared/portraits/profile-portraits.config';
 
 export interface PressFact {
   readonly label: string;
@@ -84,7 +85,7 @@ export const pressContent = {
       { label: 'Scope', value: 'Serhat Soruklu + Coupyn + Stervox + CODARIS' },
       { label: 'Source', value: 'First-party reference material' },
       { label: 'Language', value: 'English / United Kingdom' },
-      { label: 'Updated', value: '24 October 2026' },
+      { label: 'Updated', value: '25 October 2026' },
     ],
   },
   factSheets: [
@@ -219,6 +220,7 @@ export const pressContent = {
         fileSize: '11.45 MiB',
       },
     },
+    ...PROFILE_PORTRAITS,
   ] satisfies readonly PressPhotographyAsset[],
   coupynMedia: {
     title: 'Coupyn system media graphic',

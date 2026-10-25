@@ -1,3 +1,5 @@
+import { ORIGINAL_PORTRAIT } from '../../shared/portraits/original-portrait.config';
+
 export interface SeoMetadata {
   label: string;
   title: string;
@@ -26,7 +28,7 @@ export type StructuredDataProfile =
 
 const canonicalBaseUrl = 'https://serhatsoruklu.com';
 const defaultOgImage = '/assets/social/serhat-soruklu-og.png';
-const defaultPersonImage = '/assets/portraits/serhat-soruklu-real-selfie.png';
+const defaultPersonImage = ORIGINAL_PORTRAIT.original;
 const rasterSocialImage = {
   ogImageHeight: 630,
   ogImageType: 'image/png',

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://serhatsoruklu.com/</loc>
     <lastmod>2026-10-24</lastmod>
@@ -8,15 +8,33 @@
   </url>
   <url>
     <loc>https://serhatsoruklu.com/about</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://serhatsoruklu.com/assets/portraits/serhat-soruklu-real-selfie.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://serhatsoruklu.com/press</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://serhatsoruklu.com/assets/portraits/serhat-soruklu-real-selfie.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://serhatsoruklu.com/assets/portraits/profile/serhat-soruklu-ai-assisted-charcoal-suit-smile.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://serhatsoruklu.com/assets/portraits/profile/serhat-soruklu-ai-assisted-navy-suit.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://serhatsoruklu.com/assets/portraits/profile/serhat-soruklu-ai-assisted-outdoor-casual-smile.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://serhatsoruklu.com/assets/portraits/profile/serhat-soruklu-ai-assisted-white-shirt.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://serhatsoruklu.com/work</loc>
