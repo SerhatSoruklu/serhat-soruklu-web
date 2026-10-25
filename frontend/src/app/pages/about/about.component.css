@@ -3,7 +3,7 @@
   background: #07090d;
   color: #f5f7fa;
 }
-.about-codaris-a { color: #f5f7fa; }
+.about-codaris-a { color: inherit; }
 
 .about-page {
   overflow: hidden;
