@@ -62,8 +62,8 @@ const pressAssets = [
   })),
   {
     height: 630,
-    path: '/assets/social/serhat-soruklu-systems-coupyn-og.png',
-    previewPath: '/assets/social/serhat-soruklu-systems-coupyn-og.png',
+    path: '/assets/social/serhat-soruklu-systems-coupyn-og.png?v=20261025-spacing',
+    previewPath: '/assets/social/serhat-soruklu-systems-coupyn-og.png?v=20261025-spacing',
     type: /^image\/png/,
     width: 1200,
   },
@@ -107,11 +107,11 @@ const downloadableAssets = [
   ...PROFILE_PORTRAITS.map((asset) => ({ fileName: asset.fileName, path: asset.src })),
   {
     fileName: 'serhat-soruklu-systems-coupyn-og.png',
-    path: '/assets/social/serhat-soruklu-systems-coupyn-og.png',
+    path: '/assets/social/serhat-soruklu-systems-coupyn-og.png?v=20261025-spacing',
   },
   {
     fileName: 'serhat-soruklu-systems-coupyn-og.svg',
-    path: '/assets/social/serhat-soruklu-systems-coupyn-og.svg',
+    path: '/assets/social/serhat-soruklu-systems-coupyn-og.svg?v=20261025-spacing',
   },
   {
     fileName: 'serhat-soruklu-systems-stervox-og.png',
@@ -458,7 +458,7 @@ test.describe('Press and media page', () => {
       await expect(download).toHaveCount(1);
       expect(response.ok(), asset.path).toBe(true);
       expect(response.headers()['content-type'], asset.path).toMatch(
-        asset.path.endsWith('.svg') ? /^image\/svg\+xml/ : /^image\/png/,
+        new URL(asset.path, 'http://localhost').pathname.endsWith('.svg') ? /^image\/svg\+xml/ : /^image\/png/,
       );
       const portrait = PROFILE_PORTRAITS.find((candidate) => candidate.src === asset.path);
       if (portrait) {

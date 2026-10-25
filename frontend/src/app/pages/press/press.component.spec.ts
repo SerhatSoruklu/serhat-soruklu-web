@@ -203,7 +203,7 @@ describe('PressComponent', () => {
       ...PROFILE_PORTRAITS.map((asset) => asset.src),
     ]);
     expect(coupynPreview?.getAttribute('src')).toBe(
-      '/assets/social/serhat-soruklu-systems-coupyn-og.png',
+      '/assets/social/serhat-soruklu-systems-coupyn-og.png?v=20261025-spacing',
     );
     expect(coupynPreview?.getAttribute('width')).toBe('1200');
     expect(coupynPreview?.getAttribute('height')).toBe('630');
@@ -315,7 +315,7 @@ describe('PressComponent', () => {
     expect(previewPaths()).toEqual(darkPaths.map(path => path?.replace('.png', '-light.png')));
     const downloads = Array.from(native.querySelectorAll<HTMLAnchorElement>('.press-coupyn-asset .press-format-list a'));
     expect(downloads).toHaveLength(9);
-    expect(downloads.every(link => /-light\.(png|svg)$/.test(link.getAttribute('href') ?? ''))).toBe(true);
+    expect(downloads.every(link => /-light\.(png|svg)(?=\?|$)/.test(link.getAttribute('href') ?? ''))).toBe(true);
     expect(downloads.filter(link => link.hasAttribute('download')).every(link => /-light\.(png|svg)$/.test(link.download))).toBe(true);
     theme.setTheme('dark');
     fixture.detectChanges();

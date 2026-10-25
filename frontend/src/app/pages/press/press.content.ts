@@ -226,7 +226,7 @@ export const pressContent = {
     title: 'Coupyn system media graphic',
     description:
       'Current first-party system artwork for Coupyn, available in raster and vector formats.',
-    previewSrc: '/assets/social/serhat-soruklu-systems-coupyn-og.png',
+    previewSrc: '/assets/social/serhat-soruklu-systems-coupyn-og.png?v=20261025-spacing',
     previewAlt:
       'Coupyn system media graphic describing commerce infrastructure for trust and referral discovery.',
     previewWidth: 1200,
@@ -239,7 +239,7 @@ export const pressContent = {
         fileSize: '68.6 KiB',
         format: 'PNG',
         openInNewTab: true,
-        path: '/assets/social/serhat-soruklu-systems-coupyn-og.png',
+        path: '/assets/social/serhat-soruklu-systems-coupyn-og.png?v=20261025-spacing',
       },
       {
         action: 'Download SVG source',
@@ -248,7 +248,7 @@ export const pressContent = {
         fileSize: '13.0 KiB',
         format: 'SVG',
         openInNewTab: false,
-        path: '/assets/social/serhat-soruklu-systems-coupyn-og.svg',
+        path: '/assets/social/serhat-soruklu-systems-coupyn-og.svg?v=20261025-spacing',
       },
     ] satisfies readonly PressMediaFormat[],
   },
@@ -426,7 +426,7 @@ function lightArtwork<T extends { previewSrc: string; formats: readonly PressMed
   media: T,
   fileSizes: Record<PressMediaFormat['format'], string>,
 ) {
-  const lightPath = (path: string) => path.replace(/\.(png|svg)$/, '-light.$1');
+  const lightPath = (path: string) => path.replace(/\.(png|svg)(?=\?|$)/, '-light.$1');
 
   return {
     ...media,
