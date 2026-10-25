@@ -315,7 +315,7 @@ describe('PressComponent', () => {
     expect(previewPaths()).toEqual(darkPaths.map(path => path?.replace('.png', '-light.png')));
     const downloads = Array.from(native.querySelectorAll<HTMLAnchorElement>('.press-coupyn-asset .press-format-list a'));
     expect(downloads).toHaveLength(9);
-    expect(downloads.every(link => /-light\.(png|svg)$/.test(link.getAttribute('href') ?? ''))).toBe(true);
+    expect(downloads.every(link => /-light\.(png|svg)(?=\?|$)/.test(link.getAttribute('href') ?? ''))).toBe(true);
     expect(downloads.filter(link => link.hasAttribute('download')).every(link => /-light\.(png|svg)$/.test(link.download))).toBe(true);
     theme.setTheme('dark');
     fixture.detectChanges();
