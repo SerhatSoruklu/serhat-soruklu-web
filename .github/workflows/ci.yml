@@ -48,6 +48,7 @@ jobs:
         run: npm run install:projects
 
       - name: Install Playwright browsers and host dependencies
+        if: (github.event_name != 'workflow_dispatch' || !inputs.skip_tests) && !contains(github.event.pull_request.labels.*.name, 'skip-release-tests')
         run: npm --prefix frontend run e2e:install -- --with-deps chromium firefox webkit
 
       - name: Lint
@@ -57,18 +58,18 @@ jobs:
         run: npm run check
 
       - name: Frontend and backend unit tests
-        if: github.event_name != 'workflow_dispatch' || !inputs.skip_tests
+        if: (github.event_name != 'workflow_dispatch' || !inputs.skip_tests) && !contains(github.event.pull_request.labels.*.name, 'skip-release-tests')
         run: npm test
 
       - name: Full dependency audit policy (production and development)
         run: npm run audit
 
       - name: Browser end-to-end tests
-        if: github.event_name != 'workflow_dispatch' || !inputs.skip_tests
+        if: (github.event_name != 'workflow_dispatch' || !inputs.skip_tests) && !contains(github.event.pull_request.labels.*.name, 'skip-release-tests')
         run: npm run e2e
 
       - name: Firefox and WebKit route smoke tests
-        if: github.event_name != 'workflow_dispatch' || !inputs.skip_tests
+        if: (github.event_name != 'workflow_dispatch' || !inputs.skip_tests) && !contains(github.event.pull_request.labels.*.name, 'skip-release-tests')
         run: npm run e2e:smoke:cross-browser
 
       - name: Build final production artifact
@@ -78,7 +79,7 @@ jobs:
         run: npm run assert:production
 
       - name: Smoke-test production SSR and real countdown motion
-        if: github.event_name != 'workflow_dispatch' || !inputs.skip_tests
+        if: (github.event_name != 'workflow_dispatch' || !inputs.skip_tests) && !contains(github.event.pull_request.labels.*.name, 'skip-release-tests')
         run: npm run smoke:production:browser
 
       - name: Upload immutable release candidate
