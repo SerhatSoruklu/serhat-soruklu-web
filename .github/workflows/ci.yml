@@ -6,6 +6,11 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      skip_tests:
+        description: 'Skip test suites for an explicitly requested manual release'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -52,15 +57,18 @@ jobs:
         run: npm run check
 
       - name: Frontend and backend unit tests
+        if: github.event_name != 'workflow_dispatch' || !inputs.skip_tests
         run: npm test
 
       - name: Full dependency audit policy (production and development)
         run: npm run audit
 
       - name: Browser end-to-end tests
+        if: github.event_name != 'workflow_dispatch' || !inputs.skip_tests
         run: npm run e2e
 
       - name: Firefox and WebKit route smoke tests
+        if: github.event_name != 'workflow_dispatch' || !inputs.skip_tests
         run: npm run e2e:smoke:cross-browser
 
       - name: Build final production artifact
@@ -70,6 +78,7 @@ jobs:
         run: npm run assert:production
 
       - name: Smoke-test production SSR and real countdown motion
+        if: github.event_name != 'workflow_dispatch' || !inputs.skip_tests
         run: npm run smoke:production:browser
 
       - name: Upload immutable release candidate

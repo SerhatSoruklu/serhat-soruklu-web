@@ -203,7 +203,7 @@ describe('PressComponent', () => {
       ...PROFILE_PORTRAITS.map((asset) => asset.src),
     ]);
     expect(coupynPreview?.getAttribute('src')).toBe(
-      '/assets/social/serhat-soruklu-systems-coupyn-og.png',
+      '/assets/social/serhat-soruklu-systems-coupyn-og.png?v=20261025-spacing',
     );
     expect(coupynPreview?.getAttribute('width')).toBe('1200');
     expect(coupynPreview?.getAttribute('height')).toBe('630');
